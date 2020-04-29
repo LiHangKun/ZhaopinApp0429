@@ -17,7 +17,7 @@ import com.lx.zhaopin.R;
 
 public class CirclePercentView extends View {
 
-    public static final int WIDTH_RADIUS_RATIO = 10;     // 弧线半径 : 弧线线宽 (比例)
+    public static final int WIDTH_RADIUS_RATIO = 5;     // 弧线半径 : 弧线线宽 (比例)
     public static final int MAX = 100;
     private Paint mPaint;
     private float progressPercent;
@@ -36,12 +36,12 @@ public class CirclePercentView extends View {
     public CirclePercentView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CirclePercentView);
-        bgColor = typedArray.getColor(R.styleable.CirclePercentView_circleBgColor, getResources().getColor(R.color.colorPrimary));
-        progressColor = typedArray.getColor(R.styleable.CirclePercentView_circleProgressColor, getResources().getColor(R.color.colorPrimary));
+        bgColor = typedArray.getColor(R.styleable.CirclePercentView_circleBgColor, getResources().getColor(R.color.red_them));
+        progressColor = typedArray.getColor(R.styleable.CirclePercentView_circleProgressColor, getResources().getColor(R.color.red_them));
         radius = typedArray.getInt(R.styleable.CirclePercentView_circleRadius, WIDTH_RADIUS_RATIO);
         isGradient = typedArray.getBoolean(R.styleable.CirclePercentView_circleIsGradient, false);
-        startColor = typedArray.getColor(R.styleable.CirclePercentView_circleStartColor, getResources().getColor(R.color.colorPrimary));
-        endColor = typedArray.getColor(R.styleable.CirclePercentView_circleEndColor, getResources().getColor(R.color.colorPrimary));
+        startColor = typedArray.getColor(R.styleable.CirclePercentView_circleStartColor, getResources().getColor(R.color.red_them));
+        endColor = typedArray.getColor(R.styleable.CirclePercentView_circleEndColor, getResources().getColor(R.color.red_them));
         typedArray.recycle();
         init();
     }

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.awen.photo.FrescoImageLoader;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.utils.AppUtils;
+import com.lx.zhaopin.utils.RxToast;
 import com.lx.zhaopin.utils.SPTool;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -62,14 +63,14 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        RxToast.setContext(this);
         mContext = this;
         SPTool.init(mContext, AppUtils.getAppName(this));
         // 主要是添加下面这句代码
         MultiDex.install(this); //65536
 
         context = (MyApplication) getApplicationContext();
-        FrescoImageLoader.init(this,android.R.color.black);
+        FrescoImageLoader.init(this, android.R.color.black);
         //极光
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);

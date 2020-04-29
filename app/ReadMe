@@ -1,5 +1,10 @@
 求职招聘
 
+背景色  #F7F9FA
+线颜色  #e7e7e7
+
+背景输入框   android:background="@drawable/button_shapew"
+
 keyAlias 'lx'
 keyPassword '123456'
 storeFile file('zhaopinapp.jks')

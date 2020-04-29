@@ -3,7 +3,6 @@
     package="com.lx.zhaopin">
 
 
-
     <!--SDK 必须使用的权限-->
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -76,30 +75,12 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <application
-
-        android:networkSecurityConfig="@xml/network_security_config"
+        android:name="com.lx.zhaopin.common.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -110,6 +91,58 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name="com.lx.zhaopin.activity.MyUserInfoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 我的资料 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.YanSFActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 三方登录,验证身份 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.XinPhoneActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 绑定新的手机号 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.MyJianLiActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 我的简历 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.MyJiaoYuActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 教育经历 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.MyGongZuoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 工作经验 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.MyYinSiActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 隐私设置 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.SettingActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 设置 -->
+
+
     </application>
 
 </manifest>
