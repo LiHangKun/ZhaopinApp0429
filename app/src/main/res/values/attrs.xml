@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 自定义星星属性 -->
+    <declare-styleable name="star">
+        //星星数量
+        <attr name="starsNum" format="integer"></attr>
+        //星星宽度
+        <attr name="starWidth" format="dimension"></attr>
+        //星星高度
+        <attr name="starHeight" format="dimension"></attr>
+        //星星间距
+        <attr name="starDistance" format="dimension"></attr>
+        //星星背景
+        <attr name="starBackground" format="reference"></attr>
+        //星星变化背景
+        <attr name="starDrawBackground" format="reference"></attr>
+        //控件是否可以点击
+        <attr name="starClickable" format="boolean"></attr>
+
+    </declare-styleable>
+
+
+    <!--自定义购物车加减数量-->
+    <declare-styleable name="AmountView2">
+        <!-- 左右2边+-按钮的宽度 -->
+        <attr name="btnWidth" format="dimension" />
+        <!-- 中间TextView的宽度 -->
+        <attr name="tvWidth" format="dimension" />
+        <!--<attr name="tvColor" format="color"/>-->
+        <attr name="tvTextSize" format="dimension" />
+        <attr name="btnTextSize" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CustomProgressBar">
+        <attr name="progressColor" format="color" />
+        <attr name="progressDescColor" format="color" />
+        <attr name="progressRadius" format="dimension" />
+        <attr name="max" format="integer" />
+        <attr name="progress" format="integer" />
+        <attr name="borderWidth" format="dimension" />
+        <attr name="progressDesc" format="string" />
+        <attr name="isShowDesc" format="boolean" />
+    </declare-styleable>
+
+    <!--自定义密码输入框-->
+    <!--<declare-styleable name="PayPsdInputView">
+
+        <attr name="maxCount" format="integer" />
+        <attr name="circleColor" format="color" />
+        <attr name="bottomLineColor" format="color" />
+        <attr name="radius" format="dimension" />
+        <attr name="divideLineWidth" format="dimension" />
+        <attr name="divideLineColor" format="color" />
+        <attr name="rectAngle" format="dimension" />
+        <attr name="focusedColor" format="color" />
+        <attr name="psdType" format="enum">
+            <enum name="weChat" value="0" />
+            <enum name="bottomLine" value="1" />
+        </attr>
+    </declare-styleable>-->
+
+
+    <!--自定义密码输入框-->
+
+
+    <!--自定义密码输入框 明文-->
+   <!-- <declare-styleable name="PayPsdInputViewMing">
+
+        <attr name="maxCount1" format="integer" />
+        <attr name="circleColor1" format="color" />
+        <attr name="bottomLineColor1" format="color" />
+        <attr name="radius1" format="dimension" />
+        <attr name="divideLineWidth1" format="dimension" />
+        <attr name="divideLineColor1" format="color" />
+        <attr name="rectAngle1" format="dimension" />
+        <attr name="focusedColor1" format="color" />
+        <attr name="psdType1" format="enum">
+            <enum name="weChat" value="0" />
+            <enum name="bottomLine" value="1" />
+        </attr>
+    </declare-styleable>-->
+
+
+    <!--自定义星星
+    https://www.jianshu.com/p/c2a13f6fdeea
+    -->
+    <declare-styleable name="ShadowContainer">
+        <attr name="containerShadowColor" format="color"/>
+        <attr name="containerShadowRadius" format="dimension"/>
+        <attr name="containerDeltaLength" format="dimension"/>
+        <attr name="containerCornerRadius" format="dimension"/>
+        <attr name="deltaX" format="dimension"/>
+        <attr name="deltaY" format="dimension"/>
+    </declare-styleable>
+
+
+    <!--自定义密码输入框-->
+    <declare-styleable name="PayPsdInputView1">
+
+        <attr name="maxCount1" format="integer" />
+        <attr name="circleColor1" format="color" />
+        <attr name="bottomLineColor1" format="color" />
+        <attr name="radius1" format="dimension" />
+        <attr name="divideLineWidth1" format="dimension" />
+        <attr name="divideLineColor1" format="color" />
+        <attr name="rectAngle1" format="dimension" />
+        <attr name="focusedColor1" format="color" />
+        <attr name="psdType1" format="enum">
+            <enum name="weChat" value="0" />
+            <enum name="bottomLine" value="1" />
+        </attr>
+    </declare-styleable>
+
+
+    <!--头像堆积-->
+    <declare-styleable name="PileLayout">
+        <attr name="PileLayout_vertivalSpace" format="dimension"/>
+        <attr name="PileLayout_pileWidth" format="dimension"/>
+    </declare-styleable>
+
+
+    <!--圆形进度条2-->
+    <declare-styleable name="MyMarkerRoundProcess">
+        <attr name="roundColor2" format="color"/>
+        <attr name="roundProgressColor2" format="color"/>
+        <attr name="roundProgressColor3" format="color"/>
+        <attr name="textColors2" format="color" />
+        <attr name="textSize2" format="dimension" />
+        <!-- 圆环的宽度 -->
+        <attr name="circleWidth2" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="LetterBar">
+
+        <!-- A drawable to use as the background of the LetterBar -->
+        <attr name="lbLetterBarBackground" format="reference|color" />
+
+        <!-- Text Color of the LetterBar text -->
+        <attr name="lbLetterBarTextColor" format="reference|color" />
+
+        <!-- A drawable to use as the background of the Overlay -->
+        <attr name="lbOverlayBackground" format="reference|color" />
+
+        <!-- Text Color of the Overlay text -->
+        <attr name="lbOverlayTextColor" format="reference|color" />
+
+        <!-- Text Size of the Overlay text -->
+        <attr name="lbOverlayTextSize" format="reference|dimension" />
+
+    </declare-styleable>
+
+
+    <declare-styleable name="Banner">
+
+        <attr name="delay_time" format="integer" />
+
+        <attr name="scroll_time" format="integer" />
+
+        <attr name="is_auto_play" format="boolean" />
+
+        <attr name="is_loop" format="boolean" />
+
+        <attr name="title_background" format="color|reference" />
+
+        <attr name="title_textcolor" format="color" />
+
+        <attr name="title_textsize" format="dimension" />
+
+        <attr name="title_height" format="dimension" />
+
+        <attr name="indicator_width" format="dimension" />
+
+        <attr name="indicator_height" format="dimension" />
+
+        <attr name="indicator_margin" format="dimension" />
+
+        <attr name="indicator_drawable_selected" format="reference" />
+
+        <attr name="indicator_drawable_unselected" format="reference" />
+
+        <attr name="banner_layout" format="reference" />
+
+        <attr name="banner_default_image" format="reference" />
+
+
+        -
+        <attr name="image_scale_type" format="enum">
+
+            <enum name="center" value="0" />
+
+            <enum name="center_crop" value="1" />
+
+            <enum name="center_inside" value="2" />
+
+            <enum name="fit_center" value="3" />
+
+            <enum name="fit_end" value="4" />
+
+            <enum name="fit_start" value="5" />
+
+            <enum name="fit_xy" value="6" />
+
+            <enum name="matrix" value="7" />
+
+        </attr>
+
+        <!--<attr name="indicator_animator" format="reference" />-->
+
+
+        <!--<attr name="indicator_animator_reverse" format="reference" />-->
+
+
+    </declare-styleable>
+
+
+
+
+
+</resources>

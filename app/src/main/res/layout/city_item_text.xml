@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:gravity="center_vertical"
+        android:text="A"
+        android:textColor="#1a1a1a"
+        android:textSize="14sp"
+        android:paddingLeft="14dp"
+        android:background="@color/space_light"
+        android:id="@+id/letter"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:text="城市"
+        android:textColor="#1a1a1a"
+        android:textSize="14sp"
+        android:paddingLeft="14dp"
+        android:background="@color/white"
+        android:id="@+id/text"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line"
+        android:layout_marginLeft="14dp"/>
+
+</LinearLayout>

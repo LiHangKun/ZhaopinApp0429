@@ -1,0 +1,196 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+
+
+def releaseTime() {
+    return new Date().format("MM-dd")
+}
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.lx.zhaopin"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true //65536
+
+        ndk {
+            //设置支持的so库架构
+            abiFilters "armeabi"
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.lx.zhaopin",
+                JPUSH_APPKEY : "111", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+
+    }
+
+    /*buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }*/
+
+    /*关于签名*/
+    signingConfigs {
+        release {
+            keyAlias 'lx'
+            keyPassword '123456'
+            storeFile file('zhaopinapp.jks')
+            storePassword '123456'
+        }
+        debug {
+            keyAlias 'lx'
+            keyPassword '123456'
+            storeFile file('zhaopinapp.jks')
+            storePassword '123456'
+        }
+    }
+    buildTypes {
+        /* release {
+             minifyEnabled false
+             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+         }*/
+
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+    android.applicationVariants.all { variant ->
+        def fileName = "${releaseTime()}-ZhaoPinApp-${defaultConfig.versionCode}-${defaultConfig.versionName}.apk"
+        variant.outputs.all { output ->
+            outputFileName = fileName
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.+'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    compile 'com.zhouyou:segmentedbar:1.0.9'
+    compile 'com.czp.arcProgressBar:ArcProgressBar:1.0.1'
+
+    //Libs下
+    implementation files('libs/AMap2DMap_5.2.0_AMapSearch_6.1.0_AMapLocation_4.2.0_20180809.jar')
+    implementation files('libs/jcore-android-2.0.0.jar')
+    implementation files('libs/jpush-android-3.2.0.jar')
+    implementation files('libs/pinyin4j-2.5.0.jar')
+    implementation files('libs/umeng-common-2.1.0.jar')
+    implementation files('libs/umeng-share-core-6.9.6.jar')
+    implementation files('libs/umeng-share-QQ-simplify-6.9.6.jar')
+    implementation files('libs/umeng-share-sina-simplify-6.9.6.jar')
+    implementation files('libs/umeng-share-wechat-simplify-6.9.6.jar')
+    implementation files('libs/umeng-shareboard-widget-6.9.6.jar')
+    implementation files('libs/umeng-sharetool-6.9.6.jar')
+    //Libs下
+
+
+    //Gson
+    implementation 'com.google.code.gson:gson:2.7'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation project(':dialog')
+    implementation project(':FlycoTabLayout_Lib')
+    implementation project(':roundimageview')
+    implementation project(':permissiongen')
+
+    //XTabLayout
+    compile 'com.androidkun:XTabLayout:1.1.3'
+    //65536
+    implementation 'com.android.support:multidex:1.0.3'
+    //下拉刷新
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    //俊哥
+    implementation 'com.lxj:xpopup:1.8.10'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    //俊哥
+    /*图片轮播3*/
+    implementation 'com.youth.banner:banner:1.4.10'
+    //eventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    //权限管理
+    annotationProcessor 'com.zhy:mpermission-compiler:1.0.0'
+    implementation 'com.zhy:mpermission-api:1.0.0'
+    //圆形头像
+    implementation 'com.makeramen:roundedimageview:2.2.1'
+    //星星222
+    implementation 'me.zhanghai.android.materialratingbar:library:1.3.1'
+    //秒杀时间倒计时
+    implementation 'com.github.iwgang:countdownview:2.1.6'
+    implementation files('libs/AMap2DMap_5.2.0_AMapSearch_6.1.0_AMapLocation_4.2.0_20180809.jar')
+    //评价的星星
+    implementation 'com.iarcuschin:simpleratingbar:0.1.5'
+    //civ  实现头像的重叠
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    //头像叠加
+    //implementation 'com.github.hnsycsxhzcsh:DiscussionAvatarView:v1.3'
+
+
+    //加载图片
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    //时间选择器
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    //版本更新
+    implementation 'com.allenliu.versionchecklib:library:2.1.9'
+    //扫一扫
+    implementation 'com.github.yuzhiqiang1993:zxing:2.2.8'
+    //图片选择
+    implementation 'com.github.lovetuzitong:MultiImageSelector:1.2'
+    //图片压缩
+    implementation 'top.zibin:Luban:1.1.8'
+    //沉浸状态栏
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    //时间选择器
+    compile 'com.feezu.liuli:timeselector:1.1.3+'
+    //文字上下滚动
+    implementation 'com.github.paradoxie:AutoVerticalTextview:0.1'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    //切换城市的选择
+    compile 'com.github.addappcn:android-pickers:1.0.3'
+    //魅族的Banner
+    compile 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //视频播放
+    compile 'com.github.xiaoyanger0825:NiceVieoPlayer:v2.2'
+    compile 'com.github.Awent:PhotoPick-Master:v1.096'
+
+}

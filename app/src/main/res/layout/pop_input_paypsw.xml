@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_rect_white_top_5dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp"
+            android:text="输入支付密码"
+            android:textColor="#ff666666"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="￥ *.00"
+            android:textColor="#ff333333"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvErrorHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="忘记密码?"
+            android:textColor="@color/mainColor888"
+            android:textSize="14sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tvAllCoin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="剩余比特币（0个）"
+            android:textColor="#ff666666"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+
+        <com.lx.zhaopin.view.InputPswPop
+            android:id="@+id/inputEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:inputType="numberPassword"
+            android:maxLength="6" />
+
+        <TextView
+            android:id="@+id/tvFindbackPsw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginLeft="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_40"
+            android:background="@drawable/button_shape"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="确认支付"
+            android:textColor="#fff"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

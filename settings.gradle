@@ -1,0 +1,3 @@
+rootProject.name='ZhaopinApp0429'
+include ':app',':permissiongen',':roundimageview',':dialog',':FlycoTabLayout_Lib'
+

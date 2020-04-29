@@ -1,0 +1,41 @@
+求职招聘
+
+keyAlias 'lx'
+keyPassword '123456'
+storeFile file('zhaopinapp.jks')
+storePassword '123456'
+
+在Android Studio中，在右侧找到菜单栏“Gradle”—>”:app”—>“Tasks”—>“android”—>双击“signReport”即可。这时在Terminal中可以查看debug版本、resalse版本的SHA1和MD5值。见截图
+Config: release
+Store: R:\Code\ZhaopinApp0429\app\zhaopinapp.jks
+Alias: lx
+MD5: 4B:D5:E2:2A:ED:6D:0C:57:6E:2B:CB:EF:14:80:49:CA
+SHA1: FF:5A:48:D9:F9:19:93:EC:A1:85:00:8F:A4:8A:75:F6:23:5C:06:8F
+SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5:1D:BF:B6:3D:44:7B:B4:D5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
