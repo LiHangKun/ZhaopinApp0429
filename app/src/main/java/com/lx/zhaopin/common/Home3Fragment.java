@@ -13,13 +13,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.AboutMeActivity;
+import com.lx.zhaopin.activity.ChangJianWenTiActivity;
+import com.lx.zhaopin.activity.FeedActivity;
 import com.lx.zhaopin.activity.MyGongZuoActivity;
+import com.lx.zhaopin.activity.MyGuanZhuActivity;
 import com.lx.zhaopin.activity.MyJianLiActivity;
 import com.lx.zhaopin.activity.MyJiaoYuActivity;
 import com.lx.zhaopin.activity.MyUserInfoActivity;
 import com.lx.zhaopin.activity.MyYinSiActivity;
+import com.lx.zhaopin.activity.QiuZhiYiXiangActivity;
 import com.lx.zhaopin.activity.SettingActivity;
 import com.lx.zhaopin.activity.XinPhoneActivity;
+import com.lx.zhaopin.activity.XiuGaiMiMaActivity;
 import com.lx.zhaopin.activity.YanSFActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.utils.RxToast;
@@ -137,28 +143,33 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView1:
                 //已屏蔽记录
-                intent = new Intent(getActivity(), MyYinSiActivity.class);
+                intent = new Intent(getActivity(), XiuGaiMiMaActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView2:
                 //我的关注
-                ToastFactory.getToast(getActivity(), "我的关注").show();
+                intent = new Intent(getActivity(), MyGuanZhuActivity.class);
+                startActivity(intent);
                 break;
             case R.id.relView3:
                 //求职意向
-                ToastFactory.getToast(getActivity(), "求职意向").show();
+                intent = new Intent(getActivity(), QiuZhiYiXiangActivity.class);
+                startActivity(intent);
                 break;
             case R.id.relView4:
                 //在线客服
-                ToastFactory.getToast(getActivity(), "在线客服").show();
+                intent = new Intent(getActivity(), ChangJianWenTiActivity.class);
+                startActivity(intent);
                 break;
             case R.id.relView5:
                 //隐私设置
-                ToastFactory.getToast(getActivity(), "隐私设置").show();
+                intent = new Intent(getActivity(), MyYinSiActivity.class);
+                startActivity(intent);
                 break;
             case R.id.relView6:
                 //切换身份
-                ToastFactory.getToast(getActivity(), "切换身份").show();
+                intent = new Intent(getActivity(), AboutMeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.relView7:
                 //我的设置

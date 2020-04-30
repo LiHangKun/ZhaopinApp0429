@@ -141,6 +141,42 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 设置 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.XiuGaiMiMaActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 修改密码 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.FeedActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 反馈 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.ChangJianWenTiActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 常见问题 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.AboutMeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 关于我们 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.MyGuanZhuActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 我的关注 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.QiuZhiYiXiangActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 求职意向 -->
 
 
     </application>
