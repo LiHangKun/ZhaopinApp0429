@@ -177,7 +177,36 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 求职意向 -->
-
+        <activity
+            android:name="com.lx.zhaopin.activity.QiuZhiQiWangActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 编辑求职期望 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.ZhiWuLeiXingActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 选择职位类型 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.HangYeLeiXingActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 选择行业 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.AddZhuanYeJiNengActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 添加和删除专业技能 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.YuLanJianLiActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 简历预览 -->
 
     </application>
 

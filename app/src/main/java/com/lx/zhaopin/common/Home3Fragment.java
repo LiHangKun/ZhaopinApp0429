@@ -14,19 +14,24 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.AboutMeActivity;
+import com.lx.zhaopin.activity.AddZhuanYeJiNengActivity;
 import com.lx.zhaopin.activity.ChangJianWenTiActivity;
 import com.lx.zhaopin.activity.FeedActivity;
+import com.lx.zhaopin.activity.HangYeLeiXingActivity;
 import com.lx.zhaopin.activity.MyGongZuoActivity;
 import com.lx.zhaopin.activity.MyGuanZhuActivity;
 import com.lx.zhaopin.activity.MyJianLiActivity;
 import com.lx.zhaopin.activity.MyJiaoYuActivity;
 import com.lx.zhaopin.activity.MyUserInfoActivity;
 import com.lx.zhaopin.activity.MyYinSiActivity;
+import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
 import com.lx.zhaopin.activity.QiuZhiYiXiangActivity;
 import com.lx.zhaopin.activity.SettingActivity;
 import com.lx.zhaopin.activity.XinPhoneActivity;
 import com.lx.zhaopin.activity.XiuGaiMiMaActivity;
 import com.lx.zhaopin.activity.YanSFActivity;
+import com.lx.zhaopin.activity.YuLanJianLiActivity;
+import com.lx.zhaopin.activity.ZhiWuLeiXingActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.utils.RxToast;
 import com.lx.zhaopin.utils.ToastFactory;
@@ -113,27 +118,27 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.llView0:
                 //个人资料
-                intent = new Intent(getActivity(), MyUserInfoActivity.class);
+                intent = new Intent(getActivity(), QiuZhiQiWangActivity.class);
                 startActivity(intent);
                 break;
             case R.id.llView1:
                 //已收藏
-                intent = new Intent(getActivity(), YanSFActivity.class);
+                intent = new Intent(getActivity(), ZhiWuLeiXingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.llView2:
                 //待面试
-                intent = new Intent(getActivity(), XinPhoneActivity.class);
+                intent = new Intent(getActivity(), HangYeLeiXingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.llView3:
                 //已录取
-                intent = new Intent(getActivity(), MyJianLiActivity.class);
+                intent = new Intent(getActivity(), AddZhuanYeJiNengActivity.class);
                 startActivity(intent);
                 break;
             case R.id.llView4:
                 //不合适
-                intent = new Intent(getActivity(), MyJiaoYuActivity.class);
+                intent = new Intent(getActivity(), YuLanJianLiActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView0:
