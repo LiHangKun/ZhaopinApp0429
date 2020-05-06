@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:background="@color/white"
     android:layout_height="match_parent">
-
-
 
     <ScrollView
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -16,31 +15,18 @@
             android:layout_height="match_parent">
 
 
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
-            <include layout="@layout/item_guanzhu_layout"/>
+            <include layout="@layout/item_mianshi_layout_all"/>
+            <include layout="@layout/item_mianshi_layout_all"/>
+            <include layout="@layout/item_mianshi_layout_all"/>
+            <include layout="@layout/item_mianshi_layout_all"/>
+            <include layout="@layout/item_mianshi_layout_all"/>
+            <include layout="@layout/item_mianshi_layout_all"/>
+            <include layout="@layout/item_mianshi_layout_all"/>
 
         </LinearLayout>
 
 
     </ScrollView>
-
-
 
     <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
@@ -94,7 +80,6 @@
 
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
-
 
 
 </LinearLayout>

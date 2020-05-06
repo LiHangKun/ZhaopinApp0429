@@ -207,6 +207,39 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 简历预览 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.QiuZhiFeedActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 求职反馈 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.MianShiListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 面试记录 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.YiLuQuActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 已录取 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.PingBiGangActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 屏蔽岗位 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.PingBiRenActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 屏蔽人才 -->
+
+
+
 
     </application>
 

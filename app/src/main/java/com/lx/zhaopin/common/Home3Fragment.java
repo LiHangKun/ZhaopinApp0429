@@ -16,25 +16,18 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.AboutMeActivity;
 import com.lx.zhaopin.activity.AddZhuanYeJiNengActivity;
 import com.lx.zhaopin.activity.ChangJianWenTiActivity;
-import com.lx.zhaopin.activity.FeedActivity;
 import com.lx.zhaopin.activity.HangYeLeiXingActivity;
-import com.lx.zhaopin.activity.MyGongZuoActivity;
-import com.lx.zhaopin.activity.MyGuanZhuActivity;
-import com.lx.zhaopin.activity.MyJianLiActivity;
-import com.lx.zhaopin.activity.MyJiaoYuActivity;
-import com.lx.zhaopin.activity.MyUserInfoActivity;
 import com.lx.zhaopin.activity.MyYinSiActivity;
+import com.lx.zhaopin.activity.PingBiGangActivity;
+import com.lx.zhaopin.activity.PingBiRenActivity;
+import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
 import com.lx.zhaopin.activity.QiuZhiYiXiangActivity;
 import com.lx.zhaopin.activity.SettingActivity;
-import com.lx.zhaopin.activity.XinPhoneActivity;
-import com.lx.zhaopin.activity.XiuGaiMiMaActivity;
-import com.lx.zhaopin.activity.YanSFActivity;
+import com.lx.zhaopin.activity.YiLuQuActivity;
 import com.lx.zhaopin.activity.YuLanJianLiActivity;
 import com.lx.zhaopin.activity.ZhiWuLeiXingActivity;
 import com.lx.zhaopin.base.BaseFragment;
-import com.lx.zhaopin.utils.RxToast;
-import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.CirclePercentView;
 
 public class Home3Fragment extends BaseFragment implements View.OnClickListener {
@@ -143,17 +136,17 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView0:
                 //我的资料进度
-                intent = new Intent(getActivity(), MyGongZuoActivity.class);
+                intent = new Intent(getActivity(), QiuZhiFeedActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView1:
                 //已屏蔽记录
-                intent = new Intent(getActivity(), XiuGaiMiMaActivity.class);
+                intent = new Intent(getActivity(), PingBiGangActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView2:
                 //我的关注
-                intent = new Intent(getActivity(), MyGuanZhuActivity.class);
+                intent = new Intent(getActivity(), PingBiRenActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView3:
