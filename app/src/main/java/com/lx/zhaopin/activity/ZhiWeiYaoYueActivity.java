@@ -5,11 +5,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.Utility;
+
+import java.util.ArrayList;
 
 public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickListener {
 
@@ -44,7 +51,8 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         });
         titleName.setText("发送职位邀约");
         titleName.setTextColor(getResources().getColor(R.color.white));
-
+        getNoLinkData();
+        initNoLinkOptionsPicker();
 
         relView1 = findViewById(R.id.relView1);
         relView2 = findViewById(R.id.relView2);
@@ -63,6 +71,76 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         okID.setOnClickListener(this);
 
     }
+
+
+    private OptionsPickerView pvNoLinkOptions;
+    private ArrayList<String> food = new ArrayList<>();
+    private ArrayList<String> clothes = new ArrayList<>();
+    private ArrayList<String> computer = new ArrayList<>();
+
+    private void initNoLinkOptionsPicker() {// 不联动的多级选项
+        pvNoLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+
+                String str = "food:" + food.get(options1)
+                        + "\nclothes:" + clothes.get(options2)
+                        + "\ncomputer:" + computer.get(options3);
+
+                Toast.makeText(mContext, str, Toast.LENGTH_SHORT).show();
+            }
+        })
+                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+                    @Override
+                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
+                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+                        Toast.makeText(mContext, str, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setItemVisibleCount(5)
+                // .setSelectOptions(0, 1, 1)
+                .build();
+        /*pvNoLinkOptions.setNPicker(food, clothes, computer);
+        pvNoLinkOptions.setSelectOptions(0, 1, 1);*/
+
+        pvNoLinkOptions.setNPicker(food, clothes);
+        pvNoLinkOptions.setSelectOptions(0, 1);
+
+
+    }
+
+
+    
+
+
+    private void getNoLinkData() {
+        food.add("09点");
+        food.add("10点");
+        food.add("11点");
+        food.add("14点");
+        food.add("15点");
+        food.add("16点");
+        food.add("16点");
+        food.add("17点");
+
+        clothes.add("30");
+        clothes.add("30");
+        clothes.add("30");
+        clothes.add("30");
+        clothes.add("30");
+        clothes.add("30");
+        clothes.add("30");
+
+        computer.add("张三");
+        computer.add("李四");
+        computer.add("王五");
+        computer.add("赵六");
+        computer.add("周七");
+        computer.add("哈哈");
+        computer.add("嘻嘻");
+    }
+
 
     @Override
     protected void initEvent() {
@@ -88,6 +166,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             case R.id.relView4:
                 //时间
                 ToastFactory.getToast(mContext, "时间").show();
+                pvNoLinkOptions.show();
                 break;
             case R.id.okID:
                 //发送邀约
