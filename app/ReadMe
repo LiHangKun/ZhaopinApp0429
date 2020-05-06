@@ -36,7 +36,7 @@ SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5
 8.已录取  YiLuQuActivity     YiLuQuAdapter     item_yiluqu_layout_all  里面单独的列表   item_yiluqu_layout
 9.屏蔽岗位 PingBiGangActivity   PingBiGangAdapter    item_pingbi_layout
 10.屏蔽人才 PingBiRenActivity   PingBiRenAdapter     item_pingbi_ren_layout
-
+11.我的收藏岗位 MyShouCangGangActivity    MyShouCangGangAdapter
 
 
 

@@ -17,6 +17,7 @@ import com.lx.zhaopin.activity.AboutMeActivity;
 import com.lx.zhaopin.activity.AddZhuanYeJiNengActivity;
 import com.lx.zhaopin.activity.ChangJianWenTiActivity;
 import com.lx.zhaopin.activity.HangYeLeiXingActivity;
+import com.lx.zhaopin.activity.MyShouCangGangActivity;
 import com.lx.zhaopin.activity.MyYinSiActivity;
 import com.lx.zhaopin.activity.PingBiGangActivity;
 import com.lx.zhaopin.activity.PingBiRenActivity;
@@ -151,7 +152,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView3:
                 //求职意向
-                intent = new Intent(getActivity(), QiuZhiYiXiangActivity.class);
+                intent = new Intent(getActivity(), MyShouCangGangActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView4:
