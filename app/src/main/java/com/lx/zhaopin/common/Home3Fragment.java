@@ -25,6 +25,7 @@ import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
 import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
 import com.lx.zhaopin.activity.YuLanJianLiActivity;
+import com.lx.zhaopin.activity.ZhiWeiYaoYueActivity;
 import com.lx.zhaopin.activity.ZhiWuLeiXingActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.view.CirclePercentView;
@@ -165,7 +166,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView6:
                 //切换身份
-                intent = new Intent(getActivity(), AboutMeActivity.class);
+                intent = new Intent(getActivity(), ZhiWeiYaoYueActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView7:

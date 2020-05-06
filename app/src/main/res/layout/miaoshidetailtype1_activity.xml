@@ -338,19 +338,21 @@
 
     <!--求职者已达到的界面-->
     <LinearLayout
+        android:id="@+id/qiuZhiView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginBottom="@dimen/dp_30"
         android:orientation="horizontal"
         android:weightSum="3.1">
 
 
         <TextView
+            android:id="@+id/quxiaoTV"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_45"
-            android:layout_marginLeft="@dimen/dp_38"
-            android:layout_marginTop="@dimen/dp_50"
-            android:layout_marginRight="@dimen/dp_38"
-            android:layout_marginBottom="@dimen/dp_30"
             android:layout_weight="1"
             android:background="@drawable/edittext_shape"
             android:gravity="center"
@@ -364,12 +366,8 @@
 
 
         <TextView
-            android:id="@+id/okID"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_45"
-            android:layout_marginLeft="@dimen/dp_38"
-            android:layout_marginTop="@dimen/dp_100"
-            android:layout_marginRight="@dimen/dp_38"
             android:layout_weight="2"
             android:background="@drawable/button_shape"
             android:gravity="center"

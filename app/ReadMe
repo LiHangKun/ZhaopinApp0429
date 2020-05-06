@@ -12,6 +12,40 @@ http://www.jcodecraeer.com/a/opensource/2015/1104/3653.html
     android:background="#F7F9FA" />
 
 
+对话框页面的代码  dialog_quxiao_mianshi
+
+//取消面试的弹框
+View view = getLayoutInflater().inflate(R.layout.dialog_quxiao_mianshi, null);
+final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view, R.style.DialogTheme2);
+final EditText edit1 = view.findViewById(R.id.edit1);
+TextView okID = view.findViewById(R.id.okID);
+mMyDialog.setCancelable(true);
+mMyDialog.show();
+
+view.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        mMyDialog.dismiss();
+    }
+});
+
+view.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+            ToastFactory.getToast(mContext, "取消原因不能为空").show();
+            return;
+        } else {
+            ToastFactory.getToast(mContext, edit1.getText().toString().trim()).show();
+            mMyDialog.dismiss();
+        }
+    }
+});
+
+
+
+
+
 背景色  #F7F9FA
 线颜色  #e7e7e7
 
