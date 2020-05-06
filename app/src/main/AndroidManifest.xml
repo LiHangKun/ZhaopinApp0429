@@ -243,6 +243,18 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 我的收藏岗位 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.SelectUserTypeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 切换身份 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.MianShiDetailType1Activity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 招聘者面试详情 -->
 
 
 

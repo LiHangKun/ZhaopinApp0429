@@ -15,17 +15,15 @@ import android.widget.TextView;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.AboutMeActivity;
 import com.lx.zhaopin.activity.AddZhuanYeJiNengActivity;
-import com.lx.zhaopin.activity.ChangJianWenTiActivity;
 import com.lx.zhaopin.activity.HangYeLeiXingActivity;
+import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.lx.zhaopin.activity.MyShouCangGangActivity;
-import com.lx.zhaopin.activity.MyYinSiActivity;
 import com.lx.zhaopin.activity.PingBiGangActivity;
 import com.lx.zhaopin.activity.PingBiRenActivity;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
-import com.lx.zhaopin.activity.QiuZhiYiXiangActivity;
+import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
-import com.lx.zhaopin.activity.YiLuQuActivity;
 import com.lx.zhaopin.activity.YuLanJianLiActivity;
 import com.lx.zhaopin.activity.ZhiWuLeiXingActivity;
 import com.lx.zhaopin.base.BaseFragment;
@@ -157,12 +155,12 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView4:
                 //在线客服
-                intent = new Intent(getActivity(), ChangJianWenTiActivity.class);
+                intent = new Intent(getActivity(), SelectUserTypeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView5:
                 //隐私设置
-                intent = new Intent(getActivity(), MyYinSiActivity.class);
+                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
                 startActivity(intent);
                 break;
             case R.id.relView6:
