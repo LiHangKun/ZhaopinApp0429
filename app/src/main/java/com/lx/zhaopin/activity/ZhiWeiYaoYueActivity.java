@@ -1,7 +1,10 @@
 package com.lx.zhaopin.activity;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,7 +19,10 @@ import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.Utility;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickListener {
 
@@ -111,9 +117,6 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    
-
-
     private void getNoLinkData() {
         food.add("09点");
         food.add("10点");
@@ -152,6 +155,36 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    /**
+     * 日期选择
+     *
+     * @param activity
+     * @param themeResId
+     * @param calendar
+     */
+    public static void showDatePickerDialog(final Activity activity, int themeResId, Calendar calendar) {
+        // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
+        new DatePickerDialog(activity, themeResId, new DatePickerDialog.OnDateSetListener() {
+            // 绑定监听器(How the parent is notified that the date is set.)
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                // 此处得到选择的时间，可以进行你想要的操作
+                ToastFactory.getToast(activity, "您选择了：" + year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日").show();
+                //TODO   发送EventBus 展示时间段
+                //pvNoLinkOptions.show();
+                //tv.setText("您选择了：" + year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日");
+            }
+        }
+                // 设置初始日期
+                , calendar.get(Calendar.YEAR)
+                , calendar.get(Calendar.MONTH)
+                , calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+
+    DateFormat format = DateFormat.getDateTimeInstance();
+    Calendar calendar = Calendar.getInstance(Locale.CHINA);
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -166,6 +199,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             case R.id.relView4:
                 //时间
                 ToastFactory.getToast(mContext, "时间").show();
+                showDatePickerDialog(this, 4, calendar);
                 pvNoLinkOptions.show();
                 break;
             case R.id.okID:
