@@ -374,7 +374,7 @@ public class StringUtil {
         return a.substring(0, 3) + "****" + a.substring(7);
     }
 
-    /*校验手机号码*/
+    /*校验手机号码,是否是手机号*/
     public static boolean isMobileNO(String mobiles) {
         Pattern p = Pattern.compile("^[1][3,4,5,6,7,8,9][0-9]{9}$"); // 验证手机号
 //		Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[^4,\\D])|(17[0,8]))\\d{8}$");

@@ -42,8 +42,37 @@ view.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
     }
 });
 
+----------判断注册----------------
+if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+    EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+}
+
+------注销------------------------
+EventBus.getDefault().unregister(this);
+
+--------接收事件的处理------------
+@Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+public void getEventmessage(MessageEvent event) {
+    int messageType = event.getMessageType();
+    switch (messageType){
+        case 1:
+            //更新个人中心
+            getuserInfo(uid);
+            break;
+    }
+}
+
+------------发送消息-----------------
+EventBus.getDefault().post(new MessageEvent(1, null, null, null, null, null, null));
 
 
+
+
+//TODO  消息类型
+//TODO  1  发送邀约的时候  选择时间
+
+
+//TODO  消息类型
 
 
 背景色  #F7F9FA
@@ -77,10 +106,10 @@ SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5
 9.屏蔽岗位 PingBiGangActivity   PingBiGangAdapter    item_pingbi_layout
 10.屏蔽人才 PingBiRenActivity   PingBiRenAdapter     item_pingbi_ren_layout
 11.我的收藏岗位 MyShouCangGangActivity    MyShouCangGangAdapter
-
-
-
-
+12.职位邀约  ZhiWeiYaoYueActivity   ZhiWeiYaoYueInAdapter    item_select_gangwei_layout
+13.我的收藏人才  MyShouCangRenActivity   MyShouCangRenAdapter
+14.待面试 DaiMianShiListActivity    DaiMianShiListAdapter
+15.申请记录 ShenQingListActivity  ShenQingListAdapter
 
 
 

@@ -15,15 +15,18 @@ import android.widget.TextView;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.AboutMeActivity;
 import com.lx.zhaopin.activity.AddZhuanYeJiNengActivity;
+import com.lx.zhaopin.activity.DaiMianShiListActivity;
 import com.lx.zhaopin.activity.HangYeLeiXingActivity;
 import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.lx.zhaopin.activity.MyShouCangGangActivity;
+import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.PingBiGangActivity;
 import com.lx.zhaopin.activity.PingBiRenActivity;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
 import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
+import com.lx.zhaopin.activity.ShenQingListActivity;
 import com.lx.zhaopin.activity.YuLanJianLiActivity;
 import com.lx.zhaopin.activity.ZhiWeiYaoYueActivity;
 import com.lx.zhaopin.activity.ZhiWuLeiXingActivity;
@@ -111,17 +114,17 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.llView0:
                 //个人资料
-                intent = new Intent(getActivity(), QiuZhiQiWangActivity.class);
+                intent = new Intent(getActivity(), MyShouCangRenActivity.class);
                 startActivity(intent);
                 break;
             case R.id.llView1:
                 //已收藏
-                intent = new Intent(getActivity(), ZhiWuLeiXingActivity.class);
+                intent = new Intent(getActivity(), DaiMianShiListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.llView2:
                 //待面试
-                intent = new Intent(getActivity(), HangYeLeiXingActivity.class);
+                intent = new Intent(getActivity(), ShenQingListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.llView3:
