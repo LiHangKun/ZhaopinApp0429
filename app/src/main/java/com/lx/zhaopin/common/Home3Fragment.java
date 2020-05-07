@@ -23,6 +23,7 @@ import com.lx.zhaopin.activity.MyShouCangGangActivity;
 import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.PingBiGangActivity;
 import com.lx.zhaopin.activity.PingBiRenActivity;
+import com.lx.zhaopin.activity.QiYeInfoActivity;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
@@ -146,7 +147,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView1:
                 //已屏蔽记录
-                intent = new Intent(getActivity(), PingBiGangActivity.class);
+                intent = new Intent(getActivity(), QiYeInfoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView2:

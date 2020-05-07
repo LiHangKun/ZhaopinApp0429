@@ -10,16 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.lx.zhaopin.R;
+
 public class ShouYe2Fragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        TextView textView = new TextView(container.getContext());
-        textView.setTextSize(50);
-        textView.setText("最新3333333333333");
-        textView.setGravity(Gravity.CENTER);
-        return textView;
+
+        View view = View.inflate(container.getContext(), R.layout.shouye1fragment_layout, null);
+
+        return view;
 
     }
 }

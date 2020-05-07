@@ -4,23 +4,32 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 
-public class ShouYe1Fragment extends Fragment {
+public class QiYe1Fragment extends Fragment {
+
+    private static final String TAG = "QiYe1Fragment";
+
+    public static Fragment newInstance(String id) {
+        QiYe1Fragment fragment = new QiYe1Fragment();
+        String shopJiaID = id;
+        Log.i(TAG, "newInstance: 企业ID" + shopJiaID);
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = View.inflate(container.getContext(), R.layout.qiye1fragment_layout, null);
 
-        View view = View.inflate(container.getContext(), R.layout.shouye1fragment_layout, null);
 
         return view;
 
     }
+
 }

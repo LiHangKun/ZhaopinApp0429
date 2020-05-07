@@ -18,7 +18,7 @@ public class Message1Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         TextView textView = new TextView(container.getContext());
-        textView.setText("招聘沟通----1");
+        textView.setText("此界面是融云返回的聊天列表界面");
         textView.setTextSize(50);
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(container.getContext().getResources().getColor(R.color.mainColor));
