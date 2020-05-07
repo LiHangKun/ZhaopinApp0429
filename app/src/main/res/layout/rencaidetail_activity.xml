@@ -1,16 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:src="@mipmap/fanhui" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/splashbj" />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:src="@drawable/splashbj" />
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:src="@drawable/splashbj" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_weight="1"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -399,9 +450,9 @@
                  android:layout_marginTop="@dimen/dp_10"
                  android:layout_height="wrap_content"/>-->
 
-            <include layout="@layout/item_yixiang_layout" />
+            <include layout="@layout/item_rencai1_layout" />
 
-            <include layout="@layout/item_yixiang_layout" />
+            <include layout="@layout/item_rencai1_layout" />
 
 
             <TextView
@@ -499,6 +550,50 @@
 
 
     </ScrollView>
+
+
+
+    <LinearLayout
+        android:id="@+id/qiuZhiView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:orientation="horizontal"
+        android:weightSum="3.1">
+
+
+        <TextView
+            android:id="@+id/quxiaoTV"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_45"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_shape"
+            android:gravity="center"
+            android:text="立即沟通"
+            android:textColor="#1678FF" />
+
+        <View
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_45"
+            android:layout_weight="2"
+            android:background="@drawable/button_shape"
+            android:gravity="center"
+            android:text="职位邀约"
+            android:textColor="#fff" />
+
+
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

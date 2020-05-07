@@ -25,6 +25,7 @@ import com.lx.zhaopin.activity.PingBiGangActivity;
 import com.lx.zhaopin.activity.PingBiRenActivity;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
+import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
 import com.lx.zhaopin.activity.ShenQingListActivity;
@@ -135,7 +136,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.llView4:
                 //不合适
-                intent = new Intent(getActivity(), MyJianLiActivity.class);
+                intent = new Intent(getActivity(), RenCaiDetailActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView0:
