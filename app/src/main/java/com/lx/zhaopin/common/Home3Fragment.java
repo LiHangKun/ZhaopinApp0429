@@ -18,6 +18,7 @@ import com.lx.zhaopin.activity.AddZhuanYeJiNengActivity;
 import com.lx.zhaopin.activity.DaiMianShiListActivity;
 import com.lx.zhaopin.activity.HangYeLeiXingActivity;
 import com.lx.zhaopin.activity.MianShiDetailType1Activity;
+import com.lx.zhaopin.activity.MyJianLiActivity;
 import com.lx.zhaopin.activity.MyShouCangGangActivity;
 import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.PingBiGangActivity;
@@ -129,12 +130,12 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.llView3:
                 //已录取
-                intent = new Intent(getActivity(), AddZhuanYeJiNengActivity.class);
+                intent = new Intent(getActivity(), QiuZhiQiWangActivity.class);
                 startActivity(intent);
                 break;
             case R.id.llView4:
                 //不合适
-                intent = new Intent(getActivity(), YuLanJianLiActivity.class);
+                intent = new Intent(getActivity(), MyJianLiActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView0:

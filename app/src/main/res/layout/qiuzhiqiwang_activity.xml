@@ -13,6 +13,7 @@
 
 
     <LinearLayout
+        android:id="@+id/llView1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_10"
@@ -43,6 +44,7 @@
 
 
             <TextView
+                android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_5"
@@ -70,6 +72,7 @@
         android:background="#e7e7e7" />
 
     <LinearLayout
+        android:id="@+id/llView2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_10"
@@ -100,6 +103,7 @@
 
 
             <TextView
+                android:id="@+id/tv2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_5"
@@ -127,6 +131,7 @@
         android:background="#F7F9FA" />
 
     <LinearLayout
+        android:id="@+id/llView3"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_10"
@@ -157,6 +162,7 @@
 
 
             <TextView
+                android:id="@+id/tv3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_5"
@@ -184,6 +190,7 @@
         android:background="#F7F9FA" />
 
     <LinearLayout
+        android:id="@+id/llView4"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_10"
@@ -214,6 +221,7 @@
 
 
             <TextView
+                android:id="@+id/tv4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_5"
