@@ -353,6 +353,24 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 搜索结果 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.SelectCityPro1ListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 选择城市省 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.SelectCityCity2ListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 选择城市市 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.SelectHangYeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 选择行业 -->
 
 
     </application>

@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,10 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.SearchActivity;
+import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.home1.ShouYe1Fragment;
 import com.lx.zhaopin.home1.ShouYe2Fragment;
-import com.lx.zhaopin.home2.Message1Fragment;
-import com.lx.zhaopin.home2.Message2Fragment;
 
 import java.util.ArrayList;
 
@@ -34,6 +32,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private ArrayList<Fragment> fragments;
     private MyPagerAdapter adapter;
     private LinearLayout llSearchView;
+    private TextView tvCity;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -63,6 +62,11 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         llSearchView.setOnClickListener(this);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
+
+
+        LinearLayout addView = view.findViewById(R.id.addView);
+        tvCity = view.findViewById(R.id.tvCity);
+        addView.setOnClickListener(this);
 
         setListeners();
 
@@ -137,6 +141,10 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.llSearchView:
                 //搜索
                 startActivity(new Intent(getActivity(), SearchActivity.class));
+                break;
+            case R.id.addView:
+                //选择城市
+                startActivity(new Intent(getActivity(), SelectCityPro1ListActivity.class));
                 break;
         }
     }

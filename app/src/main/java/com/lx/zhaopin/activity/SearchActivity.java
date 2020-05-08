@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hss01248.dialog.StyledDialog;
-import com.hss01248.dialog.interfaces.MyDialogListener;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.common.AppSP;
@@ -80,13 +78,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             radioButton.setText(str);
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(13);
-            radioButton.setPadding(ViewUtil.dp2px(SearchActivity.this, 14),
-                    ViewUtil.dp2px(SearchActivity.this, 8)
-                    , ViewUtil.dp2px(SearchActivity.this, 14),
-                    ViewUtil.dp2px(SearchActivity.this, 8));
+            radioButton.setPadding(ViewUtil.dp2px(SearchActivity.this, 18),
+                    ViewUtil.dp2px(SearchActivity.this, 6)
+                    , ViewUtil.dp2px(SearchActivity.this, 18),
+                    ViewUtil.dp2px(SearchActivity.this, 6));
             radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
             //radioButton.setBackgroundResource(R.drawable.search_selector);
-            radioButton.setBackgroundResource(R.drawable.button_shape666);
+            radioButton.setBackgroundResource(R.drawable.button_shape03);
             radioButton.setFocusable(true);
             radioButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,8 +94,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
                     //点击流布局上的文字直接搜索
                     intent = new Intent(SearchActivity.this, SearchSuccessActivity.class);
-                    intent.putExtra("keyWord", str);
-                    intent.putExtra("cid", "");
+                    intent.putExtra("KeyWord", str);
                     startActivityForResult(intent, 100);
                     //隐藏软键盘
                     hideInputMethod();
@@ -110,28 +107,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         delImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                StyledDialog.init(mContext);
-                StyledDialog.buildIosAlert("", "\r是否清除历史记录?", new MyDialogListener() {
-                    @Override
-                    public void onFirst() {
-
-                    }
-
-                    @Override
-                    public void onSecond() {
-                        SharedPreferencesUtil.saveData(SearchActivity.this, AppSP.SEARCH, "");
-                        flowData = new ArrayList<>();
-                        flowLiner1.removeAllViews();
-
-
-                    }
-                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
-
-
+                SharedPreferencesUtil.saveData(SearchActivity.this, AppSP.SEARCH, "");
+                flowData = new ArrayList<>();
+                flowLiner1.removeAllViews();
             }
         });
-
     }
 
 
@@ -182,7 +162,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     }
                     SharedPreferencesUtil.saveData(SearchActivity.this, AppSP.SEARCH, oldSearchStr);
                     intent = new Intent(mContext, SearchSuccessActivity.class);
-                    intent.putExtra("keyWord", clearEditText.getText().toString().trim());
+                    intent.putExtra("KeyWord", clearEditText.getText().toString().trim());
                     intent.putExtra("cid", "");
                     startActivityForResult(intent, 100);
 
@@ -207,7 +187,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 }
                 SharedPreferencesUtil.saveData(SearchActivity.this, AppSP.SEARCH, oldSearchStr);
                 intent = new Intent(SearchActivity.this, SearchSuccessActivity.class);
-                intent.putExtra("keyWord", edStr);
+                intent.putExtra("KeyWord", edStr);
                 intent.putExtra("cid", "");
                 startActivityForResult(intent, 100);
             }
