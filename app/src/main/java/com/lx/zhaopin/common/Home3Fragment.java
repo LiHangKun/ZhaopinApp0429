@@ -20,6 +20,7 @@ import com.lx.zhaopin.activity.GangWeiDetailActivity;
 import com.lx.zhaopin.activity.HangYeLeiXingActivity;
 import com.lx.zhaopin.activity.JinDuDetailActivity;
 import com.lx.zhaopin.activity.JuBaoActivity;
+import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
 import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.lx.zhaopin.activity.MyJianLiActivity;
 import com.lx.zhaopin.activity.MyShouCangGangActivity;
@@ -170,7 +171,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView5:
                 //隐私设置
-                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
+                intent = new Intent(getActivity(), Login1PhoneCodeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView6:
