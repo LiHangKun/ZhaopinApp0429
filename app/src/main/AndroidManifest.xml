@@ -341,6 +341,18 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 找回密码 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.SearchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 搜索 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.SearchSuccessActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 搜索结果 -->
 
 
     </application>

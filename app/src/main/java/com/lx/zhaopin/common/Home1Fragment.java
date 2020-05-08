@@ -1,5 +1,6 @@
 package com.lx.zhaopin.common;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,9 +13,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.SearchActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.home1.ShouYe1Fragment;
 import com.lx.zhaopin.home1.ShouYe2Fragment;
@@ -30,6 +33,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private TextView tv2;
     private ArrayList<Fragment> fragments;
     private MyPagerAdapter adapter;
+    private LinearLayout llSearchView;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -55,7 +59,8 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         viewPager = view.findViewById(R.id.viewPager);
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
-
+        llSearchView = view.findViewById(R.id.llSearchView);
+        llSearchView.setOnClickListener(this);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
 
@@ -128,6 +133,10 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.tv2:
                 //最新
                 viewPager.setCurrentItem(1);
+                break;
+            case R.id.llSearchView:
+                //搜索
+                startActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
         }
     }
