@@ -84,7 +84,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".common.MainActivity">
+        <activity
+            android:name=".common.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -291,7 +293,30 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 企业信息 -->
-
+        <activity
+            android:name="com.lx.zhaopin.activity.JinDuDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 求职反馈的进度详情 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.JuBaoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 举报 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.JuBaoSuccessActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 举报结果 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.GangWeiDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 岗位详情 -->
 
 
     </application>

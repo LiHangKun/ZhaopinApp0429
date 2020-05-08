@@ -16,7 +16,10 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.AboutMeActivity;
 import com.lx.zhaopin.activity.AddZhuanYeJiNengActivity;
 import com.lx.zhaopin.activity.DaiMianShiListActivity;
+import com.lx.zhaopin.activity.GangWeiDetailActivity;
 import com.lx.zhaopin.activity.HangYeLeiXingActivity;
+import com.lx.zhaopin.activity.JinDuDetailActivity;
+import com.lx.zhaopin.activity.JuBaoActivity;
 import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.lx.zhaopin.activity.MyJianLiActivity;
 import com.lx.zhaopin.activity.MyShouCangGangActivity;
@@ -152,17 +155,17 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView2:
                 //我的关注
-                intent = new Intent(getActivity(), PingBiRenActivity.class);
+                intent = new Intent(getActivity(), JinDuDetailActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView3:
                 //求职意向
-                intent = new Intent(getActivity(), MyShouCangGangActivity.class);
+                intent = new Intent(getActivity(), JuBaoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView4:
                 //在线客服
-                intent = new Intent(getActivity(), SelectUserTypeActivity.class);
+                intent = new Intent(getActivity(), GangWeiDetailActivity.class);
                 startActivity(intent);
                 break;
             case R.id.relView5:

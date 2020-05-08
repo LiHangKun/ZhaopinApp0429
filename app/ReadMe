@@ -115,7 +115,7 @@ SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5
 18.首页数据 ShouYe1Fragment    ShouYe1FragmentAdapter
 19.求职反馈 Message2Fragment   Message2FragmentAdapter
 19.求职反馈 Message2Fragment   Message3FragmentAdapter   item_systemmessage_layout
-
+20.求职反馈的进度详情 JinDuDetailActivity     JinDuDetailAdapter
 
 
 
