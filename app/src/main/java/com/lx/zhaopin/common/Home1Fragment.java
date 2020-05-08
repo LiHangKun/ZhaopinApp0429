@@ -21,6 +21,7 @@ import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.home1.ShouYe1Fragment;
 import com.lx.zhaopin.home1.ShouYe2Fragment;
+import com.lx.zhaopin.utils.SPTool;
 
 import java.util.ArrayList;
 
@@ -67,6 +68,8 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         LinearLayout addView = view.findViewById(R.id.addView);
         tvCity = view.findViewById(R.id.tvCity);
         addView.setOnClickListener(this);
+
+        tvCity.setText(SPTool.getSessionValue(AppSP.sCity));
 
         setListeners();
 

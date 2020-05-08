@@ -29,7 +29,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: "com.lx.zhaopin",
-                JPUSH_APPKEY : "111", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_APPKEY : "705ad17c15949ebcb905cfec", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 

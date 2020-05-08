@@ -31,6 +31,29 @@ public class GaoDeUtils {
     public final static String KEY_URL = "URL";
     public final static String URL_H5LOCATION = "file:///android_asset/location.html";
 
+    /*
+    定位类型: 4
+    经    度    : 113.733508
+    纬    度    : 34.749761
+    精    度    : 41.0米
+    提供者    : lbs
+    速    度    : 0.0米/秒
+    角    度    : 0.0
+    星    数    : 0
+    国    家    : 中国
+    省            : 河南省
+    市            : 郑州市
+    城市编码 : 0371
+    区            : 金水区
+    区域 码   : 410105
+    地    址    : 河南省郑州市金水区通泰路27号靠近居然之家(商都店)
+    兴趣点    : 居然之家(商都店)
+    定位时间: 2020-05-08 16:00:56
+    回调时间: 2020-05-08 16:02:37
+    *
+    */
+
+
     /**
      * 根据定位结果返回定位信息的字符串
      *
