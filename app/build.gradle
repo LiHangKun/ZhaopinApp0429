@@ -127,6 +127,7 @@ dependencies {
     implementation project(':FlycoTabLayout_Lib')
     implementation project(':roundimageview')
     implementation project(':permissiongen')
+    implementation project(':permission-annotation')
     //定义的二级联动
     implementation project(':pickerview')
     implementation project(':wheelview')
