@@ -170,12 +170,34 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="@dimen/dp_15"
-            android:layout_height="@dimen/dp_15"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/jiantouyou" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:gravity="center"
+                android:text="0.00"
+                android:textColor="#333"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="normal" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_15"
+                android:layout_height="@dimen/dp_15"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/jiantouyou" />
+
+
+        </LinearLayout>
 
 
     </RelativeLayout>
@@ -225,15 +247,104 @@
 
     <View
         android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_3"
+        android:background="#e7e7e7" />
+
+
+    <RelativeLayout
+        android:id="@+id/relViewCui1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:gravity="center"
+                android:text="用户协议"
+                android:textColor="#333"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="normal" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/jiantouyou" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_3"
+        android:background="#e7e7e7" />
+
+
+    <RelativeLayout
+        android:id="@+id/relViewCui2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:gravity="center"
+                android:text="隐私政策"
+                android:textColor="#333"
+                android:textSize="@dimen/sp_14"
+                android:textStyle="normal" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dp_15"
+            android:layout_height="@dimen/dp_15"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/jiantouyou" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
         android:background="#F7F9FA" />
 
 
+
+
     <TextView
+        android:id="@+id/okID"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_38"
-        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_100"
         android:layout_marginRight="@dimen/dp_38"
         android:background="@drawable/button_shape"
         android:gravity="center"
