@@ -52,6 +52,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initSystemBar2(this);
+        setTheme(R.style.AppWelcome);
         //setContentView(R.layout.splash_activity);
         //Utility2.setActionBar(this);
         ActivityManager.addActivity(this);
@@ -161,7 +162,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     try {
-                        sleep(500);//使程序休眠五秒
+                        sleep(2000);//使程序休眠五秒
                         if (!isLogin) {
                             intent = new Intent(SplashActivity.this, MainActivity.class);//启动MainActivity
                             startActivity(intent);
@@ -188,7 +189,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();//关闭当前活动
                 }
-            }, 500);
+            }, 2000);
 
 
         }

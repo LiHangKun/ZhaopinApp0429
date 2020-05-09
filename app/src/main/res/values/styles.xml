@@ -17,6 +17,16 @@
         <item name="android:windowAnimationStyle">@style/Animation_Activity</item>
     </style>
 
+    <!--冷启动-->
+    <style name="AppWelcome" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/yindao1</item>
+
+    </style>
+
+     <style name="Appwelcome" parent="android:Theme.Translucent.NoTitleBar.Fullscreen" />
+    <!--冷启动-->
+
+
     <style name="Animation_Activity">
         <item name="android:activityOpenEnterAnimation">@anim/translate_right_to_center</item>
         <item name="android:activityOpenExitAnimation">@anim/translate_center_to_left</item>
@@ -42,13 +52,6 @@
         <item name="android:windowBackground">@android:color/transparent</item><!--dialog背景颜色 无边框-->
     </style>
 
-
-    <!--冷启动-->
-    <style name="AppWelcome" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/yindao3</item>
-    </style>
-    <style name="Appwelcome" parent="android:Theme.Translucent.NoTitleBar.Fullscreen"/>
-    <!--冷启动-->
 
     <!-- 对话框样式 -->
     <style name="processDialog">
