@@ -33,15 +33,15 @@
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/splashbj" />
+                android:src="@drawable/gangwei_shoucang1" />
 
             <ImageView
                 android:id="@+id/image2"
                 android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
+                android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:src="@drawable/splashbj" />
+                android:src="@drawable/gangwei_fenxiang" />
 
             <ImageView
                 android:id="@+id/image3"
@@ -49,7 +49,7 @@
                 android:layout_height="@dimen/dp_20"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:src="@drawable/splashbj" />
+                android:src="@drawable/gangwei_jubao" />
 
 
         </LinearLayout>
@@ -295,7 +295,7 @@
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/hom1s" />
+                    android:src="@drawable/mianshi_biaoqian" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -331,7 +331,7 @@
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/hom1s" />
+                    android:src="@drawable/mianshi_didian" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -367,7 +367,7 @@
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/hom1s" />
+                    android:src="@drawable/mianshi_gangwei" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -403,7 +403,7 @@
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/hom1s" />
+                    android:src="@drawable/mianshi_shijian" />
 
                 <TextView
                     android:layout_width="wrap_content"

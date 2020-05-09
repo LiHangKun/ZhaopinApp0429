@@ -45,8 +45,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_toRightOf="@+id/tv1"
-                    android:src="@drawable/hom1s"
-                    android:visibility="gone" />
+                    android:src="@drawable/shouye_biaoqian2" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -54,8 +53,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_toRightOf="@+id/imageView1"
-                    android:src="@drawable/hom1s"
-                    android:visibility="gone" />
+                    android:src="@drawable/shenqing_yitingzhao" />
 
 
             </RelativeLayout>

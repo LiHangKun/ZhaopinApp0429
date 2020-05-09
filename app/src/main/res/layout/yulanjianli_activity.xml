@@ -244,7 +244,7 @@
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/hom1s" />
+                    android:src="@drawable/mianshi_biaoqian" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -280,7 +280,7 @@
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/hom1s" />
+                    android:src="@drawable/mianshi_didian" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -316,7 +316,7 @@
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/hom1s" />
+                    android:src="@drawable/gangwei_nianxian" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -352,7 +352,7 @@
                     android:layout_width="@dimen/dp_10"
                     android:layout_height="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/hom1s" />
+                    android:src="@drawable/mianshi_shijian" />
 
                 <TextView
                     android:layout_width="wrap_content"

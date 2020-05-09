@@ -48,7 +48,7 @@
                         android:id="@+id/image1"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_30"
-                        android:src="@drawable/hom1n" />
+                        android:src="@drawable/hom2s" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                         android:id="@+id/image2"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_30"
-                        android:src="@drawable/hom2n" />
+                        android:src="@drawable/xiaoxi_fankui1" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
                         android:id="@+id/image3"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_30"
-                        android:src="@drawable/hom3n" />
+                        android:src="@drawable/xiaoxi_xitxiaoxi1" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"

@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:src="@drawable/hom1s" />
+            android:src="@drawable/kai" />
 
 
     </RelativeLayout>
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:src="@drawable/hom1s" />
+            android:src="@drawable/guan" />
 
 
     </RelativeLayout>

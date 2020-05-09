@@ -79,9 +79,9 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
         tv2.setTextColor(getResources().getColor(R.color.txt_lv4));
         tv3.setTextColor(getResources().getColor(R.color.txt_lv4));
 
-        image1.setImageResource(R.drawable.hom1s);
-        image2.setImageResource(R.drawable.hom2n);
-        image3.setImageResource(R.drawable.hom3n);
+        image1.setImageResource(R.drawable.hom2s);
+        image2.setImageResource(R.drawable.xiaoxi_fankui1);
+        image3.setImageResource(R.drawable.xiaoxi_xitxiaoxi1);
 
 
         adapter = new MyPagerAdapter(getChildFragmentManager());
@@ -120,9 +120,9 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
                         tv2.setTextColor(getResources().getColor(R.color.txt_lv4));
                         tv3.setTextColor(getResources().getColor(R.color.txt_lv4));
 
-                        image1.setImageResource(R.drawable.hom1s);
-                        image2.setImageResource(R.drawable.hom2n);
-                        image3.setImageResource(R.drawable.hom3n);
+                        image1.setImageResource(R.drawable.hom2s);
+                        image2.setImageResource(R.drawable.xiaoxi_fankui1);
+                        image3.setImageResource(R.drawable.xiaoxi_xitxiaoxi1);
 
                         break;
                     case 1:
@@ -130,9 +130,9 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
                         tv1.setTextColor(getResources().getColor(R.color.txt_lv4));
                         tv3.setTextColor(getResources().getColor(R.color.txt_lv4));
 
-                        image1.setImageResource(R.drawable.hom1n);
-                        image2.setImageResource(R.drawable.hom2s);
-                        image3.setImageResource(R.drawable.hom3n);
+                        image1.setImageResource(R.drawable.hom2n);
+                        image2.setImageResource(R.drawable.xiaoxi_fankui2);
+                        image3.setImageResource(R.drawable.xiaoxi_xitxiaoxi1);
 
                         break;
                     case 2:
@@ -140,9 +140,9 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
                         tv1.setTextColor(getResources().getColor(R.color.txt_lv4));
                         tv2.setTextColor(getResources().getColor(R.color.txt_lv4));
 
-                        image1.setImageResource(R.drawable.hom1n);
-                        image2.setImageResource(R.drawable.hom2n);
-                        image3.setImageResource(R.drawable.hom3s);
+                        image1.setImageResource(R.drawable.hom2n);
+                        image2.setImageResource(R.drawable.xiaoxi_fankui1);
+                        image3.setImageResource(R.drawable.xiaoxi_xitxiaoxi2);
 
                         break;
 

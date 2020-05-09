@@ -16,8 +16,8 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
-            android:src="@drawable/splashbj" />
+            android:layout_height="@dimen/dp_120"
+            android:src="@drawable/qiehuan_qiuzhi" />
 
 
         <TextView
@@ -43,8 +43,8 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
-            android:src="@drawable/splashbj" />
+            android:layout_height="@dimen/dp_120"
+            android:src="@drawable/qiehuan_zhaopin" />
 
 
         <TextView

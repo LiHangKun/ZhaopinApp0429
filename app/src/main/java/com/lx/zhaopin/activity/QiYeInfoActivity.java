@@ -60,7 +60,7 @@ public class QiYeInfoActivity extends BaseActivity {
     private void init() {
         topTitle.setVisibility(View.INVISIBLE);
 
-        //qiYeID = getIntent().getStringExtra("qiYeID");
+        qiYeID = getIntent().getStringExtra("qiYeID");
 
         tablayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewPager);

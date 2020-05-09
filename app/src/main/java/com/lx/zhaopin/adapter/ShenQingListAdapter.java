@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
 public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapter.ViewHolder> {
 
 
-
     public ShenQingListAdapter() {
     }
 
@@ -58,6 +57,16 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
         TextView tv4;
         @BindView(R.id.tv5)
         TextView tv5;
+
+        @BindView(R.id.caoZuoViewTv1)
+        TextView caoZuoViewTv1;
+
+        @BindView(R.id.caoZuoViewTv2)
+        TextView caoZuoViewTv2;
+
+        @BindView(R.id.caoZuoView)
+        TextView caoZuoView;
+
         @BindView(R.id.flowLiner)
         FlowLiner flowLiner;
         @BindView(R.id.recyclerView)
@@ -68,6 +77,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
         RoundedImageView roundedImageView;
         @BindView(R.id.tv6)
         TextView tv6;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

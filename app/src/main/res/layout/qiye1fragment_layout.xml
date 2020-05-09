@@ -33,6 +33,14 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/splashbj" />
 
+            <!--此处是横向滑动的图片展示-->
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_150"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/splashbj" />
+                    android:src="@drawable/ditu_bg" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

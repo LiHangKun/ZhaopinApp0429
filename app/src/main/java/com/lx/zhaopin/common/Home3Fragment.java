@@ -20,6 +20,7 @@ import com.lx.zhaopin.activity.DaiMianShiListActivity;
 import com.lx.zhaopin.activity.GangWeiDetailActivity;
 import com.lx.zhaopin.activity.JuBaoActivity;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
+import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.lx.zhaopin.activity.MianShiListActivity;
 import com.lx.zhaopin.activity.MyGuanZhuGangActivity;
 import com.lx.zhaopin.activity.MyGuanZhuRenActivity;
@@ -249,7 +250,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                /* if (!TextUtils.isEmpty(phone)) {
                     callPhone();
                 }*/
-                intent = new Intent(getActivity(), Login1PhoneCodeActivity.class);
+                intent = new Intent(getActivity(), GangWeiDetailActivity.class);
                 startActivity(intent);
 
                 break;
