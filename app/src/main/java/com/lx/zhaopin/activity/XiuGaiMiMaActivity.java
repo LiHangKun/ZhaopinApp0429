@@ -85,7 +85,7 @@ public class XiuGaiMiMaActivity extends BaseActivity implements View.OnClickList
                     ToastFactory.getToast(mContext, "密码不能为空").show();
                     return;
                 } else if (!edit2.getText().toString().trim().matches(regex)) {
-                    ToastFactory.getToast(XiuGaiMiMaActivity.this, "密码必须包含数字加字母,请重试").show();
+                    ToastFactory.getToast(XiuGaiMiMaActivity.this, "密码必须8--16位包含数字加字母,请重试").show();
                     //edit2.setText("");
                     return;
                 } else {

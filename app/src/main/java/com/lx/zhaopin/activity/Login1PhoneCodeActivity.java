@@ -2,18 +2,46 @@ package com.lx.zhaopin.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.NoticeDetailActivity;
+import com.lx.zhaopin.common.SplashActivity;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.MyCountDownTimer;
+import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.ToastFactory;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import cn.jpush.android.api.JPushInterface;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText edit1;
     private EditText edit2;
+    private static final String TAG = "Login1PhoneCodeActivity";
+    private TextView faCode;
+    private Intent intent;
+    private ImageView imageDui;
+    private boolean duiHaoBoolean = true;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -23,16 +51,24 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
 
     private void init() {
         topTitle.setText("短信验证码登录");
-
         topTitle.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);
+
+
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+        String registrationID = JPushInterface.getRegistrationID(this);
+        SPTool.addSessionMap(AppSP.JupshID, registrationID);
+        Log.i(TAG, "onCreate:极光信息 " + registrationID);
+
 
         baseback.setImageResource(R.drawable.guanbi_hei);
 
         edit1 = findViewById(R.id.edit1);
         edit2 = findViewById(R.id.edit2);
-
-        TextView faCode = findViewById(R.id.faCode);
+        imageDui = findViewById(R.id.imageDui);
+        imageDui.setOnClickListener(this);
+        faCode = findViewById(R.id.faCode);
         TextView tv1 = findViewById(R.id.tv1);
         TextView tv2 = findViewById(R.id.tv2);
         TextView tv3 = findViewById(R.id.tv3);
@@ -62,11 +98,42 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
         switch (v.getId()) {
             case R.id.faCode:
                 //发送验证码
-                ToastFactory.getToast(mContext, "发送验证码").show();
+                if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+                    ToastFactory.getToast(mContext, "手机号不能为空").show();
+                    return;
+                } else if (!StringUtil.isMobileNOCui(edit1.getText().toString().trim())) {
+                    ToastFactory.getToast(mContext, "手机号码格式不正确").show();
+                    return;
+                } else {
+                    //发送验证码,判断手机号是否可以用
+                    checkPhoneMethod(edit1.getText().toString().trim());
+                }
+                break;
+            case R.id.imageDui:
+                duiHaoBoolean = !duiHaoBoolean;
+                if (duiHaoBoolean) {
+                    imageDui.setImageResource(R.drawable.zhifu_yixuan);
+                } else {
+                    imageDui.setImageResource(R.drawable.zhifu_weixuan);
+                }
                 break;
             case R.id.tv1:
                 //登录
-                ToastFactory.getToast(mContext, "登录").show();
+                if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+                    ToastFactory.getToast(mContext, "手机号不能为空").show();
+                    return;
+                } else if (!StringUtil.isMobileNOCui(edit1.getText().toString().trim())) {
+                    ToastFactory.getToast(mContext, "手机号码格式不正确").show();
+                    return;
+                } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
+                    ToastFactory.getToast(mContext, "验证码不能为空").show();
+                    return;
+                } else if (!duiHaoBoolean) {
+                    ToastFactory.getToast(mContext, "请先同意协议").show();
+                    return;
+                } else {
+                    login1TypeMethod(edit1.getText().toString().trim(), edit2.getText().toString().trim());
+                }
                 break;
             case R.id.tv2:
                 //密码登录
@@ -74,12 +141,80 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.tv3:
                 //用户协议
-                ToastFactory.getToast(mContext, "用户协议").show();
+                intent = new Intent(mContext, NoticeDetailActivity.class);
+                intent.putExtra("title", "用户协议");
+                intent.putExtra("titleUrl", NetClass.Web_XieYi1);
+                startActivity(intent);
                 break;
             case R.id.tv4:
                 //隐私政策
-                ToastFactory.getToast(mContext, "隐私政策").show();
+                intent = new Intent(mContext, NoticeDetailActivity.class);
+                intent.putExtra("title", "隐私政策");
+                intent.putExtra("titleUrl", NetClass.Web_XieYi2);
+                startActivity(intent);
                 break;
         }
+    }
+
+
+    private void login1TypeMethod(String trim, String trim1) {
+        Log.i(TAG, "login1TypeMethod: " + trim + "--------" + trim1);
+    }
+
+
+    //验证手机号是否已注册 接口中涉及到”是/否”的字段都是：1表示是，0表示否
+    private void checkPhoneMethod(final String mobile) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+        Log.i(TAG, "判断手机号码是否已注册: " + NetClass.BASE_URL + NetCuiMethod.checkPhone + "---" + new Gson().toJson(params));
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.checkPhone, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                if (resultBean.getExist().equals("1")) {
+                    ToastFactory.getToast(mContext, "手机号已存在").show();
+                    return;
+                } else {
+                    sendPhoneCode("1", mobile);
+                }
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+    }
+
+    //发送验证码
+    private void sendPhoneCode(String type, String mobile) {
+        Map<String, String> params = new HashMap<>();
+        params.put("type", type);
+        params.put("mobile", mobile);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.sendPhoneCode, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                MyCountDownTimer timer = new MyCountDownTimer(mContext, faCode, 60 * 1000, 1000);
+                timer.start();
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 }

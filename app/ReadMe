@@ -1,5 +1,13 @@
 求职招聘0430
 
+String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
+
+if (!edit2.getText().toString().trim().matches(regex)) {
+    ToastFactory.getToast(XiuGaiMiMaActivity.this, "密码必须8--16位包含数字加字母,请重试").show();
+    //edit2.setText("");
+    return;
+}
+
 左右滑动  https://www.jianshu.com/p/edb798104dd2
 https://blog.csdn.net/a214024475/article/details/53188782
 http://www.jcodecraeer.com/a/opensource/2015/1104/3653.html

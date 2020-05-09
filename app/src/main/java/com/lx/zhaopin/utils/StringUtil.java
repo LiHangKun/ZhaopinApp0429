@@ -91,7 +91,7 @@ public class StringUtil {
      *
      * @param phone
      */
-    public static String replacePhone(String phone) {
+    public static String replacePhoneCui(String phone) {
         String a = phone.substring(0, 3);
         String b = phone.substring(7, 11);
         return a + "****" + b;
@@ -375,9 +375,9 @@ public class StringUtil {
     }
 
     /*校验手机号码,是否是手机号*/
-    public static boolean isMobileNO(String mobiles) {
+    public static boolean isMobileNOCui(String mobiles) {
         Pattern p = Pattern.compile("^[1][3,4,5,6,7,8,9][0-9]{9}$"); // 验证手机号
-//		Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[^4,\\D])|(17[0,8]))\\d{8}$");
+		//Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[^4,\\D])|(17[0,8]))\\d{8}$");
         Matcher m = p.matcher(mobiles);
         return m.matches();
     }

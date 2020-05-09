@@ -288,7 +288,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                         if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
                             ToastFactory.getToast(mContext, "电话号码不能为空").show();
                             return;
-                        } else if (!StringUtil.isMobileNO(edit1.getText().toString().trim())) {
+                        } else if (!StringUtil.isMobileNOCui(edit1.getText().toString().trim())) {
                             ToastFactory.getToast(mContext, "电话号码不正确").show();
                             return;
                         } else {

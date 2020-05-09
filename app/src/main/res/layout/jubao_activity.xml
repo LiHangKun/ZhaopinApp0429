@@ -25,22 +25,24 @@
 
 
             <TextView
+                android:id="@+id/tv1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_50"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="111111111111111111111"
+                android:text=""
                 android:textColor="#333"
                 android:textSize="@dimen/sp_26"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:lines="2"
-                android:text="111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+                android:text=""
                 android:textColor="#666"
                 android:textSize="@dimen/sp_14" />
 
@@ -80,6 +82,7 @@
 
 
     <EditText
+        android:id="@+id/edit1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
