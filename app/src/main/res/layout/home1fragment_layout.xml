@@ -21,9 +21,9 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/dp_25"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/splashbj" />
+                android:src="@drawable/shouye_dingwei2" />
 
             <TextView
                 android:id="@+id/tvCity"
@@ -38,10 +38,10 @@
                 android:textStyle="normal" />
 
             <ImageView
-                android:layout_width="@dimen/dp_25"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_5"
-                android:src="@drawable/splashbj" />
+                android:src="@drawable/shouye_xiala" />
 
 
         </LinearLayout>
@@ -73,7 +73,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/search1" />
+                        android:src="@drawable/shouye_shoucang" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_5"
-                android:src="@drawable/splashbj" />
+                android:src="@drawable/shouye_qiehuan" />
 
 
         </LinearLayout>

@@ -238,7 +238,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_30"
-                                android:src="@drawable/hom1s" />
+                                android:src="@drawable/wode_shoucang" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -288,7 +288,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_30"
-                                android:src="@drawable/hom1s" />
+                                android:src="@drawable/wode_mianshi" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -338,7 +338,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_30"
-                                android:src="@drawable/hom1s" />
+                                android:src="@drawable/wode_yiluqu" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -388,7 +388,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp_30"
-                                android:src="@drawable/hom1s" />
+                                android:src="@drawable/wode_buheshi" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -447,7 +447,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/hom1s" />
+                            android:src="@drawable/wode_yipingbi" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -474,7 +474,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -493,7 +493,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/hom1s" />
+                            android:src="@drawable/wode_guanzhu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -520,7 +520,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -539,7 +539,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/hom1s" />
+                            android:src="@drawable/wode_qiuzhiyixiang" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -566,7 +566,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -585,7 +585,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/hom1s" />
+                            android:src="@drawable/wode_zaixiankefu" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -612,7 +612,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -631,7 +631,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/hom1s" />
+                            android:src="@drawable/wode_yinsishezhi" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -658,7 +658,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -677,7 +677,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/hom1s" />
+                            android:src="@drawable/wode_qiehuanshenfen" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -725,7 +725,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -744,7 +744,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/hom1s" />
+                            android:src="@drawable/wode_shezhi" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -771,7 +771,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_1"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 

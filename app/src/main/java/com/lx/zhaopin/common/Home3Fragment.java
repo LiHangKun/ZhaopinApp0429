@@ -250,7 +250,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                /* if (!TextUtils.isEmpty(phone)) {
                     callPhone();
                 }*/
-                intent = new Intent(getActivity(), GangWeiDetailActivity.class);
+                intent = new Intent(getActivity(), SelectHangYeActivity.class);
                 startActivity(intent);
 
                 break;

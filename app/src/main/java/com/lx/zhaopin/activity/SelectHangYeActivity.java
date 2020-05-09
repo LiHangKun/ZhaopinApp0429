@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 
+//首页的选择行业
 public class SelectHangYeActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
