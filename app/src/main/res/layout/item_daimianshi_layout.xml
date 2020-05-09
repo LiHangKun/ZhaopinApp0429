@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_10"
@@ -16,14 +17,12 @@
         android:textStyle="bold" />
 
 
-    <include layout="@layout/item_yiluqu_layout" />
+    <!--<include layout="@layout/item_yiluqu_layout" />-->
 
-    <include layout="@layout/item_yiluqu_layout" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-    <include layout="@layout/item_yiluqu_layout" />
-
-    <include layout="@layout/item_yiluqu_layout" />
-
-    <include layout="@layout/item_yiluqu_layout" />
 
 </LinearLayout>

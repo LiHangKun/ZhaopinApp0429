@@ -6,15 +6,29 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.CityBean;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SelectCityAdapter extends RecyclerView.Adapter<SelectCityAdapter.ViewHolder> {
+
+
+    private List<CityBean.DataListBean> mData;
+    private Context mContext;
 
     public SelectCityAdapter() {
     }
 
-    public SelectCityAdapter(Context context) {
+    public SelectCityAdapter(Context context, List<CityBean.DataListBean> list) {
+        mContext = context;
+        mData = list;
     }
 
     @NonNull
@@ -24,20 +38,46 @@ public class SelectCityAdapter extends RecyclerView.Adapter<SelectCityAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        viewHolder.tv1.setText(mData.get(i).getCity());
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemClickener != null) {
+                    itemClickener.itemClick(mData.get(i).getCity(), mData.get(i).getId(), mData.get(i).getLat(), mData.get(i).getLng());
+                }
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.tv1)
+        TextView tv1;
+        @BindView(R.id.llView)
+        LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
+    }
+
+    private onItemClickener itemClickener;
+
+    public interface onItemClickener {
+        void itemClick(String name, String id, String sJing, String sWei);
+    }
+
+    public void setOnItemClickener(onItemClickener onItemClickener) {
+        itemClickener = onItemClickener;
     }
 
 }

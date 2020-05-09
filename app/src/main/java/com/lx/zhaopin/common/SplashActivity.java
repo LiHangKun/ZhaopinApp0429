@@ -52,7 +52,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initSystemBar2(this);
-        setTheme(R.style.AppWelcome);
+        //setTheme(R.style.AppWelcome);
         //setContentView(R.layout.splash_activity);
         //Utility2.setActionBar(this);
         ActivityManager.addActivity(this);

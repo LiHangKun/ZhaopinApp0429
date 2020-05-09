@@ -6,10 +6,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.view.FlowLiner;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class YuLan2Adapter extends RecyclerView.Adapter<YuLan2Adapter.ViewHolder> {
+
+
 
     public YuLan2Adapter() {
     }
@@ -35,9 +44,24 @@ public class YuLan2Adapter extends RecyclerView.Adapter<YuLan2Adapter.ViewHolder
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
+        @BindView(R.id.imageState)
+        ImageView imageState;
+        @BindView(R.id.tv1)
+        TextView tv1;
+        @BindView(R.id.tv2)
+        TextView tv2;
+        @BindView(R.id.tv3)
+        TextView tv3;
+        @BindView(R.id.tv4)
+        TextView tv4;
+        @BindView(R.id.flowLiner)
+        FlowLiner flowLiner;
+        @BindView(R.id.llView)
+        LinearLayout llView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
+
         }
     }
 

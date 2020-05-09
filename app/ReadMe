@@ -102,14 +102,14 @@ SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5
 4.选择职位类型 ZhiWuLeiXingActivity    ZhiWuLeiXingAdapter
 5.行业类型 HangYeLeiXingActivity      HangYeLeiXingAdapter
 6.简历预览 YuLanJianLiActivity  YuLan1Adapter    YuLan2Adapter   YuLan3Adapter
-7.面试记录 MianShiListActivity     MianShiListAdapter   item_mianshi_layout_all 里面是单独的列表 item_mianshi_layout
+7.面试记录 MianShiListActivity     MianShiListAdapter   item_mianshi_layout_all 里面是单独的列表  MianShiList_In_Adapter  item_mianshi_layout
 8.已录取  YiLuQuActivity     YiLuQuAdapter     item_yiluqu_layout_all  里面单独的列表   item_yiluqu_layout
 9.屏蔽岗位 PingBiGangActivity   PingBiGangAdapter    item_pingbi_layout
 10.屏蔽人才 PingBiRenActivity   PingBiRenAdapter     item_pingbi_ren_layout
 11.我的收藏岗位 MyShouCangGangActivity    MyShouCangGangAdapter
 12.职位邀约  ZhiWeiYaoYueActivity   ZhiWeiYaoYueInAdapter    item_select_gangwei_layout
 13.我的收藏人才  MyShouCangRenActivity   MyShouCangRenAdapter
-14.待面试 DaiMianShiListActivity    DaiMianShiListAdapter
+14.待面试 DaiMianShiListActivity    DaiMianShiListAdapter  里面的列表  DaiMianShi_In_ListAdapter   item_yiluqu_layout
 15.申请记录 ShenQingListActivity  ShenQingListAdapter
 16.我的简历 MyJianLiActivity   MyJianLi1Adapter   MyJianLi2Adapter
 17.人才详情 RenCaiDetailActivity    RenCaiDetail1Adapter  RenCaiDetail2Adapter  RenCaiDetail3Adapter
@@ -118,6 +118,6 @@ SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5
 19.求职反馈 Message2Fragment   Message3FragmentAdapter   item_systemmessage_layout
 20.求职反馈的进度详情 JinDuDetailActivity     JinDuDetailAdapter
 21.搜索结果 SearchSuccessActivity   SearchSuccessAdapter
-22.选择城市 SelectCityListActivity  SelectCityAdapter
+22.选择城市 SelectCityPro1ListActivity  SelectCityAdapter
 
 

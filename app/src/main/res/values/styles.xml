@@ -19,11 +19,12 @@
 
     <!--冷启动-->
     <style name="AppWelcome" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/yindao1</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@mipmap/yindao1</item>
 
     </style>
 
-     <style name="Appwelcome" parent="android:Theme.Translucent.NoTitleBar.Fullscreen" />
+     <!--<style name="Appwelcome" parent="android:Theme.Translucent.NoTitleBar.Fullscreen" />-->
     <!--冷启动-->
 
 

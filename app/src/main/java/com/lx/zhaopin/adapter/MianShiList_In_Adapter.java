@@ -10,24 +10,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RenCaiDetail1Adapter extends RecyclerView.Adapter<RenCaiDetail1Adapter.ViewHolder> {
+public class MianShiList_In_Adapter extends RecyclerView.Adapter<MianShiList_In_Adapter.ViewHolder> {
 
 
 
-    public RenCaiDetail1Adapter() {
+    public MianShiList_In_Adapter() {
     }
 
-    public RenCaiDetail1Adapter(Context context) {
+    public MianShiList_In_Adapter(Context context) {
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_rencai1_layout, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_mianshi_layout, viewGroup, false));
     }
 
     @Override
@@ -41,6 +42,8 @@ public class RenCaiDetail1Adapter extends RecyclerView.Adapter<RenCaiDetail1Adap
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.roundedImageView)
+        RoundedImageView roundedImageView;
         @BindView(R.id.tv1)
         TextView tv1;
         @BindView(R.id.tv2)

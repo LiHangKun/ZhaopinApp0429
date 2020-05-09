@@ -86,7 +86,9 @@
         android:theme="@style/AppTheme">
 
         <!--安卓适配全面屏-->
-        <meta-data android:name="android.max_aspect" android:value="2.1" />
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
 
 
         <!-- 高德地图 -->
@@ -95,7 +97,6 @@
             android:value="089be2732466dcc777aa88d4c6dd3e52" />
         <service android:name="com.amap.api.location.APSService" />
         <!-- 高德地图 -->
-
 
 
         <!-- 推送 -->
@@ -226,7 +227,6 @@
 
 
         <!-- 极光推送完完完 -->
-        
 
 
         <activity
@@ -546,6 +546,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 网页 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.TestActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 测试页面 -->
 
 
     </application>

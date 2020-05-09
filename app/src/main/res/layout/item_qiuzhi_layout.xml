@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/llView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
         android:layout_marginLeft="@dimen/dp_10"
@@ -46,6 +47,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -58,6 +60,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_8"
@@ -71,6 +74,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_10"

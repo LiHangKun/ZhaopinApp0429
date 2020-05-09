@@ -6,10 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ChangJianWenTiAdapter extends RecyclerView.Adapter<ChangJianWenTiAdapter.ViewHolder> {
+
 
     public ChangJianWenTiAdapter() {
     }
@@ -35,9 +41,14 @@ public class ChangJianWenTiAdapter extends RecyclerView.Adapter<ChangJianWenTiAd
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv1)
+        TextView tv1;
+        @BindView(R.id.llView)
+        LinearLayout llView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
