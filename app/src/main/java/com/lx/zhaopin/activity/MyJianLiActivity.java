@@ -142,6 +142,14 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
                 MyJianLi1Adapter myJianLi1Adapter = new MyJianLi1Adapter(mContext, experienceEducationList);
                 recyclerView1.setLayoutManager(new LinearLayoutManager(mContext));
                 recyclerView1.setAdapter(myJianLi1Adapter);
+                myJianLi1Adapter.setonItemClickener(new MyJianLi1Adapter.onItemClickener() {
+                    @Override
+                    public void onItemEid(String eid) {
+                        intent = new Intent(mContext, MyJiaoYuActivity.class);
+                        intent.putExtra("eid", eid);
+                        startActivity(intent);
+                    }
+                });
                 //TODO 教育经历
 
 
@@ -223,6 +231,7 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
             case R.id.addView1:
                 //添加学历
                 intent = new Intent(mContext, MyJiaoYuActivity.class);
+                intent.putExtra("eid", "");
                 startActivity(intent);
                 break;
             case R.id.addView2:

@@ -36,6 +36,7 @@ import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.XueLiListAdapter;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.MyJiaoYuInfoBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.XueLiListBean;
 import com.lx.zhaopin.common.AppSP;
@@ -64,7 +65,7 @@ import butterknife.OnClick;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MyJiaoYuActivity extends BaseActivity {
+public class MyJiaoYuActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.edit1)
     EditText edit1;
     @BindView(R.id.tv1)
@@ -93,6 +94,7 @@ public class MyJiaoYuActivity extends BaseActivity {
     private RecyclerView recyclerViewShopLei;
     private String xueLiName;
     private String xueLiID = "";
+    private String eid;
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
         Log.d("getTime()", "choice date millis: " + date.getTime());
@@ -325,11 +327,56 @@ public class MyJiaoYuActivity extends BaseActivity {
         initLunarPicker();
         initLunarPickerEnd();
 
+        eid = getIntent().getStringExtra("eid");
+
+        if (!TextUtils.isEmpty(eid)) {
+            //请求我的学历信息
+            chaEidInfo(eid);
+            rightText.setText("删除");
+            rightText.setVisibility(View.VISIBLE);
+            rightText.setOnClickListener(this);
+        }
+
+
         /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }*/
 
 
+    }
+
+    //
+    private void chaEidInfo(String eid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("eid", eid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.chaEidInfo, params, new BaseCallback<MyJiaoYuInfoBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, MyJiaoYuInfoBean resultBean) {
+
+                edit1.setText(resultBean.getSchool());
+                tv1.setText(resultBean.getEducation().getName());
+                edit2.setText(resultBean.getMajor());
+                tv2.setText(resultBean.getBeginDate());
+                tv3.setText(resultBean.getEndDate());
+                edit3.setText(resultBean.getExperience());
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
     @Override
@@ -346,6 +393,10 @@ public class MyJiaoYuActivity extends BaseActivity {
     @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.llView3OnClick, R.id.okID})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.rightText:
+                //删除
+                delMeEid(eid);
+                break;
             case R.id.llView1OnClick:
                 //获取学历
                 KeyAllboardUtil.hideKeyboard(MyJiaoYuActivity.this);
@@ -364,28 +415,129 @@ public class MyJiaoYuActivity extends BaseActivity {
                 break;
             case R.id.okID:
                 //保存
-                if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
-                    ToastFactory.getToast(mContext, "学校名称不能为空").show();
-                    return;
-                } else if (TextUtil.isEmpty(xueLiID)) {
-                    ToastFactory.getToast(mContext, "学历不能为空").show();
-                    return;
-                } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
-                    ToastFactory.getToast(mContext, "专业名称不能为空").show();
-                    return;
-                } else if (tv2.getText().toString().trim().startsWith("请")) {
-                    ToastFactory.getToast(mContext, "请先选择开始时间").show();
-                    return;
-                } else if (tv3.getText().toString().trim().startsWith("请")) {
-                    ToastFactory.getToast(mContext, "请先选择结束时间").show();
-                    return;
+                if (TextUtils.isEmpty(eid)) {
+                    //新增
+                    if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "学校名称不能为空").show();
+                        return;
+                    } else if (TextUtil.isEmpty(xueLiID)) {
+                        ToastFactory.getToast(mContext, "学历不能为空").show();
+                        return;
+                    } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "专业名称不能为空").show();
+                        return;
+                    } else if (tv2.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "请先选择开始时间").show();
+                        return;
+                    } else if (tv3.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "请先选择结束时间").show();
+                        return;
+                    } else {
+                        xueliMethod(edit1.getText().toString().trim(), xueLiID,
+                                edit2.getText().toString().trim(), tv2.getText().toString().trim(),
+                                tv3.getText().toString().trim(), edit3.getText().toString().trim());
+                    }
                 } else {
-                    xueliMethod(edit1.getText().toString().trim(), xueLiID,
-                            edit2.getText().toString().trim(), tv2.getText().toString().trim(),
-                            tv3.getText().toString().trim(), edit3.getText().toString().trim());
+                    //修改
+                    if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "学校名称不能为空").show();
+                        return;
+                    } else if (TextUtil.isEmpty(xueLiID)) {
+                        ToastFactory.getToast(mContext, "学历不能为空").show();
+                        return;
+                    } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "专业名称不能为空").show();
+                        return;
+                    } else if (tv2.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "请先选择开始时间").show();
+                        return;
+                    } else if (tv3.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "请先选择结束时间").show();
+                        return;
+                    } else {
+                        EdidXueliMethod(
+                                edit1.getText().toString().trim(),//学校
+                                eid, //教育经历id
+                                xueLiID,//学历ID
+                                edit2.getText().toString().trim(),//专业
+                                tv2.getText().toString().trim(),//开始时间
+                                tv3.getText().toString().trim(),//结束时间
+                                edit3.getText().toString().trim());//在校经历
+                    }
                 }
+
                 break;
         }
+    }
+
+    //删除教育经历
+    private void delMeEid(String eid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("eid", eid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.delEidInfo, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
+                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+    //修改教育经历
+    private void EdidXueliMethod(String school, String eid, String educationId, String major, String beginDate, String endDate, String experience) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("eid", eid);
+        params.put("school", school);
+        params.put("major", major);
+        params.put("educationId", educationId);
+        params.put("beginDate", beginDate);
+        params.put("endDate", endDate);
+        params.put("experience", experience);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.xiuGaiEidInfo, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
+                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
     }
 
     //新增教育信息

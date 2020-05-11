@@ -18,6 +18,9 @@ public class NetCuiMethod {
     public static final String myJianLi = "member/jobhunter/resume";//个人简历
     public static final String xueLiList = "member/education/list";//学历列表
     public static final String addJiaoYuJIngLi = "member/jobhunter/resume/education/add";//新增教育信息
+    public static final String chaEidInfo = "member/jobhunter/resume/education/get";//根据EID查询学历信息  TODO  还没有写
+    public static final String xiuGaiEidInfo = "member/jobhunter/resume/education/edit";//修改教育经历
+    public static final String delEidInfo = "member/jobhunter/resume/education/delete";//删除教育经历
 
     /*------------TODO-----求职者-----------------*/
 

@@ -22,6 +22,7 @@ public class MyJianLi1Adapter extends RecyclerView.Adapter<MyJianLi1Adapter.View
 
     private List<MyJianLiBean.ExperienceEducationListBean> mData;
     private Context mContext;
+    private onItemClickener itemClickener;
 
     public MyJianLi1Adapter() {
     }
@@ -39,12 +40,21 @@ public class MyJianLi1Adapter extends RecyclerView.Adapter<MyJianLi1Adapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.tv1.setText(mData.get(i).getSchool());
         viewHolder.tv2.setText(mData.get(i).getBeginDate() + "--" + mData.get(i).getEndDate());
         viewHolder.tv3.setText(mData.get(i).getEducation().getName());
         viewHolder.tv4.setText(mData.get(i).getMajor());
         viewHolder.tv5.setText(mData.get(i).getExperience());
+
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickener != null) {
+                    itemClickener.onItemEid(mData.get(i).getId());
+                }
+            }
+        });
 
 
     }
@@ -73,5 +83,14 @@ public class MyJianLi1Adapter extends RecyclerView.Adapter<MyJianLi1Adapter.View
             ButterKnife.bind(this, itemView);
         }
     }
+
+    public interface onItemClickener {
+        void onItemEid(String eid);
+    }
+
+    public void setonItemClickener(onItemClickener onItemClickener) {
+        itemClickener = onItemClickener;
+    }
+
 
 }
