@@ -17,10 +17,7 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.DaiMianShiListActivity;
-import com.lx.zhaopin.activity.GangWeiDetailActivity;
-import com.lx.zhaopin.activity.JuBaoActivity;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
-import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.lx.zhaopin.activity.MianShiListActivity;
 import com.lx.zhaopin.activity.MyGuanZhuGangActivity;
 import com.lx.zhaopin.activity.MyGuanZhuRenActivity;
@@ -31,11 +28,10 @@ import com.lx.zhaopin.activity.MyUserInfoActivity;
 import com.lx.zhaopin.activity.MyYinSiActivity;
 import com.lx.zhaopin.activity.PingBiGangActivity;
 import com.lx.zhaopin.activity.PingBiRenActivity;
+import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
 import com.lx.zhaopin.activity.QiuZhiYiXiangActivity;
-import com.lx.zhaopin.activity.SelectHangYeActivity;
 import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
-import com.lx.zhaopin.activity.TestActivity;
 import com.lx.zhaopin.activity.YiLuQuActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.utils.SPTool;
@@ -250,7 +246,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                /* if (!TextUtils.isEmpty(phone)) {
                     callPhone();
                 }*/
-                intent = new Intent(getActivity(), SelectHangYeActivity.class);
+                intent = new Intent(getActivity(), QiuZhiQiWangActivity.class);
                 startActivity(intent);
 
                 break;

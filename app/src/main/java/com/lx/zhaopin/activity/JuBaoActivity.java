@@ -14,7 +14,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class JuBaoActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv1)
@@ -59,6 +58,7 @@ public class JuBaoActivity extends BaseActivity implements View.OnClickListener 
                     ToastFactory.getToast(mContext, "举报原因不能为空").show();
                     return;
                 }
+                //TODO   Success
                 startActivity(new Intent(mContext, JuBaoSuccessActivity.class));
                 finish();
                 break;

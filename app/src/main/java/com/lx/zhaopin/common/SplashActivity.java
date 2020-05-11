@@ -162,7 +162,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     try {
-                        sleep(2000);//使程序休眠五秒
+                        sleep(500);//使程序休眠五秒
                         if (!isLogin) {
                             intent = new Intent(SplashActivity.this, MainActivity.class);//启动MainActivity
                             startActivity(intent);
@@ -189,7 +189,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();//关闭当前活动
                 }
-            }, 2000);
+            }, 500);
 
 
         }

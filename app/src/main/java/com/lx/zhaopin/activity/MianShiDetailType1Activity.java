@@ -58,7 +58,7 @@ public class MianShiDetailType1Activity extends BaseActivity  {
     }
 
     private void init() {
-        topTitle.setText("招聘者面试详情");
+        topTitle.setText("求职者面试详情");
 
 
     }
