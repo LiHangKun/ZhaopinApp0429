@@ -59,13 +59,17 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv1"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
+                        android:maxLength="20"
+                        android:singleLine="true"
                         android:text=""
                         android:textColor="#333"
+                        android:textIsSelectable="true"
                         android:textSize="@dimen/sp_14"
                         android:textStyle="normal" />
 
@@ -86,7 +90,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/dp_3"
                 android:background="#e7e7e7" />
 
@@ -123,13 +127,17 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
+                        android:maxLength="20"
+                        android:singleLine="true"
                         android:text=""
                         android:textColor="#333"
+                        android:textIsSelectable="true"
                         android:textSize="@dimen/sp_14"
                         android:textStyle="normal" />
 
@@ -149,7 +157,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/dp_3"
                 android:background="#e7e7e7" />
 
@@ -186,13 +194,17 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv3"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
+                        android:maxLength="20"
+                        android:singleLine="true"
                         android:text=""
                         android:textColor="#333"
+                        android:textIsSelectable="true"
                         android:textSize="@dimen/sp_14"
                         android:textStyle="normal" />
 
@@ -213,7 +225,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/dp_3"
                 android:background="#e7e7e7" />
 
@@ -250,13 +262,17 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv4"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
+                        android:maxLength="20"
+                        android:singleLine="true"
                         android:text=""
                         android:textColor="#333"
+                        android:textIsSelectable="true"
                         android:textSize="@dimen/sp_14"
                         android:textStyle="normal" />
 
@@ -277,7 +293,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/dp_3"
                 android:background="#e7e7e7" />
 
@@ -314,13 +330,17 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv5"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
+                        android:maxLength="20"
+                        android:singleLine="true"
                         android:text=""
                         android:textColor="#333"
+                        android:textIsSelectable="true"
                         android:textSize="@dimen/sp_14"
                         android:textStyle="normal" />
 
@@ -341,7 +361,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/dp_3"
                 android:background="#e7e7e7" />
 

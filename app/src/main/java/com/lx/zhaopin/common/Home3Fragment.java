@@ -189,17 +189,17 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.checkPhone, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
-
+                smartRefreshLayout.finishRefresh();
             }
 
             @Override
             public void onResponse(Response response) {
-
+                smartRefreshLayout.finishRefresh();
             }
 
             @Override
             public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
-
+                smartRefreshLayout.finishRefresh();
 
                 Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                         .load(resultBean.getAvatar()).into(roundedImageView);
@@ -223,7 +223,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onError(Response response, int code, Exception e) {
-
+                smartRefreshLayout.finishRefresh();
             }
         });
     }

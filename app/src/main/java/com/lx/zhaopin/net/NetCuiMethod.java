@@ -10,6 +10,9 @@ public class NetCuiMethod {
     public static final String retrievePassword = "member/password";//找回或修改密码
     public static final String loginMethod = "member/login";//登录
     public static final String memberCity = "member/province/list";//选择省份
+    public static final String aboutMe = "common/about";//关于我们
+    public static final String feedback = "member/feedback";//意见反馈
+    public static final String wenTiPage = "common/question/page";//常见问题
 
 
     /*------------TODO-----求职者-----------------*/

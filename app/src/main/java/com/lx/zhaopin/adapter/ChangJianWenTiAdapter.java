@@ -1,6 +1,7 @@
 package com.lx.zhaopin.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.WenTiBean;
+import com.lx.zhaopin.common.NoticeDetailActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,10 +22,15 @@ import butterknife.ButterKnife;
 public class ChangJianWenTiAdapter extends RecyclerView.Adapter<ChangJianWenTiAdapter.ViewHolder> {
 
 
+    private List<WenTiBean.DataListBean> mData;
+    private Context mContext;
+
     public ChangJianWenTiAdapter() {
     }
 
-    public ChangJianWenTiAdapter(Context context) {
+    public ChangJianWenTiAdapter(Context context, List<WenTiBean.DataListBean> list) {
+        mContext = context;
+        mData = list;
     }
 
 
@@ -31,13 +41,24 @@ public class ChangJianWenTiAdapter extends RecyclerView.Adapter<ChangJianWenTiAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        viewHolder.tv1.setText(mData.get(i).getTitle());
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, NoticeDetailActivity.class);
+                intent.putExtra("title", mData.get(i).getTitle());
+                intent.putExtra("titleUrl", mData.get(i).getUrl());
+                mContext.startActivity(intent);
+
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

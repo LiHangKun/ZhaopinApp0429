@@ -1,6 +1,7 @@
 package com.lx.zhaopin.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -8,9 +9,19 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 
-import org.feezu.liuli.timeselector.Utils.TextUtil;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Response;
 
 public class FeedActivity extends BaseActivity implements View.OnClickListener {
 
@@ -66,7 +77,30 @@ public class FeedActivity extends BaseActivity implements View.OnClickListener {
     }
 
     //反馈
-    private void feedMethod(String trim, String trim1) {
+    private void feedMethod(String content, String phone) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("content", content);
+        params.put("phone", phone);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.feedback, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
 
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 }
