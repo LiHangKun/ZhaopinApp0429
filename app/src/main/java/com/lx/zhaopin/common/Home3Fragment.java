@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.DaiMianShiListActivity;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
@@ -34,13 +38,31 @@ import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
 import com.lx.zhaopin.activity.YiLuQuActivity;
 import com.lx.zhaopin.base.BaseFragment;
+import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.TellUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.CirclePercentView;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionGrant;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Home3Fragment extends BaseFragment implements View.OnClickListener {
 
@@ -65,14 +87,39 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private String userType = "0";
     private String phone = "15555555555";
     private SmartRefreshLayout smartRefreshLayout;
+    private static final String TAG = "Home3Fragment";
+    private RoundedImageView roundedImageView;
+    private TextView tv1;
+    private TextView tv2;
+    private TextView tv3;
+
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 2:
+                //更新个人中心
+                smartRefreshLayout.autoRefresh();
+                Log.e(TAG, "getEventmessage: 个人中心收到消息  http");
+                break;
+        }
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(container.getContext(), R.layout.home3fragment_layout, null);
 
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
+
+
         tvJinDu = view.findViewById(R.id.tvJinDu);
         circlePercentView = view.findViewById(R.id.circlePercentView);
+        roundedImageView = view.findViewById(R.id.roundedImageView);
 
         llView0 = view.findViewById(R.id.llView0);
         llView1 = view.findViewById(R.id.llView1);
@@ -89,6 +136,11 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         relView5 = view.findViewById(R.id.relView5);
         relView6 = view.findViewById(R.id.relView6);
         relView7 = view.findViewById(R.id.relView7);
+
+
+        tv1 = view.findViewById(R.id.tv1);
+        tv2 = view.findViewById(R.id.tv2);
+        tv3 = view.findViewById(R.id.tv3);
 
         llView0.setOnClickListener(this);
         llView1.setOnClickListener(this);
@@ -109,11 +161,71 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         smartRefreshLayout.setEnableLoadMore(false);
 
 
-        tvJinDu.setText(cuInt + "%");
-        setData1(circlePercentView, 100, cuInt);
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+            getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+        }
+
+
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+                }
+                Log.e(TAG, "onRefresh: http  执行下拉刷新方法");
+            }
+        });
+
 
         return view;
 
+    }
+
+    //求职者个人信息
+    private void getQiuZhiMyInfo(String mid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", mid);
+        Log.i(TAG, "求职者个人信息: " + NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo + "---" + new Gson().toJson(params));
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.checkPhone, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
+
+
+                Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                        .load(resultBean.getAvatar()).into(roundedImageView);
+                tv1.setText(resultBean.getName());
+                String recruiter = resultBean.getRecruiter();
+                //是否具有hr权限
+                switch (recruiter) {
+                    case "1":
+                        tv2.setText("HR");
+                        break;
+                    case "0":
+                        tv2.setText("求职者");
+                        break;
+                }
+                tvJinDu.setText(resultBean.getImprovedDegree() + "%");
+                setData1(circlePercentView, 100, Integer.parseInt(resultBean.getImprovedDegree()));
+                tv3.setText(resultBean.getInterviewCount());
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 

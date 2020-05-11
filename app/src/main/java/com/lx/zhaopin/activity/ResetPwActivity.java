@@ -1,6 +1,7 @@
 package com.lx.zhaopin.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -106,8 +107,30 @@ public class ResetPwActivity extends BaseActivity {
         }
     }
 
-    private void zhaoHuiMethod(String trim, String trim1, String encrypt) {
-        Log.i(TAG, "zhaoHuiMethod: " + trim + "--" + trim1 + "--" + encrypt);
+    //retrievePassword
+    private void zhaoHuiMethod(String mobile, String authCode, String password) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+        params.put("authCode", authCode);
+        params.put("password", password);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.retrievePassword, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
 
     }
 
@@ -130,11 +153,11 @@ public class ResetPwActivity extends BaseActivity {
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                if (resultBean.getExist().equals("1")) {
-                    ToastFactory.getToast(mContext, "手机号已存在").show();
+                if (resultBean.getExist().equals("0")) {
+                    ToastFactory.getToast(mContext, "手机号不存在").show();
                     return;
                 } else {
-                    sendPhoneCode("1", mobile);
+                    sendPhoneCode("5", mobile);
                 }
 
             }

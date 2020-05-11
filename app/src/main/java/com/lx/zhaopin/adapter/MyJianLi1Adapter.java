@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.MyJianLiBean;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,11 +20,15 @@ import butterknife.ButterKnife;
 public class MyJianLi1Adapter extends RecyclerView.Adapter<MyJianLi1Adapter.ViewHolder> {
 
 
+    private List<MyJianLiBean.ExperienceEducationListBean> mData;
+    private Context mContext;
 
     public MyJianLi1Adapter() {
     }
 
-    public MyJianLi1Adapter(Context context) {
+    public MyJianLi1Adapter(Context context, List<MyJianLiBean.ExperienceEducationListBean> list) {
+        mContext = context;
+        mData = list;
     }
 
 
@@ -33,12 +40,18 @@ public class MyJianLi1Adapter extends RecyclerView.Adapter<MyJianLi1Adapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        viewHolder.tv1.setText(mData.get(i).getSchool());
+        viewHolder.tv2.setText(mData.get(i).getBeginDate() + "--" + mData.get(i).getEndDate());
+        viewHolder.tv3.setText(mData.get(i).getEducation().getName());
+        viewHolder.tv4.setText(mData.get(i).getMajor());
+        viewHolder.tv5.setText(mData.get(i).getExperience());
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,6 +67,7 @@ public class MyJianLi1Adapter extends RecyclerView.Adapter<MyJianLi1Adapter.View
         TextView tv5;
         @BindView(R.id.llView)
         LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

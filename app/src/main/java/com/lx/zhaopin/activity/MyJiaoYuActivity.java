@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,20 +32,37 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.google.gson.Gson;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.adapter.XueLiListAdapter;
 import com.lx.zhaopin.base.BaseActivity;
-import com.lx.zhaopin.utils.KeyboardUtil;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.XueLiListBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.KeyAllboardUtil;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 
 import org.feezu.liuli.timeselector.Utils.TextUtil;
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MyJiaoYuActivity extends BaseActivity {
     @BindView(R.id.edit1)
@@ -67,11 +86,13 @@ public class MyJiaoYuActivity extends BaseActivity {
     @BindView(R.id.okID)
     TextView okID;
 
-    private String xueLiId = "";
 
     private static final String TAG = "MyJiaoYuActivity";
 
     private TimePickerView pvTime, pvCustomTime, pvCustomLunar, pvCustomLunarEnd;
+    private RecyclerView recyclerViewShopLei;
+    private String xueLiName;
+    private String xueLiID = "";
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
         Log.d("getTime()", "choice date millis: " + date.getTime());
@@ -303,6 +324,12 @@ public class MyJiaoYuActivity extends BaseActivity {
         initTimePicker();
         initLunarPicker();
         initLunarPickerEnd();
+
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }*/
+
+
     }
 
     @Override
@@ -321,18 +348,18 @@ public class MyJiaoYuActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.llView1OnClick:
                 //获取学历
-                KeyboardUtil.hideKeyboard(MyJiaoYuActivity.this);
+                KeyAllboardUtil.hideKeyboard(MyJiaoYuActivity.this);
                 selectType1Method();
                 lightoff();
                 break;
             case R.id.llView2OnClick:
                 //开始时间
-                KeyboardUtil.hideKeyboard(MyJiaoYuActivity.this);
+                KeyAllboardUtil.hideKeyboard(MyJiaoYuActivity.this);
                 pvCustomLunar.show();
                 break;
             case R.id.llView3OnClick:
                 //结束时间
-                KeyboardUtil.hideKeyboard(MyJiaoYuActivity.this);
+                KeyAllboardUtil.hideKeyboard(MyJiaoYuActivity.this);
                 pvCustomLunarEnd.show();
                 break;
             case R.id.okID:
@@ -340,7 +367,7 @@ public class MyJiaoYuActivity extends BaseActivity {
                 if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
                     ToastFactory.getToast(mContext, "学校名称不能为空").show();
                     return;
-                } else if (TextUtil.isEmpty(xueLiId)) {
+                } else if (TextUtil.isEmpty(xueLiID)) {
                     ToastFactory.getToast(mContext, "学历不能为空").show();
                     return;
                 } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
@@ -353,14 +380,44 @@ public class MyJiaoYuActivity extends BaseActivity {
                     ToastFactory.getToast(mContext, "请先选择结束时间").show();
                     return;
                 } else {
-                    xueliMethod(edit1.getText().toString().trim(), xueLiId, edit2.getText().toString().trim(), tv2.getText().toString().trim(), tv3.getText().toString().trim(), edit3.getText().toString().trim());
+                    xueliMethod(edit1.getText().toString().trim(), xueLiID,
+                            edit2.getText().toString().trim(), tv2.getText().toString().trim(),
+                            tv3.getText().toString().trim(), edit3.getText().toString().trim());
                 }
                 break;
         }
     }
 
-    private void xueliMethod(String trim, String xueLiId, String trim1, String trim2, String trim3, String trim4) {
+    //新增教育信息
+    private void xueliMethod(String school, String educationId, String major, String beginDate, String endDate, String experience) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("school", school);
+        params.put("educationId", educationId);
+        params.put("major", major);
+        params.put("beginDate", beginDate);
+        params.put("endDate", endDate);
+        params.put("experience", experience);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.addJiaoYuJIngLi, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
+                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
 
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
 
     }
 
@@ -391,7 +448,7 @@ public class MyJiaoYuActivity extends BaseActivity {
     private void selectType1Method() {
         if (popupWindow1 == null) {
             popupView1 = View.inflate(this, R.layout.pop_layout_shoplei, null);
-            RecyclerView recyclerViewShopLei = popupView1.findViewById(R.id.recyclerViewShopLei);
+            recyclerViewShopLei = popupView1.findViewById(R.id.recyclerViewShopLei);
             TextView tvTitleName = popupView1.findViewById(R.id.tvTitleName);
             tvTitleName.setText("请选择学历");
             // 参数2,3：指明popupwindow的宽度和高度
@@ -405,6 +462,7 @@ public class MyJiaoYuActivity extends BaseActivity {
 
 
             //TODO 设置数据
+            getXueLiDataList(tv1);
 
             // 设置背景图片， 必须设置，不然动画没作用
             popupWindow1.setBackgroundDrawable(new BitmapDrawable());
@@ -441,6 +499,53 @@ public class MyJiaoYuActivity extends BaseActivity {
         //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
         popupView1.startAnimation(animation1);
 
+    }
+
+
+    //学历列表
+    private void getXueLiDataList(final TextView tv1) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        Log.i(TAG, "学历列表: " + NetClass.BASE_URL + NetCuiMethod.xueLiList + "---" + new Gson().toJson(params));
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.xueLiList, params, new BaseCallback<XueLiListBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, XueLiListBean resultBean) {
+                XueLiListAdapter xueLiListAdapter = new XueLiListAdapter(mContext, resultBean.getDataList());
+                recyclerViewShopLei.setLayoutManager(new LinearLayoutManager(mContext));
+                recyclerViewShopLei.setAdapter(xueLiListAdapter);
+
+                xueLiListAdapter.setOnItemClickener(new XueLiListAdapter.onItemClickener() {
+
+
+                    @Override
+                    public void itemClick(String name, String id) {
+                        xueLiName = name;
+                        xueLiID = id;
+                        popupWindow1.dismiss();
+
+                        tv1.setText(xueLiName);
+
+                        Log.i(TAG, "itemClick: 用户选择的学历信息" + xueLiName + "---" + xueLiID);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 

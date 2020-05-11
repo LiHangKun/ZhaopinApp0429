@@ -12,10 +12,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.LoginBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.NoticeDetailActivity;
-import com.lx.zhaopin.common.SplashActivity;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
@@ -42,6 +42,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
     private Intent intent;
     private ImageView imageDui;
     private boolean duiHaoBoolean = true;
+    private String registrationID;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
 
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
-        String registrationID = JPushInterface.getRegistrationID(this);
+        registrationID = JPushInterface.getRegistrationID(this);
         SPTool.addSessionMap(AppSP.JupshID, registrationID);
         Log.i(TAG, "onCreate:极光信息 " + registrationID);
 
@@ -157,8 +158,23 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
     }
 
 
-    private void login1TypeMethod(String trim, String trim1) {
-        Log.i(TAG, "login1TypeMethod: " + trim + "--------" + trim1);
+    private void login1TypeMethod(String mobile, String authCode) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+        params.put("authCode", authCode);
+        params.put("registerId", registrationID);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.loginMethod, params, new SpotsCallBack<LoginBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, LoginBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 
@@ -180,11 +196,11 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                if (resultBean.getExist().equals("1")) {
-                    ToastFactory.getToast(mContext, "手机号已存在").show();
+                if (resultBean.getExist().equals("0")) {
+                    ToastFactory.getToast(mContext, "手机号不已存在").show();
                     return;
                 } else {
-                    sendPhoneCode("1", mobile);
+                    sendPhoneCode("2", mobile);
                 }
 
             }

@@ -5,7 +5,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-public class KeyboardUtil {
+
+public class KeyAllboardUtil {
 
     public static void hideKeyboard(final Activity act) {
         if (null == act) {

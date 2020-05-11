@@ -11,13 +11,22 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.LoginBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.MD5Util;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.jpush.android.api.JPushInterface;
+import okhttp3.Response;
 
 public class Login2PassWordActivity extends BaseActivity implements View.OnClickListener {
 
@@ -26,6 +35,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
     private ImageView imageDui;
     private boolean duiHaoBoolean = true;
     private static final String TAG = "Login2PassWordActivity";
+    private String registrationID;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -43,7 +53,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
 
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
-        String registrationID = JPushInterface.getRegistrationID(this);
+        registrationID = JPushInterface.getRegistrationID(this);
         SPTool.addSessionMap(AppSP.JupshID, registrationID);
         Log.i(TAG, "onCreate:极光信息 " + registrationID);
 
@@ -133,7 +143,23 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
     }
 
 
-    private void login2TypeMethod(String trim, String encrypt) {
-        Log.i(TAG, "login2TypeMethod: 密码登录" + trim + "---" + encrypt);
+    private void login2TypeMethod(String mobile, String password) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+        params.put("password", password);
+        params.put("registerId", registrationID);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.loginMethod, params, new SpotsCallBack<LoginBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, LoginBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 }
+

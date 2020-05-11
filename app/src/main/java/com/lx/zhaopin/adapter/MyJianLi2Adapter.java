@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.MyJianLiBean;
+import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,10 +23,15 @@ import butterknife.ButterKnife;
 public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.ViewHolder> {
 
 
+    private List<MyJianLiBean.ExperienceWorkListBean> mData;
+    private Context mContext;
+
     public MyJianLi2Adapter() {
     }
 
-    public MyJianLi2Adapter(Context context) {
+    public MyJianLi2Adapter(Context context, List<MyJianLiBean.ExperienceWorkListBean> list) {
+        mContext = context;
+        mData = list;
     }
 
 
@@ -32,13 +42,49 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int po) {
+        viewHolder.tv1.setText(mData.get(po).getCompanyName());
+        viewHolder.tv2.setText(mData.get(po).getBeginDate() + "--" + mData.get(po).getEndDate());
+        viewHolder.tv3.setText(mData.get(po).getPositionName());
+
+        String skills = mData.get(po).getSkills();
+        if (skills.contains(",")) {
+            String[] split = skills.split(",");
+
+            for (int i = 0; i < split.length; i++) {
+                final TextView radioButton = new TextView(mContext);
+                FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT,  FlowLiner.LayoutParams.WRAP_CONTENT);
+
+                layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
+                radioButton.setLayoutParams(layoutParams);
+                final String str = split[i];
+                radioButton.setText(str);
+                radioButton.setGravity(Gravity.CENTER);
+                radioButton.setTextSize(13);
+                radioButton.setPadding(ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6));
+                radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                //radioButton.setBackgroundResource(R.drawable.search_selector);
+                radioButton.setBackgroundResource(R.drawable.button_shape03);
+                radioButton.setFocusable(true);
+                radioButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*TODO ACTION*/
+                        // doSearch(str);
+
+                    }
+                });
+                viewHolder.flowLiner.addView(radioButton);
+            }
+
+
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,6 +101,7 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
         FlowLiner flowLiner;
         @BindView(R.id.llView)
         LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

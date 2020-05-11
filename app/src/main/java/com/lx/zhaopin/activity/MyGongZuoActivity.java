@@ -32,7 +32,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
-import com.lx.zhaopin.utils.KeyboardUtil;
+import com.lx.zhaopin.utils.KeyAllboardUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.FlowLiner;
 
@@ -326,16 +326,16 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                 ToastFactory.getToast(mContext, "删除").show();
                 break;
             case R.id.llView1OnClick:
-                KeyboardUtil.hideKeyboard(MyGongZuoActivity.this);
+                KeyAllboardUtil.hideKeyboard(MyGongZuoActivity.this);
                 selectType1Method();
                 lightoff();
                 break;
             case R.id.llView2OnClick:
-                KeyboardUtil.hideKeyboard(MyGongZuoActivity.this);
+                KeyAllboardUtil.hideKeyboard(MyGongZuoActivity.this);
                 pvCustomLunar.show();
                 break;
             case R.id.llView3OnClick:
-                KeyboardUtil.hideKeyboard(MyGongZuoActivity.this);
+                KeyAllboardUtil.hideKeyboard(MyGongZuoActivity.this);
                 pvCustomLunarEnd.show();
                 break;
             case R.id.llView4OnClick:

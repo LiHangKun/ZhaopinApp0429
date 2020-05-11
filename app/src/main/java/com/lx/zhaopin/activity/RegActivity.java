@@ -2,6 +2,7 @@ package com.lx.zhaopin.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -77,7 +78,7 @@ public class RegActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.faCode, R.id.imageDui, R.id.okID,R.id.tv3,R.id.tv4})
+    @OnClick({R.id.faCode, R.id.imageDui, R.id.okID, R.id.tv3, R.id.tv4})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.faCode:
@@ -136,8 +137,31 @@ public class RegActivity extends BaseActivity {
         }
     }
 
-    private void regMethod(String trim, String trim1, String encrypt) {
-        Log.i(TAG, "regMethod: " + trim + "--" + trim1 + "--" + encrypt);
+    private void regMethod(String mobile, String authCode, String password) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+        params.put("authCode", authCode);
+        params.put("password", password);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.registerMethod, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 
@@ -176,7 +200,7 @@ public class RegActivity extends BaseActivity {
 
     }
 
-    //发送验证码
+    //发送验证码  注册
     private void sendPhoneCode(String type, String mobile) {
         Map<String, String> params = new HashMap<>();
         params.put("type", type);

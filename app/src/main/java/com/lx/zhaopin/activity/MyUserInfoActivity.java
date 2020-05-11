@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -37,12 +38,23 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
 import com.lx.zhaopin.common.AppSP;
-import com.lx.zhaopin.utils.KeyboardUtil;
+import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.KeyAllboardUtil;
 import com.lx.zhaopin.utils.NetUtil;
-import com.lx.zhaopin.utils.RxToast;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.SingleChooseDialog;
@@ -52,6 +64,7 @@ import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -60,10 +73,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+import okhttp3.Request;
+import okhttp3.Response;
 import top.zibin.luban.Luban;
 
 public class MyUserInfoActivity extends BaseActivity implements View.OnClickListener, UpLoadFileCallBack {
@@ -87,7 +104,7 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
 
 
     //-----------时间选择器--------------------------
-    private TimePickerView pvTime, pvCustomTime, pvCustomLunar,pvCustomLunar2;
+    private TimePickerView pvTime, pvCustomTime, pvCustomLunar, pvCustomLunar2;
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
         Log.d("getTime()", "choice date millis: " + date.getTime());
@@ -227,7 +244,6 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
     }
 
 
-
     /**
      * 农历时间已扩展至 ： 1900 - 2100年
      */
@@ -329,6 +345,11 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
         builder.detectFileUriExposure();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     private void init() {
         upFileUtil = new UpFileUtil(this, this);
@@ -341,6 +362,11 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
         initLunarPicker();
         initLunarPicker2();
         circleImageView = findViewById(R.id.circleImageView);
+
+       /* if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }*/
+
 
         relView1 = findViewById(R.id.relView1);
         relView2 = findViewById(R.id.relView2);
@@ -372,8 +398,58 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
         fLList.add("男");
         fLList.add("女");
 
+        getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+
 
     }
+
+    //求职者个人信息
+    private void getQiuZhiMyInfo(String mid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", mid);
+        Log.i(TAG, "求职者个人信息: " + NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo + "---" + new Gson().toJson(params));
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.checkPhone, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
+
+
+                Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                        .load(resultBean.getAvatar()).into(circleImageView);
+                edit1.setText(resultBean.getName());
+                String sex = resultBean.getSex();
+                //性别，1.男，2.女
+                switch (sex) {
+                    case "1":
+                        tv1.setText("男");
+                        break;
+                    case "2":
+                        tv1.setText("女");
+                        break;
+                }
+                tv2.setText(resultBean.getWorkDate());
+                tv3.setText(resultBean.getBirthday());
+                edit2.setText(resultBean.getMobile());
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
 
     @PermissionGrant(AppSP.PMS_CAMERA)
     public void pmsLocationSuccess() {
@@ -417,6 +493,8 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
                 } else if (tv3.getText().toString().trim().startsWith("请")) {
                     ToastFactory.getToast(mContext, "出生年月时间不能为空").show();
                     return;
+                } else {
+                    xiuGiaMethod(edit1.getText().toString().trim(), userSelectIcon, sex, tv3.getText().toString().trim(), tv2.getText().toString().trim());
                 }
 
                 break;
@@ -444,15 +522,46 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
                 }).show();
                 break;
             case R.id.relView4:
-                KeyboardUtil.hideKeyboard(MyUserInfoActivity.this);
+                KeyAllboardUtil.hideKeyboard(MyUserInfoActivity.this);
                 pvCustomLunar.show();
                 break;
             case R.id.relView5:
-                KeyboardUtil.hideKeyboard(MyUserInfoActivity.this);
+                KeyAllboardUtil.hideKeyboard(MyUserInfoActivity.this);
                 pvCustomLunar2.show();
                 break;
 
         }
+    }
+
+    //修改个人信息
+    private void xiuGiaMethod(String name, String avatar, String sex, String birthday, String workDate) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("name", name);
+        params.put("avatar", avatar);
+        params.put("sex", sex);
+        params.put("birthday", birthday);
+        params.put("workDate", workDate);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.xiugaiQiuZhiMyInfo, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
     }
 
 
