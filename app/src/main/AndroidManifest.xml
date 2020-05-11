@@ -554,6 +554,34 @@
             android:windowSoftInputMode="adjustPan" /><!-- 测试页面 -->
 
 
+        <!--解决-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.lx.zhaopin.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/rc_file_path" />
+        </provider>
+        <!--融云自定义画面-->
+        <activity
+            android:name="com.lx.zhaopin.rong.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.lx.zhaopin"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+
     </application>
 
 </manifest>

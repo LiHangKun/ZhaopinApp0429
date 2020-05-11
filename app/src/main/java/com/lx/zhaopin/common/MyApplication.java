@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
-
 import com.awen.photo.FrescoImageLoader;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.utils.AppUtils;
@@ -23,6 +22,7 @@ import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.RongIM;
 
 public class MyApplication extends Application {
 
@@ -63,6 +63,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        RongIM.init(this,"pvxdm17jpe7sr");//融云
         RxToast.setContext(this);
         mContext = this;
         SPTool.init(mContext, AppUtils.getAppName(this));

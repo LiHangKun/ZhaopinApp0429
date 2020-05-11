@@ -1,12 +1,13 @@
 package com.lx.zhaopin.common;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
@@ -14,12 +15,14 @@ import android.widget.Toast;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
-import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.view.NoScrollViewPager;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity {
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
+
+public class MainActivity extends BaseActivity implements RongIM.UserInfoProvider {
 
     public ViewPager viewPager;
     private ArrayList<Fragment> fragments;
@@ -69,13 +72,76 @@ public class MainActivity extends BaseActivity {
         fragments.add(new Home1Fragment());
         fragments.add(new Home2Fragment());
         fragments.add(new Home3Fragment());
+        initC();
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
+            @Override
+            public UserInfo getUserInfo(String userId) {
+                //MainActivity.this.getUserInfo(userId);
+                return null;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+            }
+
+        }, true);
+        RongIM.setUserInfoProvider(this, true);
+        final String nickName = "崔文乐";
+        final String userHead = "https://himg2.huanqiucdn.cn/attachment2010/2020/0507/20200507011017575.jpg";
+        final String uid = "123";
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(uid, nickName, Uri.parse(userHead)));
 
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
 
         viewPager.setOffscreenPageLimit(fragments.size());
+    }
+
+
+    private void initC() {
+        RongIM.connect("5EzeuoxRkESv3vBru1S/BvTP18LHSVglo2ejizkCQP8=@z7fh.cn.rongnav.com;z7fh.cn.rongcfg.com", new RongIMClient.ConnectCallback() {
+
+            /**
+             * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+             *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+             */
+            @Override
+            public void onTokenIncorrect() {
+                Log.e("RongIM", "onTokenIncorrect");
+            }
+
+            /**
+             * 连接融云成功
+             * @param userid 当前 token 对应的用户 id
+             */
+            @Override
+            public void onSuccess(String userid) {
+                Log.e("RongIM", "onSuccess" + userid);
+                //SharePrefUtil.saveString(MainActivity.this, AppConsts.RONGID, userid);
+
+
+            }
+
+            /**
+             * 连接融云失败
+             * @param errorCode 错误码，可到官网 查看错误码对应的注释
+             */
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.e("RongIM", "onError" + errorCode);
+                if (errorCode == RongIMClient.ErrorCode.RC_DISCONN_KICK) {
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public UserInfo getUserInfo(String s) {
+        setUserInfo(s);
+        return null;
+    }
+
+    private void setUserInfo(String s) {
+
     }
 
 

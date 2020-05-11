@@ -1,3 +1,4 @@
 rootProject.name='ZhaopinApp0429'
-include ':app',':permissiongen',':roundimageview',':dialog',':FlycoTabLayout_Lib',':pickerview',':wheelview',':permission-annotation'
+include ':app',':permissiongen',':roundimageview',':dialog',':FlycoTabLayout_Lib',':pickerview',':wheelview',':permission-annotation',
+        ":CallKit",":IMKit",":CallLib",":IMLib"
 
