@@ -1,5 +1,4 @@
-求职招聘0430
-
+求职招聘0430,融云部分
 String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
 
 if (!edit2.getText().toString().trim().matches(regex)) {
