@@ -95,7 +95,7 @@ public class QiYe2Fragment extends Fragment {
         params.put("cid", cid);
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
-        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.wenTiPage, params, new SpotsCallBack<GongSiZaiZhaoBean>(getActivity()) {
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.gongSiGangWei, params, new SpotsCallBack<GongSiZaiZhaoBean>(getActivity()) {
             @Override
             public void onSuccess(Response response, GongSiZaiZhaoBean resultBean) {
                 smartRefreshLayout.finishRefresh();

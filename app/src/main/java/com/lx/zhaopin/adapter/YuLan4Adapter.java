@@ -17,32 +17,38 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class YuLan1Adapter extends RecyclerView.Adapter<YuLan1Adapter.ViewHolder> {
+public class YuLan4Adapter extends RecyclerView.Adapter<YuLan4Adapter.ViewHolder> {
 
 
-    private List<YuLanBean.ResumeExpectationListBean> mData;
+    private List<YuLanBean.ResumeSkillListBean> mData;
     private Context mContext;
+    private OnItemClickener itemClickener;
 
-    public YuLan1Adapter() {
+    public YuLan4Adapter() {
     }
 
-    public YuLan1Adapter(Context context, List<YuLanBean.ResumeExpectationListBean> list) {
+    public YuLan4Adapter(Context context, List<YuLanBean.ResumeSkillListBean> list) {
         mContext = context;
         mData = list;
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_yixiang_layout, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_jinneg_layout, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.tv1.setText(mData.get(i).getPositionCategory3().getName());
-        viewHolder.tv2.setText(mData.get(i).getCity().getName());
-        viewHolder.tv3.setText(mData.get(i).getMinSalary() + "K" + " - " + mData.get(i).getMaxSalary() + "K");
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        viewHolder.tv1.setText(mData.get(i).getName());
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickener != null) {
+                    itemClickener.OnItemClickener(mData.get(i).getId(), mData.get(i).getName());
+                }
+            }
+        });
     }
 
     @Override
@@ -53,10 +59,6 @@ public class YuLan1Adapter extends RecyclerView.Adapter<YuLan1Adapter.ViewHolder
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv1)
         TextView tv1;
-        @BindView(R.id.tv2)
-        TextView tv2;
-        @BindView(R.id.tv3)
-        TextView tv3;
         @BindView(R.id.llView)
         LinearLayout llView;
 
@@ -64,6 +66,14 @@ public class YuLan1Adapter extends RecyclerView.Adapter<YuLan1Adapter.ViewHolder
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnItemClickener {
+        void OnItemClickener(String id, String name);
+    }
+
+    public void setOnItemClickener(OnItemClickener OnItemClickener) {
+        itemClickener = OnItemClickener;
     }
 
 }

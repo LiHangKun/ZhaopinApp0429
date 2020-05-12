@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -78,6 +78,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/tv1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:ellipsize="end"
@@ -101,6 +102,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="@dimen/dp_3"
@@ -115,6 +117,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/tv3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_8"
@@ -137,6 +140,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv4"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:ellipsize="end"
@@ -157,6 +161,7 @@
                             android:background="#e7e7e7" />
 
                         <TextView
+                            android:id="@+id/tv5"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:ellipsize="end"
@@ -178,6 +183,7 @@
 
 
                         <TextView
+                            android:id="@+id/tv6"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
@@ -198,6 +204,7 @@
 
 
                         <TextView
+                            android:id="@+id/tv7"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
@@ -258,6 +265,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv8"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -294,6 +302,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv9"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -330,6 +339,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv10"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -366,6 +376,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv11"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -394,14 +405,13 @@
                 android:textStyle="bold" />
 
 
-            <!-- <android.support.v7.widget.RecyclerView
-                 android:layout_width="match_parent"
-                 android:layout_marginTop="@dimen/dp_10"
-                 android:layout_height="wrap_content"/>-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10" />
 
-            <include layout="@layout/item_yixiang_layout" />
-
-            <include layout="@layout/item_yixiang_layout" />
+            <!--<include layout="@layout/item_yixiang_layout" />-->
 
 
             <TextView
@@ -416,24 +426,13 @@
                 android:textStyle="bold" />
 
 
-            <!-- <android.support.v7.widget.RecyclerView
-                 android:layout_width="match_parent"
-                 android:layout_marginTop="@dimen/dp_10"
-                 android:layout_height="wrap_content"/>-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10" />
 
-            <include layout="@layout/item_yulan2_layout" />
-
-            <include layout="@layout/item_yulan2_layout" />
-
-            <include layout="@layout/item_yulan2_layout" />
-
-            <include layout="@layout/item_yulan2_layout" />
-
-            <include layout="@layout/item_yulan2_layout" />
-
-            <include layout="@layout/item_yulan2_layout" />
-
-            <include layout="@layout/item_yulan2_layout" />
+            <!-- <include layout="@layout/item_yulan2_layout" />-->
 
 
             <TextView
@@ -448,22 +447,14 @@
                 android:textStyle="bold" />
 
 
-            <!-- <android.support.v7.widget.RecyclerView
-                 android:layout_width="match_parent"
-                 android:layout_marginTop="@dimen/dp_10"
-                 android:layout_height="wrap_content"/>-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10" />
 
-            <include layout="@layout/item_yulan3_layout" />
 
-            <include layout="@layout/item_yulan3_layout" />
-
-            <include layout="@layout/item_yulan3_layout" />
-
-            <include layout="@layout/item_yulan3_layout" />
-
-            <include layout="@layout/item_yulan3_layout" />
-
-            <include layout="@layout/item_yulan3_layout" />
+            <!--<include layout="@layout/item_yulan3_layout" />-->
 
 
             <View
@@ -484,7 +475,7 @@
                 android:textStyle="bold" />
 
 
-            <TextView
+            <!--<TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
                 android:layout_marginBottom="@dimen/dp_100"
@@ -492,13 +483,29 @@
                 android:text="用于展示专业技能的流布局"
                 android:textColor="#333"
                 android:textSize="@dimen/sp_14"
-                android:textStyle="normal" />
+                android:textStyle="normal" />-->
+
+            <com.lx.zhaopin.view.FlowLiner
+                android:visibility="gone"
+                android:id="@+id/flowLiner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="10dp" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10" />
 
 
         </LinearLayout>
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>

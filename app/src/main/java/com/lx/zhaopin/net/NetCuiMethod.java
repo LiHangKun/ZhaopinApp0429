@@ -36,6 +36,14 @@ public class NetCuiMethod {
     public static final String guanZhuGongsi = "member/company/collect";//关注公司/取消关注
     public static final String gongSiGangWei = "member/company/position/page";//公司在招岗位
 
+
+
+
+    public static final String jianLiPreview = "member/jobhunter/resume/preview";//简历预览
+    public static final String delZyJN = "member/jobhunter/resume/skill/delete";//删除专业技能
+    public static final String ADDZyJN = "member/jobhunter/resume/skill/add";//新增专业技能
+    public static final String EditZyJN = "member/jobhunter/resume/skill/edit";//修改专业技能
+
     /*------------TODO-----求职者-----------------*/
 
 
