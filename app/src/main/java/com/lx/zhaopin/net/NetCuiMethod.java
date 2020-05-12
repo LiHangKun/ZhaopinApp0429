@@ -45,6 +45,8 @@ public class NetCuiMethod {
     public static final String getWokJingLi = "member/jobhunter/resume/work/get";//获取工作经历
     public static final String editWokJingLi = "member/jobhunter/resume/work/edit";//修改工作经历  //TODO  可能会有问题
     public static final String addWokJingLi = "member/jobhunter/resume/work/add";//新增工作经历  //TODO  可能会有问题
+    public static final String qiuZhiYiXiang = "member/jobhunter/expectation";//求职意向
+    public static final String zhuCiZhiWei = "member/jobhunter/expectation/get";//获取主次职位
 
     /*------------TODO-----求职者-----------------*/
 

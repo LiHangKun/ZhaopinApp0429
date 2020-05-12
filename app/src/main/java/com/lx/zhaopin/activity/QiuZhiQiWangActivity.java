@@ -1,6 +1,7 @@
 package com.lx.zhaopin.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,9 +12,21 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.ZhuCiZhiWuBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickListener {
 
@@ -31,9 +44,17 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
     private void init() {
         topTitle.setText("编辑求职期望");
         rightText.setText("删除");
-        rightText.setVisibility(View.VISIBLE);
-        rightText.setOnClickListener(this);
 
+
+        String id = getIntent().getStringExtra("id");
+        if (!TextUtils.isEmpty(id)) {
+            rightText.setVisibility(View.VISIBLE);
+            yiXiangDetail(id);
+        } else {
+            rightText.setVisibility(View.INVISIBLE);
+        }
+
+        rightText.setOnClickListener(this);
         getNoLinkData();
         initNoLinkOptionsPicker();
 
@@ -53,6 +74,48 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
         tv4 = findViewById(R.id.tv4);
 
 
+    }
+
+
+    //zhuCiZhiWei 获取主次职位
+    private void yiXiangDetail(String exId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("exId", exId);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhuCiZhiWei, params, new BaseCallback<ZhuCiZhiWuBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ZhuCiZhiWuBean resultBean) {
+
+                tv1.setText(resultBean.getPositionCategory3().getName());
+
+                if (resultBean.getResumeExpectationIndustryList().size() > 2) {
+                    tv2.setText(resultBean.getResumeExpectationIndustryList().get(0).getName() + "  " + resultBean.getResumeExpectationIndustryList().get(1).getName());
+                } else {
+                    tv2.setText(resultBean.getResumeExpectationIndustryList().get(0).getName());
+                }
+
+
+                tv3.setText(resultBean.getCity().getName());
+                tv4.setText(resultBean.getMinSalary() + "-" + resultBean.getMaxSalary() + "K");
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 
