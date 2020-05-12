@@ -37,12 +37,14 @@ public class NetCuiMethod {
     public static final String gongSiGangWei = "member/company/position/page";//公司在招岗位
 
 
-
-
     public static final String jianLiPreview = "member/jobhunter/resume/preview";//简历预览
     public static final String delZyJN = "member/jobhunter/resume/skill/delete";//删除专业技能
     public static final String ADDZyJN = "member/jobhunter/resume/skill/add";//新增专业技能
     public static final String EditZyJN = "member/jobhunter/resume/skill/edit";//修改专业技能
+    public static final String delWorkJingLi = "member/jobhunter/resume/work/delete";//删除工作经历
+    public static final String getWokJingLi = "member/jobhunter/resume/work/get";//获取工作经历
+    public static final String editWokJingLi = "member/jobhunter/resume/work/edit";//修改工作经历  //TODO  可能会有问题
+    public static final String addWokJingLi = "member/jobhunter/resume/work/add";//新增工作经历  //TODO  可能会有问题
 
     /*------------TODO-----求职者-----------------*/
 

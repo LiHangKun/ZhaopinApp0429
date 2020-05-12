@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -30,19 +32,44 @@ import com.bigkoo.pickerview.listener.CustomListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.hss01248.dialog.StyledDialog;
+import com.hss01248.dialog.interfaces.MyDialogListener;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.MyWorkBean;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.KeyAllboardUtil;
+import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.SharedPreferencesUtil;
 import com.lx.zhaopin.utils.ToastFactory;
+import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MyGongZuoActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.edit1)
@@ -67,12 +94,18 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
     FlowLiner flowLiner;
     @BindView(R.id.edit2)
     EditText edit2;
+
+    @BindView(R.id.edit0)
+    EditText edit0;
+
     @BindView(R.id.okID)
     TextView okID;
 
     private static final String TAG = "MyGongZuoActivity";
 
     private TimePickerView pvTime, pvCustomTime, pvCustomLunar, pvCustomLunarEnd;
+    private Intent intent;
+    private String workID;
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
         Log.d("getTime()", "choice date millis: " + date.getTime());
@@ -298,14 +331,102 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void init() {
         topTitle.setText("工作经验");
         rightText.setText("删除");
+        workID = getIntent().getStringExtra("workID");
+        if (!TextUtils.isEmpty(workID)) {
+            rightText.setVisibility(View.VISIBLE);
+
+            getWorkMyJingLi(workID);
+
+        } else {
+            rightText.setVisibility(View.INVISIBLE);
+        }
         rightText.setOnClickListener(this);
-        rightText.setVisibility(View.VISIBLE);
+
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
+
         initTimePicker();
         initLunarPicker();
         initLunarPickerEnd();
+    }
+
+    private List<String> flowData = new ArrayList<>();
+
+    private void getWorkMyJingLi(String wid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("wid", wid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.getWokJingLi, params, new BaseCallback<MyWorkBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, MyWorkBean resultBean) {
+
+                edit1.setText(resultBean.getCompanyName());
+                edit0.setText(resultBean.getPositionName());
+                tv2.setText(resultBean.getBeginDate());
+                tv3.setText(resultBean.getEndDate());
+                edit2.setText(resultBean.getExperience());
+
+                String skills = resultBean.getSkills();
+                String[] split = skills.split(",");
+                for (int i = 0; i < split.length; i++) {
+                    flowData.add(split[i]);
+                }
+
+                for (int i = 0; i < flowData.size(); i++) {
+                    final TextView radioButton = new TextView(mContext);
+                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
+                    radioButton.setLayoutParams(layoutParams);
+                    final String str = flowData.get(i);
+                    radioButton.setText(str);
+                    radioButton.setGravity(Gravity.CENTER);
+                    radioButton.setTextSize(13);
+                    radioButton.setPadding(ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6));
+                    radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                    //radioButton.setBackgroundResource(R.drawable.search_selector);
+                    radioButton.setBackgroundResource(R.drawable.button_shape03);
+                    radioButton.setFocusable(true);
+                    radioButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, AddZhuanYeJiNengActivity.class);
+                            intent.putExtra("id", "");
+                            intent.putExtra("name", str);
+                            startActivity(intent);
+                        }
+                    });
+                    flowLiner.addView(radioButton);
+                }
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
     }
 
     @Override
@@ -318,17 +439,32 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
 
     }
 
+    private String oldSearchStr = "";
 
     @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.llView3OnClick, R.id.llView4OnClick, R.id.okID, R.id.rightText})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rightText:
-                ToastFactory.getToast(mContext, "删除").show();
+                StyledDialog.init(mContext);
+                StyledDialog.buildIosAlert("", "\r是否删除工作经历?", new MyDialogListener() {
+                    @Override
+                    public void onFirst() {
+
+                    }
+
+                    @Override
+                    public void onSecond() {
+                        delWorkJingLiMe(workID);
+
+
+                    }
+                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+
                 break;
             case R.id.llView1OnClick:
-                KeyAllboardUtil.hideKeyboard(MyGongZuoActivity.this);
+                /*KeyAllboardUtil.hideKeyboard(MyGongZuoActivity.this);
                 selectType1Method();
-                lightoff();
+                lightoff();*/
                 break;
             case R.id.llView2OnClick:
                 KeyAllboardUtil.hideKeyboard(MyGongZuoActivity.this);
@@ -340,12 +476,229 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.llView4OnClick:
                 //添加专业技能
-                startActivity(new Intent(mContext, AddZhuanYeJiNengActivity.class));
+
+                intent = new Intent(mContext, AddZhuanYeJiNengActivity.class);
+                intent.putExtra("id", "");
+                intent.putExtra("name", "");
+                startActivityForResult(intent, 222);
                 break;
             case R.id.okID:
-                ToastFactory.getToast(mContext, "保存").show();
+                if (TextUtils.isEmpty(workID)) {
+                    //新增工作经历
+                    if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "公司名称不能为空").show();
+                        return;
+                    } else if (TextUtils.isEmpty(edit0.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "职位名称不能为空").show();
+                        return;
+                    } else if (tv2.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "开始时间不能为空").show();
+                        return;
+                    } else if (tv3.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "结束时间不能为空").show();
+                        return;
+                    } else if (TextUtils.isEmpty(oldSearchStr)) {
+                        ToastFactory.getToast(mContext, "专业技能不能为空").show();
+                        return;
+                    } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "工作描述不能为空").show();
+                        return;
+                    } else {
+                        addWorkJingYan(edit1.getText().toString().trim(),
+                                edit0.getText().toString().trim(),
+                                oldSearchStr,
+                                tv2.getText().toString().trim(),
+                                tv3.getText().toString().trim(),
+                                edit2.getText().toString().trim());
+                    }
+                } else {
+                    //编辑工作经历
+                    if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "公司名称不能为空").show();
+                        return;
+                    } else if (TextUtils.isEmpty(edit0.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "职位名称不能为空").show();
+                        return;
+                    } else if (tv2.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "开始时间不能为空").show();
+                        return;
+                    } else if (tv3.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "结束时间不能为空").show();
+                        return;
+                    } else if (TextUtils.isEmpty(oldSearchStr)) {
+                        ToastFactory.getToast(mContext, "专业技能不能为空").show();
+                        return;
+                    } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
+                        ToastFactory.getToast(mContext, "工作描述不能为空").show();
+                        return;
+                    } else {
+                        editWorkJingYan(workID, edit1.getText().toString().trim(),
+                                edit0.getText().toString().trim(),
+                                oldSearchStr,
+                                tv2.getText().toString().trim(),
+                                tv3.getText().toString().trim(),
+                                edit2.getText().toString().trim());
+                    }
+                }
+
                 break;
         }
+    }
+
+    //编辑工作经历
+    private void editWorkJingYan(String wid, String companyName, String positionName, String skills, String beginDate, String endDate, String experience) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("wid", wid);
+        params.put("companyName", companyName);
+        params.put("positionName", positionName);
+        params.put("skills", skills);
+        params.put("beginDate", beginDate);
+        params.put("endDate", endDate);
+        params.put("experience", experience);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.editWokJingLi, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+
+
+    }
+
+
+    private void setUpFlowLinear() {
+        flowLiner.removeAllViews();
+
+        for (int i = 0; i < flowData.size(); i++) {
+            final TextView radioButton = new TextView(mContext);
+            FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
+            radioButton.setLayoutParams(layoutParams);
+            final String str = flowData.get(i);
+            radioButton.setText(str);
+            radioButton.setGravity(Gravity.CENTER);
+            radioButton.setTextSize(13);
+            radioButton.setPadding(ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6));
+            radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+            //radioButton.setBackgroundResource(R.drawable.search_selector);
+            radioButton.setBackgroundResource(R.drawable.button_shape03);
+            radioButton.setFocusable(true);
+            radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            flowLiner.addView(radioButton);
+        }
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!TextUtils.isEmpty(oldSearchStr)) {
+            String oldArray[] = oldSearchStr.split(",");
+            List list = Arrays.asList(oldArray);
+            Set set = new HashSet(list);
+            oldArray = (String[]) set.toArray(new String[0]);
+            flowData = Arrays.asList(oldArray);
+            setUpFlowLinear();
+        }
+    }
+
+    /**
+     * 所有的Activity对象的返回值都是由这个方法来接收
+     *
+     * @param requestCode 表示的是启动一个Activity时传过去的requestCode值
+     * @param resultCode  表示的是启动后的Activity回传值时的resultCode值
+     * @param data        表示的是启动后的Activity回传过来的Intent对象
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 判断请求码和返回码是不是正确的，这两个码都是我们自己设置的
+        if (requestCode == 222 && resultCode == 111) {
+            String name = data.getStringExtra("WorkName");
+            SharedPreferencesUtil.saveData(MyGongZuoActivity.this, AppSP.WORK_JINENG, name);
+        }
+    }
+
+
+    //新增工作经历
+    private void addWorkJingYan(String companyName, String positionName, String skills, String beginDate, String endDate, String experience) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("companyName", companyName);
+        params.put("positionName", positionName);
+        params.put("skills", skills);
+        params.put("beginDate", beginDate);
+        params.put("endDate", endDate);
+        params.put("experience", experience);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.addWokJingLi, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+
+    //删除工作经历
+    private void delWorkJingLiMe(String wid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("wid", wid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.delWorkJingLi, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
     }
 
     /**
@@ -386,8 +739,6 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                 }
             });
 
-
-            //TODO 设置数据
 
             // 设置背景图片， 必须设置，不然动画没作用
             popupWindow1.setBackgroundDrawable(new BitmapDrawable());

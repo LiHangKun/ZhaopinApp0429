@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -155,7 +156,7 @@ public class AddZhuanYeJiNengActivity extends BaseActivity implements View.OnCli
     }
 
     //新增专业技能
-    private void addNewZYJN(String name) {
+    private void addNewZYJN(final String name) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("name", name);
@@ -167,6 +168,9 @@ public class AddZhuanYeJiNengActivity extends BaseActivity implements View.OnCli
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        Intent intent = new Intent();
+                        intent.putExtra("WorkName", name);
+                        setResult(111, intent);
                         finish();
                     }
                 }, 500);

@@ -242,6 +242,7 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
             case R.id.addView3:
                 //工作经验
                 intent = new Intent(mContext, MyGongZuoActivity.class);
+                intent.putExtra("workID","");
                 startActivity(intent);
                 break;
         }
