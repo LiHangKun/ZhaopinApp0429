@@ -9,7 +9,8 @@ public class NetCuiMethod {
     public static final String registerMethod = "member/register";//注册
     public static final String retrievePassword = "member/password";//找回或修改密码
     public static final String loginMethod = "member/login";//登录
-    public static final String memberCity = "member/province/list";//选择省份
+    public static final String memberProvinceCity = "member/province/list";//选择省份
+    public static final String memberCity = "member/city/list";//城市列表
     public static final String aboutMe = "common/about";//关于我们
     public static final String feedback = "member/feedback";//意见反馈
     public static final String wenTiPage = "common/question/page";//常见问题
@@ -21,9 +22,19 @@ public class NetCuiMethod {
     public static final String myJianLi = "member/jobhunter/resume";//个人简历
     public static final String xueLiList = "member/education/list";//学历列表
     public static final String addJiaoYuJIngLi = "member/jobhunter/resume/education/add";//新增教育信息
-    public static final String chaEidInfo = "member/jobhunter/resume/education/get";//根据EID查询学历信息  TODO  还没有写
+    public static final String chaEidInfo = "member/jobhunter/resume/education/get";//根据EID查询学历信息
     public static final String xiuGaiEidInfo = "member/jobhunter/resume/education/edit";//修改教育经历
     public static final String delEidInfo = "member/jobhunter/resume/education/delete";//删除教育经历
+    public static final String zhiWeiDetail = "member/position/detail";//职位详情
+    public static final String zhiWeiShouCang = "member/position/collect";//职位收藏/取消收藏
+    public static final String zhiWeiPageList = "member/position/page";//职位分页列表  TODO  还没有写
+    public static final String zhiWeiIsHeShi = "member/position/improper";//职位不合适/取消不合适  TODO  还没有写
+    public static final String zhiWeiJuBao = "member/position/report";//职位举报
+    public static final String mianShiTimeList = "member/position/time";//预约面试时间列表   TODO  还没有写
+    public static final String mianShiYuYue = "member/position/appoint";//预约面试   TODO  还没有写
+    public static final String companyInfo = "member/company/info";//公司信息
+    public static final String guanZhuGongsi = "member/company/collect";//关注公司/取消关注
+    public static final String gongSiGangWei = "member/company/position/page";//公司在招岗位
 
     /*------------TODO-----求职者-----------------*/
 

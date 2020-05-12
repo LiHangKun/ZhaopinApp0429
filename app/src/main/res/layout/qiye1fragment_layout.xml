@@ -27,21 +27,17 @@
                 android:textSize="@dimen/sp_16"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
-                android:scaleType="centerCrop"
-                android:src="@drawable/splashbj" />
 
             <!--此处是横向滑动的图片展示-->
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
 
             <TextView
+                android:id="@+id/tv1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -72,6 +68,7 @@
                     android:src="@drawable/ditu_bg" />
 
                 <LinearLayout
+                    android:id="@+id/daoHang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_20"
@@ -81,6 +78,7 @@
                     android:padding="@dimen/dp_20">
 
                     <TextView
+                        android:id="@+id/tv2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -122,6 +120,7 @@
                     android:textSize="@dimen/sp_13" />
 
                 <TextView
+                    android:id="@+id/tv3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_10"
@@ -148,6 +147,7 @@
                     android:textSize="@dimen/sp_13" />
 
                 <TextView
+                    android:id="@+id/tv4"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_10"
@@ -174,6 +174,7 @@
                     android:textSize="@dimen/sp_13" />
 
                 <TextView
+                    android:id="@+id/tv5"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_10"
@@ -196,6 +197,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"

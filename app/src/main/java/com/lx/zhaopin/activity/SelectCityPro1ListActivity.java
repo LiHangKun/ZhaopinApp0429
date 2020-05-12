@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,14 +10,10 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.SelectCityAdapter;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.CityBean;
-import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
-import com.lx.zhaopin.utils.SPTool;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,11 +41,10 @@ public class SelectCityPro1ListActivity extends BaseActivity {
         getDataList();
     }
 
-    //获取城市列表
+    //获取省份
     private void getDataList() {
         Map<String, String> params = new HashMap<>();
-        params.put("mid", "ca38784005db46c80a5aa2704c9571e54279a16ef03bf24044e6da0fc235fb91");
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.memberCity, params, new BaseCallback<CityBean>() {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.memberProvinceCity, params, new BaseCallback<CityBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
 
@@ -73,7 +69,9 @@ public class SelectCityPro1ListActivity extends BaseActivity {
                         String cityName = name;
                         String cityID = id;
                         Log.i(TAG, "itemClick: 用户选择的名字" + cityName + "---" + cityID + "----" + sJing + "------" + sWei);
-
+                        Intent intent = new Intent(mContext, SelectCityCity2ListActivity.class);
+                        intent.putExtra("provinceId", id);
+                        startActivity(intent);
 
                     }
                 });

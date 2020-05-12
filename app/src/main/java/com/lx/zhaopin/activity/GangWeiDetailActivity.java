@@ -2,28 +2,54 @@ package com.lx.zhaopin.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.ZhiWeiDetailBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
+import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class GangWeiDetailActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.back)
@@ -80,12 +106,22 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     TextView dibuView4;
     @BindView(R.id.llViewGongSi)
     LinearLayout llViewGongSi;
+
+    @BindView(R.id.noGouTongView)
+    LinearLayout noGouTongView;
+
+
     private Intent intent;
 
     String Cui = "1.独立Cover产品需求对接及解决方案制定，并高效输出相对应付物2.系统化完成需求挖掘、流程梳理（业务流、操作流、信息流）及相关产品规则制定1.独立Cover产品需求对接及解决方案制定，并高效输出相对应付物2.系统化完成需求挖掘、流程梳理（业务流、操作流、信息流）及相关产品规则制定1.独立Cover产品需求对接及解决方案制定，并高效输出相对应付物2.系统化完成需求挖掘、流程梳理（业务流、操作流、信息流）及相关产品规则制定";
     private int maxLine = 5;
     private SpannableString elipseString;//收起的文字
     private SpannableString notElipseString;//展开的文字
+    private String lng;
+    private String lat;
+    private String qiYeID;
+    private String pid;
+    private String collected;
 
 
     private void getLastIndexForLimit(TextView tv, int maxLine, String content) {
@@ -140,7 +176,161 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void init() {
+        pid = getIntent().getStringExtra("pid");
+
+        getZhiWeiDetail(pid);
+
+
         getLastIndexForLimit(tv7, maxLine, Cui);
+    }
+
+    //职位详情
+    private void getZhiWeiDetail(String pid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiDetail, params, new SpotsCallBack<ZhiWeiDetailBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
+
+                //是否收藏  image1
+                collected = resultBean.getCollected();
+                //1表示是，0表示否
+                switch (collected) {
+                    case "1":
+                        image1.setImageResource(R.drawable.gangwei_shoucang2);
+                        break;
+                    case "0":
+                        image1.setImageResource(R.drawable.gangwei_shoucang1);
+                        break;
+                }
+
+
+                String positionType = resultBean.getPositionType();
+                //职位类型  TODO  这个职位类型 是不是 用来判断 上面的文字显示和  下面的布局的显示隐藏
+
+                  /* 底部按钮部分
+                   立即沟通 dibuView1
+                   立即沟通和申请职位 dibuView2  liJiGouTongTV   shenQingZhiwei
+                   申请职位 dibuView3
+                   预约面试 dibuView4
+                   */
+
+
+                switch (positionType) {
+                    //职位类型1.需沟通，2.无需沟通，3.直接面试
+                    case "1":
+                        noGouTongView.setVisibility(View.GONE);
+                        break;
+                    case "2":
+                        noGouTongView.setVisibility(View.VISIBLE);
+                        break;
+                    case "3":
+                        noGouTongView.setVisibility(View.VISIBLE);
+                        break;
+                }
+
+
+                tv1.setText(resultBean.getName());
+                tv2.setText(resultBean.getMinSalary() + "--" + resultBean.getMaxSalary() + "K");
+                tv3.setText(resultBean.getLocation());
+                tv4.setText(resultBean.getExperienceYear() + "年");
+                tv5.setText(resultBean.getEducation().getName());
+                tv7.setText(resultBean.getDuty());
+
+                //TODO 专业技能 flowLiner1
+                String skills = resultBean.getSkills();
+                List<String> flowData = new ArrayList<>();
+                if (skills.contains(",")) {
+                    String[] split = skills.split(",");
+
+                    for (int i = 0; i < split.length; i++) {
+                        flowData.add(split[i]);
+                    }
+
+                    for (int i = 0; i < flowData.size(); i++) {
+                        final TextView radioButton = new TextView(GangWeiDetailActivity.this);
+                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
+                        radioButton.setLayoutParams(layoutParams);
+                        final String str = flowData.get(i);
+                        radioButton.setText(str);
+                        radioButton.setGravity(Gravity.CENTER);
+                        radioButton.setTextSize(13);
+                        radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
+                                , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
+                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                        //radioButton.setBackgroundResource(R.drawable.search_selector);
+                        radioButton.setBackgroundResource(R.drawable.button_shape03);
+                        radioButton.setFocusable(true);
+                        radioButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //流布局文字的点击
+                            }
+                        });
+                        flowLiner1.addView(radioButton);
+                    }
+                }
+                //TODO 专业技能 flowLiner1
+
+
+                //TODO 福利待遇 flowLiner2
+                String workfare = resultBean.getWorkfare();
+                List<String> flowData2 = new ArrayList<>();
+                if (workfare.contains(",")) {
+                    String[] workfareL = workfare.split(",");
+                    for (int i = 0; i < workfareL.length; i++) {
+                        flowData2.add(workfareL[i]);
+                    }
+                    for (int i = 0; i < flowData2.size(); i++) {
+                        final TextView radioButton = new TextView(GangWeiDetailActivity.this);
+                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
+                        radioButton.setLayoutParams(layoutParams);
+                        final String str = flowData2.get(i);
+                        radioButton.setText(str);
+                        radioButton.setGravity(Gravity.CENTER);
+                        radioButton.setTextSize(13);
+                        radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
+                                , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
+                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                        //radioButton.setBackgroundResource(R.drawable.search_selector);
+                        radioButton.setBackgroundResource(R.drawable.button_shape03);
+                        radioButton.setFocusable(true);
+                        radioButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //流布局文字的点击
+                            }
+                        });
+                        flowLiner2.addView(radioButton);
+                    }
+                }
+                //TODO 福利待遇 flowLiner2
+
+
+                Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                        .load(resultBean.getCompany().getLogo()).into(roundedImageView);
+                tv8.setText(resultBean.getCompany().getName());
+                tv9.setText(resultBean.getCompany().getFinancing().getName());
+                tv10.setText(resultBean.getCompany().getStaffNum() + "人");
+                tv11.setText(resultBean.getCompany().getIndustry().getName());
+                tv12.setText(resultBean.getCity().getName() + "" + resultBean.getCompany().getDistrict().getName());
+                qiYeID = resultBean.getCompany().getId();
+                lat = resultBean.getCompany().getLat();
+                lng = resultBean.getCompany().getLng();
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+
     }
 
     @Override
@@ -170,46 +360,98 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.image1:
                 //收藏
-                ToastFactory.getToast(mContext, "收藏").show();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    shouCangZhiWei(pid, collected);
+                } else {
+                    ToastFactory.getToast(mContext, "请先登录").show();
+                    startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
             case R.id.image2:
                 //分享
-                ToastFactory.getToast(mContext, "分享").show();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    ToastFactory.getToast(mContext, "分享").show();
+                } else {
+                    ToastFactory.getToast(mContext, "请先登录").show();
+                    startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
             case R.id.image3:
                 //举报
-                ToastFactory.getToast(mContext, "举报").show();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    intent = new Intent(mContext, JuBaoActivity.class);
+                    intent.putExtra("pid", pid);
+                    startActivity(intent);
+                } else {
+                    ToastFactory.getToast(mContext, "请先登录").show();
+                    startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
             case R.id.daoHang:
-                ToastFactory.getToast(mContext, "导航").show();
+                gotoGaode(lat, lng);
                 break;
             case R.id.dibuView1:
                 //立即沟通
-                ToastFactory.getToast(mContext, "立即沟通长的").show();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    ToastFactory.getToast(mContext, "立即沟通长的").show();
+                } else {
+                    ToastFactory.getToast(mContext, "请先登录").show();
+                    startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
             case R.id.liJiGouTongTV:
                 //立即沟通
-                ToastFactory.getToast(mContext, "立即沟通端的").show();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    ToastFactory.getToast(mContext, "立即沟通短的").show();
+                } else {
+                    ToastFactory.getToast(mContext, "请先登录").show();
+                    startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
             case R.id.shenQingZhiwei:
                 //申请职位
-                ToastFactory.getToast(mContext, "申请职位").show();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    ToastFactory.getToast(mContext, "申请职位").show();
+                } else {
+                    ToastFactory.getToast(mContext, "请先登录").show();
+                    startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
             case R.id.dibuView2:
                 //不要
                 break;
             case R.id.dibuView3:
                 //申请职位
-                ToastFactory.getToast(mContext, "申请职位").show();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    ToastFactory.getToast(mContext, "申请职位哈哈").show();
+                } else {
+                    ToastFactory.getToast(mContext, "请先登录").show();
+                    startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
             case R.id.dibuView4:
-                ToastFactory.getToast(mContext, "预约面试").show();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    ToastFactory.getToast(mContext, "预约面试").show();
+                } else {
+                    ToastFactory.getToast(mContext, "请先登录").show();
+                    startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
             case R.id.llViewGongSi:
                 //公司
-                intent = new Intent(mContext, QiYeInfoActivity.class);
-                intent.putExtra("qiYeID", "崔崔");
-                startActivity(intent);
+                if (!TextUtils.isEmpty(qiYeID)) {
+                    intent = new Intent(mContext, QiYeInfoActivity.class);
+                    intent.putExtra("qiYeID", qiYeID);
+                    startActivity(intent);
+                }
                 break;
             case R.id.tv7:
                 //岗位详情的文本,查看全部
@@ -224,5 +466,107 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
         }
+    }
+
+
+    //职位收藏/取消收藏 zhiWeiShouCang  1表示是，0表示否
+    private void shouCangZhiWei(final String pid, final String collected) {
+
+       /* Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiShouCang, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+                *//*switch (collected) {
+                    case "1":
+                        image1.setImageResource(R.drawable.gangwei_shoucang1);
+                        break;
+                    case "0":
+                        image1.setImageResource(R.drawable.gangwei_shoucang2);
+                        break;
+                }*//*
+
+                getZhiWeiDetail(pid);
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });*/
+
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiShouCang, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                getZhiWeiDetail(pid);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+
+    }
+
+
+    /*打开高德导航*/
+    private void gotoGaode(String lat, String lon) {
+        if (isAvilible(mContext, "com.autonavi.minimap")) {
+            try {
+                //116.304521,40.003865
+                Intent intent = Intent.getIntent("androidamap://navi?sourceApplication=慧医&poiname=我的目的地&lat=" + lat + "&lon=" + lon + "&dev=0");
+                startActivity(intent);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(mContext, "您尚未安装高德地图", Toast.LENGTH_LONG).show();
+            Uri uri = Uri.parse("market://details?id=com.autonavi.minimap");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+
+    }
+
+
+    /* 检查手机上是否安装了指定的软件
+     * @param context
+     * @param packageName：应用包名
+     * @return
+     */
+    public static boolean isAvilible(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
     }
 }

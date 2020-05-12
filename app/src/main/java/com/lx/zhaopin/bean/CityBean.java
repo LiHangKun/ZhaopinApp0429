@@ -29,6 +29,24 @@ public class CityBean extends CommonBean {
         private String id;
         private String lat;
         private String lng;
+        private String name;
+        private String initial;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getInitial() {
+            return initial;
+        }
+
+        public void setInitial(String initial) {
+            this.initial = initial;
+        }
 
         public String getCity() {
             return city;

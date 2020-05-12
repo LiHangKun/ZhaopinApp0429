@@ -23,6 +23,10 @@ import com.lx.zhaopin.home1.ShouYe1Fragment;
 import com.lx.zhaopin.home1.ShouYe2Fragment;
 import com.lx.zhaopin.utils.SPTool;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 public class Home1Fragment extends BaseFragment implements View.OnClickListener {
@@ -51,6 +55,25 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         }
     }
 
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 4:
+                String cityName = event.getKeyWord1();
+                String cityNameID = event.getKeyWord2();
+                tvCity.setText(cityName);
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,6 +87,9 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
 
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
 
         LinearLayout addView = view.findViewById(R.id.addView);
         tvCity = view.findViewById(R.id.tvCity);

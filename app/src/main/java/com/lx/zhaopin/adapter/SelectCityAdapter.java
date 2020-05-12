@@ -39,7 +39,7 @@ public class SelectCityAdapter extends RecyclerView.Adapter<SelectCityAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        viewHolder.tv1.setText(mData.get(i).getCity());
+        viewHolder.tv1.setText(mData.get(i).getName());
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
