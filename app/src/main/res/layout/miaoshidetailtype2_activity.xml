@@ -8,9 +8,8 @@
 
 
     <!--
-    面试官看到的,面试详情
+    求职者,面试详情
     -->
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,7 +52,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:singleLine="true"
                             android:text=""
                             android:textColor="#3B3B3B"
                             android:textSize="@dimen/sp_20"
@@ -98,8 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/dp_15"
-                            android:visibility="visible" />
+                            android:layout_marginLeft="@dimen/dp_15" />
 
 
                     </LinearLayout>
@@ -341,7 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:gravity="center_vertical"
-                    android:text="备注"
+                    android:text=""
                     android:textColor="#666"
                     android:textSize="@dimen/sp_13" />
 
@@ -364,7 +361,6 @@
         android:layout_marginRight="@dimen/dp_18"
         android:layout_marginBottom="@dimen/dp_30"
         android:orientation="horizontal"
-        android:visibility="gone"
         android:weightSum="3.1">
 
 
@@ -412,7 +408,8 @@
         android:background="@drawable/edittext_shape"
         android:gravity="center"
         android:text="取消面试"
-        android:textColor="#1678FF" />
+        android:textColor="#1678FF"
+        android:visibility="gone" />
 
 
 </LinearLayout>

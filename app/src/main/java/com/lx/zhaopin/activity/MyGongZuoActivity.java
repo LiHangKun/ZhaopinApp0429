@@ -351,9 +351,9 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
         }
         rightText.setOnClickListener(this);
 
-        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
-        }
+        }*/
 
         initTimePicker();
         initLunarPicker();

@@ -54,7 +54,10 @@ public class NetCuiMethod {
     public static final String pingBiGangList = "member/postion/improper/page";//不合适职位列表
     public static final String guanzhuGongSi = "member/company/collect/page";//关注公司列表
     public static final String mianshiList = "member/jobhunter/interview/list";//面试记录  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
-    public static final String mianshiDetail = "member/jobhunter/interview/detail";//面试详情
+    public static final String mianshiDetail_qiuZhi1 = "member/jobhunter/interview/detail";//面试详情,求职者看到的界面  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
+    public static final String yiLuQuList = "member/jobhunter/offer/list";//录取记录
+    public static final String offerDetail = "member/jobhunter/offer/detail";//offer详情
+    public static final String caoZuoOffer = "member/jobhunter/offer/deal";//处理offer
 
 
 
@@ -64,10 +67,17 @@ public class NetCuiMethod {
     /*------------TODO-----求职者-----------------*/
 
 
+    public static final String quXiaoMianShi_Type1 = "member/jobhunter/interview/cancel";//取消面试,求职者
+    public static final String quXiaoMianShi_Type2 = "member/recruiter/interview/cancel";//取消面试,HR
+
     public static final String logout = "logout";//退出登录
     public static final String memberLogout = "member/logout";//退出登录
     public static final String zhuXiaoUID = "member/account/delete";//注销账户
     public static final String versionUpdate = "member/version/update";//更新
+
+
+
+    public static final String mianshiDetail_HR = "member/recruiter/interview/detail";//面试详情,HR看到的界面  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
 
 
 }

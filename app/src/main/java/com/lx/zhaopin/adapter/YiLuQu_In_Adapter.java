@@ -1,6 +1,7 @@
 package com.lx.zhaopin.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,8 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.QiuZhiFeedActivity;
+import com.lx.zhaopin.bean.YiLuQuBean;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,10 +26,15 @@ import butterknife.ButterKnife;
 public class YiLuQu_In_Adapter extends RecyclerView.Adapter<YiLuQu_In_Adapter.ViewHolder> {
 
 
+    private List<YiLuQuBean.DataListBean.OfferListBean> mData;
+    private Context mContext;
+
     public YiLuQu_In_Adapter() {
     }
 
-    public YiLuQu_In_Adapter(Context context) {
+    public YiLuQu_In_Adapter(Context context, List<YiLuQuBean.DataListBean.OfferListBean> allList) {
+        mContext = context;
+        mData = allList;
     }
 
     @NonNull
@@ -32,13 +44,44 @@ public class YiLuQu_In_Adapter extends RecyclerView.Adapter<YiLuQu_In_Adapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                .load(mData.get(i).getCompany().getLogo()).into(viewHolder.roundedImageView);
+
+        viewHolder.tv1.setText(mData.get(i).getCompany().getName());
+        viewHolder.tv2.setText("面试：" + mData.get(i).getPosition().getName() + " " + mData.get(i).getPosition().getMinSalary() + " - " + mData.get(i).getPosition().getMaxSalary() + "K");
+        viewHolder.tv3.setText(mData.get(i).getSendDate());
+
+
+        String offerStatus = mData.get(i).getOfferStatus();
+        //offerStatus  1待处理 2 已接受 3 已拒绝
+        switch (offerStatus) {
+            case "1":
+                viewHolder.image1.setImageResource(R.drawable.daitongyi);
+                break;
+            case "2":
+                viewHolder.image1.setImageResource(R.drawable.yitongyi);
+                break;
+            case "3":
+                viewHolder.image1.setImageResource(R.drawable.yijujue);
+                break;
+        }
+
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, QiuZhiFeedActivity.class);
+                intent.putExtra("offerID", mData.get(i).getId());
+                mContext.startActivity(intent);
+            }
+        });
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

@@ -428,7 +428,13 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 招聘者面试详情 -->
+            android:windowSoftInputMode="adjustPan" /><!-- 面试官面试详情 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.MianShiDetailType2Activity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 面试详情招聘者 -->
         <activity
             android:name="com.lx.zhaopin.activity.ZhiWeiYaoYueActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
