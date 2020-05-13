@@ -86,7 +86,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/tv1"
-                        android:src="@drawable/yitongyi" />
+                        android:src="@drawable/yitongyi"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>

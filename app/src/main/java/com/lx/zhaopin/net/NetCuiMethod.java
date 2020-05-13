@@ -53,9 +53,8 @@ public class NetCuiMethod {
     public static final String shouCangZhiWeiList = "member/postion/collect/page";//收藏职位列表
     public static final String pingBiGangList = "member/postion/improper/page";//不合适职位列表
     public static final String guanzhuGongSi = "member/company/collect/page";//关注公司列表
-    public static final String mianshiList = "member/jobhunter/interview/list";//面试记录
-
-
+    public static final String mianshiList = "member/jobhunter/interview/list";//面试记录  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
+    public static final String mianshiDetail = "member/jobhunter/interview/detail";//面试详情
 
 
 

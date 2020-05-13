@@ -2,6 +2,7 @@ package com.lx.zhaopin.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.MianShiListBean;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,11 +21,15 @@ import butterknife.ButterKnife;
 public class MianShiListAdapter extends RecyclerView.Adapter<MianShiListAdapter.ViewHolder> {
 
 
+    private Context mContext;
+    private List<MianShiListBean.DataListBean> mData;
 
     public MianShiListAdapter() {
     }
 
-    public MianShiListAdapter(Context context) {
+    public MianShiListAdapter(Context context, List<MianShiListBean.DataListBean> allList) {
+        mContext = context;
+        mData = allList;
     }
 
     @NonNull
@@ -32,12 +40,16 @@ public class MianShiListAdapter extends RecyclerView.Adapter<MianShiListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
+        viewHolder.tv1.setText(mData.get(i).getDate());
+        List<MianShiListBean.DataListBean.InterviewsBean> interviews = mData.get(i).getInterviews();
+        MianShiList_In_Adapter mianShiList_in_adapter = new MianShiList_In_Adapter(mContext, interviews);
+        viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        viewHolder.recyclerView.setAdapter(mianShiList_in_adapter);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -45,6 +57,7 @@ public class MianShiListAdapter extends RecyclerView.Adapter<MianShiListAdapter.
         TextView tv1;
         @BindView(R.id.recyclerView)
         RecyclerView recyclerView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

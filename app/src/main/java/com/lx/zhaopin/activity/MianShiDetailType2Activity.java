@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
@@ -19,48 +16,17 @@ import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.MyDialog;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Response;
 
-//面试官看到的--面试详情
-public class MianShiDetailType1Activity extends BaseActivity {
-    @BindView(R.id.tv1)
-    TextView tv1;
-    @BindView(R.id.tv2)
-    TextView tv2;
-    @BindView(R.id.imageState)
-    ImageView imageState;
-    @BindView(R.id.roundedImageView)
-    RoundedImageView roundedImageView;
-    @BindView(R.id.tv3)
-    TextView tv3;
-    @BindView(R.id.llView1OnClick)
-    LinearLayout llView1OnClick;
-    @BindView(R.id.llView2OnClick)
-    LinearLayout llView2OnClick;
-    @BindView(R.id.tv4)
-    TextView tv4;
-    @BindView(R.id.tv5)
-    TextView tv5;
-    @BindView(R.id.tv6Click)
-    TextView tv6Click;
-    @BindView(R.id.tv7)
-    TextView tv7;
-    @BindView(R.id.quxiaoTV)
-    TextView quxiaoTV;
-    @BindView(R.id.okID)
-    TextView okID;
-    @BindView(R.id.qiuZhiView)
-    LinearLayout qiuZhiView;
-    @BindView(R.id.quxiaoTv)
-    TextView quxiaoTv;
+//求职者--面试详情
+public class MianShiDetailType2Activity extends BaseActivity {
+
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -70,7 +36,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("面试官看到的--面试详情");
+        topTitle.setText("求职者看到的--面试详情");
 
         String interviewId = getIntent().getStringExtra("interviewId");
 
@@ -87,7 +53,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.mianshiDetail, params, new SpotsCallBack<MianShiDetailBean>(mContext) {
             @Override
             public void onSuccess(Response response, MianShiDetailBean resultBean) {
-                tv1.setText(resultBean.getDataList().get(0).getName());
+
 
             }
 
