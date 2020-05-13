@@ -24,6 +24,16 @@
 
     </style>
 
+
+    <style name="SplashTheme" parent="AppTheme.NoActionBar">
+        <item name="android:background">@drawable/yindao1</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
      <!--<style name="Appwelcome" parent="android:Theme.Translucent.NoTitleBar.Fullscreen" />-->
     <!--冷启动-->
 

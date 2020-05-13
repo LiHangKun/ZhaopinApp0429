@@ -45,7 +45,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_toRightOf="@+id/tv1"
-                    android:src="@drawable/shouye_biaoqian2" />
+                    android:src="@drawable/shouye_biaoqian2"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -53,7 +54,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_toRightOf="@+id/imageView1"
-                    android:src="@drawable/shenqing_yitingzhao" />
+                    android:src="@drawable/shenqing_yitingzhao"
+                    android:visibility="gone" />
 
 
             </RelativeLayout>
@@ -155,14 +157,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginRight="10dp"
-            android:visibility="gone" />
+            android:layout_marginRight="10dp" />
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
 
     </LinearLayout>

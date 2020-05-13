@@ -236,6 +236,9 @@
             android:screenOrientation="portrait" />
 
 
+        <!--
+        android:theme="@style/SplashTheme"
+        -->
         <activity
             android:name="com.lx.zhaopin.common.SplashActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

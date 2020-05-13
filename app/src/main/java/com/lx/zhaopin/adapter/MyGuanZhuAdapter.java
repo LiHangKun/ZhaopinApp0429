@@ -9,8 +9,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.GuanZhuGongSiBean;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,12 +23,16 @@ import butterknife.ButterKnife;
 public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.ViewHolder> {
 
 
-
+    private List<GuanZhuGongSiBean.DataListBean> mData;
+    private Context mContext;
+    private OnItemClickListener itemClickListener;
 
     public MyGuanZhuAdapter() {
     }
 
-    public MyGuanZhuAdapter(Context context) {
+    public MyGuanZhuAdapter(Context context, List<GuanZhuGongSiBean.DataListBean> list) {
+        mContext = context;
+        mData = list;
     }
 
     @NonNull
@@ -33,13 +42,30 @@ public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                .load(mData.get(i).getLogo()).into(viewHolder.roundedImageView);
+
+        viewHolder.tv1.setText(mData.get(i).getName());
+        viewHolder.tv3.setText(mData.get(i).getFinancing().getName());
+        viewHolder.tv4.setText(mData.get(i).getStaffNum() + "人");
+        viewHolder.tv5.setText(mData.get(i).getIndustry().getName());
+
+        viewHolder.tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClick(mData.get(i).getId());
+                }
+            }
+        });
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,10 +83,19 @@ public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.View
         TextView tv5;
         @BindView(R.id.llView)
         LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(String id);
+    }
+
+    public void SetOnItemClickListener(OnItemClickListener OnItemClickListener) {
+        itemClickListener = OnItemClickListener;
     }
 
 }
