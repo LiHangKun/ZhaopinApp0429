@@ -77,7 +77,7 @@ EventBus.getDefault().post(new MessageEvent(1, null, null, null, null, null, nul
 
 //TODO  消息类型
 //TODO  1  发送邀约的时候  选择时间
-//TODO  2  修改个人信息头像
+//TODO  2  修改个人信息头像,登录成功,切换用户身份后,重新通知链接融云服务器和更新个人中心的信息
 //TODO  3  修改和添加以及删除学历 工作经验和专业技能
 //TODO  4  选择城市
 //TODO  5  求职者对offer的处理

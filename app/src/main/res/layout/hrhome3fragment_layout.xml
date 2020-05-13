@@ -96,7 +96,7 @@
                                 android:paddingTop="@dimen/dp_2"
                                 android:paddingRight="@dimen/dp_15"
                                 android:paddingBottom="@dimen/dp_2"
-                                android:text="求职者"
+                                android:text="HR"
                                 android:textColor="#fff"
                                 android:textSize="@dimen/sp_16"
                                 android:textStyle="bold" />
@@ -477,7 +477,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -523,7 +523,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -569,7 +569,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -615,7 +615,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -661,7 +661,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -728,7 +728,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 
@@ -774,7 +774,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1px"
+                      android:layout_height="1px"
                     android:layout_marginTop="@dimen/dp_3"
                     android:background="#ECECEC" />
 

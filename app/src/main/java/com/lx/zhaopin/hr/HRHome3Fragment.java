@@ -1,4 +1,4 @@
-package com.lx.zhaopin.common;
+package com.lx.zhaopin.hr;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
@@ -23,18 +23,20 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.DaiMianShiListActivity;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
 import com.lx.zhaopin.activity.MianShiListActivity;
-import com.lx.zhaopin.activity.MyGuanZhuGangActivity;
+import com.lx.zhaopin.activity.MyGuanZhuRenActivity;
 import com.lx.zhaopin.activity.MyJianLiActivity;
-import com.lx.zhaopin.activity.MyShouCangGangActivity;
+import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.MyUserInfoActivity;
 import com.lx.zhaopin.activity.MyYinSiActivity;
-import com.lx.zhaopin.activity.PingBiGangActivity;
+import com.lx.zhaopin.activity.PingBiRenActivity;
 import com.lx.zhaopin.activity.QiuZhiYiXiangActivity;
 import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
 import com.lx.zhaopin.activity.YiLuQuActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
@@ -60,8 +62,8 @@ import java.util.Map;
 import okhttp3.Request;
 import okhttp3.Response;
 
-//求职者界面
-public class Home3Fragment extends BaseFragment implements View.OnClickListener {
+//HR的界面
+public class HRHome3Fragment extends BaseFragment implements View.OnClickListener {
 
     private CirclePercentView circlePercentView;
     private TextView tvJinDu;
@@ -106,7 +108,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(container.getContext(), R.layout.home3fragment_layout, null);
+        View view = View.inflate(container.getContext(), R.layout.hrhome3fragment_layout, null);
 
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
@@ -215,7 +217,6 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 tv3.setText(resultBean.getInterviewCount());
                 phone = resultBean.getServicePhone();
 
-
             }
 
             @Override
@@ -250,7 +251,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.llView1:
                 //已收藏
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), MyShouCangGangActivity.class);
+                    intent = new Intent(getActivity(), MyShouCangRenActivity.class);
                     startActivity(intent);
                 } else {
                     ToastFactory.getToast(getActivity(), "请先登录").show();
@@ -305,7 +306,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.relView1:
                 //已屏蔽记录
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), PingBiGangActivity.class);
+                    intent = new Intent(getActivity(), PingBiRenActivity.class);
                     startActivity(intent);
                 } else {
                     ToastFactory.getToast(getActivity(), "请先登录").show();
@@ -316,7 +317,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.relView2:
                 //我的关注
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), MyGuanZhuGangActivity.class);
+                    intent = new Intent(getActivity(), MyGuanZhuRenActivity.class);
                     startActivity(intent);
                 } else {
                     ToastFactory.getToast(getActivity(), "请先登录").show();

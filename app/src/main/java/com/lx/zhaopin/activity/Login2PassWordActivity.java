@@ -13,6 +13,8 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.LoginBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MainActivity;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -21,6 +23,8 @@ import com.lx.zhaopin.utils.MD5Util;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.ToastFactory;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +40,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
     private boolean duiHaoBoolean = true;
     private static final String TAG = "Login2PassWordActivity";
     private String registrationID;
+    private Intent intent;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -43,8 +48,19 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+
     private void init() {
         topTitle.setText("密码登录");
+
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
 
         topTitle.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);
@@ -151,7 +167,23 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.loginMethod, params, new SpotsCallBack<LoginBean>(mContext) {
             @Override
             public void onSuccess(Response response, LoginBean resultBean) {
-
+                SPTool.addSessionMap(AppSP.isLogin, true);
+                String RongToken = resultBean.getJRongToken();
+                String mid = resultBean.getMid();
+                String name = resultBean.getName();
+                String avatar = resultBean.getAvatar();
+                String userPhone = resultBean.getMobile();
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                //TODO 保存的数据
+                SPTool.getSessionValue(AppSP.UID, mid);
+                SPTool.getSessionValue(AppSP.USER_NAME, name);
+                SPTool.getSessionValue(AppSP.USER_ICON, avatar);
+                SPTool.getSessionValue(AppSP.USER_PHONE, userPhone);
+                SPTool.getSessionValue(AppSP.USER_RongToken, RongToken);
+                SPTool.getSessionValue(AppSP.USER_TYPE, "0");
+                intent = new Intent(mContext, MainActivity.class);
+                startActivity(intent);
+                finish();
 
             }
 

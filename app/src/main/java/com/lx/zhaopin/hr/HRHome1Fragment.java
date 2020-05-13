@@ -1,4 +1,4 @@
-package com.lx.zhaopin.common;
+package com.lx.zhaopin.hr;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -19,9 +19,10 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.SearchActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.home1.ShouYe1Fragment;
 import com.lx.zhaopin.home1.ShouYe2Fragment;
-import com.lx.zhaopin.home1.ShouYe3Fragment;
 import com.lx.zhaopin.utils.SPTool;
 
 import org.greenrobot.eventbus.EventBus;
@@ -30,8 +31,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-//求职者看到的首页
-public class Home1Fragment extends BaseFragment implements View.OnClickListener {
+//HR看到的首页
+public class HRHome1Fragment extends BaseFragment implements View.OnClickListener {
 
     public ViewPager viewPager;
     private TextView tv1;
@@ -40,7 +41,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private MyPagerAdapter adapter;
     private LinearLayout llSearchView;
     private TextView tvCity;
-    private TextView tv3;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -80,17 +80,14 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View view = View.inflate(container.getContext(), R.layout.home1fragment_layout, null);
+        View view = View.inflate(container.getContext(), R.layout.hrhome1fragment_layout, null);
         viewPager = view.findViewById(R.id.viewPager);
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
-        tv3 = view.findViewById(R.id.tv3);
         llSearchView = view.findViewById(R.id.llSearchView);
         llSearchView.setOnClickListener(this);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
-        tv3.setOnClickListener(this);
 
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
@@ -107,11 +104,11 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         fragments = new ArrayList<>();
         fragments.add(new ShouYe1Fragment());
         fragments.add(new ShouYe2Fragment());
-        fragments.add(new ShouYe3Fragment());
 
         adapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(fragments.size());
+
 
         return view;
 
@@ -126,44 +123,24 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                     case 0:
                         tv1.setTextColor(getResources().getColor(R.color.txt_c333));
                         tv2.setTextColor(getResources().getColor(R.color.txt_lv2));
-                        tv3.setTextColor(getResources().getColor(R.color.txt_lv2));
 
                         tv1.setTextSize(18);
                         tv2.setTextSize(16);
-                        tv3.setTextSize(16);
 
                         tv1.setTypeface(null, Typeface.BOLD);
                         tv2.setTypeface(null, Typeface.NORMAL);
-                        tv3.setTypeface(null, Typeface.NORMAL);
 
 
                         break;
                     case 1:
                         tv2.setTextColor(getResources().getColor(R.color.txt_c333));
                         tv1.setTextColor(getResources().getColor(R.color.txt_lv2));
-                        tv3.setTextColor(getResources().getColor(R.color.txt_lv2));
 
-                        tv3.setTextSize(16);
                         tv1.setTextSize(16);
                         tv2.setTextSize(18);
 
                         tv2.setTypeface(null, Typeface.BOLD);
                         tv1.setTypeface(null, Typeface.NORMAL);
-                        tv3.setTypeface(null, Typeface.NORMAL);
-
-                        break;
-                    case 2:
-                        tv3.setTextColor(getResources().getColor(R.color.txt_c333));
-                        tv1.setTextColor(getResources().getColor(R.color.txt_lv2));
-                        tv2.setTextColor(getResources().getColor(R.color.txt_lv2));
-
-                        tv2.setTextSize(16);
-                        tv1.setTextSize(16);
-                        tv3.setTextSize(18);
-
-                        tv3.setTypeface(null, Typeface.BOLD);
-                        tv1.setTypeface(null, Typeface.NORMAL);
-                        tv2.setTypeface(null, Typeface.NORMAL);
 
                         break;
 
@@ -192,10 +169,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.tv2:
                 //最新
                 viewPager.setCurrentItem(1);
-                break;
-            case R.id.tv3:
-                //最近
-                viewPager.setCurrentItem(2);
                 break;
             case R.id.llSearchView:
                 //搜索

@@ -12,6 +12,7 @@
         android:background="#F7F9FA" />
 
     <RelativeLayout
+        android:id="@+id/relView1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_10"
@@ -28,6 +29,7 @@
             android:textStyle="normal" />
 
         <ImageView
+            android:id="@+id/imageState1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -44,6 +46,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/relView2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_10"
@@ -60,6 +63,7 @@
             android:textStyle="normal" />
 
         <ImageView
+            android:id="@+id/imageState2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

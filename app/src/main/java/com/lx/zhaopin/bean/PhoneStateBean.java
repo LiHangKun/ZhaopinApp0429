@@ -16,6 +16,16 @@ public class PhoneStateBean extends CommonBean {
     private String ratio;
     private String count;
 
+    public String getrRongToken() {
+        return rRongToken;
+    }
+
+    public void setrRongToken(String rRongToken) {
+        this.rRongToken = rRongToken;
+    }
+
+    private String rRongToken;
+
     public String getCount() {
         return count;
     }

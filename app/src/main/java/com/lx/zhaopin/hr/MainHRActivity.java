@@ -1,5 +1,4 @@
-package com.lx.zhaopin.common;
-
+package com.lx.zhaopin.hr;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,17 +15,13 @@ import android.widget.Toast;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
-public class MainActivity extends BaseActivity implements RongIM.UserInfoProvider {
+public class MainHRActivity extends BaseActivity implements RongIM.UserInfoProvider{
 
     public ViewPager viewPager;
     private ArrayList<Fragment> fragments;
@@ -34,8 +29,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     private RadioButton rB1;
     private RadioButton rB2;
     private RadioButton rB3;
-    private static final String TAG = "MainActivity";
-
+    private static final String TAG = "MainHRActivity";
 
     //记录用户首次点击返回键的时间
     private long firstTime = 0;
@@ -52,7 +46,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
             long secondTime = System.currentTimeMillis();
             if (secondTime - firstTime > 2000) {
-                Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainHRActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 firstTime = secondTime;
                 return true;
             } else {
@@ -63,42 +57,23 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         return super.onKeyUp(keyCode, event);
     }
 
-
     @Override
     protected void initView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.mainhr_activity);
         init();
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
-    public void getEventmessage(MessageEvent event) {
-        int messageType = event.getMessageType();
-        switch (messageType) {
-            case 2:
-                setUserRongInfoMethod();
-                Log.i(TAG, "getEventmessage: 重新链接融云,和更新个人中心");
-                break;
-        }
-    }
-
     private void init() {
 
-        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
-        }
+        }*/
 
         setViews();
         setListeners();
         fragments = new ArrayList<>();
-        fragments.add(new Home1Fragment());
-        fragments.add(new Home2Fragment());
-        fragments.add(new Home3Fragment());
+        fragments.add(new HRHome1Fragment());
+        fragments.add(new HRHome2Fragment());
+        fragments.add(new HRHome3Fragment());
 
 
         setUserRongInfoMethod();

@@ -76,8 +76,9 @@ public class NetCuiMethod {
     public static final String versionUpdate = "member/version/update";//更新
 
 
-
+    /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
+    public static final String getHRRongToken = "member/recruiter/rong";//获取招聘者融云token
     public static final String mianshiDetail_HR = "member/recruiter/interview/detail";//面试详情,HR看到的界面  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
-
+    /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
 
 }
