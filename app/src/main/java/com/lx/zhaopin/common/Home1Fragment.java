@@ -111,7 +111,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
 
         adapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(fragments.size());
+        //viewPager.setOffscreenPageLimit(fragments.size());
 
         return view;
 
