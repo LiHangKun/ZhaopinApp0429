@@ -88,6 +88,7 @@ public class NetCuiMethod {
     public static final String HR_QuXiao = "member/recruiter/interview/cancel";//HR取消面试
     public static final String HR_yiLuQu = "member/recruiter/offer/list";//HR已录取
     public static final String HR_OfferDetail = "member/recruiter/offer/detail";//HR看到的offer详情
+    public static final String renCaiDetail = "member/resume/detail";//人才详情
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
 
 }
