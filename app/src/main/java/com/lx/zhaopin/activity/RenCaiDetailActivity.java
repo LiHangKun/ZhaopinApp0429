@@ -128,7 +128,7 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                         tv8.setText("兼职");
                         break;
                 }
-                tv9.setText(resultBean.getLatestCityName());
+                tv9.setText(resultBean.getLatestCityName());//这个地址
 
 
             }
