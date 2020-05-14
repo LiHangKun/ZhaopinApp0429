@@ -60,6 +60,8 @@ public class NetCuiMethod {
     public static final String offerDetail = "member/jobhunter/offer/detail";//offer详情
     public static final String caoZuoOffer = "member/jobhunter/offer/deal";//处理offer
     public static final String qiuZheZheDaoDa = "我已到达";//求职者我已到达  TODO 没写
+    public static final String qiuZhiFeedList = "member/jobhunter/chat/feedback/page";//求职反馈消息列表
+    public static final String messageDetail = "jobhunter/chat/feedback/detail";//求职反馈消息详情
 
 
 

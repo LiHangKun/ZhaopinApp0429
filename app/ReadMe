@@ -133,11 +133,58 @@ SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5
 22.选择城市 SelectCityPro1ListActivity  SelectCityAdapter
 23.学历 Adapter   XueLiListAdapter
 24.公司详情 在招聘的岗位 ZaiZhaoGangAdapter
+25.消息详情 XiaoXiDetailActivity   XiaoXiDetailAdapter
+
+
+
+ //聊天状态 chatStatus  1 已沟通 2 已投递 3 已预约 4 待面试 5 已到达 6 面试已取消 7 已反馈 8 同意入职 9 拒绝入职
 
 
 gotoGaode(lat, lng);
 
 
+/*打开高德导航*/
+private void gotoGaode(String lat, String lon) {
+    if (isAvilible(mContext, "com.autonavi.minimap")) {
+        try {
+            //116.304521,40.003865
+            Intent intent = Intent.getIntent("androidamap://navi?sourceApplication=慧医&poiname=我的目的地&lat=" + lat + "&lon=" + lon + "&dev=0");
+            startActivity(intent);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    } else {
+        Toast.makeText(mContext, "您尚未安装高德地图", Toast.LENGTH_LONG).show();
+        Uri uri = Uri.parse("market://details?id=com.autonavi.minimap");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+}
+
+
+/* 检查手机上是否安装了指定的软件
+ * @param context
+ * @param packageName：应用包名
+ * @return
+ */
+public static boolean isAvilible(Context context, String packageName) {
+    //获取packagemanager
+    final PackageManager packageManager = context.getPackageManager();
+    //获取所有已安装程序的包信息
+    List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+    //用于存储所有已安装程序的包名
+    List<String> packageNames = new ArrayList<String>();
+    //从pinfo中将包名字逐一取出，压入pName list中
+    if (packageInfos != null) {
+        for (int i = 0; i < packageInfos.size(); i++) {
+            String packName = packageInfos.get(i).packageName;
+            packageNames.add(packName);
+        }
+    }
+    //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+    return packageNames.contains(packageName);
+}
 
 
 

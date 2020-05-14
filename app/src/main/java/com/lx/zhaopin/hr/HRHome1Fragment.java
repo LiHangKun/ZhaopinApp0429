@@ -20,8 +20,6 @@ import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
-import com.lx.zhaopin.home1.ShouYe1Fragment;
-import com.lx.zhaopin.home1.ShouYe2Fragment;
 import com.lx.zhaopin.hractivity.HRSearchActivity;
 import com.lx.zhaopin.utils.SPTool;
 
@@ -102,8 +100,8 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         setListeners();
 
         fragments = new ArrayList<>();
-        fragments.add(new ShouYe1Fragment());
-        fragments.add(new ShouYe2Fragment());
+        fragments.add(new HRShouYe1Fragment());
+        fragments.add(new HRShouYe2Fragment());
 
         adapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);

@@ -47,7 +47,7 @@
                     <ImageView
                         android:id="@+id/image1"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/hom2s" />
 
                     <LinearLayout
@@ -99,7 +99,7 @@
                     <ImageView
                         android:id="@+id/image2"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/xiaoxi_fankui1" />
 
                     <LinearLayout
@@ -151,7 +151,7 @@
                     <ImageView
                         android:id="@+id/image3"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/xiaoxi_xitxiaoxi1" />
 
                     <LinearLayout
