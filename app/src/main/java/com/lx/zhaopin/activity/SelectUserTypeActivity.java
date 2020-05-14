@@ -113,6 +113,9 @@ public class SelectUserTypeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.llView1OnClick:
                 //求职者
+
+                //getQiuZhiRongToken(SPTool.getSessionValue(AppSP.UID));
+
                 SPTool.addSessionMap(AppSP.USER_TYPE, "0");
                 startActivity(new Intent(mContext, MainActivity.class));
                 EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
@@ -137,6 +140,29 @@ public class SelectUserTypeActivity extends BaseActivity {
         }
     }
 
+    //获取求职者融云Token
+    private void getQiuZhiRongToken(String mid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", mid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.qiuZhiRToken, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                startActivity(new Intent(mContext, MainActivity.class));
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                finish();
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+    }
+
+    //获取HR融云Token
     private void getHrRongToken(String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
@@ -145,6 +171,7 @@ public class SelectUserTypeActivity extends BaseActivity {
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 SPTool.addSessionMap(AppSP.USER_TYPE, "1");
                 startActivity(new Intent(mContext, MainActivity.class));
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 finish();
 
             }

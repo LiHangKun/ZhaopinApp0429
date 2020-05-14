@@ -69,8 +69,8 @@ public class MianShiDetailType1Activity extends BaseActivity {
     TextView okID;
     @BindView(R.id.qiuZhiView)
     LinearLayout qiuZhiView;
-    @BindView(R.id.quxiaoTv)
-    TextView quxiaoTv;
+    @BindView(R.id.quxiaoHR)
+    TextView quxiaoHR;
     private String lat;
     private String lng;
     private String id;
@@ -128,6 +128,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
                         imageState.setImageResource(R.drawable.yiquxiao);
                         tv3.setText("取消原因:" + resultBean.getCancelReason());
                         tv3.setVisibility(View.VISIBLE);
+                        quxiaoHR.setVisibility(View.GONE);
                         break;
                     case "7":
                         imageState.setImageResource(R.drawable.yitongyi);
@@ -170,7 +171,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.tv6Click, R.id.quxiaoTV, R.id.okID, R.id.qiuZhiView, R.id.quxiaoTv})
+    @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.tv6Click, R.id.quxiaoTV, R.id.okID, R.id.qiuZhiView, R.id.quxiaoHR})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llView1OnClick:
@@ -189,7 +190,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
             case R.id.qiuZhiView:
                 //这个不要了
                 break;
-            case R.id.quxiaoTV:
+            case R.id.quxiaoHR:
                 //取消面试的弹框
                 View view = getLayoutInflater().inflate(R.layout.dialog_quxiao_mianshi, null);
                 final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view, R.style.DialogTheme2);
@@ -220,13 +221,13 @@ public class MianShiDetailType1Activity extends BaseActivity {
     }
 
 
-    //取消面试
+    //HR 取消面试
     private void quXiaoMianShiMe( String interviewId, String cancelReason) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("interviewId", interviewId);
         params.put("cancelReason", cancelReason);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.quXiaoMianShi_Type2, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_QuXiao, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();

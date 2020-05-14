@@ -18,11 +18,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.DaiMianShiListActivity;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
-import com.lx.zhaopin.activity.MianShiListActivity;
 import com.lx.zhaopin.activity.MyGuanZhuRenActivity;
 import com.lx.zhaopin.activity.MyJianLiActivity;
 import com.lx.zhaopin.activity.MyShouCangRenActivity;
@@ -37,6 +35,7 @@ import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.hractivity.HRMianShiListActivity;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
@@ -90,6 +89,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
+    private TextView tvJueSe;
 
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
@@ -139,6 +139,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
         tv3 = view.findViewById(R.id.tv3);
+        tvJueSe = view.findViewById(R.id.tvJueSe);
 
         llView0.setOnClickListener(this);
         llView1.setOnClickListener(this);
@@ -160,7 +161,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
 
 
         if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-            getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+            getHRMyInfo(SPTool.getSessionValue(AppSP.UID));
         }
 
 
@@ -168,7 +169,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+                    getHRMyInfo(SPTool.getSessionValue(AppSP.UID));
                 }
                 Log.e(TAG, "onRefresh: http  执行下拉刷新方法");
             }
@@ -179,12 +180,11 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    //求职者个人信息
-    private void getQiuZhiMyInfo(String mid) {
+    //HR个人信息
+    private void getHRMyInfo(String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
-        Log.i(TAG, "求职者个人信息: " + NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo + "---" + new Gson().toJson(params));
-        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.checkPhone, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.getHRMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
                 smartRefreshLayout.finishRefresh();
@@ -202,16 +202,9 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
                 Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                         .load(resultBean.getAvatar()).into(roundedImageView);
                 tv1.setText(resultBean.getName());
-                String recruiter = resultBean.getRecruiter();
-                //是否具有hr权限
-                switch (recruiter) {
-                    case "1":
-                        tv2.setText("HR");
-                        break;
-                    case "0":
-                        tv2.setText("求职者");
-                        break;
-                }
+
+                tvJueSe.setText("招聘者");
+
                 tvJinDu.setText(resultBean.getImprovedDegree() + "%");
                 setData1(circlePercentView, 100, Integer.parseInt(resultBean.getImprovedDegree()));
                 tv3.setText(resultBean.getInterviewCount());
@@ -284,7 +277,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
             case R.id.llView4:
                 //不合适
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), MianShiListActivity.class);
+                    intent = new Intent(getActivity(), HRMianShiListActivity.class);
                     startActivity(intent);
                 } else {
                     ToastFactory.getToast(getActivity(), "请先登录").show();

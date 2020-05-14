@@ -17,6 +17,7 @@ public class NetCuiMethod {
 
 
     /*------------TODO-----求职者-----------------*/
+    public static final String qiuZhiRToken = "member/jobhunter/rong";//求职者个人信息
     public static final String qiuZhiMyInfo = "member/jobhunter/info";//求职者个人信息
     public static final String xiugaiQiuZhiMyInfo = "member/jobhunter/modify";//修改个人信息
     public static final String myJianLi = "member/jobhunter/resume";//个人简历
@@ -58,6 +59,7 @@ public class NetCuiMethod {
     public static final String yiLuQuList = "member/jobhunter/offer/list";//录取记录
     public static final String offerDetail = "member/jobhunter/offer/detail";//offer详情
     public static final String caoZuoOffer = "member/jobhunter/offer/deal";//处理offer
+    public static final String qiuZheZheDaoDa = "我已到达";//求职者我已到达  TODO 没写
 
 
 
@@ -68,7 +70,6 @@ public class NetCuiMethod {
 
 
     public static final String quXiaoMianShi_Type1 = "member/jobhunter/interview/cancel";//取消面试,求职者
-    public static final String quXiaoMianShi_Type2 = "member/recruiter/interview/cancel";//取消面试,HR
 
     public static final String logout = "logout";//退出登录
     public static final String memberLogout = "member/logout";//退出登录
@@ -79,6 +80,14 @@ public class NetCuiMethod {
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
     public static final String getHRRongToken = "member/recruiter/rong";//获取招聘者融云token
     public static final String mianshiDetail_HR = "member/recruiter/interview/detail";//面试详情,HR看到的界面  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
+    public static final String getHRMyInfo = "member/recruiter/info";//招聘者个人信息
+    public static final String HRShouCangRen = "member/jobhunter/collect/page";//收藏求职者列表
+    public static final String ShouCangRenCai = "member/resume/collect";//收藏求职者/取消收藏
+    public static final String pingBiRen = "member/jobhunter/improper/page";//屏蔽求职者列表
+    public static final String HR_mianshiList = "member/recruiter/interview/list";//HR面试记录  TODO  接口没有处理好
+    public static final String HR_QuXiao = "member/recruiter/interview/cancel";//HR取消面试
+    public static final String HR_yiLuQu = "member/recruiter/offer/list";//HR已录取
+    public static final String HR_OfferDetail = "member/recruiter/offer/detail";//HR看到的offer详情
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
 
 }

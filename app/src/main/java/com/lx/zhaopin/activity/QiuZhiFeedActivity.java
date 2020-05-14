@@ -48,6 +48,7 @@ public class QiuZhiFeedActivity extends BaseActivity {
     LinearLayout caoZuoView;
 
     private String offerID;
+    private String userType;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -64,12 +65,49 @@ public class QiuZhiFeedActivity extends BaseActivity {
 
     private void init() {
         topTitle.setText("求职反馈");
+
+        userType = getIntent().getStringExtra("userType");
+
         offerID = getIntent().getStringExtra("offerID");
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
-        getOfferDetail(offerID);
+        //userType  0 求职者  1 HR
 
+        switch (userType) {
+            case "0":
+                getOfferDetail(offerID);
+                break;
+            case "1":
+                getOfferDetailHR(offerID);
+                break;
+        }
+
+
+    }
+
+    private void getOfferDetailHR(String offerID) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("offerId", offerID);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_OfferDetail, params, new SpotsCallBack<OfferDetailBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, OfferDetailBean resultBean) {
+
+                tv1.setText(resultBean.getJobhunter().getName());
+                tv2.setText(resultBean.getContent());
+                tv3.setText(resultBean.getCompany().getName());
+                tv4.setText(resultBean.getSendDate());
+
+                caoZuoView.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 

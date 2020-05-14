@@ -1,4 +1,4 @@
-package com.lx.zhaopin.adapter;
+package com.lx.zhaopin.hradapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
-import com.lx.zhaopin.bean.YiLuQuBean;
+import com.lx.zhaopin.bean.HRYiLuQuBean;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -23,16 +23,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class YiLuQu_In_Adapter extends RecyclerView.Adapter<YiLuQu_In_Adapter.ViewHolder> {
+public class HRYiLuQu_In_Adapter extends RecyclerView.Adapter<HRYiLuQu_In_Adapter.ViewHolder> {
 
 
-    private List<YiLuQuBean.DataListBean.OfferListBean> mData;
+    private List<HRYiLuQuBean.DataListBean.OfferListBean> mData;
     private Context mContext;
 
-    public YiLuQu_In_Adapter() {
+    public HRYiLuQu_In_Adapter() {
     }
 
-    public YiLuQu_In_Adapter(Context context, List<YiLuQuBean.DataListBean.OfferListBean> allList) {
+    public HRYiLuQu_In_Adapter(Context context, List<HRYiLuQuBean.DataListBean.OfferListBean> allList) {
         mContext = context;
         mData = allList;
     }
@@ -46,9 +46,9 @@ public class YiLuQu_In_Adapter extends RecyclerView.Adapter<YiLuQu_In_Adapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
-                .load(mData.get(i).getCompany().getLogo()).into(viewHolder.roundedImageView);
+                .load(mData.get(i).getMember().getAvatar()).into(viewHolder.roundedImageView);
 
-        viewHolder.tv1.setText(mData.get(i).getCompany().getName());
+        viewHolder.tv1.setText(mData.get(i).getMember().getName());
         viewHolder.tv2.setText("面试：" + mData.get(i).getPosition().getName() + " " + mData.get(i).getPosition().getMinSalary() + " - " + mData.get(i).getPosition().getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(i).getSendDate());
 
@@ -72,7 +72,7 @@ public class YiLuQu_In_Adapter extends RecyclerView.Adapter<YiLuQu_In_Adapter.Vi
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, QiuZhiFeedActivity.class);
                 intent.putExtra("offerID", mData.get(i).getId());
-                intent.putExtra("userType", "0");
+                intent.putExtra("userType", "1");
                 mContext.startActivity(intent);
             }
         });

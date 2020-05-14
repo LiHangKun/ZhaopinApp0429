@@ -88,6 +88,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
+    private TextView jueSe;
 
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
@@ -122,6 +123,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         llView2 = view.findViewById(R.id.llView2);
         llView3 = view.findViewById(R.id.llView3);
         llView4 = view.findViewById(R.id.llView4);
+        jueSe = view.findViewById(R.id.jueSe);
 
 
         relView0 = view.findViewById(R.id.relView0);
@@ -205,9 +207,11 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 switch (recruiter) {
                     case "1":
                         tv2.setText("HR");
+                        jueSe.setText("招聘者");
                         break;
                     case "0":
                         tv2.setText("求职者");
+                        jueSe.setText("求职者");
                         break;
                 }
                 tvJinDu.setText(resultBean.getImprovedDegree() + "%");

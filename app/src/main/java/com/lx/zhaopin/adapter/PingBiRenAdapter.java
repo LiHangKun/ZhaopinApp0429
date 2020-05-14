@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.PingBiRen;
+import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
+import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,11 +26,17 @@ import butterknife.ButterKnife;
 public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.ViewHolder> {
 
 
+    private List<PingBiRen.DataListBean> mData;
+    private Context mContext;
+    private OnItemClickListener itemClickListener;
+    private List<String> flowData = new ArrayList<>();
 
     public PingBiRenAdapter() {
     }
 
-    public PingBiRenAdapter(Context context) {
+    public PingBiRenAdapter(Context context, List<PingBiRen.DataListBean> allList) {
+        mContext = context;
+        mData = allList;
     }
 
 
@@ -34,16 +47,68 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int po) {
 
+        viewHolder.tv1.setText(mData.get(po).getName());
+        viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
+        viewHolder.tv3.setText(mData.get(po).getEducation().getName());
+        viewHolder.tv4.setText(mData.get(po).getAge() + "岁");
+        viewHolder.tv5.setText(mData.get(po).getWorkYears() + "年");
+        viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
+
+
+        String openResume = mData.get(po).getOpenResume();
+        //是否开放简历  1 是 0 否
+        switch (openResume) {
+            case "1":
+                viewHolder.imageView1.setVisibility(View.GONE);
+                break;
+            default:
+                viewHolder.imageView1.setVisibility(View.VISIBLE);
+        }
+
+        for (int i = 0; i < flowData.size(); i++) {
+            final TextView radioButton = new TextView(mContext);
+            FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
+            radioButton.setLayoutParams(layoutParams);
+            final String str = flowData.get(i);
+            radioButton.setText(str);
+            radioButton.setGravity(Gravity.CENTER);
+            radioButton.setTextSize(13);
+            radioButton.setPadding(ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6));
+            radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+            //radioButton.setBackgroundResource(R.drawable.search_selector);
+            radioButton.setBackgroundResource(R.drawable.button_shape03);
+            radioButton.setFocusable(true);
+            radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            viewHolder.flowLiner.addView(radioButton);
+        }
+
+
+        viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClickListener(mData.get(po).getId());
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.roundedImageView)
+        RoundedImageView roundedImageView;
         @BindView(R.id.tv1)
         TextView tv1;
         @BindView(R.id.imageView1)
@@ -68,10 +133,20 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
         TextView tv7;
         @BindView(R.id.llView)
         LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+
+    public interface OnItemClickListener {
+        void OnItemClickListener(String id);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {
+        itemClickListener = OnItemClickListener;
     }
 
 }
