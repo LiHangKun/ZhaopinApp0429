@@ -42,13 +42,13 @@
         <View style="@style/MylineSty" />
 
 
-        <!--<android.support.v7.widget.RecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />-->
+            android:layout_height="match_parent" />
 
 
-        <ScrollView
+       <!-- <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -57,23 +57,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
-                <include layout="@layout/item_select_gangwei_layout" />
-
-                <include layout="@layout/item_select_gangwei_layout" />
-
-                <include layout="@layout/item_select_gangwei_layout" />
-
-                <include layout="@layout/item_select_gangwei_layout" />
-
-                <include layout="@layout/item_select_gangwei_layout" />
-
                 <include layout="@layout/item_select_gangwei_layout" />
 
 
             </LinearLayout>
 
-        </ScrollView>
+        </ScrollView>-->
 
 
     </LinearLayout>

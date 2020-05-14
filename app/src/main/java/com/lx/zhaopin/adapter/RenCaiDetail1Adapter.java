@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.RenCaiDetailBean;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,11 +20,15 @@ import butterknife.ButterKnife;
 public class RenCaiDetail1Adapter extends RecyclerView.Adapter<RenCaiDetail1Adapter.ViewHolder> {
 
 
+    private List<RenCaiDetailBean.ResumeExpectationListBean> mData;
+    private Context mContext;
 
     public RenCaiDetail1Adapter() {
     }
 
-    public RenCaiDetail1Adapter(Context context) {
+    public RenCaiDetail1Adapter(Context context, List<RenCaiDetailBean.ResumeExpectationListBean> resumeExpectationList) {
+        mContext = context;
+        mData = resumeExpectationList;
     }
 
     @NonNull
@@ -32,12 +39,14 @@ public class RenCaiDetail1Adapter extends RecyclerView.Adapter<RenCaiDetail1Adap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
+        viewHolder.tv1.setText(mData.get(i).getPositionCategory3().getName());
+        viewHolder.tv2.setText(mData.get(i).getCity().getName());
+        viewHolder.tv3.setText(mData.get(i).getMinSalary() + "K - " + mData.get(i).getMaxSalary() + "K");
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,6 +58,7 @@ public class RenCaiDetail1Adapter extends RecyclerView.Adapter<RenCaiDetail1Adap
         TextView tv3;
         @BindView(R.id.llView)
         LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

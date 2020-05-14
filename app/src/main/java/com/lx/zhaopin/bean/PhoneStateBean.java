@@ -15,6 +15,15 @@ public class PhoneStateBean extends CommonBean {
     private String joinImage;
     private String ratio;
     private String count;
+    private String interviewId;
+
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public void setInterviewId(String interviewId) {
+        this.interviewId = interviewId;
+    }
 
     public String getrRongToken() {
         return rRongToken;

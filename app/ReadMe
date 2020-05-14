@@ -133,3 +133,17 @@ SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5
 22.选择城市 SelectCityPro1ListActivity  SelectCityAdapter
 23.学历 Adapter   XueLiListAdapter
 24.公司详情 在招聘的岗位 ZaiZhaoGangAdapter
+
+
+gotoGaode(lat, lng);
+
+
+
+
+
+
+
+
+
+
+

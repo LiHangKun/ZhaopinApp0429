@@ -89,6 +89,10 @@ public class NetCuiMethod {
     public static final String HR_yiLuQu = "member/recruiter/offer/list";//HR已录取
     public static final String HR_OfferDetail = "member/recruiter/offer/detail";//HR看到的offer详情
     public static final String renCaiDetail = "member/resume/detail";//人才详情
+    public static final String HR_PingBi_renCaiDetail = "member/resume/improper";//屏蔽求职者/取消屏蔽
+    public static final String gongSiAllZhiWei = "member/recruiter/position/list";//公司所有的职位
+    public static final String getGouTongInfo = "member/chat/position";//获取已沟通职位
+    public static final String yaoQingMianShi = "member/recruiter/interview/invite";//发布邀约,邀请面试
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
 
 }

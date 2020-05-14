@@ -2,9 +2,10 @@ package com.lx.zhaopin.bean;
 
 import com.lx.zhaopin.http.CommonBean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RenCaiDetailBean extends CommonBean {
+public class RenCaiDetailBean extends CommonBean implements Serializable {
 
 
     /**
@@ -230,7 +231,7 @@ public class RenCaiDetailBean extends CommonBean {
         this.resumeSkillList = resumeSkillList;
     }
 
-    public static class EducationBean {
+    public static class EducationBean implements Serializable{
         /**
          * id :
          * name :
@@ -256,7 +257,7 @@ public class RenCaiDetailBean extends CommonBean {
         }
     }
 
-    public static class ExperienceEducationListBean {
+    public static class ExperienceEducationListBean implements Serializable{
         /**
          * beginDate :
          * education : {"id":"","name":""}
@@ -331,7 +332,7 @@ public class RenCaiDetailBean extends CommonBean {
             this.school = school;
         }
 
-        public static class EducationBeanX {
+        public static class EducationBeanX implements Serializable{
             /**
              * id :
              * name :
@@ -358,7 +359,7 @@ public class RenCaiDetailBean extends CommonBean {
         }
     }
 
-    public static class ExperienceWorkListBean {
+    public static class ExperienceWorkListBean implements Serializable{
         /**
          * beginDate :
          * companyName :
@@ -434,7 +435,7 @@ public class RenCaiDetailBean extends CommonBean {
         }
     }
 
-    public static class ResumeExpectationListBean {
+    public static class ResumeExpectationListBean implements Serializable{
         /**
          * city : {"id":"","name":""}
          * id :
@@ -499,7 +500,7 @@ public class RenCaiDetailBean extends CommonBean {
             this.resumeExpectationIndustryList = resumeExpectationIndustryList;
         }
 
-        public static class CityBean {
+        public static class CityBean implements Serializable{
             /**
              * id :
              * name :
@@ -525,7 +526,7 @@ public class RenCaiDetailBean extends CommonBean {
             }
         }
 
-        public static class PositionCategory3Bean {
+        public static class PositionCategory3Bean implements Serializable{
             /**
              * id :
              * name :
@@ -551,7 +552,7 @@ public class RenCaiDetailBean extends CommonBean {
             }
         }
 
-        public static class ResumeExpectationIndustryListBean {
+        public static class ResumeExpectationIndustryListBean implements Serializable{
             /**
              * id :
              * name :
@@ -578,7 +579,7 @@ public class RenCaiDetailBean extends CommonBean {
         }
     }
 
-    public static class ResumeSkillListBean {
+    public static class ResumeSkillListBean implements Serializable{
         /**
          * id :
          * name :

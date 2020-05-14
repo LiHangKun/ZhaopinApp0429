@@ -2,13 +2,17 @@ package com.lx.zhaopin.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -28,23 +32,40 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.adapter.ZhiWeiYaoYueInAdapter;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.GetGouTongZhiWeiBean;
+import com.lx.zhaopin.bean.GongSiZhiWeiBean;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.RenCaiDetailBean;
+import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.Utility;
 import com.lx.zhaopin.view.MyDialog;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickListener {
 
@@ -58,7 +79,10 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
     private TextView tv4;
     private TextView okID;
     private String time1;
-    private RecyclerView recyclerView;
+    private String yaoYueGangWeiId;
+    private String lng;
+    private String lat;
+    private String rid;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -95,6 +119,9 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         }
 
 
+        rid = getIntent().getStringExtra("rid");
+        RenCaiDetailBean renCaiDetailBean = (RenCaiDetailBean) getIntent().getSerializableExtra("renCaiDetailBean");
+
         relView1 = findViewById(R.id.relView1);
         relView2 = findViewById(R.id.relView2);
         relView4 = findViewById(R.id.relView4);
@@ -110,6 +137,44 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         okID = findViewById(R.id.okID);
         tv3.setOnClickListener(this);
         okID.setOnClickListener(this);
+
+        tv0.setText(renCaiDetailBean.getName());
+        tv2.setText(SPTool.getSessionValue(AppSP.USER_PHONE));
+
+        getGongSiInfo(tv3, rid);
+
+
+    }
+
+    private void getGongSiInfo(final TextView tv3, String rid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("rid", rid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.getGouTongInfo, params, new BaseCallback<GetGouTongZhiWeiBean>() {
+
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GetGouTongZhiWeiBean resultBean) {
+                tv3.setText(resultBean.getCompany().getLocation());
+                lat = resultBean.getCompany().getLat();
+                lng = resultBean.getCompany().getLng();
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
 
     }
 
@@ -263,7 +328,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.relView1:
                 //选择岗位
-                AllGangwei("videoId");
+                AllGangwei();
                 lightoff();
                 break;
             case R.id.relView2:
@@ -292,7 +357,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                             ToastFactory.getToast(mContext, "电话号码不正确").show();
                             return;
                         } else {
-                            ToastFactory.getToast(mContext, edit1.getText().toString().trim()).show();
+                            tv2.setText(edit1.getText().toString().trim());
                             mMyDialog.dismiss();
                         }
                     }
@@ -305,21 +370,64 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.okID:
-                //发送邀约
-                ToastFactory.getToast(mContext, "发送邀约").show();
+                //发送邀约  yaoQingMianShi
+                if (TextUtils.isEmpty(yaoYueGangWeiId)) {
+                    ToastFactory.getToast(mContext, "请先选择岗位").show();
+                    return;
+                } else if (TextUtils.isEmpty(tv2.getText().toString().trim())) {
+                    ToastFactory.getToast(mContext, "电话号码不能为空").show();
+                    return;
+                } else if (tv4.getText().toString().trim().startsWith("请")) {
+                    ToastFactory.getToast(mContext, "请先选择面试时间").show();
+                    return;
+                } else {
+                    //发布邀约
+                    fabuYaoYueMe(rid, yaoYueGangWeiId, tv2.getText().toString().trim(), tv4.getText().toString().trim());
+                }
                 break;
             case R.id.tv3:
                 //导航
-                ToastFactory.getToast(mContext, "导航").show();
+                gotoGaode(lat, lng);
                 break;
         }
 
     }
 
-    private void AllGangwei(String videoId) {
+
+    //yaoQingMianShi
+    private void fabuYaoYueMe(String rid, String pid, String mobile, String interviewDate) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("rid", rid);
+        params.put("pid", pid);
+        params.put("mobile", mobile);
+        params.put("interviewDate", interviewDate);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.yaoQingMianShi, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+                ToastFactory.getToast(mContext,resultBean.getResultNote()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+    }
+
+    private void AllGangwei() {
         if (popupWindow1 == null) {
             popupView1 = View.inflate(this, R.layout.pop_layout_allgangwei_list, null);
-            recyclerView = popupView1.findViewById(R.id.recyclerView);
+            RecyclerView recyclerView = popupView1.findViewById(R.id.recyclerView);
             popupWindow1 = new PopupWindow(popupView1, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             popupWindow1.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -327,6 +435,11 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                     lighton();
                 }
             });
+
+
+            getGongSiAllZhiWei(recyclerView);
+
+
             // 设置背景图片， 必须设置，不然动画没作用
             popupWindow1.setBackgroundDrawable(new BitmapDrawable());
             popupWindow1.setFocusable(true);
@@ -353,8 +466,94 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
 
         // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
         popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-//        popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
         popupView1.startAnimation(animation1);
 
     }
+
+    private void getGongSiAllZhiWei(final RecyclerView recyclerView) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.gongSiAllZhiWei, params, new BaseCallback<GongSiZhiWeiBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GongSiZhiWeiBean resultBean) {
+
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                ZhiWeiYaoYueInAdapter zhiWeiYaoYueInAdapter = new ZhiWeiYaoYueInAdapter(mContext, resultBean.getDataList());
+                recyclerView.setAdapter(zhiWeiYaoYueInAdapter);
+                zhiWeiYaoYueInAdapter.setOnItemClickListener(new ZhiWeiYaoYueInAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClickListener(String id, String name) {
+                        tv1.setText(name);
+                        yaoYueGangWeiId = id;
+                    }
+                });
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+
+    }
+
+
+    /*打开高德导航*/
+    private void gotoGaode(String lat, String lon) {
+        if (isAvilible(mContext, "com.autonavi.minimap")) {
+            try {
+                //116.304521,40.003865
+                Intent intent = Intent.getIntent("androidamap://navi?sourceApplication=慧医&poiname=我的目的地&lat=" + lat + "&lon=" + lon + "&dev=0");
+                startActivity(intent);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(mContext, "您尚未安装高德地图", Toast.LENGTH_LONG).show();
+            Uri uri = Uri.parse("market://details?id=com.autonavi.minimap");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+
+    }
+
+
+    /* 检查手机上是否安装了指定的软件
+     * @param context
+     * @param packageName：应用包名
+     * @return
+     */
+    public static boolean isAvilible(Context context, String packageName) {
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if (packageInfos != null) {
+            for (int i = 0; i < packageInfos.size(); i++) {
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
+    }
+
 }

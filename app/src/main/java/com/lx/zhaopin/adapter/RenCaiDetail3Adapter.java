@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.RenCaiDetailBean;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,11 +21,15 @@ import butterknife.ButterKnife;
 public class RenCaiDetail3Adapter extends RecyclerView.Adapter<RenCaiDetail3Adapter.ViewHolder> {
 
 
+    private List<RenCaiDetailBean.ExperienceEducationListBean> mData;
+    private Context mContext;
 
     public RenCaiDetail3Adapter() {
     }
 
-    public RenCaiDetail3Adapter(Context context) {
+    public RenCaiDetail3Adapter(Context context, List<RenCaiDetailBean.ExperienceEducationListBean> experienceEducationList) {
+        mContext = context;
+        mData = experienceEducationList;
     }
 
     @NonNull
@@ -33,12 +40,16 @@ public class RenCaiDetail3Adapter extends RecyclerView.Adapter<RenCaiDetail3Adap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
+        viewHolder.tv1.setText(mData.get(i).getSchool());
+        viewHolder.tv2.setText(mData.get(i).getBeginDate() + "-" + mData.get(i).getEndDate());
+        viewHolder.tv3.setText(mData.get(i).getEducation().getName());
+        viewHolder.tv4.setText(mData.get(i).getMajor());
+        viewHolder.tv5.setText(mData.get(i).getExperience());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,6 +67,7 @@ public class RenCaiDetail3Adapter extends RecyclerView.Adapter<RenCaiDetail3Adap
         TextView tv5;
         @BindView(R.id.llView)
         LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
