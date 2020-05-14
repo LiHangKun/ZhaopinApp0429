@@ -28,7 +28,7 @@ public class NetCuiMethod {
     public static final String delEidInfo = "member/jobhunter/resume/education/delete";//删除教育经历
     public static final String zhiWeiDetail = "member/position/detail";//职位详情
     public static final String zhiWeiShouCang = "member/position/collect";//职位收藏/取消收藏
-    public static final String zhiWeiPageList = "member/position/page";//职位分页列表  TODO  还没有写
+    public static final String zhiWeiPageList = "member/position/page";//职位分页列表  TODO  卡片没有写
     public static final String zhiWeiIsHeShi = "member/position/improper";//职位不合适/取消不合适  TODO  还没有写
     public static final String zhiWeiJuBao = "member/position/report";//职位举报
     public static final String mianShiTimeList = "member/position/time";//预约面试时间列表   TODO  还没有写
@@ -93,6 +93,9 @@ public class NetCuiMethod {
     public static final String gongSiAllZhiWei = "member/recruiter/position/list";//公司所有的职位
     public static final String getGouTongInfo = "member/chat/position";//获取已沟通职位
     public static final String yaoQingMianShi = "member/recruiter/interview/invite";//发布邀约,邀请面试
+    public static final String shenQingJiLu = "member/jobhunter/chat/apply/page";//申请记录
+    public static final String chuliGouTongShenQing = "member/jobhunter/chat/apply/deal";//处理沟通申请
+    public static final String HRSouRenCai = "member/resume/page";//求职者简历分页数据
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
 
 }

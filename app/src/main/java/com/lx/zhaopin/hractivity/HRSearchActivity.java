@@ -1,4 +1,4 @@
-package com.lx.zhaopin.activity;
+package com.lx.zhaopin.hractivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SearchActivity extends BaseActivity implements View.OnClickListener {
+public class HRSearchActivity extends BaseActivity implements View.OnClickListener {
 
     private ClearEditText clearEditText;
     private TextView searchTv;
@@ -34,7 +34,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private ImageView delImage1;
     private List<String> flowData = new ArrayList<>();
     private Intent intent;
-    private static final String TAG = "SearchActivity";
+    private static final String TAG = "HRSearchActivity";
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         flowLiner1 = findViewById(R.id.flowLiner1);
         delImage1 = findViewById(R.id.delImage1);
 
-        oldSearchStr = (String) SharedPreferencesUtil.getData(SearchActivity.this, AppSP.SEARCH, "");
+        oldSearchStr = (String) SharedPreferencesUtil.getData(HRSearchActivity.this, AppSP.SEARCH_USER_NAME, "");
         if (!TextUtils.isEmpty(oldSearchStr)) {
             delImage1.setVisibility(View.VISIBLE);
             String oldArray[] = oldSearchStr.split(",");
@@ -68,15 +68,15 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         flowLiner1.removeAllViews();
 
         for (int i = 0; i < flowData.size(); i++) {
-            final TextView radioButton = new TextView(SearchActivity.this);
+            final TextView radioButton = new TextView(HRSearchActivity.this);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(0, 0, ViewUtil.dp2px(SearchActivity.this, 10), ViewUtil.dp2px(SearchActivity.this, 10));
+            layoutParams.setMargins(0, 0, ViewUtil.dp2px(HRSearchActivity.this, 10), ViewUtil.dp2px(HRSearchActivity.this, 10));
             radioButton.setLayoutParams(layoutParams);
             final String str = flowData.get(i);
             radioButton.setText(str);
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(13);
-            radioButton.setPadding(ViewUtil.dp2px(SearchActivity.this, 18),ViewUtil.dp2px(SearchActivity.this, 6) , ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6));
+            radioButton.setPadding(ViewUtil.dp2px(HRSearchActivity.this, 18), ViewUtil.dp2px(HRSearchActivity.this, 6), ViewUtil.dp2px(HRSearchActivity.this, 18), ViewUtil.dp2px(HRSearchActivity.this, 6));
             radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
             //radioButton.setBackgroundResource(R.drawable.search_selector);
             radioButton.setBackgroundResource(R.drawable.button_shape03);
@@ -88,7 +88,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     // doSearch(str);
 
                     //点击流布局上的文字直接搜索
-                    intent = new Intent(SearchActivity.this, SearchSuccessActivity.class);
+                    intent = new Intent(HRSearchActivity.this, HRSearchSuccessActivity.class);
                     intent.putExtra("KeyWord", str);
                     startActivityForResult(intent, 100);
                     //隐藏软键盘
@@ -102,7 +102,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         delImage1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferencesUtil.saveData(SearchActivity.this, AppSP.SEARCH, "");
+                SharedPreferencesUtil.saveData(HRSearchActivity.this, AppSP.SEARCH_USER_NAME, "");
                 flowData = new ArrayList<>();
                 flowLiner1.removeAllViews();
             }
@@ -115,7 +115,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100) {
             //加载历史
-            oldSearchStr = (String) SharedPreferencesUtil.getData(SearchActivity.this, AppSP.SEARCH, "");
+            oldSearchStr = (String) SharedPreferencesUtil.getData(HRSearchActivity.this, AppSP.SEARCH_USER_NAME, "");
             if (!TextUtils.isEmpty(oldSearchStr)) {
                 delImage1.setVisibility(View.VISIBLE);
                 String oldArray[] = oldSearchStr.split(",");
@@ -155,8 +155,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     } else {
                         oldSearchStr = oldSearchStr + "," + edStr;
                     }
-                    SharedPreferencesUtil.saveData(SearchActivity.this, AppSP.SEARCH, oldSearchStr);
-                    intent = new Intent(mContext, SearchSuccessActivity.class);
+                    SharedPreferencesUtil.saveData(HRSearchActivity.this, AppSP.SEARCH_USER_NAME, oldSearchStr);
+                    intent = new Intent(mContext, HRSearchSuccessActivity.class);
                     intent.putExtra("KeyWord", clearEditText.getText().toString().trim());
                     startActivityForResult(intent, 100);
 
@@ -179,8 +179,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 } else {
                     oldSearchStr = oldSearchStr + "," + edStr;
                 }
-                SharedPreferencesUtil.saveData(SearchActivity.this, AppSP.SEARCH, oldSearchStr);
-                intent = new Intent(SearchActivity.this, SearchSuccessActivity.class);
+                SharedPreferencesUtil.saveData(HRSearchActivity.this, AppSP.SEARCH_USER_NAME, oldSearchStr);
+                intent = new Intent(HRSearchActivity.this, HRSearchSuccessActivity.class);
                 intent.putExtra("KeyWord", edStr);
                 startActivityForResult(intent, 100);
             }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dp_10"
+    android:id="@+id/AllllView"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -155,15 +156,15 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginRight="10dp"
-            android:visibility="gone" />
+            android:layout_marginRight="10dp" />
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:visibility="gone" />
 
 
     </LinearLayout>

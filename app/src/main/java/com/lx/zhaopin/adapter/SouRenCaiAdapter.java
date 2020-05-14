@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.bean.ShouYeQiuZhiZheBean;
+import com.lx.zhaopin.bean.RenCaiListBean;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -25,58 +25,43 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1FragmentAdapter.ViewHolder> {
+public class SouRenCaiAdapter extends RecyclerView.Adapter<SouRenCaiAdapter.ViewHolder> {
 
 
-    private List<ShouYeQiuZhiZheBean.DataListBean> mData;
+    private List<RenCaiListBean.DataListBean> mData;
     private Context mContext;
     private List<String> flowData = new ArrayList<>();
-    private OnItemClickListener onItemClickListener;
+    private OnItemClickListener itemClickListener;
 
-
-    public ShouYe1FragmentAdapter() {
+    public SouRenCaiAdapter() {
     }
 
-    public ShouYe1FragmentAdapter(Context context, List<ShouYeQiuZhiZheBean.DataListBean> allList) {
+
+    public SouRenCaiAdapter(Context context, List<RenCaiListBean.DataListBean> list) {
         mContext = context;
-        mData = allList;
+        mData = list;
     }
 
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        //return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_shouye_layout, viewGroup, false));//这个是招聘者看到的是人才信息
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_select_gangwei_layout, viewGroup, false));//求职者看到的是岗位信息
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_shoucangren_layout, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int po) {
+        Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                .load(mData.get(po).getAvatar()).into(viewHolder.roundedImageView);
 
-        String positionType = mData.get(po).getPositionType();
-        switch (positionType) {
-            case "1":
-                viewHolder.imageView1.setVisibility(View.GONE);
-                break;
-            case "2":
-            case "3":
-                viewHolder.imageView1.setVisibility(View.VISIBLE);
-                break;
-        }
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
-        viewHolder.tv3.setText(mData.get(po).getLocation());
-        viewHolder.tv4.setText(mData.get(po).getExperienceYear() + "年");
-        viewHolder.tv5.setText(mData.get(po).getEducation().getName());
-        viewHolder.tv6.setText(mData.get(po).getCompany().getName());
-        Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
-                .error(R.mipmap.imageerror)).load(mData.get(po).getCompany().getLogo()).into(viewHolder.roundedImageView);
+        viewHolder.tv3.setText(mData.get(po).getEducation().getName());
+        viewHolder.tv4.setText(mData.get(po).getAge() + "岁");
+        viewHolder.tv5.setText(mData.get(po).getWorkYears() + "年");
+        viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
 
-        String workfare = mData.get(po).getWorkfare();
-        String[] split = workfare.split(",");
-        for (int i = 0; i < split.length; i++) {
-            flowData.add(split[i]);
-        }
+
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
@@ -100,16 +85,14 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
             viewHolder.flowLiner.addView(radioButton);
         }
 
-        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.ItemClickListener(mData.get(po).getId());
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClickListener(mData.get(po).getId());
                 }
             }
         });
-
-
     }
 
     @Override
@@ -118,7 +101,8 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
+        @BindView(R.id.roundedImageView)
+        RoundedImageView roundedImageView;
         @BindView(R.id.tv1)
         TextView tv1;
         @BindView(R.id.imageView1)
@@ -133,17 +117,16 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
         TextView tv4;
         @BindView(R.id.tv5)
         TextView tv5;
+        @BindView(R.id.tv6)
+        TextView tv6;
         @BindView(R.id.flowLiner)
         FlowLiner flowLiner;
         @BindView(R.id.recyclerView)
         RecyclerView recyclerView;
-        @BindView(R.id.roundedImageView)
-        RoundedImageView roundedImageView;
-        @BindView(R.id.tv6)
-        TextView tv6;
+        @BindView(R.id.tv7)
+        TextView tv7;
         @BindView(R.id.llView)
         LinearLayout llView;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -151,11 +134,10 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
     }
 
     public interface OnItemClickListener {
-        void ItemClickListener(String id);
+        void OnItemClickListener(String id);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        onItemClickListener = onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {
+        itemClickListener = OnItemClickListener;
     }
-
 }

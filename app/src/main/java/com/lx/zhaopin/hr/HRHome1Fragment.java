@@ -16,13 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.activity.SearchActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.home1.ShouYe1Fragment;
 import com.lx.zhaopin.home1.ShouYe2Fragment;
+import com.lx.zhaopin.hractivity.HRSearchActivity;
 import com.lx.zhaopin.utils.SPTool;
 
 import org.greenrobot.eventbus.EventBus;
@@ -172,7 +172,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.llSearchView:
                 //搜索
-                startActivity(new Intent(getActivity(), SearchActivity.class));
+                startActivity(new Intent(getActivity(), HRSearchActivity.class));
                 break;
             case R.id.addView:
                 //选择城市

@@ -610,6 +610,18 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- HR已录取 -->
+        <activity
+            android:name=".hractivity.HRSearchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- HR搜索 -->
+        <activity
+            android:name=".hractivity.HRSearchSuccessActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- HR搜索的结果 -->
 
         <!--以下是HR看到的界面-->
 

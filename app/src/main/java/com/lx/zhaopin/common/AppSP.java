@@ -35,11 +35,11 @@ public class AppSP {
     public static final String xieyi = "xieyi";//启动的协议
 
 
-
     public static final int PMS_LOCATION = 1003;// 权限编号，自定义----定位  打电话
     public static final int PMS_CALL_PHONE = 1004;// 权限编号，打电话
     public static final int PMS_CAMERA = 1005;// 权限编号，自定义----相机
     public static final String SEARCH = "SEARCH";//用户搜索结果
+    public static final String SEARCH_USER_NAME = "SEARCH_USER_NAME";//HR搜索名字
     public static final String WORK_JINENG = "WORK_JINENG";//用户的专业技能
 
 

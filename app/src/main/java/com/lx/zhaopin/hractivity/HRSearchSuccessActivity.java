@@ -1,4 +1,4 @@
-package com.lx.zhaopin.activity;
+package com.lx.zhaopin.hractivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.adapter.ShouYe1FragmentAdapter;
+import com.lx.zhaopin.activity.RenCaiDetailActivity;
+import com.lx.zhaopin.adapter.SouRenCaiAdapter;
 import com.lx.zhaopin.base.BaseActivity;
-import com.lx.zhaopin.bean.ShouYeQiuZhiZheBean;
+import com.lx.zhaopin.bean.RenCaiListBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
@@ -39,7 +40,7 @@ import java.util.Map;
 
 import okhttp3.Response;
 
-public class SearchSuccessActivity extends BaseActivity implements View.OnClickListener {
+public class HRSearchSuccessActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView searchTv;
     private ImageView back;
@@ -48,13 +49,13 @@ public class SearchSuccessActivity extends BaseActivity implements View.OnClickL
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
-    private static final String TAG = "SearchSuccessActivity";
+    private static final String TAG = "HRSearchSuccessActivity";
     private int nowPageIndex = 1;
     private int totalPage = 1;
-    private List<ShouYeQiuZhiZheBean.DataListBean> allList;
-    private ShouYe1FragmentAdapter shouYe1FragmentAdapter;
+    private List<RenCaiListBean.DataListBean> allList;
     private Intent intent;
     private String cityId = "";
+    private SouRenCaiAdapter souRenCaiAdapter;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -77,13 +78,13 @@ public class SearchSuccessActivity extends BaseActivity implements View.OnClickL
         noDataLinView = findViewById(R.id.noDataLinView);
 
 
-        getDataList("2", keyWord, SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
+        getDataList("2", keyWord, String.valueOf(nowPageIndex), AppSP.pageCount);
 
         allList = new ArrayList<>();
-        shouYe1FragmentAdapter = new ShouYe1FragmentAdapter(mContext,allList);
+        souRenCaiAdapter = new SouRenCaiAdapter(mContext, allList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(shouYe1FragmentAdapter);
-        shouYe1FragmentAdapter.setOnItemClickListener(getPid());
+        recyclerView.setAdapter(souRenCaiAdapter);
+        souRenCaiAdapter.setOnItemClickListener(getRid());
 
         //下拉
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -91,7 +92,7 @@ public class SearchSuccessActivity extends BaseActivity implements View.OnClickL
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 allList.clear();
                 nowPageIndex = 1;
-                getDataList("2", keyWord, SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
+                getDataList("2", keyWord, String.valueOf(nowPageIndex), AppSP.pageCount);
                 Log.i(TAG, "onRefresh: 执行下拉刷新方法");
             }
         });
@@ -103,7 +104,7 @@ public class SearchSuccessActivity extends BaseActivity implements View.OnClickL
             public void onLoadMore(RefreshLayout refreshlayout) {
                 if (nowPageIndex < totalPage) {
                     nowPageIndex++;
-                    getDataList("2", keyWord, SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
+                    getDataList("2", keyWord, String.valueOf(nowPageIndex), AppSP.pageCount);
                     Log.i(TAG, "onLoadMore: 执行上拉加载");
                     smartRefreshLayout.finishLoadMore();
                 } else {
@@ -118,33 +119,30 @@ public class SearchSuccessActivity extends BaseActivity implements View.OnClickL
 
     }
 
-
     @NotNull
-    private ShouYe1FragmentAdapter.OnItemClickListener getPid() {
-        return new ShouYe1FragmentAdapter.OnItemClickListener() {
+    private SouRenCaiAdapter.OnItemClickListener getRid() {
+        return new SouRenCaiAdapter.OnItemClickListener() {
             @Override
-            public void ItemClickListener(String pid) {
-                intent = new Intent(mContext, GangWeiDetailActivity.class);
-                intent.putExtra("pid", pid);
+            public void OnItemClickListener(String rid) {
+                intent = new Intent(mContext, RenCaiDetailActivity.class);
+                intent.putExtra("rid", rid);
                 startActivity(intent);
             }
         };
     }
 
+
     //职位分页列表求职者
-    private void getDataList(String dataType, String name, String lng, String lat, String cityId, String pageNo, String pageSize) {
+    private void getDataList(String dataType, String name, String pageNo, String pageSize) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("dataType", dataType);
         params.put("name", name);
-        params.put("lng", lng);
-        params.put("lat", lat);
-        params.put("cityId", cityId);
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiPageList, params, new SpotsCallBack<ShouYeQiuZhiZheBean>(mContext) {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HRSouRenCai, params, new SpotsCallBack<RenCaiListBean>(mContext) {
             @Override
-            public void onSuccess(Response response, ShouYeQiuZhiZheBean resultBean) {
+            public void onSuccess(Response response, RenCaiListBean resultBean) {
                 smartRefreshLayout.finishRefresh();
                 if (resultBean.getDataList() != null) {
                     totalPage = resultBean.getTotalPage();
@@ -158,7 +156,7 @@ public class SearchSuccessActivity extends BaseActivity implements View.OnClickL
                         recyclerView.setVisibility(View.VISIBLE);
                         noDataLinView.setVisibility(View.GONE);
                         allList.addAll(resultBean.getDataList());
-                        shouYe1FragmentAdapter.notifyDataSetChanged();
+                        souRenCaiAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -194,7 +192,7 @@ public class SearchSuccessActivity extends BaseActivity implements View.OnClickL
                 } else {
                     //开始搜索
                     String keyWord = clearEditText.getText().toString().trim();
-                    getDataList("2", keyWord, SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
+                    getDataList("2", keyWord, String.valueOf(nowPageIndex), AppSP.pageCount);
 
                 }
                 break;
@@ -211,7 +209,7 @@ public class SearchSuccessActivity extends BaseActivity implements View.OnClickL
                 ToastFactory.getToast(mContext, "请输入关键词").show();
             } else {
                 //开始搜索
-                getDataList("2", keyWord, SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
+                getDataList("2", keyWord, String.valueOf(nowPageIndex), AppSP.pageCount);
             }
             return true;
         }

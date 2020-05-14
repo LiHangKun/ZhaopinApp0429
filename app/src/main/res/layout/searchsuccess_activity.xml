@@ -69,7 +69,7 @@
 
     </LinearLayout>
 
-    <ScrollView
+   <!-- <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -79,26 +79,17 @@
             android:layout_height="match_parent">
 
             <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
-            <include layout="@layout/item_search_success_layout"></include>
 
 
         </LinearLayout>
 
 
-    </ScrollView>
+    </ScrollView>-->
 
 
 
 
-    <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -149,7 +140,7 @@
         </LinearLayout>
 
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
 

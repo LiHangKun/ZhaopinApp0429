@@ -69,7 +69,7 @@ public class ShouYe2Fragment extends Fragment {
         getDataList("3", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
 
         allList = new ArrayList<>();
-        shouYe1FragmentAdapter = new ShouYe1FragmentAdapter();
+        shouYe1FragmentAdapter = new ShouYe1FragmentAdapter(getActivity(),allList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(shouYe1FragmentAdapter);
         shouYe1FragmentAdapter.setOnItemClickListener(getPid());
@@ -132,7 +132,7 @@ public class ShouYe2Fragment extends Fragment {
         params.put("cityId", cityId);
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
-        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.wenTiPage, params, new SpotsCallBack<ShouYeQiuZhiZheBean>(getActivity()) {
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.zhiWeiPageList, params, new SpotsCallBack<ShouYeQiuZhiZheBean>(getActivity()) {
             @Override
             public void onSuccess(Response response, ShouYeQiuZhiZheBean resultBean) {
                 smartRefreshLayout.finishRefresh();
