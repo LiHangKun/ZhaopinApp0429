@@ -78,6 +78,7 @@ public class GuideActivity extends AppCompatActivity {
                 //点击进入的时候直接跳转到登录界面
                 SPTool.addSessionMap(AppSP.isFirstIndex, true);
                 Intent intent = new Intent(GuideActivity.this, MainActivity.class);
+                SPTool.addSessionMap(AppSP.USER_TYPE, "0");
                 startActivity(intent);
                 finish();
             }

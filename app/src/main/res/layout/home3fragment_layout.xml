@@ -305,7 +305,7 @@
                                     android:background="@drawable/button_shape40r"
                                     android:paddingLeft="@dimen/dp_6"
                                     android:paddingRight="@dimen/dp_6"
-                                    android:text="0"
+                                    android:text="110"
                                     android:textColor="#fff" />
 
                             </LinearLayout>

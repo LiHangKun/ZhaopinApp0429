@@ -188,12 +188,12 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                 String userPhone = resultBean.getMobile();
                 EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 //TODO 保存的数据
-                SPTool.getSessionValue(AppSP.UID, mid);
-                SPTool.getSessionValue(AppSP.USER_NAME, name);
-                SPTool.getSessionValue(AppSP.USER_ICON, avatar);
-                SPTool.getSessionValue(AppSP.USER_PHONE, userPhone);
-                SPTool.getSessionValue(AppSP.USER_RongToken, RongToken);
-                SPTool.getSessionValue(AppSP.USER_TYPE, "0");
+                SPTool.addSessionMap(AppSP.UID, mid);
+                SPTool.addSessionMap(AppSP.USER_NAME, name);
+                SPTool.addSessionMap(AppSP.USER_ICON, avatar);
+                SPTool.addSessionMap(AppSP.USER_PHONE, userPhone);
+                SPTool.addSessionMap(AppSP.USER_RongToken, RongToken);
+                SPTool.addSessionMap(AppSP.USER_TYPE, "0");
                 intent = new Intent(mContext, MainActivity.class);
                 startActivity(intent);
                 finish();

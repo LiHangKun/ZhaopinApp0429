@@ -15,6 +15,10 @@ import android.widget.Toast;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.hr.HRHome1Fragment;
+import com.lx.zhaopin.hr.HRHome2Fragment;
+import com.lx.zhaopin.hr.HRHome3Fragment;
+import com.lx.zhaopin.utils.SPTool;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,7 +34,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
     public ViewPager viewPager;
     private ArrayList<Fragment> fragments;
-    private MyPagerAdapter adapter;
+    //private MyPagerAdapter adapter;
     private RadioButton rB1;
     private RadioButton rB2;
     private RadioButton rB3;
@@ -81,8 +85,9 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         int messageType = event.getMessageType();
         switch (messageType) {
             case 2:
-                setUserRongInfoMethod();
-                Log.i(TAG, "getEventmessage: 重新链接融云,和更新个人中心");
+                //setUserRongInfoMethod();
+                setUserType();
+                Log.i(TAG, "getEventmessage:用户  重新链接融云,和更新个人中心");
                 break;
         }
     }
@@ -93,18 +98,35 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
 
+
+        setUserType();
+
+
+    }
+
+    private void setUserType() {
         setViews();
         setListeners();
         fragments = new ArrayList<>();
-        fragments.add(new Home1Fragment());
-        fragments.add(new Home2Fragment());
-        fragments.add(new Home3Fragment());
 
-
+        String userType = SPTool.getSessionValue(AppSP.USER_TYPE);
+        Log.i(TAG, "setUserType: 用户" + userType);
+        if (userType.equals("0")) {
+            fragments.add(new Home1Fragment());
+            fragments.add(new Home2Fragment());
+            fragments.add(new Home3Fragment());
+        } else if (userType.equals("1")) {
+            fragments.add(new HRHome1Fragment());
+            fragments.add(new HRHome2Fragment());
+            fragments.add(new HRHome3Fragment());
+        }
         setUserRongInfoMethod();
 
-        adapter = new MyPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
+        //adapter = new MyPagerAdapter(getSupportFragmentManager());
+
+        FragmentDreamAdapter fragmentDreamAdapter = new FragmentDreamAdapter(getSupportFragmentManager(),fragments);
+
+        viewPager.setAdapter(fragmentDreamAdapter);
 
 
         viewPager.setOffscreenPageLimit(fragments.size());

@@ -13,14 +13,15 @@ import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MainActivity;
-import com.lx.zhaopin.hr.MainHRActivity;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.ToastFactory;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,8 +50,18 @@ public class SelectUserTypeActivity extends BaseActivity {
     private void init() {
         topTitle.setText("切换身份");
         getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }*/
+
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     //求职者个人信息
     private void getQiuZhiMyInfo(String mid) {
@@ -102,18 +113,25 @@ public class SelectUserTypeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.llView1OnClick:
                 //求职者
+                SPTool.addSessionMap(AppSP.USER_TYPE, "0");
                 startActivity(new Intent(mContext, MainActivity.class));
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 finish();
                 break;
             case R.id.llView2OnClick:
                 //HR
                 //是否具有hr权限 1 是 0 否
-                if (recruiter.equals("1")) {
+                /*if (recruiter.equals("1")) {
                     getHrRongToken(SPTool.getSessionValue(AppSP.UID));
                 } else {
                     ToastFactory.getToast(mContext, "您还不是HR,请联系客服申请").show();
                     return;
-                }
+                }*/
+
+                SPTool.addSessionMap(AppSP.USER_TYPE, "1");
+                startActivity(new Intent(mContext, MainActivity.class));
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                finish();
 
                 break;
         }
@@ -125,8 +143,8 @@ public class SelectUserTypeActivity extends BaseActivity {
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.getHRRongToken, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-
-                startActivity(new Intent(mContext, MainHRActivity.class));
+                SPTool.addSessionMap(AppSP.USER_TYPE, "1");
+                startActivity(new Intent(mContext, MainActivity.class));
                 finish();
 
             }
