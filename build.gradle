@@ -19,6 +19,8 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         //2.自动上传至Bintray平台插件
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0"
+        //鸿洋流布局的依赖
+        classpath 'com.novoda:bintray-release:0.8.0'
     }
 }
 

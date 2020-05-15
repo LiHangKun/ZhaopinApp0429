@@ -136,8 +136,13 @@ dependencies {
     implementation project(':dialog')
     implementation project(':FlycoTabLayout_Lib')
     implementation project(':roundimageview')
+    //申请权限
     implementation project(':permissiongen')
     implementation project(':permission-annotation')
+    //申请权限
+    //鸿洋的流布局
+    implementation project(':flowlayout-lib')
+    //鸿洋的流布局
     //定义的二级联动
     implementation project(':pickerview')
     implementation project(':wheelview')
