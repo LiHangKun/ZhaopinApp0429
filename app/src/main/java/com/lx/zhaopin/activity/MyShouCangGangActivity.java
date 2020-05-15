@@ -53,7 +53,7 @@ public class MyShouCangGangActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("我的收藏岗位");
+        topTitle.setText("我的收藏");
         smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);

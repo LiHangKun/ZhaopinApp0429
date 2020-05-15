@@ -65,9 +65,9 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
         topTitle.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);
 
-        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
-        }
+        }*/
 
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);

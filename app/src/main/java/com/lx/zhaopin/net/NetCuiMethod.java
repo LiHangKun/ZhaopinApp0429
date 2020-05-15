@@ -67,6 +67,8 @@ public class NetCuiMethod {
     public static final String lookSysMessage = "member/jobhunter/chat/system/view";//查看系统消息
     public static final String seleQiWangType1 = "member/position/category/list";//职位分类列表
     public static final String seleQiWangType2 = "member/industry/list";//行业分类列表
+    public static final String getYuyueTimeList = "member/position/time";//预约面试时间列表
+    public static final String YuYueMianShi = "member/position/appoint";//预约面试
 
 
 
@@ -78,7 +80,7 @@ public class NetCuiMethod {
 
     public static final String quXiaoMianShi_Type1 = "member/jobhunter/interview/cancel";//取消面试,求职者
 
-    public static final String logout = "logout";//退出登录
+    public static final String logout = "member/logout";//退出登录
     public static final String memberLogout = "member/logout";//退出登录
     public static final String zhuXiaoUID = "member/account/delete";//注销账户
     public static final String versionUpdate = "member/version/update";//更新

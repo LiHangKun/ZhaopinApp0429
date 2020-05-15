@@ -10,23 +10,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.bean.CityBean;
+import com.lx.zhaopin.bean.YuYueMianListBean;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SelectCityAdapter extends RecyclerView.Adapter<SelectCityAdapter.ViewHolder> {
+public class YuYueTimeListAdapter extends RecyclerView.Adapter<YuYueTimeListAdapter.ViewHolder> {
 
 
-    private List<CityBean.DataListBean> mData;
+    private List<YuYueMianListBean.DataListBean> mData;
     private Context mContext;
+    private OnItemClickListener itemClickListener;
 
-    public SelectCityAdapter() {
+    public YuYueTimeListAdapter() {
     }
 
-    public SelectCityAdapter(Context context, List<CityBean.DataListBean> list) {
+    public YuYueTimeListAdapter(Context context, List<YuYueMianListBean.DataListBean> list) {
         mContext = context;
         mData = list;
     }
@@ -34,17 +35,18 @@ public class SelectCityAdapter extends RecyclerView.Adapter<SelectCityAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_city_layout, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_mianshi_time_layout, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        viewHolder.tv1.setText(mData.get(i).getName());
+        viewHolder.tv1.setText(mData.get(i).getInterviewDate() + "( 还剩" + mData.get(i).getRemainCount() + " 个名额)");
+
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (itemClickener != null) {
-                    itemClickener.itemClick(mData.get(i).getName(), mData.get(i).getId());
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClickListener(i, mData.get(i).getInterviewDate(), mData.get(i).getId(), mData.get(i).getRemainCount());
                 }
             }
         });
@@ -58,7 +60,6 @@ public class SelectCityAdapter extends RecyclerView.Adapter<SelectCityAdapter.Vi
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.tv1)
         TextView tv1;
         @BindView(R.id.llView)
@@ -70,14 +71,13 @@ public class SelectCityAdapter extends RecyclerView.Adapter<SelectCityAdapter.Vi
         }
     }
 
-    private onItemClickener itemClickener;
-
-    public interface onItemClickener {
-        void itemClick(String name, String id);
+    public interface OnItemClickListener {
+        void OnItemClickListener(int i, String time, String id, String yuNumber);
     }
 
-    public void setOnItemClickener(onItemClickener onItemClickener) {
-        itemClickener = onItemClickener;
+    public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {
+        itemClickListener = OnItemClickListener;
     }
+
 
 }

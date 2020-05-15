@@ -51,7 +51,7 @@ public class RegActivity extends BaseActivity {
     TextView tv4;
     @BindView(R.id.okID)
     TextView okID;
-    private boolean duiHaoBoolean = true;
+    private boolean duiHaoBoolean = false;
     private static final String TAG = "RegActivity";
     private Intent intent;
     String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
@@ -129,6 +129,9 @@ public class RegActivity extends BaseActivity {
                 } else if (!edit3.getText().toString().trim().matches(regex)) {
                     ToastFactory.getToast(mContext, "密码必须8--16位包含数字加字母,请重试").show();
                     //edit3.setText("");
+                    return;
+                } else if (!duiHaoBoolean) {
+                    ToastFactory.getToast(mContext, "请先勾选注册协议").show();
                     return;
                 } else {
                     regMethod(edit1.getText().toString().trim(), edit2.getText().toString().trim(), MD5Util.encrypt(edit3.getText().toString().trim()));

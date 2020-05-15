@@ -42,12 +42,12 @@ public class SelectCityCity2ListActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("选择地址");
+        topTitle.setText("选择地址市");
         String provinceId = getIntent().getStringExtra("provinceId");
         recyclerView = findViewById(R.id.recyclerView);
-        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
-        }
+        }*/
         getCityDataList(provinceId);
 
 
@@ -79,7 +79,7 @@ public class SelectCityCity2ListActivity extends BaseActivity {
 
 
                     @Override
-                    public void itemClick(String name, String cityId, String sJing, String sWei) {
+                    public void itemClick(String name, String cityId) {
                         EventBus.getDefault().post(new MessageEvent(4, name, cityId, null, null, null, null));
 
 
@@ -93,7 +93,7 @@ public class SelectCityCity2ListActivity extends BaseActivity {
 
                         String cityName = name;
                         String cityID = cityId;
-                        Log.i(TAG, "itemClick: 用户选择的名字" + cityName + "---" + cityID + "----" + sJing + "------" + sWei);
+                        Log.i(TAG, "itemClick: 用户选择的名字" + cityName + "---" + cityID);
 
 
                     }

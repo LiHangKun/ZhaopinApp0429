@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 
+//我的关注  收藏的人才  已经写过了  MyShouCangRenActivity
+
 public class MyGuanZhuRenActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -13,7 +15,7 @@ public class MyGuanZhuRenActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("我的关注--人才");
+        topTitle.setText("我的关注");
     }
 
     @Override

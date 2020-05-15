@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:layout_width="280dp"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#dddddd"
     android:orientation="vertical">
 
     <LinearLayout
@@ -11,16 +12,22 @@
         android:orientation="vertical">
 
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
             <!--此处是流布局的地方-->
 
+            <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/tagFlowLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_50"
+                android:padding="20dp"
+                zhy:max_select="-1" />
 
-        </LinearLayout>
+        </ScrollView>
 
 
         <TextView

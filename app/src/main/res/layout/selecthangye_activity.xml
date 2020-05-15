@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -28,13 +29,15 @@
     </FrameLayout>
 
 
-    <com.lx.zhaopin.view.FlowLiner
-        android:id="@+id/flowLiner1"
+    <!--此处是流布局的地方-->
+
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/tagFlowLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginRight="10dp" />
+        android:layout_marginTop="@dimen/dp_50"
+        android:padding="20dp"
+        zhy:max_select="-1" />
 
 
     <TextView

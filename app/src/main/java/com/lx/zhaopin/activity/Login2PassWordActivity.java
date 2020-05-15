@@ -58,9 +58,9 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
     private void init() {
         topTitle.setText("密码登录");
 
-        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
-        }
+        }*/
 
         topTitle.setVisibility(View.INVISIBLE);
         view.setVisibility(View.INVISIBLE);

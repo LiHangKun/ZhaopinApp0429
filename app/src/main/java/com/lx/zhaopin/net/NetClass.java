@@ -10,15 +10,15 @@ public class NetClass {
 
     static {
         if (isDeg) {
-            BASE_URL = "http://47.113.91.112/api/service/";//测试环境地址
+            BASE_URL = "http://39.96.78.51/api/service/";//测试环境地址
         } else {
-            BASE_URL = "http://47.113.91.112/api/service/";//正式生产环境地址
+            BASE_URL = "正式生产环境地址/";//正式生产环境地址
         }
     }
 
 
-    public static final String Web_XieYi1 = "http://app.ydznz.com/a/agreement/agreement/disPlayDetail?id=1";//用户协议
-    public static final String Web_XieYi2 = "http://app.ydznz.com/a/agreement/agreement/disPlayDetail?id=2";//隐私政策
+    public static final String Web_XieYi1 = BASE_URL + "common/protocol1";//用户协议
+    public static final String Web_XieYi2 = BASE_URL + "common/privacy";//隐私政策
     public static final String Web_XieYi3 = BASE_URL + "coupon";//优惠券使用说明
     public static final String Web_XieYi4 = BASE_URL + "authentication";//实名认证说明
     public static final String Web_XieYi5 = BASE_URL + "expand";//推广活动规则

@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.DaiMianShiListActivity;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
@@ -184,8 +183,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private void getQiuZhiMyInfo(String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
-        Log.i(TAG, "求职者个人信息: " + NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo + "---" + new Gson().toJson(params));
-        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.checkPhone, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
                 smartRefreshLayout.finishRefresh();

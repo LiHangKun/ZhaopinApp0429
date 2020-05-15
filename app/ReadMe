@@ -192,7 +192,9 @@ public static boolean isAvilible(Context context, String packageName) {
 
 
 
-
+1.修改密码 验证码有误或错误
+2.首页数据类型4 未获取到定位信息
+3.注销获取验证码
 
 
 

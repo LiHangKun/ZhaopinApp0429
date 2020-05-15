@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -16,16 +19,23 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.adapter.YuYueTimeListAdapter;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.YuYueMianListBean;
 import com.lx.zhaopin.bean.ZhiWeiDetailBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.http.BaseCallback;
@@ -215,18 +225,29 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                    申请职位 dibuView3
                    预约面试 dibuView4
                    */
-
+                String deliverResume = resultBean.getDeliverResume(); //是否已沟通 1 是 0 否
 
                 switch (positionType) {
                     //职位类型1.需沟通，2.无需沟通，3.直接面试
                     case "1":
                         noGouTongView.setVisibility(View.GONE);
+
+                        switch (deliverResume) {
+                            case "1":
+                                dibuView2.setVisibility(View.VISIBLE);
+                                break;
+                            case "0":
+                                dibuView1.setVisibility(View.VISIBLE);
+                                break;
+                        }
                         break;
                     case "2":
                         noGouTongView.setVisibility(View.VISIBLE);
+                        dibuView3.setVisibility(View.VISIBLE);
                         break;
                     case "3":
                         noGouTongView.setVisibility(View.VISIBLE);
+                        dibuView4.setVisibility(View.VISIBLE);
                         break;
                 }
 
@@ -438,7 +459,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.dibuView4:
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    ToastFactory.getToast(mContext, "预约面试").show();
+                    fabuMethod();
+                    lightoff();
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -469,33 +491,163 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     }
 
 
-    //职位收藏/取消收藏 zhiWeiShouCang  1表示是，0表示否
-    private void shouCangZhiWei(final String pid, final String collected) {
+    /**
+     * 设置手机屏幕亮度变暗
+     */
+    private void lightoff() {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.3f;
+        getWindow().setAttributes(lp);
+    }
 
-       /* Map<String, String> params = new HashMap<>();
+    /**
+     * 设置手机屏幕亮度显示正常
+     */
+    private void lighton() {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 1f;
+        getWindow().setAttributes(lp);
+    }
+
+    private PopupWindow popupWindow1;
+    private View popupView1;
+    private TranslateAnimation animation1;
+
+
+    //TODO---------------------------------------------------------------
+    private void fabuMethod() {
+        if (popupWindow1 == null) {
+            popupView1 = View.inflate(this, R.layout.pop_layout_shoplei, null);
+            RecyclerView recyclerViewShopLei = popupView1.findViewById(R.id.recyclerViewShopLei);
+
+            // 参数2,3：指明popupwindow的宽度和高度
+            popupWindow1 = new PopupWindow(popupView1, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            popupWindow1.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    lighton();
+                }
+            });
+
+            getDataList(recyclerViewShopLei);
+
+            // 设置背景图片， 必须设置，不然动画没作用
+            popupWindow1.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow1.setFocusable(true);
+
+            // 设置点击popupwindow外屏幕其它地方消失
+            popupWindow1.setOutsideTouchable(true);
+
+            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
+            animation1 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
+
+            animation1.setInterpolator(new AccelerateInterpolator());
+            animation1.setDuration(200);
+
+            popupView1.findViewById(R.id.cancle).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    popupWindow1.dismiss();
+                    lighton();
+                }
+            });
+        }
+
+        // 在点击之后设置popupwindow的销毁
+        if (popupWindow1.isShowing()) {
+            popupWindow1.dismiss();
+            lighton();
+        }
+
+        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+        popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popupView1.startAnimation(animation1);
+
+    }
+
+
+    //活动分类
+    private void getDataList(final RecyclerView recyclerViewShopLei) {
+        Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pid", pid);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiShouCang, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.getYuyueTimeList, params, new BaseCallback<YuYueMianListBean>() {
             @Override
-            public void onSuccess(Response response, PhoneStateBean resultBean) {
+            public void onFailure(Request request, Exception e) {
 
-                *//*switch (collected) {
-                    case "1":
-                        image1.setImageResource(R.drawable.gangwei_shoucang1);
-                        break;
-                    case "0":
-                        image1.setImageResource(R.drawable.gangwei_shoucang2);
-                        break;
-                }*//*
+            }
 
-                getZhiWeiDetail(pid);
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, YuYueMianListBean resultBean) {
+                recyclerViewShopLei.setLayoutManager(new LinearLayoutManager(mContext));
+                YuYueTimeListAdapter yuYueTimeListAdapter = new YuYueTimeListAdapter(mContext, resultBean.getDataList());
+                recyclerViewShopLei.setAdapter(yuYueTimeListAdapter);
+
+                yuYueTimeListAdapter.setOnItemClickListener(new YuYueTimeListAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClickListener(int i, String time, String id, String yuNumber) {
+
+                        if (yuNumber.equals("0")) {
+                            ToastFactory.getToast(mContext, "该时间段预约已满").show();
+                            return;
+                        } else {
+                            //预约面试 YuYueMianShi
+                            YuYueMianShiMe(id);
+
+                        }
+
+                    }
+                });
+
+
             }
 
             @Override
             public void onError(Response response, int code, Exception e) {
 
             }
-        });*/
+        });
+    }
+
+    private void YuYueMianShiMe(String dateId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pid", pid);
+        params.put("dateId", dateId);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.YuYueMianShi, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+
+    //职位收藏/取消收藏 zhiWeiShouCang  1表示是，0表示否
+    private void shouCangZhiWei(final String pid, final String collected) {
 
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));

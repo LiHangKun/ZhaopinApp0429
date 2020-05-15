@@ -55,7 +55,7 @@ public class MyGuanZhuGangActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("我的关注--公司");
+        topTitle.setText("我的关注");
         smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);

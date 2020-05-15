@@ -310,6 +310,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 设置 -->
         <activity
+            android:name="com.lx.zhaopin.activity.ZhuXiaoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 设置 -->
+        <activity
             android:name="com.lx.zhaopin.activity.XiuGaiMiMaActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"

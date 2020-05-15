@@ -36,7 +36,11 @@ public class SelectCityPro1ListActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("选择地址");
+        topTitle.setText("选择地址省");
+
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }*/
 
         getDataList();
     }
@@ -65,13 +69,14 @@ public class SelectCityPro1ListActivity extends BaseActivity {
 
 
                     @Override
-                    public void itemClick(String name, String id, String sJing, String sWei) {
+                    public void itemClick(String name, String id) {
                         String cityName = name;
                         String cityID = id;
-                        Log.i(TAG, "itemClick: 用户选择的名字" + cityName + "---" + cityID + "----" + sJing + "------" + sWei);
+                        Log.i(TAG, "itemClick: 用户选择的名字" + cityName + "---" + cityID );
                         Intent intent = new Intent(mContext, SelectCityCity2ListActivity.class);
                         intent.putExtra("provinceId", id);
                         startActivity(intent);
+                        finish();
 
                     }
                 });

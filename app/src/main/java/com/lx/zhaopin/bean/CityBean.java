@@ -19,25 +19,21 @@ public class CityBean extends CommonBean {
 
     public static class DataListBean {
         /**
-         * city : 城市名称
-         * id : 城市id
-         * lat : 纬度
-         * lng : 经度
+         * id : 110100
+         * initial : B
+         * name : 北京城区
          */
 
-        private String city;
         private String id;
-        private String lat;
-        private String lng;
-        private String name;
         private String initial;
+        private String name;
 
-        public String getName() {
-            return name;
+        public String getId() {
+            return id;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getInitial() {
@@ -48,36 +44,12 @@ public class CityBean extends CommonBean {
             this.initial = initial;
         }
 
-        public String getCity() {
-            return city;
+        public String getName() {
+            return name;
         }
 
-        public void setCity(String city) {
-            this.city = city;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getLat() {
-            return lat;
-        }
-
-        public void setLat(String lat) {
-            this.lat = lat;
-        }
-
-        public String getLng() {
-            return lng;
-        }
-
-        public void setLng(String lng) {
-            this.lng = lng;
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

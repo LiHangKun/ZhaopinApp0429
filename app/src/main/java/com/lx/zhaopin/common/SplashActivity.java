@@ -19,7 +19,6 @@ import com.amap.api.location.AMapLocationListener;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.utils.ActivityManager;
-import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.GaoDeUtils;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
@@ -101,8 +100,7 @@ public class SplashActivity extends AppCompatActivity {
             pmsLocationSuccess();
         }
 
-        SPTool.addSessionMap(AppSP.UID, AppUtils.getAppName(SplashActivity.this));
-        SPTool.addSessionMap(AppSP.USER_PHONE, "17600057277");
+
 
         initLocation();//高德定位
     }
