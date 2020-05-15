@@ -56,13 +56,14 @@
                         android:layout_gravity="center">
 
                         <TextView
+                            android:id="@+id/messageNumberTv1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_48"
                             android:background="@drawable/button_shape40r"
                             android:paddingLeft="@dimen/dp_6"
                             android:paddingRight="@dimen/dp_6"
-                            android:text="111"
+                            android:text="0"
                             android:textColor="#fff" />
 
                     </LinearLayout>
@@ -108,13 +109,14 @@
                         android:layout_gravity="center">
 
                         <TextView
+                            android:id="@+id/messageNumberTv2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_48"
                             android:background="@drawable/button_shape40r"
                             android:paddingLeft="@dimen/dp_6"
                             android:paddingRight="@dimen/dp_6"
-                            android:text="345"
+                            android:text="0"
                             android:textColor="#fff" />
 
                     </LinearLayout>
@@ -160,13 +162,14 @@
                         android:layout_gravity="center">
 
                         <TextView
+                            android:id="@+id/messageNumberTv3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_48"
                             android:background="@drawable/button_shape40r"
                             android:paddingLeft="@dimen/dp_6"
                             android:paddingRight="@dimen/dp_6"
-                            android:text="678"
+                            android:text="0"
                             android:textColor="#fff" />
 
                     </LinearLayout>

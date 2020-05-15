@@ -7,22 +7,31 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseFragment;
+import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.home2.Message1Fragment;
 import com.lx.zhaopin.home2.Message2Fragment;
 import com.lx.zhaopin.home2.Message3Fragment;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.SPTool;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class Home2Fragment extends BaseFragment implements View.OnClickListener {
 
@@ -39,9 +48,9 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
     private LinearLayout llView2;
     private LinearLayout llView3;
     private MyPagerAdapter adapter;
-
-
-
+    private TextView messageNumberTv1;
+    private TextView messageNumberTv2;
+    private TextView messageNumberTv3;
 
 
     @Nullable
@@ -62,6 +71,9 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
         tv3 = view.findViewById(R.id.tv3);
+        messageNumberTv1 = view.findViewById(R.id.messageNumberTv1);
+        messageNumberTv2 = view.findViewById(R.id.messageNumberTv2);
+        messageNumberTv3 = view.findViewById(R.id.messageNumberTv3);
 
 
         llView1.setOnClickListener(this);
@@ -88,8 +100,41 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(fragments.size());
 
+        getUnMessageNumber();
+
+
         return view;
 
+    }
+
+    //newMessageCount
+    private void getUnMessageNumber() {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.newMessageCount, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                messageNumberTv1.setText(resultBean.getChatApplyCount());
+                messageNumberTv2.setText(resultBean.getJobFeedbackCount());
+                messageNumberTv3.setText(resultBean.getSystemMessageCount());
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 
@@ -107,7 +152,6 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
             return fragments.size();
         }
     }
-
 
 
     //通过监听viewpager滑动改变Checked的属性

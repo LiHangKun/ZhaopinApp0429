@@ -16,6 +16,33 @@ public class PhoneStateBean extends CommonBean {
     private String ratio;
     private String count;
     private String interviewId;
+    private String jobFeedbackCount;
+    private String systemMessageCount;
+    private String chatApplyCount;
+
+    public String getJobFeedbackCount() {
+        return jobFeedbackCount;
+    }
+
+    public void setJobFeedbackCount(String jobFeedbackCount) {
+        this.jobFeedbackCount = jobFeedbackCount;
+    }
+
+    public String getSystemMessageCount() {
+        return systemMessageCount;
+    }
+
+    public void setSystemMessageCount(String systemMessageCount) {
+        this.systemMessageCount = systemMessageCount;
+    }
+
+    public String getChatApplyCount() {
+        return chatApplyCount;
+    }
+
+    public void setChatApplyCount(String chatApplyCount) {
+        this.chatApplyCount = chatApplyCount;
+    }
 
     public String getInterviewId() {
         return interviewId;

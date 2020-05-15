@@ -62,6 +62,9 @@ public class NetCuiMethod {
     public static final String qiuZheZheDaoDa = "我已到达";//求职者我已到达  TODO 没写
     public static final String qiuZhiFeedList = "member/jobhunter/chat/feedback/page";//求职反馈消息列表
     public static final String messageDetail = "jobhunter/chat/feedback/detail";//求职反馈消息详情
+    public static final String newMessageCount = "member/jobhunter/chat/count";//新消息数量  TODO  还要处理消息已读数量的刷新
+    public static final String sysMessageList = "member/jobhunter/chat/system/page";//系统消息列表
+    public static final String lookSysMessage = "member/jobhunter/chat/system/view";//查看系统消息
 
 
 

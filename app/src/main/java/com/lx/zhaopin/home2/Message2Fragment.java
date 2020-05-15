@@ -34,6 +34,7 @@ import java.util.Map;
 
 import okhttp3.Response;
 
+//这个是求职反馈---点击进入求职反馈的详情进度列表页面
 public class Message2Fragment extends Fragment {
 
     private SmartRefreshLayout smartRefreshLayout;

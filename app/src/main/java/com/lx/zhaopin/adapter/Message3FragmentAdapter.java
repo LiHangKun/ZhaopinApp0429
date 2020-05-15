@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.SystemMessageListBean;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,11 +21,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3FragmentAdapter.ViewHolder> {
 
 
+    private List<SystemMessageListBean.DataListBean> mData;
+    private Context mContext;
+    private OnItemClickListener itemClickListener;
 
     public Message3FragmentAdapter() {
     }
 
-    public Message3FragmentAdapter(Context context) {
+    public Message3FragmentAdapter(Context context, List<SystemMessageListBean.DataListBean> allList) {
+        mContext = context;
+        mData = allList;
     }
 
 
@@ -33,13 +41,71 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
+
+        viewHolder.tv2.setText(mData.get(i).getSendDate());
+        viewHolder.tv3.setText(mData.get(i).getTitle());
+
+
+        String messageType = mData.get(i).getMessageType();
+        // 1 系统消息 2 收到Offer 3 求职反馈 4 面试邀请 5 面试取消 6 面试超时  7 举报结果
+        switch (messageType) {
+            case "1":
+                viewHolder.tv1.setText("系统消息");
+                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
+                break;
+            case "2":
+                viewHolder.tv1.setText("收到Offer");
+                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
+                break;
+            case "3":
+                viewHolder.tv1.setText("求职反馈");
+                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
+                break;
+            case "4":
+                viewHolder.tv1.setText("面试邀请");
+                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
+                break;
+            case "5":
+                viewHolder.tv1.setText("面试取消");
+                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
+                break;
+            case "6":
+                viewHolder.tv1.setText("面试超时");
+                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
+                break;
+            case "7":
+                viewHolder.tv1.setText("举报结果");
+                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
+                break;
+        }
+
+        String unread = mData.get(i).getUnread();
+        //1 是 0 否
+        switch (unread) {
+            case "1":
+                viewHolder.unTV.setVisibility(View.GONE);
+                break;
+            case "0":
+                viewHolder.unTV.setVisibility(View.VISIBLE);
+                break;
+        }
+
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClickListener(viewHolder.llView, i, mData.get(i).getCorrelation(), mData.get(i).getMessageType(), mData.get(i).getUrl(), mData.get(i).getTitle(),mData.get(i).getId());
+                }
+            }
+        });
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,12 +117,25 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
         TextView tv2;
         @BindView(R.id.tv3)
         TextView tv3;
+
+        @BindView(R.id.unTV)
+        TextView unTV;
+
         @BindView(R.id.llView)
         LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClickListener(View view, int i, String Correlation, String messageType, String url, String title,String messID);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {
+        itemClickListener = OnItemClickListener;
     }
 
 }
