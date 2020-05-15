@@ -65,6 +65,8 @@ public class NetCuiMethod {
     public static final String newMessageCount = "member/jobhunter/chat/count";//新消息数量  TODO  还要处理消息已读数量的刷新
     public static final String sysMessageList = "member/jobhunter/chat/system/page";//系统消息列表
     public static final String lookSysMessage = "member/jobhunter/chat/system/view";//查看系统消息
+    public static final String seleQiWangType1 = "member/position/category/list";//职位分类列表
+    public static final String seleQiWangType2 = "member/industry/list";//行业分类列表
 
 
 

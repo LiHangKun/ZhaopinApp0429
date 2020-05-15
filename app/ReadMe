@@ -81,6 +81,8 @@ EventBus.getDefault().post(new MessageEvent(1, null, null, null, null, null, nul
 //TODO  3  修改和添加以及删除学历 工作经验和专业技能
 //TODO  4  选择城市
 //TODO  5  求职者对offer的处理
+//TODO  6  处理编辑求职期望中  职位
+//TODO  7  处理编辑求职期望中  行业
 
 
 //TODO  消息类型

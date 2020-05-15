@@ -364,7 +364,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 选择职位类型 -->
         <activity
-            android:name="com.lx.zhaopin.activity.HangYeLeiXingActivity"
+            android:name="com.lx.zhaopin.activity.SelectQiWangType1Activity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- 选择行业 -->
+        <activity
+            android:name="com.lx.zhaopin.activity.SelectQiWangType2Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

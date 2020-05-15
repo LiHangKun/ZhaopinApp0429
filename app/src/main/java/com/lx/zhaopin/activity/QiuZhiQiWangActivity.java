@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,12 +15,17 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.ZhuCiZhiWuBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +40,7 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
     private TextView tv2;
     private TextView tv3;
     private TextView tv4;
+    private String zhiWeiID;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -41,10 +48,32 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
         init();
     }
 
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 6:
+                zhiWeiID = event.getKeyWord1();
+                String name = event.getKeyWord2();
+                tv1.setText(name);
+                break;
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void init() {
         topTitle.setText("编辑求职期望");
         rightText.setText("删除");
 
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
 
         String id = getIntent().getStringExtra("id");
         if (!TextUtils.isEmpty(id)) {
@@ -204,11 +233,11 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.llView1:
                 //期望职位
-                ToastFactory.getToast(mContext, "期望职位").show();
+                startActivity(new Intent(mContext, SelectQiWangType1Activity.class));
                 break;
             case R.id.llView2:
                 //期望行业
-                ToastFactory.getToast(mContext, "期望行业").show();
+                startActivity(new Intent(mContext, SelectQiWangType2Activity.class));
                 break;
             case R.id.llView3:
                 //工作城市
