@@ -30,9 +30,7 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
 
     private List<ShouYeQiuZhiZheBean.DataListBean> mData;
     private Context mContext;
-    private List<String> flowData = new ArrayList<>();
-    private OnItemClickListener onItemClickListener;
-
+    private OnItemClickListener itemClickListener;
 
     public ShouYe1FragmentAdapter() {
     }
@@ -65,8 +63,8 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
         }
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
-        viewHolder.tv3.setText(mData.get(po).getLocation());
-        viewHolder.tv4.setText(mData.get(po).getExperienceYear() + "年");
+        viewHolder.tv3.setText(mData.get(po).getCity().getName() + mData.get(po).getDistrict().getName());
+        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() + "年");
         viewHolder.tv5.setText(mData.get(po).getEducation().getName());
         viewHolder.tv6.setText(mData.get(po).getCompany().getName());
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
@@ -74,9 +72,11 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
 
         String workfare = mData.get(po).getWorkfare();
         String[] split = workfare.split(",");
+        List<String> flowData = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             flowData.add(split[i]);
         }
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
@@ -103,8 +103,8 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.ItemClickListener(mData.get(po).getId());
+                if (itemClickListener != null) {
+                    itemClickListener.ItemClickListener(mData.get(po).getId());
                 }
             }
         });
@@ -154,8 +154,8 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
         void ItemClickListener(String id);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        onItemClickListener = onItemClickListener;
+    public void SetOnItemClickListener(OnItemClickListener onItemClickListener) {
+        itemClickListener = onItemClickListener;
     }
 
 }

@@ -27,7 +27,6 @@ public class RenCaiDetail2Adapter extends RecyclerView.Adapter<RenCaiDetail2Adap
 
     private List<RenCaiDetailBean.ExperienceWorkListBean> mData;
     private Context mContext;
-    private List<String> flowData = new ArrayList<>();
 
     public RenCaiDetail2Adapter() {
     }
@@ -53,10 +52,11 @@ public class RenCaiDetail2Adapter extends RecyclerView.Adapter<RenCaiDetail2Adap
 
         String skills = mData.get(po).getSkills();
         String[] split = skills.split(",");
+        List<String> flowData = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             flowData.add(split[i]);
         }
-
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);

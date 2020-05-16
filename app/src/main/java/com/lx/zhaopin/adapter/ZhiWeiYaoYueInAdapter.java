@@ -28,7 +28,6 @@ public class ZhiWeiYaoYueInAdapter extends RecyclerView.Adapter<ZhiWeiYaoYueInAd
 
     private List<GongSiZhiWeiBean.DataListBean> mData;
     private Context mContext;
-    private List<String> flowData = new ArrayList<>();
     private OnItemClickListener itemClickListener;
 
     public ZhiWeiYaoYueInAdapter() {
@@ -66,11 +65,11 @@ public class ZhiWeiYaoYueInAdapter extends RecyclerView.Adapter<ZhiWeiYaoYueInAd
 
         String workfare = mData.get(po).getWorkfare();
         String[] split = workfare.split(",");
-
+        List<String> flowData = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             flowData.add(split[i]);
         }
-
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);

@@ -100,7 +100,7 @@ public class ShouYe2Fragment extends Fragment {
         shouYe1FragmentAdapter = new ShouYe1FragmentAdapter(getActivity(),allList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(shouYe1FragmentAdapter);
-        shouYe1FragmentAdapter.setOnItemClickListener(getPid());
+        shouYe1FragmentAdapter.SetOnItemClickListener(getPid());
 
         //下拉
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {

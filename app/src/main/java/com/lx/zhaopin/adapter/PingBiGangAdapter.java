@@ -31,7 +31,6 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
     private List<PingBiGangWeiBean.DataListBean> mData;
     private Context mContext;
     private OnItemClickListener itemClickListener;
-    private List<String> flowData = new ArrayList<>();
 
     public PingBiGangAdapter() {
     }
@@ -93,11 +92,11 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
         String workfare = mData.get(po).getWorkfare();
 
         String[] split = workfare.split(",");
-
+        List<String> flowData = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             flowData.add(split[i]);
         }
-
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);

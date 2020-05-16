@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -93,10 +94,10 @@
                 android:background="#e7e7e7" />
 
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_90"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -143,11 +144,11 @@
 
 
             <View
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginTop="@dimen/dp_3"
-                android:background="#e7e7e7" />
+                android:background="#e7e7e7"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"

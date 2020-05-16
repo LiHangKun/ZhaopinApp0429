@@ -30,7 +30,6 @@ public class SouRenCaiAdapter extends RecyclerView.Adapter<SouRenCaiAdapter.View
 
     private List<RenCaiListBean.DataListBean> mData;
     private Context mContext;
-    private List<String> flowData = new ArrayList<>();
     private OnItemClickListener itemClickListener;
 
     public SouRenCaiAdapter() {
@@ -61,7 +60,8 @@ public class SouRenCaiAdapter extends RecyclerView.Adapter<SouRenCaiAdapter.View
         viewHolder.tv5.setText(mData.get(po).getWorkYears() + "年");
         viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
 
-
+        List<String> flowData = new ArrayList<>();
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);

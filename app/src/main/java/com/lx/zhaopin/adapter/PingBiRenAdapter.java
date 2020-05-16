@@ -29,7 +29,6 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
     private List<PingBiRen.DataListBean> mData;
     private Context mContext;
     private OnItemClickListener itemClickListener;
-    private List<String> flowData = new ArrayList<>();
 
     public PingBiRenAdapter() {
     }
@@ -66,7 +65,8 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
             default:
                 viewHolder.imageView1.setVisibility(View.VISIBLE);
         }
-
+        List<String> flowData = new ArrayList<>();
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);

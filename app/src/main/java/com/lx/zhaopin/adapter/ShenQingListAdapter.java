@@ -30,7 +30,6 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
 
     private List<ShenQingListBean.DataListBean> mData;
     private Context mContext;
-    private List<String> flowData = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public ShenQingListAdapter() {
@@ -95,11 +94,12 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
 
         String workfare = mData.get(po).getPosition().getWorkfare();
         String[] split = workfare.split(",");
+        List<String> flowData = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             flowData.add(split[i]);
         }
 
-
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);

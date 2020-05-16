@@ -60,7 +60,7 @@ public class YuLan2Adapter extends RecyclerView.Adapter<YuLan2Adapter.ViewHolder
             flowData.add(split[j]);
         }
 
-
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT,

@@ -30,7 +30,6 @@ public class ZaiZhaoGangAdapter extends RecyclerView.Adapter<ZaiZhaoGangAdapter.
 
     private List<GongSiZaiZhaoBean.DataListBean> mData;
     private Context mContext;
-    private List<String> flowData = new ArrayList<>();
     private OnItemClickener itemClickener;
 
     public ZaiZhaoGangAdapter() {
@@ -77,12 +76,12 @@ public class ZaiZhaoGangAdapter extends RecyclerView.Adapter<ZaiZhaoGangAdapter.
 
         String workfare = mData.get(i).getWorkfare();
         String[] split = workfare.split(",");
-
+        List<String> flowData = new ArrayList<>();
         for (int j = 0; j < split.length; j++) {
             flowData.add(split[j]);
         }
 
-
+        viewHolder.flowLiner.removeAllViews();
         for (int k = 0; k < flowData.size(); k++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT,
