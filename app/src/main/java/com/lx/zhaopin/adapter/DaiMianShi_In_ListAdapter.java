@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -77,8 +76,6 @@ public class DaiMianShi_In_ListAdapter extends RecyclerView.Adapter<DaiMianShi_I
         RoundedImageView roundedImageView;
         @BindView(R.id.tv1)
         TextView tv1;
-        @BindView(R.id.image1)
-        ImageView image1;
         @BindView(R.id.tv2)
         TextView tv2;
         @BindView(R.id.tv3)

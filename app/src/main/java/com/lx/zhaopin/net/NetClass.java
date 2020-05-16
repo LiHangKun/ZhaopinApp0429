@@ -5,7 +5,7 @@ public class NetClass {
 
     public static final boolean isDeg = true;
     public static final String BASE_URL;
-    public static final String Base_FileCui = "http://47.113.91.112/api/service/member/file/upload";//单张图片
+    public static final String Base_FileCui = "http://39.96.78.51/api/service/member/file/upload";//单张图片
 
 
     static {

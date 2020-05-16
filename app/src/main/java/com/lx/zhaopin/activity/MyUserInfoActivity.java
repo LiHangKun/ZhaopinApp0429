@@ -175,7 +175,7 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 //Toast.makeText(UserInforActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
-                String userAge = getTime(date).substring(0, 11);
+                String userAge = getTime(date).substring(0, 7);
                 Log.i(TAG, "onTimeSelect: 用户年龄" + userAge);
                 tv2.setText(userAge);
 
@@ -236,7 +236,7 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
                         }
                     }
                 })
-                .setType(new boolean[]{true, true, true, false, false, false})
+                .setType(new boolean[]{true, true, false, false, false, false})
                 .setRangDate(startDate, selectedDate)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(Color.RED)
@@ -259,7 +259,7 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 //Toast.makeText(UserInforActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
-                String userAge = getTime(date).substring(0, 11);
+                String userAge = getTime(date).substring(0, 7);
                 Log.i(TAG, "onTimeSelect: 用户年龄" + userAge);
                 tv3.setText(userAge);
 
@@ -320,7 +320,7 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
                         }
                     }
                 })
-                .setType(new boolean[]{true, true, true, false, false, false})
+                .setType(new boolean[]{true, true, false, false, false, false})
                 .setRangDate(startDate, selectedDate)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(Color.RED)
@@ -645,6 +645,7 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
         Log.e(TAG, "http 上传图片:" + url);
         userSelectIcon = url;
         //TODO  头像上传成功,修改头像
+        xiuGiaMethod2(userSelectIcon);
 
     }
 
@@ -652,4 +653,33 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
     public void uoLoad(@NotNull List<String> url) {
         dismissLoading();
     }
+
+
+    //修改个人信息
+    private void xiuGiaMethod2(String avatar) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("avatar", avatar);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.xiugaiQiuZhiMyInfo, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+               /* ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);*/
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+    }
+
 }

@@ -25,6 +25,7 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
 
     private List<MyJianLiBean.ExperienceWorkListBean> mData;
     private Context mContext;
+    private OnItemClickListener itemClickListener;
 
     public MyJianLi2Adapter() {
     }
@@ -42,10 +43,20 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int po) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int po) {
         viewHolder.tv1.setText(mData.get(po).getCompanyName());
         viewHolder.tv2.setText(mData.get(po).getBeginDate() + "--" + mData.get(po).getEndDate());
         viewHolder.tv3.setText(mData.get(po).getPositionName());
+
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null){
+                    itemClickListener.OnItemClickListener(mData.get(po).getId());
+                }
+            }
+        });
+
 
         String skills = mData.get(po).getSkills();
         if (skills.contains(",")) {
@@ -107,6 +118,15 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
             ButterKnife.bind(this, itemView);
 
         }
+    }
+
+
+    public interface OnItemClickListener{
+        void OnItemClickListener(String id);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        itemClickListener = onItemClickListener;
     }
 
 }

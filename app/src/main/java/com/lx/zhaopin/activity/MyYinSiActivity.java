@@ -1,12 +1,10 @@
 package com.lx.zhaopin.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
@@ -56,8 +54,7 @@ public class MyYinSiActivity extends BaseActivity {
     private void getQiuZhiMyInfo(String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
-        Log.i(TAG, "求职者个人信息: " + NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo + "---" + new Gson().toJson(params));
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.checkPhone, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
 
             @Override
             public void onFailure(Request request, Exception e) {
@@ -132,7 +129,7 @@ public class MyYinSiActivity extends BaseActivity {
     //修改简历开关
     private void xiuGaiOpenJianLi(String openResume) {
         Map<String, String> params = new HashMap<>();
-
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         switch (openResume) {
             case "0":
                 params.put("openResume", "1");
@@ -155,7 +152,7 @@ public class MyYinSiActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
-
+                getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
             }
 
             @Override
@@ -171,7 +168,7 @@ public class MyYinSiActivity extends BaseActivity {
     //修改是否可以和我主动沟通
     private void xiuGaiOpenChat(String openChat) {
         Map<String, String> params = new HashMap<>();
-
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         switch (openChat) {
             case "0":
                 params.put("openChat", "1");
@@ -194,7 +191,7 @@ public class MyYinSiActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
-
+                getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
             }
 
             @Override

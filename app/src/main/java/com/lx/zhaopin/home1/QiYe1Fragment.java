@@ -110,16 +110,26 @@ public class QiYe1Fragment extends Fragment {
             @Override
             public void onSuccess(Response response, QiYeInfoBean resultBean) {
                 tv1.setText(resultBean.getIntro());
-                tv2.setText(resultBean.getCity().getName() + resultBean.getDistrict().getName());
+                tv2.setText(resultBean.getCity().getName() + resultBean.getLocation());
                 lat = resultBean.getLat();
                 lng = resultBean.getLng();
 
+                tv3.setText(resultBean.getName());
+                tv4.setText(resultBean.getFund());
+                tv5.setText(resultBean.getLegalPerson());
+                tv6.setText(resultBean.getService());
+
 
                 String imagesLen = resultBean.getImages();
-                String[] split = imagesLen.split("\\|");
-                for (int i = 0; i < split.length; i++) {
-                    images.add(split[i]);
+                if (imagesLen.contains("|")) {
+                    String[] split = imagesLen.split("\\|");
+                    for (int i = 0; i < split.length; i++) {
+                        images.add(split[i]);
+                    }
+                } else {
+                    images.add(imagesLen);
                 }
+
 
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
                 linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);//
@@ -185,7 +195,7 @@ public class QiYe1Fragment extends Fragment {
     @OnClick(R.id.daoHang)
     public void onClick() {
         //导航
-        gotoGaode(lat, lng);
+        gotoGaode(lng, lat);
     }
 
 

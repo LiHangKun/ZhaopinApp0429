@@ -19,33 +19,18 @@ public class YuYueMianListBean extends CommonBean {
 
     public static class DataListBean {
         /**
-         * InterviewDate :
          * appointCount :
-         * id :
+         * id : 21281ba3eed54d79b45dec4c14c8bf26
+         * interviewDate : 2020-05-17 09:00
+         * remainCount :
          * totalCount :
          */
 
-        private String InterviewDate;
         private String appointCount;
         private String id;
-        private String totalCount;
+        private String interviewDate;
         private String remainCount;
-
-        public String getRemainCount() {
-            return remainCount;
-        }
-
-        public void setRemainCount(String remainCount) {
-            this.remainCount = remainCount;
-        }
-
-        public String getInterviewDate() {
-            return InterviewDate;
-        }
-
-        public void setInterviewDate(String InterviewDate) {
-            this.InterviewDate = InterviewDate;
-        }
+        private String totalCount;
 
         public String getAppointCount() {
             return appointCount;
@@ -61,6 +46,22 @@ public class YuYueMianListBean extends CommonBean {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getInterviewDate() {
+            return interviewDate;
+        }
+
+        public void setInterviewDate(String interviewDate) {
+            this.interviewDate = interviewDate;
+        }
+
+        public String getRemainCount() {
+            return remainCount;
+        }
+
+        public void setRemainCount(String remainCount) {
+            this.remainCount = remainCount;
         }
 
         public String getTotalCount() {

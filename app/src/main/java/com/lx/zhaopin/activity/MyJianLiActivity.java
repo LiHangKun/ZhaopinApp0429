@@ -133,7 +133,7 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
                 }
 
                 tv3.setText(resultBean.getEducation().getName());
-                tv4.setText(resultBean.getBirthday());
+                tv4.setText(resultBean.getAge() + "岁");
                 tv5.setText(resultBean.getWorkYears() + "年经验");
                 tv6.setText(resultBean.getLatestCityName());
 
@@ -158,6 +158,17 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
                 MyJianLi2Adapter myJianLi2Adapter = new MyJianLi2Adapter(mContext, experienceWorkList);
                 recyclerView2.setLayoutManager(new LinearLayoutManager(mContext));
                 recyclerView2.setAdapter(myJianLi2Adapter);
+                myJianLi2Adapter.setOnItemClickListener(new MyJianLi2Adapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClickListener(String workID) {
+
+                        intent = new Intent(mContext, MyGongZuoActivity.class);
+                        intent.putExtra("workID", workID);
+                        startActivity(intent);
+
+
+                    }
+                });
                 //TODO 工作经验
 
                 //TODO 专业技能
@@ -167,21 +178,17 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
                     resumeSkillListString.add(resumeSkillList.get(i).getName());
                 }
 
+                flowLiner.removeAllViews();
                 for (int i = 0; i < resumeSkillListString.size(); i++) {
                     final TextView radioButton = new TextView(mContext);
-                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT,
-                            FlowLiner.LayoutParams.WRAP_CONTENT);
-                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10),
-                            ViewUtil.dp2px(mContext, 10));
+                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
                     radioButton.setLayoutParams(layoutParams);
                     final String str = resumeSkillListString.get(i);
                     radioButton.setText(str);
                     radioButton.setGravity(Gravity.CENTER);
                     radioButton.setTextSize(13);
-                    radioButton.setPadding(ViewUtil.dp2px(mContext, 18),
-                            ViewUtil.dp2px(mContext, 6)
-                            , ViewUtil.dp2px(mContext, 18),
-                            ViewUtil.dp2px(mContext, 6));
+                    radioButton.setPadding(ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6));
                     radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
                     //radioButton.setBackgroundResource(R.drawable.search_selector);
                     radioButton.setBackgroundResource(R.drawable.button_shape03);
@@ -242,7 +249,7 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
             case R.id.addView3:
                 //工作经验
                 intent = new Intent(mContext, MyGongZuoActivity.class);
-                intent.putExtra("workID","");
+                intent.putExtra("workID", "");
                 startActivity(intent);
                 break;
         }

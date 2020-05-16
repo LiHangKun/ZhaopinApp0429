@@ -9,49 +9,40 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.SelectQiWangBean;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
 import com.lxj.xpopup.core.DrawerPopupView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Request;
+import okhttp3.Response;
+
 
 public class CustomDrawerPopupView extends DrawerPopupView {
     private static final String TAG = "CustomDrawerPopupView";
 
-    private String[] mVals = new String[]
-            {"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid", "Weclome Hello", "ButtonButtonButton Text", "TextView","HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid","Weclome Hello", "ButtonButtonButton Text", "TextView","HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid","Weclome Hello", "ButtonButtonButton Text", "TextView","HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid" ,"HelloHelloHelloHelloHelloHello", "AndroidAndroid", "WeclomeWeclome Hi ", "ButtonButtonButton", "TextViewTextView", "Hello",
-                    "Android", "WeclomeWeclomeWeclomeWeclomeWeclome", "Button ImageView", "TextView", "Helloworld",
-                    "AndroidAndroidAndroidAndroid", };
+    //private String[] mVals = new String[]{"HelloHelloHelloHelloHelloHello", "AndroidAndroidAndroidAndroid",};
+    List<String> StringList = new ArrayList<>();
+
     private final Context mContext;
+    private final String itemID;
+    private TagFlowLayout tagFlowLayout;
 
 
-    public CustomDrawerPopupView(@NonNull Context context) {
+    public CustomDrawerPopupView(@NonNull Context context, String id) {
         super(context);
         mContext = context;
+        itemID = id;
     }
 
     @Override
@@ -63,7 +54,10 @@ public class CustomDrawerPopupView extends DrawerPopupView {
     protected void onCreate() {
         super.onCreate();
 
-        final TagFlowLayout tagFlowLayout = findViewById(R.id.tagFlowLayout);
+        getDataList(itemID);
+
+
+        tagFlowLayout = findViewById(R.id.tagFlowLayout);
         Log.e("tag", "CustomDrawerPopupView onCreate");
 
 
@@ -74,18 +68,50 @@ public class CustomDrawerPopupView extends DrawerPopupView {
             }
         });
 
-        tagFlowLayout.setAdapter(new TagAdapter<String>(mVals) {
-            @Override
-            public View getView(FlowLayout parent, int position, String s) {
-                TextView tv = (TextView) LayoutInflater.from(mContext).inflate(R.layout.tv, tagFlowLayout, false);
 
-                tv.setText(s);
-                return tv;
+
+
+    }
+
+    private void getDataList(String parentid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("parentid", parentid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.seleQiWangType2, params, new BaseCallback<SelectQiWangBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
             }
 
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, SelectQiWangBean resultBean) {
+                List<SelectQiWangBean.DataListBean> dataList = resultBean.getDataList();
+                for (int i = 0; i < dataList.size(); i++) {
+                    StringList.add(dataList.get(i).getName());
+                }
+
+                tagFlowLayout.setAdapter(new TagAdapter<String>(StringList) {
+                    @Override
+                    public View getView(FlowLayout parent, int position, String s) {
+                        TextView tv = (TextView) LayoutInflater.from(mContext).inflate(R.layout.tv, tagFlowLayout, false);
+
+                        tv.setText(s);
+                        return tv;
+                    }
+
+                });
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
         });
-
-
     }
 
     @Override

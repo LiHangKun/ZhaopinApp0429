@@ -100,7 +100,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
 
     @BindView(R.id.okID)
     TextView okID;
-
+    private String oldSearchStr = "";
     private static final String TAG = "MyGongZuoActivity";
 
     private TimePickerView pvTime, pvCustomTime, pvCustomLunar, pvCustomLunarEnd;
@@ -358,6 +358,18 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
         initTimePicker();
         initLunarPicker();
         initLunarPickerEnd();
+
+
+        oldSearchStr = (String) SharedPreferencesUtil.getData(MyGongZuoActivity.this, AppSP.WORK_JINENG, "");
+        if (!TextUtils.isEmpty(oldSearchStr)) {
+            String oldArray[] = oldSearchStr.split(",");
+            List list = Arrays.asList(oldArray);
+            Set set = new HashSet(list);
+            oldArray = (String[]) set.toArray(new String[0]);
+            flowData = Arrays.asList(oldArray);
+            setUpFlowLinear();
+        }
+
     }
 
     private List<String> flowData = new ArrayList<>();
@@ -439,7 +451,6 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
 
     }
 
-    private String oldSearchStr = "";
 
     @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.llView3OnClick, R.id.llView4OnClick, R.id.okID, R.id.rightText})
     public void onClick(View view) {
@@ -477,10 +488,10 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
             case R.id.llView4OnClick:
                 //添加专业技能
 
-                intent = new Intent(mContext, AddZhuanYeJiNengActivity.class);
+                intent = new Intent(mContext, AddZhuanYeJiNengWorkActivity.class);
                 intent.putExtra("id", "");
                 intent.putExtra("name", "");
-                startActivityForResult(intent, 222);
+                startActivityForResult(intent, 100);
                 break;
             case R.id.okID:
                 if (TextUtils.isEmpty(workID)) {
@@ -614,14 +625,14 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        if (!TextUtils.isEmpty(oldSearchStr)) {
+        /*if (!TextUtils.isEmpty(oldSearchStr)) {
             String oldArray[] = oldSearchStr.split(",");
             List list = Arrays.asList(oldArray);
             Set set = new HashSet(list);
             oldArray = (String[]) set.toArray(new String[0]);
             flowData = Arrays.asList(oldArray);
             setUpFlowLinear();
-        }
+        }*/
     }
 
     /**
@@ -635,9 +646,18 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 判断请求码和返回码是不是正确的，这两个码都是我们自己设置的
-        if (requestCode == 222 && resultCode == 111) {
-            String name = data.getStringExtra("WorkName");
-            SharedPreferencesUtil.saveData(MyGongZuoActivity.this, AppSP.WORK_JINENG, name);
+        if (requestCode == 100) {
+
+            oldSearchStr = (String) SharedPreferencesUtil.getData(MyGongZuoActivity.this, AppSP.WORK_JINENG, "");
+            if (!TextUtils.isEmpty(oldSearchStr)) {
+                String oldArray[] = oldSearchStr.split(",");
+                List list = Arrays.asList(oldArray);
+                Set set = new HashSet(list);
+                oldArray = (String[]) set.toArray(new String[0]);
+                flowData = Arrays.asList(oldArray);
+                setUpFlowLinear();
+            }
+
         }
     }
 

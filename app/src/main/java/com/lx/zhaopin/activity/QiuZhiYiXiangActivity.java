@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
@@ -21,12 +23,17 @@ import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.QiuZhiyiXiangBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +66,12 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
     @BindView(R.id.llView4)
     LinearLayout llView4;
 
+    @BindView(R.id.addZhiWei)
+    RelativeLayout addZhiWei;
+    private List<QiuZhiyiXiangBean.DataListBean> allList;
+    private QiuZhiYiXiangAdapter qiuZhiYiXiangAdapter;
+
+
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.qiuzhiyixiang_activity);
@@ -66,11 +79,48 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+
+    }
+
     private void init() {
         topTitle.setText("求职意向");
         getDataList();
 
+        allList = new ArrayList<>();
+        qiuZhiYiXiangAdapter = new QiuZhiYiXiangAdapter(mContext, allList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.setAdapter(qiuZhiYiXiangAdapter);
+        qiuZhiYiXiangAdapter.setOnItemClickener(new QiuZhiYiXiangAdapter.OnItemClickener() {
+            @Override
+            public void onItemClick(String id) {
+                Intent intent = new Intent(mContext, QiuZhiQiWangActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
 
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
+
+
+    }
+
+    private static final String TAG = "QiuZhiYiXiangActivity";
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 8:
+                getDataList();
+                Log.i(TAG, "getEventmessage: 刷新求职意向");
+                break;
+        }
     }
 
     private void getDataList() {
@@ -80,19 +130,8 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, QiuZhiyiXiangBean resultBean) {
 
-                List<QiuZhiyiXiangBean.ResumeExpectationListBean> allList = new ArrayList<>();
-                QiuZhiYiXiangAdapter qiuZhiYiXiangAdapter = new QiuZhiYiXiangAdapter(mContext, allList);
-                recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-                recyclerView.setAdapter(qiuZhiYiXiangAdapter);
-                qiuZhiYiXiangAdapter.setOnItemClickener(new QiuZhiYiXiangAdapter.OnItemClickener() {
-                    @Override
-                    public void onItemClick(String id) {
-                        Intent intent = new Intent(mContext, QiuZhiQiWangActivity.class);
-                        intent.putExtra("id", id);
-                        startActivity(intent);
-                    }
-                });
-
+                allList.addAll(resultBean.getDataList());
+                qiuZhiYiXiangAdapter.notifyDataSetChanged();
 
                 String jobNature = resultBean.getJobNature();
                 //工作性质 1.全职，2.兼职
@@ -176,8 +215,8 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
         getWindow().setAttributes(lp);
     }
 
-
-    @OnClick({R.id.llView1, R.id.llView2, R.id.llView3, R.id.llView4})
+    // 8342740fa1fe419dac350c34b6031adf
+    @OnClick({R.id.llView1, R.id.llView2, R.id.llView3, R.id.llView4, R.id.addZhiWei})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llView1:
@@ -194,6 +233,11 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
                 //到岗时间
                 fabuMethod3();
                 lightoff();
+                break;
+            case R.id.addZhiWei:
+                //添加主次职位
+                Intent intent = new Intent(mContext, QiuZhiQiWangActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -313,7 +357,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             tv1Click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tv2.setText("离职-随时到岗");
+                    tv3.setText("离职-随时到岗");
                     editYiXiangMe("2", "1");
                     popupWindow2.dismiss();
                     lighton();
@@ -323,7 +367,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             tv2Click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tv2.setText("在职-月内到岗");
+                    tv3.setText("在职-月内到岗");
                     editYiXiangMe("2", "2");
                     popupWindow2.dismiss();
                     lighton();
@@ -333,7 +377,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             tv3Click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tv2.setText("在职-考虑机会");
+                    tv3.setText("在职-考虑机会");
                     editYiXiangMe("2", "3");
                     popupWindow2.dismiss();
                     lighton();
@@ -343,7 +387,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             tv4Click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tv2.setText("在职-暂不考虑");
+                    tv3.setText("在职-暂不考虑");
                     editYiXiangMe("2", "4");
                     popupWindow2.dismiss();
                     lighton();
@@ -421,7 +465,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             tv1Click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tv3.setText("一周");
+                    tv4.setText("一周");
                     editYiXiangMe("3", "1");
                     popupWindow3.dismiss();
                     lighton();
@@ -431,7 +475,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             tv2Click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tv3.setText("半个月");
+                    tv4.setText("半个月");
                     editYiXiangMe("3", "2");
                     popupWindow3.dismiss();
                     lighton();
@@ -441,7 +485,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             tv3Click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tv3.setText("一个月");
+                    tv4.setText("一个月");
                     editYiXiangMe("3", "3");
                     popupWindow3.dismiss();
                     lighton();
@@ -493,19 +537,6 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
     //-------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void editYiXiangMe(String type, String states) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
@@ -535,7 +566,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-
+                getDataList();
 
             }
 

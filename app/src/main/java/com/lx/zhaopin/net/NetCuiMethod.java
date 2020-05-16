@@ -48,7 +48,7 @@ public class NetCuiMethod {
     public static final String addWokJingLi = "member/jobhunter/resume/work/add";//新增工作经历  //TODO  可能会有问题
     public static final String qiuZhiYiXiang = "member/jobhunter/expectation";//求职意向
     public static final String zhuCiZhiWei = "member/jobhunter/expectation/get";//获取主次职位
-    public static final String addzhuCiZhiWei = "member/jobhunter/expectation/add";//新增主次职位   TODO  还没有写
+    public static final String addzhuCiZhiWei = "member/jobhunter/expectation/add";//新增主次职位   TODO  可能会有问题 写死的数据
     public static final String xiuGaizhuCiZhiWei = "member/jobhunter/expectation/change";//修改主次职位   TODO  还没有写
     public static final String delzhuCiZhiWei = "member/jobhunter/expectation/delete";//删除主次职位   TODO  还没有写
     public static final String shouCangZhiWeiList = "member/postion/collect/page";//收藏职位列表

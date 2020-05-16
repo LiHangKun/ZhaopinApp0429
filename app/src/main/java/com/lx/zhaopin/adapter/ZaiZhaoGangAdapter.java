@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class ZaiZhaoGangAdapter extends RecyclerView.Adapter<ZaiZhaoGangAdapter.
     private List<GongSiZaiZhaoBean.DataListBean> mData;
     private Context mContext;
     private OnItemClickener itemClickener;
+    private static final String TAG = "ZaiZhaoGangAdapter";
 
     public ZaiZhaoGangAdapter() {
     }
@@ -65,7 +67,7 @@ public class ZaiZhaoGangAdapter extends RecyclerView.Adapter<ZaiZhaoGangAdapter.
 
         viewHolder.tv1.setText(mData.get(i).getName());
         viewHolder.tv2.setText(mData.get(i).getMinSalary() + "-" + mData.get(i).getMaxSalary() + "K");
-        viewHolder.tv3.setText(mData.get(i).getCity().getName());
+        viewHolder.tv3.setText(mData.get(i).getCity().getName() + mData.get(i).getDistrict().getName());
         viewHolder.tv4.setText(mData.get(i).getExperienceYear().getName() + "年");
         viewHolder.tv5.setText(mData.get(i).getEducation().getName());
 

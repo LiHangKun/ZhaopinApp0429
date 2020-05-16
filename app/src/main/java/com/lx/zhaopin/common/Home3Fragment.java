@@ -28,7 +28,6 @@ import com.lx.zhaopin.activity.MyShouCangGangActivity;
 import com.lx.zhaopin.activity.MyUserInfoActivity;
 import com.lx.zhaopin.activity.MyYinSiActivity;
 import com.lx.zhaopin.activity.PingBiGangActivity;
-import com.lx.zhaopin.activity.QiuZhiQiWangActivity;
 import com.lx.zhaopin.activity.QiuZhiYiXiangActivity;
 import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
@@ -340,11 +339,11 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView4:
                 //在线客服
-                /*if (!TextUtils.isEmpty(phone)) {
+                if (!TextUtils.isEmpty(phone)) {
                     callPhone();
-                }*/
-                intent = new Intent(getActivity(), QiuZhiQiWangActivity.class);
-                startActivity(intent);
+                }
+               /* intent = new Intent(getActivity(), QiuZhiQiWangActivity.class);
+                startActivity(intent);*/
 
                 break;
             case R.id.relView5:

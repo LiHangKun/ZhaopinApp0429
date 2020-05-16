@@ -167,6 +167,7 @@ public class QiYeInfoActivity extends BaseActivity implements View.OnClickListen
     private void getQiYeInfo(String cid) {
         Map<String, String> params = new HashMap<>();
         params.put("cid", cid);
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.companyInfo, params, new BaseCallback<QiYeInfoBean>() {
             @Override
             public void onFailure(Request request, Exception e) {

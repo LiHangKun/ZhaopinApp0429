@@ -51,7 +51,7 @@ public class SelectQiWangType2Activity extends BaseActivity implements View.OnCl
         recyclerView = findViewById(R.id.recyclerView);
 
         rightText.setText("侧滑");
-        rightText.setVisibility(View.VISIBLE);
+        rightText.setVisibility(View.INVISIBLE);
         rightText.setOnClickListener(this);
 
 
@@ -74,7 +74,7 @@ public class SelectQiWangType2Activity extends BaseActivity implements View.OnCl
                 new XPopup.Builder(SelectQiWangType2Activity.this)
                         .popupPosition(PopupPosition.Right)//右边
                         .hasStatusBarShadow(true) //启用状态栏阴影
-                        .asCustom(new CustomDrawerPopupView(SelectQiWangType2Activity.this))
+                        .asCustom(new CustomDrawerPopupView(SelectQiWangType2Activity.this,id))
                         .show();
 
 
@@ -132,11 +132,7 @@ public class SelectQiWangType2Activity extends BaseActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rightText:
-                new XPopup.Builder(SelectQiWangType2Activity.this)
-                        .popupPosition(PopupPosition.Right)//右边
-                        .hasStatusBarShadow(true) //启用状态栏阴影
-                        .asCustom(new CustomDrawerPopupView(SelectQiWangType2Activity.this))
-                        .show();
+
                 break;
         }
     }

@@ -23,7 +23,6 @@ import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,14 +35,13 @@ import okhttp3.Response;
 
 public class QiYe2Fragment extends Fragment {
 
-    private static final String TAG = "QiYe1Fragment";
+    private static final String TAG = "QiYe2Fragment";
 
     private int nowPageIndex = 1;
     private static String shopJiaID;
-    private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
-    private int totalPage;
+    private int totalPage = 1;
     private List<GongSiZaiZhaoBean.DataListBean> allList;
     private ZaiZhaoGangAdapter zaiZhaoGangAdapter;
     private Intent intent;
@@ -60,16 +58,15 @@ public class QiYe2Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(container.getContext(), R.layout.qiye2fragment_layout, null);
 
-        smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
         noDataLinView = view.findViewById(R.id.noDataLinView);
 
+        getDataList(String.valueOf(nowPageIndex), AppSP.pageCount, shopJiaID);
 
         allList = new ArrayList<>();
         zaiZhaoGangAdapter = new ZaiZhaoGangAdapter(getActivity(), allList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(zaiZhaoGangAdapter);
-        getDataList(String.valueOf(nowPageIndex), AppSP.pageCount, shopJiaID);
         zaiZhaoGangAdapter.setOnItemClickener(getPid());
 
         return view;
@@ -98,11 +95,11 @@ public class QiYe2Fragment extends Fragment {
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.gongSiGangWei, params, new SpotsCallBack<GongSiZaiZhaoBean>(getActivity()) {
             @Override
             public void onSuccess(Response response, GongSiZaiZhaoBean resultBean) {
-                smartRefreshLayout.finishRefresh();
                 if (resultBean.getDataList() != null) {
                     totalPage = resultBean.getTotalPage();
                     if (resultBean.getDataList().size() == 0) {
                         recyclerView.setVisibility(View.GONE);
+                        Log.i(TAG, "onSuccess: --->" + resultBean.getDataList().size());
                         noDataLinView.setVisibility(View.VISIBLE);
                     } else {
                         if (nowPageIndex == 1) {
@@ -110,7 +107,9 @@ public class QiYe2Fragment extends Fragment {
                         }
                         recyclerView.setVisibility(View.VISIBLE);
                         noDataLinView.setVisibility(View.GONE);
+                        Log.i(TAG, "onSuccess: --->" + resultBean.getDataList().size());
                         allList.addAll(resultBean.getDataList());
+                        Log.i(TAG, "onSuccess: --->" + allList.size());
                         zaiZhaoGangAdapter.notifyDataSetChanged();
                     }
                 }
@@ -118,7 +117,6 @@ public class QiYe2Fragment extends Fragment {
 
             @Override
             public void onError(Response response, int code, Exception e) {
-                smartRefreshLayout.finishRefresh();
             }
         });
 

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_100"
         android:layout_marginTop="@dimen/dp_100"
-        android:src="@drawable/splashbj" />
+        android:src="@drawable/chenggong" />
 
     <TextView
         android:layout_width="match_parent"

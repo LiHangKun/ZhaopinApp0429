@@ -2,52 +2,47 @@ package com.lx.zhaopin.bean;
 
 import com.lx.zhaopin.http.CommonBean;
 
-public class ZhiWeiDetailBean extends CommonBean {
+import java.io.Serializable;
+import java.util.List;
+
+public class ZhiWeiDetailBean extends CommonBean implements Serializable {
 
 
     /**
-     * HRID :
-     * city : {"id":"","name":"名称"}
-     * company : {"city":{"id":"","name":"名称"},"district":{"id":"","name":"名称"},"financing":{"name":""},"id":"","images":"","industry":{"name":""},"intro":"","lat":"","lng":"","logo":"","name":"","staffNum":""}
-     * deliverResume :
-     * delivered :
-     * duty :
-     * education : {"id":"","name":"名称"}
-     * experienceYear : {"id":"","name":"名称"}
-     * id :
-     * location :
-     * maxSalary :
-     * minSalary :
-     * name : 职位名称
-     * positionType : 1
-     * skills :
-     * workfare :
+     * HRID : hre6151ce13783416bad54fffc10b19c0d
+     * city : {"children":[],"id":"410100","name":"郑州市","parentId":"0","sort":30,"type":"2"}
+     * collected : 1
+     * company : {"city":{"children":["",""],"id":"410100","name":"郑州市","parentId":"0","sort":30},"financing":{"id":"4edccb5a934741bc95e509251ddd6896","name":"一轮融资"},"id":"7f246b2831254cb1b9ba5c2441668541","images":"/userfiles/company/2020/5/qprkzn4q5x.png","industry":{"children":["",""],"id":"8342740fa1fe419dac350c34b6031adf","name":"二级2","parentId":"0","sort":30},"intro":"服务好每一个客户","lat":"34.749272","lng":"113.735057","location":"郑东新区通泰路与宏昌街交叉口向东50米","logo":"http://39.96.78.51/userfiles/company/2020/5/yqhwombvot.jpg","name":"立信","staffNum":"100"}
+     * deliverResume : 0
+     * district : {"children":[],"id":"410105","name":"金水区","parentId":"0","sort":30}
+     * duty : 高比例还原设计图稿，配合团队完成项目
+     * education : {"id":"899919864ee84faba953e6c435bfa0e8","name":"本科"}
+     * experienceYear : {"id":"165deca730524295809095ff8ac3e8a3","maxYear":5,"minYear":1,"name":"1-5"}
+     * id : 045fc44509444842ad27d4a7ee30a021
+     * location : 商都世贸中心
+     * maxSalary : 12
+     * minSalary : 6
+     * name : 前端开发
+     * positionType : 2
+     * skills : html|css|javascript|jq|vue
+     * workfare : 双休,五险一金
      */
 
     private String HRID;
     private CityBean city;
+    private String collected;
     private CompanyBean company;
     private String deliverResume;
-    private String delivered;
+    private DistrictBean district;
     private String duty;
     private EducationBean education;
     private ExperienceYearBean experienceYear;
     private String id;
     private String location;
-    private String maxSalary;
-    private String minSalary;
+    private int maxSalary;
+    private int minSalary;
     private String name;
     private String positionType;
-    private String collected;
-
-    public String getCollected() {
-        return collected;
-    }
-
-    public void setCollected(String collected) {
-        this.collected = collected;
-    }
-
     private String skills;
     private String workfare;
 
@@ -67,6 +62,14 @@ public class ZhiWeiDetailBean extends CommonBean {
         this.city = city;
     }
 
+    public String getCollected() {
+        return collected;
+    }
+
+    public void setCollected(String collected) {
+        this.collected = collected;
+    }
+
     public CompanyBean getCompany() {
         return company;
     }
@@ -83,12 +86,12 @@ public class ZhiWeiDetailBean extends CommonBean {
         this.deliverResume = deliverResume;
     }
 
-    public String getDelivered() {
-        return delivered;
+    public DistrictBean getDistrict() {
+        return district;
     }
 
-    public void setDelivered(String delivered) {
-        this.delivered = delivered;
+    public void setDistrict(DistrictBean district) {
+        this.district = district;
     }
 
     public String getDuty() {
@@ -131,19 +134,19 @@ public class ZhiWeiDetailBean extends CommonBean {
         this.location = location;
     }
 
-    public String getMaxSalary() {
+    public int getMaxSalary() {
         return maxSalary;
     }
 
-    public void setMaxSalary(String maxSalary) {
+    public void setMaxSalary(int maxSalary) {
         this.maxSalary = maxSalary;
     }
 
-    public String getMinSalary() {
+    public int getMinSalary() {
         return minSalary;
     }
 
-    public void setMinSalary(String minSalary) {
+    public void setMinSalary(int minSalary) {
         this.minSalary = minSalary;
     }
 
@@ -179,14 +182,22 @@ public class ZhiWeiDetailBean extends CommonBean {
         this.workfare = workfare;
     }
 
-    public static class CityBean {
+    public static class CityBean implements Serializable{
         /**
-         * id :
-         * name : 名称
+         * children : []
+         * id : 410100
+         * name : 郑州市
+         * parentId : 0
+         * sort : 30
+         * type : 2
          */
 
         private String id;
         private String name;
+        private String parentId;
+        private int sort;
+        private String type;
+        private List<?> children;
 
         public String getId() {
             return id;
@@ -203,26 +214,57 @@ public class ZhiWeiDetailBean extends CommonBean {
         public void setName(String name) {
             this.name = name;
         }
+
+        public String getParentId() {
+            return parentId;
+        }
+
+        public void setParentId(String parentId) {
+            this.parentId = parentId;
+        }
+
+        public int getSort() {
+            return sort;
+        }
+
+        public void setSort(int sort) {
+            this.sort = sort;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public List<?> getChildren() {
+            return children;
+        }
+
+        public void setChildren(List<?> children) {
+            this.children = children;
+        }
     }
 
-    public static class CompanyBean {
+    public static class CompanyBean implements Serializable{
         /**
-         * city : {"id":"","name":"名称"}
-         * district : {"id":"","name":"名称"}
-         * financing : {"name":""}
-         * id :
-         * images :
-         * industry : {"name":""}
-         * intro :
-         * lat :
-         * lng :
-         * logo :
-         * name :
-         * staffNum :
+         * city : {"children":["",""],"id":"410100","name":"郑州市","parentId":"0","sort":30}
+         * financing : {"id":"4edccb5a934741bc95e509251ddd6896","name":"一轮融资"}
+         * id : 7f246b2831254cb1b9ba5c2441668541
+         * images : /userfiles/company/2020/5/qprkzn4q5x.png
+         * industry : {"children":["",""],"id":"8342740fa1fe419dac350c34b6031adf","name":"二级2","parentId":"0","sort":30}
+         * intro : 服务好每一个客户
+         * lat : 34.749272
+         * lng : 113.735057
+         * location : 郑东新区通泰路与宏昌街交叉口向东50米
+         * logo : http://39.96.78.51/userfiles/company/2020/5/yqhwombvot.jpg
+         * name : 立信
+         * staffNum : 100
          */
 
         private CityBeanX city;
-        private DistrictBean district;
         private FinancingBean financing;
         private String id;
         private String images;
@@ -230,6 +272,7 @@ public class ZhiWeiDetailBean extends CommonBean {
         private String intro;
         private String lat;
         private String lng;
+        private String location;
         private String logo;
         private String name;
         private String staffNum;
@@ -240,14 +283,6 @@ public class ZhiWeiDetailBean extends CommonBean {
 
         public void setCity(CityBeanX city) {
             this.city = city;
-        }
-
-        public DistrictBean getDistrict() {
-            return district;
-        }
-
-        public void setDistrict(DistrictBean district) {
-            this.district = district;
         }
 
         public FinancingBean getFinancing() {
@@ -306,6 +341,14 @@ public class ZhiWeiDetailBean extends CommonBean {
             this.lng = lng;
         }
 
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
         public String getLogo() {
             return logo;
         }
@@ -330,10 +373,66 @@ public class ZhiWeiDetailBean extends CommonBean {
             this.staffNum = staffNum;
         }
 
-        public static class CityBeanX {
+        public static class CityBeanX implements Serializable{
             /**
-             * id :
-             * name : 名称
+             * children : ["",""]
+             * id : 410100
+             * name : 郑州市
+             * parentId : 0
+             * sort : 30
+             */
+
+            private String id;
+            private String name;
+            private String parentId;
+            private int sort;
+            private List<String> children;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getParentId() {
+                return parentId;
+            }
+
+            public void setParentId(String parentId) {
+                this.parentId = parentId;
+            }
+
+            public int getSort() {
+                return sort;
+            }
+
+            public void setSort(int sort) {
+                this.sort = sort;
+            }
+
+            public List<String> getChildren() {
+                return children;
+            }
+
+            public void setChildren(List<String> children) {
+                this.children = children;
+            }
+        }
+
+        public static class FinancingBean implements Serializable{
+            /**
+             * id : 4edccb5a934741bc95e509251ddd6896
+             * name : 一轮融资
              */
 
             private String id;
@@ -356,14 +455,20 @@ public class ZhiWeiDetailBean extends CommonBean {
             }
         }
 
-        public static class DistrictBean {
+        public static class IndustryBean implements Serializable{
             /**
-             * id :
-             * name : 名称
+             * children : ["",""]
+             * id : 8342740fa1fe419dac350c34b6031adf
+             * name : 二级2
+             * parentId : 0
+             * sort : 30
              */
 
             private String id;
             private String name;
+            private String parentId;
+            private int sort;
+            private List<String> children;
 
             public String getId() {
                 return id;
@@ -380,45 +485,93 @@ public class ZhiWeiDetailBean extends CommonBean {
             public void setName(String name) {
                 this.name = name;
             }
-        }
 
-        public static class FinancingBean {
-            /**
-             * name :
-             */
-
-            private String name;
-
-            public String getName() {
-                return name;
+            public String getParentId() {
+                return parentId;
             }
 
-            public void setName(String name) {
-                this.name = name;
-            }
-        }
-
-        public static class IndustryBean {
-            /**
-             * name :
-             */
-
-            private String name;
-
-            public String getName() {
-                return name;
+            public void setParentId(String parentId) {
+                this.parentId = parentId;
             }
 
-            public void setName(String name) {
-                this.name = name;
+            public int getSort() {
+                return sort;
+            }
+
+            public void setSort(int sort) {
+                this.sort = sort;
+            }
+
+            public List<String> getChildren() {
+                return children;
+            }
+
+            public void setChildren(List<String> children) {
+                this.children = children;
             }
         }
     }
 
-    public static class EducationBean {
+    public static class DistrictBean implements Serializable{
         /**
-         * id :
-         * name : 名称
+         * children : []
+         * id : 410105
+         * name : 金水区
+         * parentId : 0
+         * sort : 30
+         */
+
+        private String id;
+        private String name;
+        private String parentId;
+        private int sort;
+        private List<?> children;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getParentId() {
+            return parentId;
+        }
+
+        public void setParentId(String parentId) {
+            this.parentId = parentId;
+        }
+
+        public int getSort() {
+            return sort;
+        }
+
+        public void setSort(int sort) {
+            this.sort = sort;
+        }
+
+        public List<?> getChildren() {
+            return children;
+        }
+
+        public void setChildren(List<?> children) {
+            this.children = children;
+        }
+    }
+
+    public static class EducationBean implements Serializable{
+        /**
+         * id : 899919864ee84faba953e6c435bfa0e8
+         * name : 本科
          */
 
         private String id;
@@ -441,13 +594,17 @@ public class ZhiWeiDetailBean extends CommonBean {
         }
     }
 
-    public static class ExperienceYearBean {
+    public static class ExperienceYearBean implements Serializable{
         /**
-         * id :
-         * name : 名称
+         * id : 165deca730524295809095ff8ac3e8a3
+         * maxYear : 5
+         * minYear : 1
+         * name : 1-5
          */
 
         private String id;
+        private int maxYear;
+        private int minYear;
         private String name;
 
         public String getId() {
@@ -456,6 +613,22 @@ public class ZhiWeiDetailBean extends CommonBean {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public int getMaxYear() {
+            return maxYear;
+        }
+
+        public void setMaxYear(int maxYear) {
+            this.maxYear = maxYear;
+        }
+
+        public int getMinYear() {
+            return minYear;
+        }
+
+        public void setMinYear(int minYear) {
+            this.minYear = minYear;
         }
 
         public String getName() {

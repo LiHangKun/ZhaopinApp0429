@@ -348,6 +348,7 @@ public class MyJiaoYuActivity extends BaseActivity implements View.OnClickListen
     //
     private void chaEidInfo(String eid) {
         Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("eid", eid);
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.chaEidInfo, params, new BaseCallback<MyJiaoYuInfoBean>() {
             @Override
@@ -369,6 +370,8 @@ public class MyJiaoYuActivity extends BaseActivity implements View.OnClickListen
                 tv2.setText(resultBean.getBeginDate());
                 tv3.setText(resultBean.getEndDate());
                 edit3.setText(resultBean.getExperience());
+
+                xueLiID = resultBean.getEducation().getId();
 
             }
 
@@ -489,7 +492,7 @@ public class MyJiaoYuActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
-                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -521,7 +524,7 @@ public class MyJiaoYuActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
-                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -554,7 +557,7 @@ public class MyJiaoYuActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 EventBus.getDefault().post(new MessageEvent(3, null, null, null, null, null, null));
-                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

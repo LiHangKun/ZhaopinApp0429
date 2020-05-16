@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,13 @@ public class QiuZhiYiXiangAdapter extends RecyclerView.Adapter<QiuZhiYiXiangAdap
 
 
     private Context mContext;
-    private List<QiuZhiyiXiangBean.ResumeExpectationListBean> mData;
+    private List<QiuZhiyiXiangBean.DataListBean> mData;
     private OnItemClickener itemClickener;
 
     public QiuZhiYiXiangAdapter() {
     }
 
-    public QiuZhiYiXiangAdapter(Context context, List<QiuZhiyiXiangBean.ResumeExpectationListBean> list) {
+    public QiuZhiYiXiangAdapter(Context context, List<QiuZhiyiXiangBean.DataListBean> list) {
         mContext = context;
         mData = list;
     }
@@ -56,8 +57,10 @@ public class QiuZhiYiXiangAdapter extends RecyclerView.Adapter<QiuZhiYiXiangAdap
 
     }
 
+    private static final String TAG = "QiuZhiYiXiangAdapter";
     @Override
     public int getItemCount() {
+        Log.i(TAG, "getItemCount: " + mData.size());
         return mData == null ? 0 : mData.size();
     }
 

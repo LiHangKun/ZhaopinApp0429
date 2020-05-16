@@ -8,16 +8,16 @@ public class QiuZhiyiXiangBean extends CommonBean {
 
 
     /**
-     * arrivalTime : 1
-     * jobNature : 1
-     * jobStatus : 1
-     * resumeExpectationList : [{"city":{"id":"","name":""},"id":"","maxSalary":"","minSalary":"","positionCategory3":{"id":"","name":""},"resumeExpectationIndustryList":[{"id":"","name":""}]}]
+     * arrivalTime : 3
+     * dataList : [{"city":{"children":[""],"id":"110100","name":"北京城区","parentId":"0","sort":"","type":"2"},"id":"8b6a4c19000545a78eab09fb7c69f609","maxSalary":"","minSalary":"","positionCategory3":{"children":[""],"id":"6f4b48602beb4d3482129c7ebc3dcfaa","level":"3","name":"三级职位","parentId":"0","sort":""},"principal":"0","province":{"children":[""],"id":"110000","parentId":"0","sort":""},"resumeExpectationIndustryList":[""]}]
+     * jobNature : 2
+     * jobStatus : 4
      */
 
     private String arrivalTime;
     private String jobNature;
     private String jobStatus;
-    private List<ResumeExpectationListBean> resumeExpectationList;
+    private List<DataListBean> dataList;
 
     public String getArrivalTime() {
         return arrivalTime;
@@ -43,22 +43,24 @@ public class QiuZhiyiXiangBean extends CommonBean {
         this.jobStatus = jobStatus;
     }
 
-    public List<ResumeExpectationListBean> getResumeExpectationList() {
-        return resumeExpectationList;
+    public List<DataListBean> getDataList() {
+        return dataList;
     }
 
-    public void setResumeExpectationList(List<ResumeExpectationListBean> resumeExpectationList) {
-        this.resumeExpectationList = resumeExpectationList;
+    public void setDataList(List<DataListBean> dataList) {
+        this.dataList = dataList;
     }
 
-    public static class ResumeExpectationListBean {
+    public static class DataListBean {
         /**
-         * city : {"id":"","name":""}
-         * id :
+         * city : {"children":[""],"id":"110100","name":"北京城区","parentId":"0","sort":"","type":"2"}
+         * id : 8b6a4c19000545a78eab09fb7c69f609
          * maxSalary :
          * minSalary :
-         * positionCategory3 : {"id":"","name":""}
-         * resumeExpectationIndustryList : [{"id":"","name":""}]
+         * positionCategory3 : {"children":[""],"id":"6f4b48602beb4d3482129c7ebc3dcfaa","level":"3","name":"三级职位","parentId":"0","sort":""}
+         * principal : 0
+         * province : {"children":[""],"id":"110000","parentId":"0","sort":""}
+         * resumeExpectationIndustryList : [""]
          */
 
         private CityBean city;
@@ -66,7 +68,9 @@ public class QiuZhiyiXiangBean extends CommonBean {
         private String maxSalary;
         private String minSalary;
         private PositionCategory3Bean positionCategory3;
-        private List<ResumeExpectationIndustryListBean> resumeExpectationIndustryList;
+        private String principal;
+        private ProvinceBean province;
+        private List<String> resumeExpectationIndustryList;
 
         public CityBean getCity() {
             return city;
@@ -108,22 +112,46 @@ public class QiuZhiyiXiangBean extends CommonBean {
             this.positionCategory3 = positionCategory3;
         }
 
-        public List<ResumeExpectationIndustryListBean> getResumeExpectationIndustryList() {
+        public String getPrincipal() {
+            return principal;
+        }
+
+        public void setPrincipal(String principal) {
+            this.principal = principal;
+        }
+
+        public ProvinceBean getProvince() {
+            return province;
+        }
+
+        public void setProvince(ProvinceBean province) {
+            this.province = province;
+        }
+
+        public List<String> getResumeExpectationIndustryList() {
             return resumeExpectationIndustryList;
         }
 
-        public void setResumeExpectationIndustryList(List<ResumeExpectationIndustryListBean> resumeExpectationIndustryList) {
+        public void setResumeExpectationIndustryList(List<String> resumeExpectationIndustryList) {
             this.resumeExpectationIndustryList = resumeExpectationIndustryList;
         }
 
         public static class CityBean {
             /**
-             * id :
-             * name :
+             * children : [""]
+             * id : 110100
+             * name : 北京城区
+             * parentId : 0
+             * sort :
+             * type : 2
              */
 
             private String id;
             private String name;
+            private String parentId;
+            private String sort;
+            private String type;
+            private List<String> children;
 
             public String getId() {
                 return id;
@@ -139,17 +167,57 @@ public class QiuZhiyiXiangBean extends CommonBean {
 
             public void setName(String name) {
                 this.name = name;
+            }
+
+            public String getParentId() {
+                return parentId;
+            }
+
+            public void setParentId(String parentId) {
+                this.parentId = parentId;
+            }
+
+            public String getSort() {
+                return sort;
+            }
+
+            public void setSort(String sort) {
+                this.sort = sort;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public List<String> getChildren() {
+                return children;
+            }
+
+            public void setChildren(List<String> children) {
+                this.children = children;
             }
         }
 
         public static class PositionCategory3Bean {
             /**
-             * id :
-             * name :
+             * children : [""]
+             * id : 6f4b48602beb4d3482129c7ebc3dcfaa
+             * level : 3
+             * name : 三级职位
+             * parentId : 0
+             * sort :
              */
 
             private String id;
+            private String level;
             private String name;
+            private String parentId;
+            private String sort;
+            private List<String> children;
 
             public String getId() {
                 return id;
@@ -159,23 +227,59 @@ public class QiuZhiyiXiangBean extends CommonBean {
                 this.id = id;
             }
 
+            public String getLevel() {
+                return level;
+            }
+
+            public void setLevel(String level) {
+                this.level = level;
+            }
+
             public String getName() {
                 return name;
             }
 
             public void setName(String name) {
                 this.name = name;
+            }
+
+            public String getParentId() {
+                return parentId;
+            }
+
+            public void setParentId(String parentId) {
+                this.parentId = parentId;
+            }
+
+            public String getSort() {
+                return sort;
+            }
+
+            public void setSort(String sort) {
+                this.sort = sort;
+            }
+
+            public List<String> getChildren() {
+                return children;
+            }
+
+            public void setChildren(List<String> children) {
+                this.children = children;
             }
         }
 
-        public static class ResumeExpectationIndustryListBean {
+        public static class ProvinceBean {
             /**
-             * id :
-             * name :
+             * children : [""]
+             * id : 110000
+             * parentId : 0
+             * sort :
              */
 
             private String id;
-            private String name;
+            private String parentId;
+            private String sort;
+            private List<String> children;
 
             public String getId() {
                 return id;
@@ -185,12 +289,28 @@ public class QiuZhiyiXiangBean extends CommonBean {
                 this.id = id;
             }
 
-            public String getName() {
-                return name;
+            public String getParentId() {
+                return parentId;
             }
 
-            public void setName(String name) {
-                this.name = name;
+            public void setParentId(String parentId) {
+                this.parentId = parentId;
+            }
+
+            public String getSort() {
+                return sort;
+            }
+
+            public void setSort(String sort) {
+                this.sort = sort;
+            }
+
+            public List<String> getChildren() {
+                return children;
+            }
+
+            public void setChildren(List<String> children) {
+                this.children = children;
             }
         }
     }

@@ -75,7 +75,7 @@
                                     android:layout_weight="1"
                                     android:gravity="center_vertical"
                                     android:singleLine="true"
-                                    android:text="111111111111111111111111111111111111111111111111111111111111"
+                                    android:text=""
                                     android:textColor="#333"
                                     android:textSize="@dimen/sp_14" />
 
@@ -110,7 +110,7 @@
                                     android:gravity="center_vertical"
                                     android:maxLength="8"
                                     android:singleLine="true"
-                                    android:text="未融资"
+                                    android:text=""
                                     android:textColor="#3D3D3D"
                                     android:textSize="@dimen/sp_12" />
 
@@ -131,7 +131,7 @@
                                     android:gravity="center_vertical"
                                     android:maxLength="8"
                                     android:singleLine="true"
-                                    android:text="20-99人"
+                                    android:text=""
                                     android:textColor="#3D3D3D"
                                     android:textSize="@dimen/sp_12" />
 
@@ -151,7 +151,7 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center_vertical"
                                     android:singleLine="true"
-                                    android:text="创业型公司"
+                                    android:text=""
                                     android:textColor="#3D3D3D"
                                     android:textSize="@dimen/sp_12" />
 

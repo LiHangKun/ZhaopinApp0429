@@ -20,7 +20,7 @@
             android:layout_marginRight="@dimen/dp_10"
             android:layout_weight="1"
             android:gravity="center_vertical|center"
-            android:text="14:00 (还有3个名额)"
+            android:text="14:00 (还有0个名额)"
             android:textColor="#333"
             android:textSize="@dimen/sp_14" />
 

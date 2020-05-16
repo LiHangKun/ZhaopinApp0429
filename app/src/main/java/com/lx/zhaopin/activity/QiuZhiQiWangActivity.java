@@ -2,7 +2,9 @@ package com.lx.zhaopin.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,11 +15,13 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.ZhuCiZhiWuBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
@@ -40,7 +44,12 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
     private TextView tv2;
     private TextView tv3;
     private TextView tv4;
+    private TextView okID;
     private String zhiWeiID;
+    private String cityNameID;
+    private static final String TAG = "QiuZhiQiWangActivity";
+    private String maxK;
+    private String minK;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -56,7 +65,15 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
                 zhiWeiID = event.getKeyWord1();
                 String name = event.getKeyWord2();
                 tv1.setText(name);
+                Log.i(TAG, "getEventmessage: " + zhiWeiID + name + "--");
                 break;
+            case 4:
+                String cityName = event.getKeyWord1();
+                cityNameID = event.getKeyWord2();
+                tv3.setText(cityName);
+                Log.i(TAG, "getEventmessage: " + "--" + cityName + "---" + cityNameID);
+                break;
+
         }
     }
 
@@ -101,6 +118,8 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
         tv4 = findViewById(R.id.tv4);
+        okID = findViewById(R.id.okID);
+        okID.setOnClickListener(this);
 
 
     }
@@ -200,6 +219,8 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
 
                 //String str = "food:" + food.get(options1) + "\nclothes:" + clothes.get(options2) + "\ncomputer:" + computer.get(options3);
                 String time2 = food.get(options1) + " - " + clothes.get(options2);
+                minK = food.get(options1).substring(0, food.get(options1).length() - 1);
+                maxK = clothes.get(options2).substring(0, clothes.get(options2).length() - 1);
                 tv4.setText(time2);
 
                 //Toast.makeText(mContext, time2, Toast.LENGTH_SHORT).show();
@@ -225,6 +246,10 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
     }
 
 
+    //zhiWeiID
+    String hangID = "8342740fa1fe419dac350c34b6031adf";
+
+    //8342740fa1fe419dac350c34b6031adf
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -241,12 +266,61 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.llView3:
                 //工作城市
-                ToastFactory.getToast(mContext, "工作城市").show();
+                startActivity(new Intent(mContext, SelectCityPro1ListActivity.class));
                 break;
             case R.id.llView4:
                 //薪资要求
                 pvNoLinkOptions.show();
                 break;
+            case R.id.okID:
+                //保存
+                if (TextUtils.isEmpty(zhiWeiID)) {
+                    ToastFactory.getToast(mContext, "请选择职位").show();
+                    return;
+                } else if (TextUtils.isEmpty(hangID)) {
+                    ToastFactory.getToast(mContext, "请选择行业").show();
+                    return;
+                } else if (TextUtils.isEmpty(cityNameID)) {
+                    ToastFactory.getToast(mContext, "请选择工作城市").show();
+                    return;
+                } else if (tv4.getText().toString().trim().startsWith("请")) {
+                    ToastFactory.getToast(mContext, "请选择薪资范围").show();
+                    return;
+                } else {
+                    addQiWang(minK, maxK, zhiWeiID, hangID, cityNameID);
+                }
+
+                break;
         }
+    }
+
+    //addzhuCiZhiWei
+    private void addQiWang(String minSalary, String maxSalary, String positionCategoryId, String industries, String cityId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("minSalary", minSalary);
+        params.put("maxSalary", maxSalary);
+        params.put("positionCategoryId", positionCategoryId);
+        params.put("industries", industries);
+        params.put("cityId", cityId);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.addzhuCiZhiWei, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                EventBus.getDefault().post(new MessageEvent(8, null, null, null, null, null, null));
+                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 }

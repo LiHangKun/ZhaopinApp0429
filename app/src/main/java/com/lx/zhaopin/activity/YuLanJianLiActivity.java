@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -137,7 +138,12 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
                         tv2.setText("女");
                         break;
                 }
-                tv3.setText(resultBean.getMinSalary() + "-" + resultBean.getMaxSalary() + "K");
+
+                if (TextUtils.isEmpty(resultBean.getMinSalary())) {
+                    tv3.setVisibility(View.GONE);
+                } else {
+                    tv3.setText(resultBean.getMinSalary() + "-" + resultBean.getMaxSalary() + "K");
+                }
                 tv4.setText(resultBean.getEducation().getName());
                 tv5.setText(resultBean.getBirthday());
                 tv6.setText(resultBean.getWorkYears() + "年");

@@ -7,9 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.ZhiWeiDetailBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
@@ -36,6 +39,10 @@ public class JuBaoActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.edit1)
     EditText edit1;
     private String pid;
+    private static final String TAG = "JuBaoActivity";
+    private RoundedImageView roundedImageView1;
+    private TextView tv21;
+    private TextView tv11;
 
 
     @Override
@@ -48,9 +55,45 @@ public class JuBaoActivity extends BaseActivity implements View.OnClickListener 
     private void init() {
         topTitle.setText("举报");
         pid = getIntent().getStringExtra("pid");
+
+        tv11 = findViewById(R.id.tv1);
+        tv21 = findViewById(R.id.tv2);
+        roundedImageView1 = findViewById(R.id.roundedImageView);
+
+
         TextView okID = findViewById(R.id.okID);
         okID.setOnClickListener(this);
+
+
+        getZhiWeiDetail(pid);
+
     }
+
+    //职位详情
+    private void getZhiWeiDetail(String pid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiDetail, params, new SpotsCallBack<ZhiWeiDetailBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
+
+                tv1.setText(resultBean.getName());
+                tv2.setText(resultBean.getCompany().getName());
+                Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                        .load(resultBean.getCompany().getLogo()).into(roundedImageView);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+
+    }
+
 
     @Override
     protected void initEvent() {

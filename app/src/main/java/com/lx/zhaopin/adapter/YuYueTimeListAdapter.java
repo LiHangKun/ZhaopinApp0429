@@ -40,7 +40,7 @@ public class YuYueTimeListAdapter extends RecyclerView.Adapter<YuYueTimeListAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        viewHolder.tv1.setText(mData.get(i).getInterviewDate() + "( 还剩" + mData.get(i).getRemainCount() + " 个名额)");
+        viewHolder.tv1.setText(mData.get(i).getInterviewDate() + "  (还剩" + mData.get(i).getRemainCount() + "个名额)");
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override

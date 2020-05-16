@@ -123,7 +123,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
     private Intent intent;
 
-    String Cui = "1.独立Cover产品需求对接及解决方案制定，并高效输出相对应付物2.系统化完成需求挖掘、流程梳理（业务流、操作流、信息流）及相关产品规则制定1.独立Cover产品需求对接及解决方案制定，并高效输出相对应付物2.系统化完成需求挖掘、流程梳理（业务流、操作流、信息流）及相关产品规则制定1.独立Cover产品需求对接及解决方案制定，并高效输出相对应付物2.系统化完成需求挖掘、流程梳理（业务流、操作流、信息流）及相关产品规则制定";
+    String Cui = "";
     private int maxLine = 5;
     private SpannableString elipseString;//收起的文字
     private SpannableString notElipseString;//展开的文字
@@ -191,7 +191,6 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         getZhiWeiDetail(pid);
 
 
-        getLastIndexForLimit(tv7, maxLine, Cui);
     }
 
     //职位详情
@@ -254,44 +253,44 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
                 tv1.setText(resultBean.getName());
                 tv2.setText(resultBean.getMinSalary() + "--" + resultBean.getMaxSalary() + "K");
-                tv3.setText(resultBean.getLocation());
-                tv4.setText(resultBean.getExperienceYear() + "年");
+                tv3.setText(resultBean.getCity().getName() + resultBean.getDistrict().getName());
+                tv4.setText(resultBean.getExperienceYear().getName() + "年");
                 tv5.setText(resultBean.getEducation().getName());
-                tv7.setText(resultBean.getDuty());
+
+                Cui = resultBean.getDuty();
+                getLastIndexForLimit(tv7, maxLine, resultBean.getDuty()/*+Cui*/);
 
                 //TODO 专业技能 flowLiner1
                 String skills = resultBean.getSkills();
                 List<String> flowData = new ArrayList<>();
-                if (skills.contains(",")) {
-                    String[] split = skills.split(",");
+                String[] split = skills.split(",");
 
-                    for (int i = 0; i < split.length; i++) {
-                        flowData.add(split[i]);
-                    }
-
-                    for (int i = 0; i < flowData.size(); i++) {
-                        final TextView radioButton = new TextView(GangWeiDetailActivity.this);
-                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
-                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
-                        radioButton.setLayoutParams(layoutParams);
-                        final String str = flowData.get(i);
-                        radioButton.setText(str);
-                        radioButton.setGravity(Gravity.CENTER);
-                        radioButton.setTextSize(13);
-                        radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
-                                , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
-                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
-                        //radioButton.setBackgroundResource(R.drawable.search_selector);
-                        radioButton.setBackgroundResource(R.drawable.button_shape03);
-                        radioButton.setFocusable(true);
-                        radioButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //流布局文字的点击
-                            }
-                        });
-                        flowLiner1.addView(radioButton);
-                    }
+                for (int i = 0; i < split.length; i++) {
+                    flowData.add(split[i]);
+                }
+                flowLiner1.removeAllViews();
+                for (int i = 0; i < flowData.size(); i++) {
+                    final TextView radioButton = new TextView(GangWeiDetailActivity.this);
+                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
+                    radioButton.setLayoutParams(layoutParams);
+                    final String str = flowData.get(i);
+                    radioButton.setText(str);
+                    radioButton.setGravity(Gravity.CENTER);
+                    radioButton.setTextSize(13);
+                    radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
+                            , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
+                    radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                    //radioButton.setBackgroundResource(R.drawable.search_selector);
+                    radioButton.setBackgroundResource(R.drawable.button_shape03);
+                    radioButton.setFocusable(true);
+                    radioButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //流布局文字的点击
+                        }
+                    });
+                    flowLiner1.addView(radioButton);
                 }
                 //TODO 专业技能 flowLiner1
 
@@ -299,34 +298,33 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 //TODO 福利待遇 flowLiner2
                 String workfare = resultBean.getWorkfare();
                 List<String> flowData2 = new ArrayList<>();
-                if (workfare.contains(",")) {
-                    String[] workfareL = workfare.split(",");
-                    for (int i = 0; i < workfareL.length; i++) {
-                        flowData2.add(workfareL[i]);
-                    }
-                    for (int i = 0; i < flowData2.size(); i++) {
-                        final TextView radioButton = new TextView(GangWeiDetailActivity.this);
-                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
-                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
-                        radioButton.setLayoutParams(layoutParams);
-                        final String str = flowData2.get(i);
-                        radioButton.setText(str);
-                        radioButton.setGravity(Gravity.CENTER);
-                        radioButton.setTextSize(13);
-                        radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
-                                , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
-                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
-                        //radioButton.setBackgroundResource(R.drawable.search_selector);
-                        radioButton.setBackgroundResource(R.drawable.button_shape03);
-                        radioButton.setFocusable(true);
-                        radioButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //流布局文字的点击
-                            }
-                        });
-                        flowLiner2.addView(radioButton);
-                    }
+                String[] workfareL = workfare.split(",");
+                for (int i = 0; i < workfareL.length; i++) {
+                    flowData2.add(workfareL[i]);
+                }
+                flowLiner2.removeAllViews();
+                for (int i = 0; i < flowData2.size(); i++) {
+                    final TextView radioButton = new TextView(GangWeiDetailActivity.this);
+                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
+                    radioButton.setLayoutParams(layoutParams);
+                    final String str = flowData2.get(i);
+                    radioButton.setText(str);
+                    radioButton.setGravity(Gravity.CENTER);
+                    radioButton.setTextSize(13);
+                    radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
+                            , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
+                    radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                    //radioButton.setBackgroundResource(R.drawable.search_selector);
+                    radioButton.setBackgroundResource(R.drawable.button_shape03);
+                    radioButton.setFocusable(true);
+                    radioButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //流布局文字的点击
+                        }
+                    });
+                    flowLiner2.addView(radioButton);
                 }
                 //TODO 福利待遇 flowLiner2
 
@@ -337,11 +335,10 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 tv9.setText(resultBean.getCompany().getFinancing().getName());
                 tv10.setText(resultBean.getCompany().getStaffNum() + "人");
                 tv11.setText(resultBean.getCompany().getIndustry().getName());
-                tv12.setText(resultBean.getCity().getName() + "" + resultBean.getCompany().getDistrict().getName());
+                tv12.setText(resultBean.getCity().getName() + "" + resultBean.getDistrict().getName());
                 qiYeID = resultBean.getCompany().getId();
                 lat = resultBean.getCompany().getLat();
                 lng = resultBean.getCompany().getLng();
-
 
             }
 
@@ -568,7 +565,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     }
 
 
-    //活动分类
+    //获取预约面试时间
     private void getDataList(final RecyclerView recyclerViewShopLei) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
