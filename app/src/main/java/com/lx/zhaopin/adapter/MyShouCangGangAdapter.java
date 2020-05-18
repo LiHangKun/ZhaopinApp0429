@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAdapter.ViewHolder> {
 
-    private List<String> flowData = new ArrayList<>();
+    //private List<String> flowData = new ArrayList<>();
     private List<ShouCangZhiWeiBean.DataListBean> mData;
     private Context mContext;
     private OnItemClickListener onItemClickListener;
@@ -48,7 +48,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int po) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int po) {
         //职位类型1.需沟通，2.无需沟通，3.直接面试
         String positionType = mData.get(po).getPositionType();
         switch (positionType) {
@@ -88,7 +88,17 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(mData.get(po).getCompany().getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.tv7,mData.get(po).getId());
+                }
+            }
+        });
+
+
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.OnItemClickListener(viewHolder.llView,mData.get(po).getId());
                 }
             }
         });
@@ -97,11 +107,11 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
         String workfare = mData.get(po).getWorkfare();
 
         String[] split = workfare.split(",");
-
+        List<String> flowData = new ArrayList<>();
         for (int i = 0; i < split.length; i++) {
             flowData.add(split[i]);
         }
-
+        viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
@@ -168,7 +178,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
 
 
     public interface OnItemClickListener {
-        void OnItemClickListener(String id);
+        void OnItemClickListener(View view,String id);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

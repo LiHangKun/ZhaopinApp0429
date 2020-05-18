@@ -176,6 +176,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
                 EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 //TODO 保存的数据
                 SPTool.addSessionMap(AppSP.UID, mid);
+                Log.e(TAG, "onSuccess: http 保存数据2" + SPTool.getSessionValue(AppSP.UID) + "-----");
                 SPTool.addSessionMap(AppSP.USER_NAME, name);
                 SPTool.addSessionMap(AppSP.USER_ICON, avatar);
                 SPTool.addSessionMap(AppSP.USER_PHONE, userPhone);

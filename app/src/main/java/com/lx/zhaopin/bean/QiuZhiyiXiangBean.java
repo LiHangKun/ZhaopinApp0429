@@ -9,15 +9,15 @@ public class QiuZhiyiXiangBean extends CommonBean {
 
     /**
      * arrivalTime : 3
-     * dataList : [{"city":{"children":[""],"id":"110100","name":"北京城区","parentId":"0","sort":"","type":"2"},"id":"8b6a4c19000545a78eab09fb7c69f609","maxSalary":"","minSalary":"","positionCategory3":{"children":[""],"id":"6f4b48602beb4d3482129c7ebc3dcfaa","level":"3","name":"三级职位","parentId":"0","sort":""},"principal":"0","province":{"children":[""],"id":"110000","parentId":"0","sort":""},"resumeExpectationIndustryList":[""]}]
      * jobNature : 2
      * jobStatus : 4
+     * resumeExpectationList : [{"city":{"id":"330100","name":"杭州市"},"id":"3367250a93f14a61afcde8e785752421","maxSalary":7,"minSalary":4,"positionCategory3":{"id":"6f4b48602beb4d3482129c7ebc3dcfaa","name":"三级职位"},"resumeExpectationIndustryList":[{"id":"2108b1064dc24456bfd2e5ca1696b199","name":"金融"},{"id":"bafe78fd30e542ef94ad8ddfd0c45fd8","name":"互联网"}]},{"city":{"id":"110100","name":"北京城区"},"id":"8b6a4c19000545a78eab09fb7c69f609","maxSalary":10,"minSalary":8,"positionCategory3":{"id":"6f4b48602beb4d3482129c7ebc3dcfaa","name":"三级职位"},"resumeExpectationIndustryList":[{"id":"8342740fa1fe419dac350c34b6031adf","name":"二级2"}]}]
      */
 
     private String arrivalTime;
     private String jobNature;
     private String jobStatus;
-    private List<DataListBean> dataList;
+    private List<ResumeExpectationListBean> resumeExpectationList;
 
     public String getArrivalTime() {
         return arrivalTime;
@@ -43,34 +43,30 @@ public class QiuZhiyiXiangBean extends CommonBean {
         this.jobStatus = jobStatus;
     }
 
-    public List<DataListBean> getDataList() {
-        return dataList;
+    public List<ResumeExpectationListBean> getResumeExpectationList() {
+        return resumeExpectationList;
     }
 
-    public void setDataList(List<DataListBean> dataList) {
-        this.dataList = dataList;
+    public void setResumeExpectationList(List<ResumeExpectationListBean> resumeExpectationList) {
+        this.resumeExpectationList = resumeExpectationList;
     }
 
-    public static class DataListBean {
+    public static class ResumeExpectationListBean {
         /**
-         * city : {"children":[""],"id":"110100","name":"北京城区","parentId":"0","sort":"","type":"2"}
-         * id : 8b6a4c19000545a78eab09fb7c69f609
-         * maxSalary :
-         * minSalary :
-         * positionCategory3 : {"children":[""],"id":"6f4b48602beb4d3482129c7ebc3dcfaa","level":"3","name":"三级职位","parentId":"0","sort":""}
-         * principal : 0
-         * province : {"children":[""],"id":"110000","parentId":"0","sort":""}
-         * resumeExpectationIndustryList : [""]
+         * city : {"id":"330100","name":"杭州市"}
+         * id : 3367250a93f14a61afcde8e785752421
+         * maxSalary : 7
+         * minSalary : 4
+         * positionCategory3 : {"id":"6f4b48602beb4d3482129c7ebc3dcfaa","name":"三级职位"}
+         * resumeExpectationIndustryList : [{"id":"2108b1064dc24456bfd2e5ca1696b199","name":"金融"},{"id":"bafe78fd30e542ef94ad8ddfd0c45fd8","name":"互联网"}]
          */
 
         private CityBean city;
         private String id;
-        private String maxSalary;
-        private String minSalary;
+        private int maxSalary;
+        private int minSalary;
         private PositionCategory3Bean positionCategory3;
-        private String principal;
-        private ProvinceBean province;
-        private List<String> resumeExpectationIndustryList;
+        private List<ResumeExpectationIndustryListBean> resumeExpectationIndustryList;
 
         public CityBean getCity() {
             return city;
@@ -88,19 +84,19 @@ public class QiuZhiyiXiangBean extends CommonBean {
             this.id = id;
         }
 
-        public String getMaxSalary() {
+        public int getMaxSalary() {
             return maxSalary;
         }
 
-        public void setMaxSalary(String maxSalary) {
+        public void setMaxSalary(int maxSalary) {
             this.maxSalary = maxSalary;
         }
 
-        public String getMinSalary() {
+        public int getMinSalary() {
             return minSalary;
         }
 
-        public void setMinSalary(String minSalary) {
+        public void setMinSalary(int minSalary) {
             this.minSalary = minSalary;
         }
 
@@ -112,46 +108,22 @@ public class QiuZhiyiXiangBean extends CommonBean {
             this.positionCategory3 = positionCategory3;
         }
 
-        public String getPrincipal() {
-            return principal;
-        }
-
-        public void setPrincipal(String principal) {
-            this.principal = principal;
-        }
-
-        public ProvinceBean getProvince() {
-            return province;
-        }
-
-        public void setProvince(ProvinceBean province) {
-            this.province = province;
-        }
-
-        public List<String> getResumeExpectationIndustryList() {
+        public List<ResumeExpectationIndustryListBean> getResumeExpectationIndustryList() {
             return resumeExpectationIndustryList;
         }
 
-        public void setResumeExpectationIndustryList(List<String> resumeExpectationIndustryList) {
+        public void setResumeExpectationIndustryList(List<ResumeExpectationIndustryListBean> resumeExpectationIndustryList) {
             this.resumeExpectationIndustryList = resumeExpectationIndustryList;
         }
 
         public static class CityBean {
             /**
-             * children : [""]
-             * id : 110100
-             * name : 北京城区
-             * parentId : 0
-             * sort :
-             * type : 2
+             * id : 330100
+             * name : 杭州市
              */
 
             private String id;
             private String name;
-            private String parentId;
-            private String sort;
-            private String type;
-            private List<String> children;
 
             public String getId() {
                 return id;
@@ -167,57 +139,17 @@ public class QiuZhiyiXiangBean extends CommonBean {
 
             public void setName(String name) {
                 this.name = name;
-            }
-
-            public String getParentId() {
-                return parentId;
-            }
-
-            public void setParentId(String parentId) {
-                this.parentId = parentId;
-            }
-
-            public String getSort() {
-                return sort;
-            }
-
-            public void setSort(String sort) {
-                this.sort = sort;
-            }
-
-            public String getType() {
-                return type;
-            }
-
-            public void setType(String type) {
-                this.type = type;
-            }
-
-            public List<String> getChildren() {
-                return children;
-            }
-
-            public void setChildren(List<String> children) {
-                this.children = children;
             }
         }
 
         public static class PositionCategory3Bean {
             /**
-             * children : [""]
              * id : 6f4b48602beb4d3482129c7ebc3dcfaa
-             * level : 3
              * name : 三级职位
-             * parentId : 0
-             * sort :
              */
 
             private String id;
-            private String level;
             private String name;
-            private String parentId;
-            private String sort;
-            private List<String> children;
 
             public String getId() {
                 return id;
@@ -225,14 +157,6 @@ public class QiuZhiyiXiangBean extends CommonBean {
 
             public void setId(String id) {
                 this.id = id;
-            }
-
-            public String getLevel() {
-                return level;
-            }
-
-            public void setLevel(String level) {
-                this.level = level;
             }
 
             public String getName() {
@@ -242,44 +166,16 @@ public class QiuZhiyiXiangBean extends CommonBean {
             public void setName(String name) {
                 this.name = name;
             }
-
-            public String getParentId() {
-                return parentId;
-            }
-
-            public void setParentId(String parentId) {
-                this.parentId = parentId;
-            }
-
-            public String getSort() {
-                return sort;
-            }
-
-            public void setSort(String sort) {
-                this.sort = sort;
-            }
-
-            public List<String> getChildren() {
-                return children;
-            }
-
-            public void setChildren(List<String> children) {
-                this.children = children;
-            }
         }
 
-        public static class ProvinceBean {
+        public static class ResumeExpectationIndustryListBean {
             /**
-             * children : [""]
-             * id : 110000
-             * parentId : 0
-             * sort :
+             * id : 2108b1064dc24456bfd2e5ca1696b199
+             * name : 金融
              */
 
             private String id;
-            private String parentId;
-            private String sort;
-            private List<String> children;
+            private String name;
 
             public String getId() {
                 return id;
@@ -289,28 +185,12 @@ public class QiuZhiyiXiangBean extends CommonBean {
                 this.id = id;
             }
 
-            public String getParentId() {
-                return parentId;
+            public String getName() {
+                return name;
             }
 
-            public void setParentId(String parentId) {
-                this.parentId = parentId;
-            }
-
-            public String getSort() {
-                return sort;
-            }
-
-            public void setSort(String sort) {
-                this.sort = sort;
-            }
-
-            public List<String> getChildren() {
-                return children;
-            }
-
-            public void setChildren(List<String> children) {
-                this.children = children;
+            public void setName(String name) {
+                this.name = name;
             }
         }
     }

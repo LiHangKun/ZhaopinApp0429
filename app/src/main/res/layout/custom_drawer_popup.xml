@@ -3,8 +3,17 @@
     xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:layout_width="280dp"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/dp_100"
     android:background="#dddddd"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:gravity="center"
+        android:text="选择行业"
+        android:textColor="#333"
+        android:textSize="@dimen/sp_20" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +32,7 @@
                 android:id="@+id/tagFlowLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_10"
                 android:padding="20dp"
                 zhy:max_select="-1" />
 

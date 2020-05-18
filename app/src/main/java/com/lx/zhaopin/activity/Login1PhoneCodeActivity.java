@@ -189,6 +189,8 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                 EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 //TODO 保存的数据
                 SPTool.addSessionMap(AppSP.UID, mid);
+                SPTool.getSessionValue(AppSP.UID);
+                Log.e(TAG, "onSuccess: http 保存数据1" + SPTool.getSessionValue(AppSP.UID) + "-----");
                 SPTool.addSessionMap(AppSP.USER_NAME, name);
                 SPTool.addSessionMap(AppSP.USER_ICON, avatar);
                 SPTool.addSessionMap(AppSP.USER_PHONE, userPhone);

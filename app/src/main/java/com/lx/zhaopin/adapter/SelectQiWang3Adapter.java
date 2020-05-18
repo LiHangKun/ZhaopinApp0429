@@ -3,7 +3,6 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,66 +10,56 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.bean.QiuZhiyiXiangBean;
+import com.lx.zhaopin.bean.SelectQiWang3Bean;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class QiuZhiYiXiangAdapter extends RecyclerView.Adapter<QiuZhiYiXiangAdapter.ViewHolder> {
+public class SelectQiWang3Adapter extends RecyclerView.Adapter<SelectQiWang3Adapter.ViewHolder> {
 
 
+    private List<SelectQiWang3Bean.DataListBean> mData;
     private Context mContext;
-    private List<QiuZhiyiXiangBean.ResumeExpectationListBean> mData;
-    private OnItemClickener itemClickener;
+    private OnItemClickListener itemClickListener;
 
-    public QiuZhiYiXiangAdapter() {
+    public SelectQiWang3Adapter() {
     }
 
-    public QiuZhiYiXiangAdapter(Context context, List<QiuZhiyiXiangBean.ResumeExpectationListBean> list) {
+    public SelectQiWang3Adapter(Context context, List<SelectQiWang3Bean.DataListBean> list) {
         mContext = context;
         mData = list;
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_yixiang_layout, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_zhiwu_layout, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        viewHolder.tv1.setText(mData.get(i).getPositionCategory3().getName());
-        viewHolder.tv2.setText(mData.get(i).getCity().getName());
-        viewHolder.tv3.setText(mData.get(i).getMinSalary() + "K - " + mData.get(i).getMaxSalary() + "K");
+        viewHolder.tv1.setText(mData.get(i).getName());
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (itemClickener != null) {
-                    itemClickener.onItemClick(mData.get(i).getId());
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClickListener(i, mData.get(i).getId(), mData.get(i).getName());
                 }
             }
         });
-
     }
 
-    private static final String TAG = "QiuZhiYiXiangAdapter";
     @Override
     public int getItemCount() {
-        Log.i(TAG, "getItemCount: " + mData.size());
         return mData == null ? 0 : mData.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv1)
         TextView tv1;
-        @BindView(R.id.tv2)
-        TextView tv2;
-        @BindView(R.id.tv3)
-        TextView tv3;
         @BindView(R.id.llView)
         LinearLayout llView;
 
@@ -80,12 +69,12 @@ public class QiuZhiYiXiangAdapter extends RecyclerView.Adapter<QiuZhiYiXiangAdap
         }
     }
 
-    public interface OnItemClickener {
-        void onItemClick(String id);
+    public interface OnItemClickListener {
+        void OnItemClickListener(int i, String id, String name);
     }
 
-    public void setOnItemClickener(OnItemClickener OnItemClickener) {
-        itemClickener = OnItemClickener;
+    public void SetOnItemClickListener(OnItemClickListener OnItemClickListener) {
+        itemClickListener = OnItemClickListener;
     }
 
 }

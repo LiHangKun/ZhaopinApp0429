@@ -13,12 +13,16 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.hss01248.dialog.StyledDialog;
+import com.hss01248.dialog.interfaces.MyDialogListener;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.SelectQiWangBean;
 import com.lx.zhaopin.bean.ZhuCiZhiWuBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.event.TypeEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
@@ -33,6 +37,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Request;
@@ -50,6 +55,9 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
     private static final String TAG = "QiuZhiQiWangActivity";
     private String maxK;
     private String minK;
+    private Intent intent;
+    private String id;
+    private String editID;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -62,6 +70,7 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
         int messageType = event.getMessageType();
         switch (messageType) {
             case 6:
+                //期望的职位ID
                 zhiWeiID = event.getKeyWord1();
                 String name = event.getKeyWord2();
                 tv1.setText(name);
@@ -75,6 +84,23 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
                 break;
 
         }
+    }
+
+    List<String> HangIDList = new ArrayList<>();
+    List<String> HangNameList = new ArrayList<>();
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(TypeEvent event) {
+        List<SelectQiWangBean.DataListBean> dataListBeans = event.getmSelectedData();
+        for (int i = 0; i < dataListBeans.size(); i++) {
+            Log.i(TAG, "getEventmessage: " + dataListBeans.get(i).getName() + "--" + dataListBeans.get(i).getId());
+            HangIDList.add(dataListBeans.get(i).getId());
+            HangNameList.add(dataListBeans.get(i).getName());
+        }
+        hangID = HangIDList.toString().replace("[", "").replace("]", "").replace(" ", "").trim();
+        hangName = HangNameList.toString().replace("[", "").replace("]", "").replace(" ", "").trim();
+        tv2.setText(hangName);
+        Log.i(TAG, "getEventmessage: 选择的ID" + hangID + "----" + hangName);
     }
 
 
@@ -92,7 +118,7 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
 
-        String id = getIntent().getStringExtra("id");
+        id = getIntent().getStringExtra("id");
         if (!TextUtils.isEmpty(id)) {
             rightText.setVisibility(View.VISIBLE);
             yiXiangDetail(id);
@@ -144,13 +170,23 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Response response, ZhuCiZhiWuBean resultBean) {
 
+                minK = resultBean.getMinSalary();
+                maxK = resultBean.getMaxSalary();
+                editID = resultBean.getId();
+                zhiWeiID = resultBean.getPositionCategory3().getId();
                 tv1.setText(resultBean.getPositionCategory3().getName());
-
-                if (resultBean.getResumeExpectationIndustryList().size() > 2) {
-                    tv2.setText(resultBean.getResumeExpectationIndustryList().get(0).getName() + "  " + resultBean.getResumeExpectationIndustryList().get(1).getName());
+                cityNameID = resultBean.getCity().getId();
+                if (resultBean.getResumeExpectationIndustryList().size() >= 2) {
+                    tv2.setText(resultBean.getResumeExpectationIndustryList().get(0).getName() + "," + resultBean.getResumeExpectationIndustryList().get(1).getName());
                 } else {
                     tv2.setText(resultBean.getResumeExpectationIndustryList().get(0).getName());
                 }
+
+                for (int i = 0; i < resultBean.getResumeExpectationIndustryList().size(); i++) {
+                    resultBean.getResumeExpectationIndustryList().get(i).getId();
+                    HangIDList.add(resultBean.getResumeExpectationIndustryList().get(i).getId());
+                }
+                hangID = HangIDList.toString().replace("[", "").replace("]", "").replace(" ", "").trim();
 
 
                 tv3.setText(resultBean.getCity().getName());
@@ -246,19 +282,32 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    //zhiWeiID
-    String hangID = "8342740fa1fe419dac350c34b6031adf";
+    String hangID = "";
+    String hangName = "";
 
-    //8342740fa1fe419dac350c34b6031adf
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rightText:
-                ToastFactory.getToast(mContext, "删除").show();
+                //delzhuCiZhiWei
+                StyledDialog.init(mContext);
+                StyledDialog.buildIosAlert("", "\r是否删除职位信息?", new MyDialogListener() {
+                    @Override
+                    public void onFirst() {
+
+                    }
+
+                    @Override
+                    public void onSecond() {
+                        delZhiWeiMe(id);
+                    }
+                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+
                 break;
             case R.id.llView1:
                 //期望职位
-                startActivity(new Intent(mContext, SelectQiWangType1Activity.class));
+                intent = new Intent(mContext, SelectQiWangType1_1Activity.class);
+                startActivity(intent);
                 break;
             case R.id.llView2:
                 //期望行业
@@ -274,24 +323,103 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.okID:
                 //保存
-                if (TextUtils.isEmpty(zhiWeiID)) {
-                    ToastFactory.getToast(mContext, "请选择职位").show();
-                    return;
-                } else if (TextUtils.isEmpty(hangID)) {
-                    ToastFactory.getToast(mContext, "请选择行业").show();
-                    return;
-                } else if (TextUtils.isEmpty(cityNameID)) {
-                    ToastFactory.getToast(mContext, "请选择工作城市").show();
-                    return;
-                } else if (tv4.getText().toString().trim().startsWith("请")) {
-                    ToastFactory.getToast(mContext, "请选择薪资范围").show();
-                    return;
+                if (TextUtils.isEmpty(id)) {
+                    //新增
+                    if (TextUtils.isEmpty(zhiWeiID)) {
+                        ToastFactory.getToast(mContext, "请选择职位").show();
+                        return;
+                    } else if (TextUtils.isEmpty(hangID)) {
+                        ToastFactory.getToast(mContext, "请选择行业").show();
+                        return;
+                    } else if (TextUtils.isEmpty(cityNameID)) {
+                        ToastFactory.getToast(mContext, "请选择工作城市").show();
+                        return;
+                    } else if (tv4.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "请选择薪资范围").show();
+                        return;
+                    } else {
+                        addQiWang(minK, maxK, zhiWeiID, hangID, cityNameID);
+                    }
                 } else {
-                    addQiWang(minK, maxK, zhiWeiID, hangID, cityNameID);
+                    //编辑
+                    if (TextUtils.isEmpty(zhiWeiID)) {
+                        ToastFactory.getToast(mContext, "请选择职位").show();
+                        return;
+                    } else if (TextUtils.isEmpty(hangID)) {
+                        ToastFactory.getToast(mContext, "请选择行业").show();
+                        return;
+                    } else if (TextUtils.isEmpty(cityNameID)) {
+                        ToastFactory.getToast(mContext, "请选择工作城市").show();
+                        return;
+                    } else if (tv4.getText().toString().trim().startsWith("请")) {
+                        ToastFactory.getToast(mContext, "请选择薪资范围").show();
+                        return;
+                    } else {
+                        editQiWang(editID, minK, maxK, zhiWeiID, hangID, cityNameID);
+                    }
+
                 }
+
 
                 break;
         }
+    }
+
+    //xiuGaizhuCiZhiWei
+    private void editQiWang(String exId, String minSalary, String maxSalary, String positionCategoryId, String industries, String cityId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("exId", exId);
+        params.put("minSalary", minSalary);
+        params.put("maxSalary", maxSalary);
+        params.put("positionCategoryId", positionCategoryId);
+        params.put("industries", industries);
+        params.put("cityId", cityId);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.xiuGaizhuCiZhiWei, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                EventBus.getDefault().post(new MessageEvent(8, null, null, null, null, null, null));
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+    }
+
+    private void delZhiWeiMe(String exId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("exId", exId);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.delzhuCiZhiWei, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                EventBus.getDefault().post(new MessageEvent(8, null, null, null, null, null, null));
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
     //addzhuCiZhiWei
@@ -307,7 +435,7 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 EventBus.getDefault().post(new MessageEvent(8, null, null, null, null, null, null));
-                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

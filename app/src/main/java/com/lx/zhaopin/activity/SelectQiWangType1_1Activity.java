@@ -1,28 +1,20 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.SelectQiWang1Adapter;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.SelectQiWangBean;
-import com.lx.zhaopin.event.TypeEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
-import com.lx.zhaopin.view.CustomDrawerPopupView;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.enums.PopupPosition;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,8 +24,8 @@ import java.util.Map;
 import okhttp3.Request;
 import okhttp3.Response;
 
-//选择行业
-public class SelectQiWangType2Activity extends BaseActivity implements View.OnClickListener {
+//选择职位类型
+public class SelectQiWangType1_1Activity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private List<SelectQiWangBean.DataListBean> allList;
@@ -52,17 +44,12 @@ public class SelectQiWangType2Activity extends BaseActivity implements View.OnCl
     }
 
     private void init() {
-        topTitle.setText("选择行业");
+        topTitle.setText("选择职位类型");
         recyclerView = findViewById(R.id.recyclerView);
 
-        rightText.setText("侧滑");
-        rightText.setVisibility(View.INVISIBLE);
-        rightText.setOnClickListener(this);
-
-
-        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
-        }
+        }*/
         getDataList("");
 
         allList = new ArrayList<>();
@@ -72,16 +59,13 @@ public class SelectQiWangType2Activity extends BaseActivity implements View.OnCl
 
         selectQiWang1Adapter.SetOnItemClickListener(new SelectQiWang1Adapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(int i, String id, String name) {
-                /*EventBus.getDefault().post(new MessageEvent(7, id, name, null, null, null, null));
+            public void OnItemClickListener(int i, String parentid, String name) {
+                Intent intent = new Intent(mContext, SelectQiWangType1_2Activity.class);
+                intent.putExtra("parentid", parentid);
+                startActivity(intent);
+                finish();
+               /* EventBus.getDefault().post(new MessageEvent(6, id, name, null, null, null, null));
                 finish();*/
-                //TODO  弹出侧滑菜单
-                new XPopup.Builder(SelectQiWangType2Activity.this)
-                        .popupPosition(PopupPosition.Right)//右边
-                        .hasStatusBarShadow(true) //启用状态栏阴影
-                        .asCustom(new CustomDrawerPopupView(SelectQiWangType2Activity.this, id))
-                        .show();
-
 
             }
         });
@@ -92,7 +76,7 @@ public class SelectQiWangType2Activity extends BaseActivity implements View.OnCl
     private void getDataList(String parentid) {
         Map<String, String> params = new HashMap<>();
         params.put("parentid", parentid);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.seleQiWangType2, params, new BaseCallback<SelectQiWangBean>() {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.seleQiWangType1, params, new BaseCallback<SelectQiWangBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
 
@@ -122,20 +106,6 @@ public class SelectQiWangType2Activity extends BaseActivity implements View.OnCl
 
     }
 
-    private static final String TAG = "SelectQiWangType2Activi";
-
-    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
-    public void getEventmessage(TypeEvent event) {
-        Log.i(TAG, "getEventmessage: 收到消息关闭页面");
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        }, 500);
-    }
-
-
     @Override
     protected void initEvent() {
 
@@ -144,14 +114,5 @@ public class SelectQiWangType2Activity extends BaseActivity implements View.OnCl
     @Override
     protected void initData() {
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.rightText:
-
-                break;
-        }
     }
 }

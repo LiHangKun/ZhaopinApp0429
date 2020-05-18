@@ -97,7 +97,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             case 2:
                 //更新个人中心
                 smartRefreshLayout.autoRefresh();
-                Log.e(TAG, "getEventmessage: 个人中心收到消息  http");
+                Log.e(TAG, "getEventmessage: 个人中心收到消息 保存数据  http" + SPTool.getSessionValue(AppSP.UID) + "----");
                 break;
         }
     }
@@ -166,9 +166,10 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+              /*  if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
-                }
+                }*/
+                getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
                 Log.e(TAG, "onRefresh: http  执行下拉刷新方法");
             }
         });
@@ -182,6 +183,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private void getQiuZhiMyInfo(String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
+        Log.e(TAG, "getQiuZhiMyInfo: http 个人中心请求");
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
             @Override
             public void onFailure(Request request, Exception e) {

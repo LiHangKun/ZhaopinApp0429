@@ -68,7 +68,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
 
     @BindView(R.id.addZhiWei)
     RelativeLayout addZhiWei;
-    private List<QiuZhiyiXiangBean.DataListBean> allList;
+    private List<QiuZhiyiXiangBean.ResumeExpectationListBean> allList;
     private QiuZhiYiXiangAdapter qiuZhiYiXiangAdapter;
 
 
@@ -130,8 +130,14 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, QiuZhiyiXiangBean resultBean) {
 
-                allList.addAll(resultBean.getDataList());
-                qiuZhiYiXiangAdapter.notifyDataSetChanged();
+                if (resultBean.getResumeExpectationList() != null) {
+                    if (resultBean.getResumeExpectationList().size() != 0) {
+                        allList.clear();
+                        allList.addAll(resultBean.getResumeExpectationList());
+                        qiuZhiYiXiangAdapter.notifyDataSetChanged();
+                    }
+                }
+
 
                 String jobNature = resultBean.getJobNature();
                 //工作性质 1.全职，2.兼职

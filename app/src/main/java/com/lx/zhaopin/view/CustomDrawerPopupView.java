@@ -6,10 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.SelectQiWangBean;
+import com.lx.zhaopin.event.TypeEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
@@ -19,24 +19,31 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class CustomDrawerPopupView extends DrawerPopupView {
+public class CustomDrawerPopupView extends DrawerPopupView implements View.OnClickListener {
     private static final String TAG = "CustomDrawerPopupView";
 
-    //private String[] mVals = new String[]{"HelloHelloHelloHelloHelloHello", "AndroidAndroidAndroidAndroid",};
-    List<String> StringList = new ArrayList<>();
 
+    List<String> StringList = new ArrayList<>();
     private final Context mContext;
     private final String itemID;
     private TagFlowLayout tagFlowLayout;
+    private List<SelectQiWangBean.DataListBean> dataList;
+    private List<SelectQiWangBean.DataListBean> mSelectedData;
+
+
 
 
     public CustomDrawerPopupView(@NonNull Context context, String id) {
@@ -54,6 +61,9 @@ public class CustomDrawerPopupView extends DrawerPopupView {
     protected void onCreate() {
         super.onCreate();
 
+
+        TextView okID = findViewById(R.id.okID);
+        okID.setOnClickListener(this);
         getDataList(itemID);
 
 
@@ -64,14 +74,13 @@ public class CustomDrawerPopupView extends DrawerPopupView {
         tagFlowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "FlowLayout Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), "FlowLayout Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-
-
     }
+
 
     private void getDataList(String parentid) {
         Map<String, String> params = new HashMap<>();
@@ -89,21 +98,44 @@ public class CustomDrawerPopupView extends DrawerPopupView {
 
             @Override
             public void onSuccess(Response response, SelectQiWangBean resultBean) {
-                List<SelectQiWangBean.DataListBean> dataList = resultBean.getDataList();
+                dataList = resultBean.getDataList();
+                mSelectedData = new ArrayList<>();
                 for (int i = 0; i < dataList.size(); i++) {
                     StringList.add(dataList.get(i).getName());
                 }
 
-                tagFlowLayout.setAdapter(new TagAdapter<String>(StringList) {
+                TagAdapter tagAdapter = new TagAdapter<String>(StringList) {
                     @Override
                     public View getView(FlowLayout parent, int position, String s) {
                         TextView tv = (TextView) LayoutInflater.from(mContext).inflate(R.layout.tv, tagFlowLayout, false);
-
                         tv.setText(s);
                         return tv;
                     }
 
+                    @Override
+                    public void unSelected(int position, View view) {
+                        super.unSelected(position, view);
+                        if (null != mOnItemClickListener)
+                            mOnItemClickListener.onItemUnSelect(dataList.get(position));
+                    }
+                };
+
+                //tagAdapter.setSelectedList(positions);
+                //设置显示数据
+                tagFlowLayout.setAdapter(tagAdapter);
+
+
+                tagFlowLayout.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+
+
+                    @Override
+                    public void onSelected(Set<Integer> selectPosSet) {
+                        Log.i(TAG, "onSelected:11111 " + selectPosSet.toString()); //  [0, 2]
+
+                        setSelectData(selectPosSet);
+                    }
                 });
+
 
             }
 
@@ -112,6 +144,18 @@ public class CustomDrawerPopupView extends DrawerPopupView {
 
             }
         });
+    }
+
+    private void setSelectData(Set<Integer> selectPosSet) {
+        if (mSelectedData != null) {
+            mSelectedData.clear();
+        }
+        Iterator<Integer> iterator = selectPosSet.iterator();
+        while (iterator.hasNext()) {
+            int next = iterator.next();
+            mSelectedData.add(dataList.get(next));
+        }
+
     }
 
     @Override
@@ -124,5 +168,32 @@ public class CustomDrawerPopupView extends DrawerPopupView {
     protected void onDismiss() {
         super.onDismiss();
         Log.e(TAG, "CustomDrawerPopupView onDismiss");
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.okID:
+                //确定
+                EventBus.getDefault().post(new TypeEvent(mSelectedData));
+                dismiss();
+                break;
+        }
+    }
+
+
+    //自定义一个回调接口来实现Click和LongClick事件
+    public interface OnItemClickListener23 {
+        //void onItemSelect(ArrayList<String> afterHashSetList);
+        void onItemSelect(List<SelectQiWangBean.DataListBean> dataList);
+
+        void onItemUnSelect(SelectQiWangBean.DataListBean unSelect);
+    }
+
+    private OnItemClickListener23 mOnItemClickListener;//声明自定义的接口
+
+    //定义方法并传给外面的使用者
+    public void setOnItemClickListener(OnItemClickListener23 listener) {
+        this.mOnItemClickListener = listener;
     }
 }

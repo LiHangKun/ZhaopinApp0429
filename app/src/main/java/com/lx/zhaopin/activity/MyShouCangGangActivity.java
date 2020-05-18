@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,7 +54,7 @@ public class MyShouCangGangActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("我的收藏");
+        topTitle.setText("我的收藏岗位");
         smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
@@ -65,22 +66,34 @@ public class MyShouCangGangActivity extends BaseActivity {
 
         myShouCangGangAdapter.setOnItemClickListener(new MyShouCangGangAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(final String id) {
-                //取消收藏岗位
-                StyledDialog.init(mContext);
-                StyledDialog.buildIosAlert("", "\r是否取消收藏岗位?", new MyDialogListener() {
-                    @Override
-                    public void onFirst() {
+            public void OnItemClickListener(View view, final String pid) {
 
-                    }
+                switch (view.getId()) {
+                    case R.id.llView:
+                        //职位详情
+                        Intent intent = new Intent(mContext, GangWeiDetailActivity.class);
+                        intent.putExtra("pid", pid);
+                        startActivity(intent);
+                        break;
+                    case R.id.tv7:
+                        //取消收藏岗位
+                        StyledDialog.init(mContext);
+                        StyledDialog.buildIosAlert("", "\r是否取消收藏岗位?", new MyDialogListener() {
+                            @Override
+                            public void onFirst() {
 
-                    @Override
-                    public void onSecond() {
-                        quXiaoShouCangGang(id);
+                            }
+
+                            @Override
+                            public void onSecond() {
+                                quXiaoShouCangGang(pid);
 
 
-                    }
-                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                            }
+                        }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                        break;
+                }
+
 
             }
         });

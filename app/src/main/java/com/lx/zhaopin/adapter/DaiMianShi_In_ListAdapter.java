@@ -50,7 +50,7 @@ public class DaiMianShi_In_ListAdapter extends RecyclerView.Adapter<DaiMianShi_I
                 .error(R.mipmap.imageerror)).load(mData.get(i).getCompany().getLogo()).into(viewHolder.roundedImageView);
 
         viewHolder.tv1.setText(mData.get(i).getCompany().getName());
-        viewHolder.tv3.setText(mData.get(i).getInterviewDate());
+        viewHolder.tv3.setText(mData.get(i).getInterviewDate().substring(12, mData.get(i).getInterviewDate().length()));
         viewHolder.tv2.setText("面试：" + mData.get(i).getPosition().getName() + " " + mData.get(i).getPosition().getMinSalary() + "-" + mData.get(i).getPosition().getMaxSalary() + "K");
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
