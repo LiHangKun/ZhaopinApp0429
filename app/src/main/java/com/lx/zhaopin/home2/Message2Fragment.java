@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.SPTool;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -101,7 +103,10 @@ public class Message2Fragment extends Fragment {
         });
 
 
-        getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+            getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+        }
+
 
         return view;
 
@@ -110,6 +115,7 @@ public class Message2Fragment extends Fragment {
 
     private void getDataList(String pageNo, String pageSize) {
         Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.qiuZhiFeedList, params, new SpotsCallBack<QiuZhiFeedBean>(getActivity()) {

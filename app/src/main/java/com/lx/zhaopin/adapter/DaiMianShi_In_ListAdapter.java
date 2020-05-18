@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.activity.MianShiDetailType1Activity;
+import com.lx.zhaopin.activity.MianShiDetailType2Activity;
 import com.lx.zhaopin.bean.MianShiListBean;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -50,13 +50,13 @@ public class DaiMianShi_In_ListAdapter extends RecyclerView.Adapter<DaiMianShi_I
                 .error(R.mipmap.imageerror)).load(mData.get(i).getCompany().getLogo()).into(viewHolder.roundedImageView);
 
         viewHolder.tv1.setText(mData.get(i).getCompany().getName());
-        viewHolder.tv3.setText(mData.get(i).getInterviewDate().substring(12, mData.get(i).getInterviewDate().length()));
+        viewHolder.tv3.setText(mData.get(i).getInterviewDate().substring(11, mData.get(i).getInterviewDate().length()));
         viewHolder.tv2.setText("面试：" + mData.get(i).getPosition().getName() + " " + mData.get(i).getPosition().getMinSalary() + "-" + mData.get(i).getPosition().getMaxSalary() + "K");
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, MianShiDetailType1Activity.class);
+                Intent intent = new Intent(mContext, MianShiDetailType2Activity.class);
                 intent.putExtra("interviewId", mData.get(i).getId());
                 mContext.startActivity(intent);
             }

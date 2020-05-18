@@ -116,13 +116,13 @@ public class MianShiDetailType1Activity extends BaseActivity {
                         imageState.setImageResource(R.drawable.yijujue);
                         break;
                     case "3":
-                        imageState.setImageResource(R.drawable.hom1s);
+                        imageState.setImageResource(R.drawable.daimianshi);
                         break;
                     case "4":
                         imageState.setImageResource(R.drawable.yichaoshi);
                         break;
                     case "5":
-                        imageState.setImageResource(R.drawable.hom1s);
+                        imageState.setImageResource(R.drawable.yidaoda);
                         break;
                     case "6":
                         imageState.setImageResource(R.drawable.yiquxiao);
@@ -134,7 +134,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
                         imageState.setImageResource(R.drawable.yitongyi);
                         break;
                     case "8":
-                        imageState.setImageResource(R.drawable.hom1s);
+                        imageState.setImageResource(R.drawable.buheshi);
                         tv3.setText("不合适原因:" + resultBean.getDenyReason());
                         tv3.setVisibility(View.VISIBLE);
                         break;

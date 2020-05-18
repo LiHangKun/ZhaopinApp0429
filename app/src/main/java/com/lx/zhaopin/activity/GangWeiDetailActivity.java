@@ -38,6 +38,7 @@ import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.YuYueMianListBean;
 import com.lx.zhaopin.bean.ZhiWeiDetailBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
@@ -48,6 +49,8 @@ import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -187,7 +190,9 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
     private void init() {
         pid = getIntent().getStringExtra("pid");
-
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }*/
         getZhiWeiDetail(pid);
 
 
@@ -526,7 +531,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 }
             });
 
-            getDataList(recyclerViewShopLei);
+            getDataList(popupWindow1,recyclerViewShopLei);
 
             // 设置背景图片， 必须设置，不然动画没作用
             popupWindow1.setBackgroundDrawable(new BitmapDrawable());
@@ -566,7 +571,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
 
     //获取预约面试时间
-    private void getDataList(final RecyclerView recyclerViewShopLei) {
+    private void getDataList(final PopupWindow popupWindow1, final RecyclerView recyclerViewShopLei) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pid", pid);
@@ -596,7 +601,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                             return;
                         } else {
                             //预约面试 YuYueMianShi
-                            YuYueMianShiMe(id);
+                            YuYueMianShiMe(popupWindow1,id);
 
                         }
 
@@ -613,7 +618,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    private void YuYueMianShiMe(String dateId) {
+    private void YuYueMianShiMe(final PopupWindow popupWindow1, String dateId) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pid", pid);
@@ -621,23 +626,47 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.YuYueMianShi, params, new BaseCallback<PhoneStateBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
-
+                EventBus.getDefault().post(new MessageEvent(2, null,null,null,null,null,null));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow1.dismiss();
+                    }
+                });
             }
 
             @Override
             public void onResponse(Response response) {
-
+                EventBus.getDefault().post(new MessageEvent(2, null,null,null,null,null,null));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow1.dismiss();
+                    }
+                });
             }
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-
-
+                EventBus.getDefault().post(new MessageEvent(2, null,null,null,null,null,null));
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow1.dismiss();
+                    }
+                });
             }
 
             @Override
             public void onError(Response response, int code, Exception e) {
-
+                EventBus.getDefault().post(new MessageEvent(2, null,null,null,null,null,null));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        popupWindow1.dismiss();
+                    }
+                });
             }
         });
     }

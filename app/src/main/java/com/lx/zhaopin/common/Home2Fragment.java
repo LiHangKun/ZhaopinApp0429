@@ -111,6 +111,7 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
     private void getUnMessageNumber() {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("hr", "0");
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.newMessageCount, params, new BaseCallback<PhoneStateBean>() {
             @Override
             public void onFailure(Request request, Exception e) {

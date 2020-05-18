@@ -9,6 +9,7 @@ public class AppSP {
     public static final String USER_TYPE = "USER_TYPE";//0 是求职 1是HR
 
     //    params.put("pageCount", YunDongSP.pageCount);
+    public static final String DaKaMi = "300";//打卡距离
     public static final String pageCount = "10";
     public static final String ManJine = "1";
     public static boolean isToHome = false;//个人中心

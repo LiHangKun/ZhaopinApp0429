@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -186,8 +187,11 @@ public class Message3Fragment extends Fragment {
             }
         });
 
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+            getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+        }
 
-        getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+
 
         return view;
 
@@ -227,6 +231,7 @@ public class Message3Fragment extends Fragment {
 
     private void getDataList(String pageNo, String pageSize) {
         Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.sysMessageList, params, new SpotsCallBack<SystemMessageListBean>(getActivity()) {
