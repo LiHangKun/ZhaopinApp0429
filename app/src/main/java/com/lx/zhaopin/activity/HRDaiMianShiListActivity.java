@@ -12,6 +12,7 @@ import com.lx.zhaopin.adapter.DaiMianShiListAdapter;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.MianShiListBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.hractivity.HRMianShiListActivity;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 import okhttp3.Response;
 
-public class DaiMianShiListActivity extends BaseActivity implements View.OnClickListener {
+public class HRDaiMianShiListActivity extends BaseActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
@@ -39,7 +40,7 @@ public class DaiMianShiListActivity extends BaseActivity implements View.OnClick
     }
 
     private void init() {
-        topTitle.setText("求职者待面试");
+        topTitle.setText("HR待面试");
         rightText.setText("面试记录");
         rightText.setVisibility(View.VISIBLE);
         rightText.setOnClickListener(this);
@@ -61,7 +62,7 @@ public class DaiMianShiListActivity extends BaseActivity implements View.OnClick
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("interviewStatus", interviewStatus);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.mianshiList, params, new SpotsCallBack<MianShiListBean>(mContext) {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_mianshiList, params, new SpotsCallBack<MianShiListBean>(mContext) {
             @Override
             public void onSuccess(Response response, MianShiListBean resultBean) {
                 if (resultBean.getDataList() != null) {
@@ -101,7 +102,7 @@ public class DaiMianShiListActivity extends BaseActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.rightText:
                 //面试记录
-                startActivity(new Intent(mContext, MianShiListActivity.class));
+                startActivity(new Intent(mContext, HRMianShiListActivity.class));
                 break;
         }
     }

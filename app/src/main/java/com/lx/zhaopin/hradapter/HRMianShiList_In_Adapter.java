@@ -26,13 +26,13 @@ import butterknife.ButterKnife;
 public class HRMianShiList_In_Adapter extends RecyclerView.Adapter<HRMianShiList_In_Adapter.ViewHolder> {
 
 
-    private List<HRMianShiListBean.DataListBean.IntervierListBean> mData;
+    private List<HRMianShiListBean.DataListBean.InterviewsBean> mData;
     private Context mContext;
 
     public HRMianShiList_In_Adapter() {
     }
 
-    public HRMianShiList_In_Adapter(Context context, List<HRMianShiListBean.DataListBean.IntervierListBean>  allList) {
+    public HRMianShiList_In_Adapter(Context context, List<HRMianShiListBean.DataListBean.InterviewsBean> allList) {
         mContext = context;
         mData = allList;
     }
@@ -50,7 +50,7 @@ public class HRMianShiList_In_Adapter extends RecyclerView.Adapter<HRMianShiList
                 .error(R.mipmap.imageerror)).load(mData.get(i).getJobhunter().getAvatar()).into(viewHolder.roundedImageView);
 
         viewHolder.tv1.setText(mData.get(i).getJobhunter().getName());
-        viewHolder.tv3.setText(mData.get(i).getInterviewDate());
+        viewHolder.tv3.setText(mData.get(i).getInterviewDate().substring(11, mData.get(i).getInterviewDate().length()));
         viewHolder.tv2.setText("面试：" + mData.get(i).getPosition().getName() + " " + mData.get(i).getPosition().getMinSalary() + "-" + mData.get(i).getPosition().getMaxSalary() + "K");
 
         String interviewStatus = mData.get(i).getInterviewStatus();
@@ -63,13 +63,13 @@ public class HRMianShiList_In_Adapter extends RecyclerView.Adapter<HRMianShiList
                 viewHolder.image1.setImageResource(R.drawable.yijujue);
                 break;
             case "3":
-                viewHolder.image1.setImageResource(R.drawable.hom1s);
+                viewHolder.image1.setImageResource(R.drawable.daimianshi);
                 break;
             case "4":
                 viewHolder.image1.setImageResource(R.drawable.yichaoshi);
                 break;
             case "5":
-                viewHolder.image1.setImageResource(R.drawable.hom1s);
+                viewHolder.image1.setImageResource(R.drawable.yidaoda);
                 break;
             case "6":
                 viewHolder.image1.setImageResource(R.drawable.yiquxiao);
@@ -78,7 +78,7 @@ public class HRMianShiList_In_Adapter extends RecyclerView.Adapter<HRMianShiList
                 viewHolder.image1.setImageResource(R.drawable.yitongyi);
                 break;
             case "8":
-                viewHolder.image1.setImageResource(R.drawable.hom1s);
+                viewHolder.image1.setImageResource(R.drawable.buheshi);
                 break;
         }
 

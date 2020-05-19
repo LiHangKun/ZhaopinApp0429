@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,21 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
         }
 
         viewHolder.tv2.setText(mData.get(i).getChatDate());
-        viewHolder.tv3.setText(mData.get(i).getSubhead());
+
+        if (!TextUtils.isEmpty(mData.get(i).getSubhead())) {
+            viewHolder.tv3.setText(mData.get(i).getSubhead());
+        } else {
+            viewHolder.tv3.setText("暂无反馈信息");
+        }
+
+
+        //imageState
+        if (i == 0) {
+            viewHolder.imageState.setImageResource(R.drawable.yuanquan);
+        } else {
+            viewHolder.imageState.setImageResource(R.drawable.yuanquan3);
+        }
+
 
     }
 

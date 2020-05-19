@@ -29,6 +29,16 @@ public class YuLanBean extends CommonBean {
     private String arrivalTime;
     private String avatar;
     private String birthday;
+    private String age;
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
     private EducationBean education;
     private String jobNature;
     private String jobStatus;

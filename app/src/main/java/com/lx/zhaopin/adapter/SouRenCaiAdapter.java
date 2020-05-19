@@ -45,7 +45,7 @@ public class SouRenCaiAdapter extends RecyclerView.Adapter<SouRenCaiAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_shoucangren_layout, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_shouye_ren_layout, viewGroup, false));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class SouRenCaiAdapter extends RecyclerView.Adapter<SouRenCaiAdapter.View
             viewHolder.flowLiner.addView(radioButton);
         }
 
-        viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {

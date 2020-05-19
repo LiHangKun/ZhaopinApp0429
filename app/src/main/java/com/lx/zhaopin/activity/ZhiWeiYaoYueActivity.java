@@ -141,8 +141,47 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         tv0.setText(renCaiDetailBean.getName());
         tv2.setText(SPTool.getSessionValue(AppSP.USER_PHONE));
 
-        getGongSiInfo(tv3, rid);
+        //getGongSiInfo(tv3, rid);
 
+        getGongSiAllZhiWeiMid();
+
+
+    }
+
+    private void getGongSiAllZhiWeiMid() {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.gongSiAllZhiWei, params, new BaseCallback<GongSiZhiWeiBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GongSiZhiWeiBean resultBean) {
+
+                if (resultBean.getDataList() != null){
+                    if (resultBean.getDataList().size() != 0){
+                        //String location = resultBean.getDataList().get(0).getLocation();
+                        tv3.setText(resultBean.getDataList().get(0).getCompany().getLocation());
+                        lat = resultBean.getDataList().get(0).getCompany().getLat();
+                        lng = resultBean.getDataList().get(0).getCompany().getLng();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
 
     }
 
@@ -382,7 +421,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                     return;
                 } else {
                     //发布邀约
-                    fabuYaoYueMe(rid, yaoYueGangWeiId, tv2.getText().toString().trim(), tv4.getText().toString().trim());
+                    fabuYaoYueMe(rid, yaoYueGangWeiId, tv2.getText().toString().trim(), tv4.getText().toString().trim().replace("点",":").replace("分",""));
                 }
                 break;
             case R.id.tv3:
@@ -498,6 +537,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                     public void OnItemClickListener(String id, String name) {
                         tv1.setText(name);
                         yaoYueGangWeiId = id;
+                        popupWindow1.dismiss();
                     }
                 });
 

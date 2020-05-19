@@ -1,10 +1,12 @@
 package com.lx.zhaopin.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.MianShiDetailBean;
@@ -24,9 +28,12 @@ import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.TellUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.MyDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.zhy.m.permission.MPermissions;
+import com.zhy.m.permission.PermissionGrant;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -75,6 +82,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
     private String lng;
     private String id;
     private String interviewId2;
+    private String phone;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -84,7 +92,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("面试官看到的--面试详情");
+        topTitle.setText("面试详情");
 
         interviewId2 = getIntent().getStringExtra("interviewId");
 
@@ -102,7 +110,14 @@ public class MianShiDetailType1Activity extends BaseActivity {
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.mianshiDetail_HR, params, new SpotsCallBack<MianShiDetailBean>(mContext) {
             @Override
             public void onSuccess(Response response, MianShiDetailBean resultBean) {
-                tv1.setText(resultBean.getCompany().getName());
+                tv1.setText(resultBean.getJobhunter().getName());
+
+
+                Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
+                        .error(R.mipmap.imageerror)).load(resultBean.getJobhunter().getAvatar()).into(roundedImageView);
+
+
+                phone = resultBean.getJobhunter().getMobile();
                 tv2.setText(resultBean.getInterviewDate() + " 面试");
                 id = resultBean.getId();
                 String interviewStatus = resultBean.getInterviewStatus();
@@ -114,15 +129,18 @@ public class MianShiDetailType1Activity extends BaseActivity {
                         break;
                     case "2":
                         imageState.setImageResource(R.drawable.yijujue);
+                        quxiaoHR.setVisibility(View.GONE);
                         break;
                     case "3":
                         imageState.setImageResource(R.drawable.daimianshi);
+                        quxiaoHR.setVisibility(View.GONE);
                         break;
                     case "4":
                         imageState.setImageResource(R.drawable.yichaoshi);
                         break;
                     case "5":
                         imageState.setImageResource(R.drawable.yidaoda);
+                        quxiaoHR.setVisibility(View.GONE);
                         break;
                     case "6":
                         imageState.setImageResource(R.drawable.yiquxiao);
@@ -132,11 +150,13 @@ public class MianShiDetailType1Activity extends BaseActivity {
                         break;
                     case "7":
                         imageState.setImageResource(R.drawable.yitongyi);
+                        quxiaoHR.setVisibility(View.GONE);
                         break;
                     case "8":
                         imageState.setImageResource(R.drawable.buheshi);
                         tv3.setText("不合适原因:" + resultBean.getDenyReason());
                         tv3.setVisibility(View.VISIBLE);
+                        quxiaoHR.setVisibility(View.GONE);
                         break;
                 }
 
@@ -145,7 +165,12 @@ public class MianShiDetailType1Activity extends BaseActivity {
                 tv6Click.setText(resultBean.getLocation());
 
 
-                tv7.setText(resultBean.getRemarks());
+                if (TextUtils.isEmpty(resultBean.getRemarks())) {
+                    tv7.setText("备注: " + "暂无备注信息");
+                } else {
+                    tv7.setText("备注: " + resultBean.getRemarks());
+                }
+
                 lat = resultBean.getLat();
                 lng = resultBean.getLng();
 
@@ -171,6 +196,24 @@ public class MianShiDetailType1Activity extends BaseActivity {
     }
 
 
+    @PermissionGrant(AppSP.PMS_LOCATION)
+    public void pmsLocationSuccess() {
+        //权限授权成功
+        TellUtil.tell(mContext, phone);
+    }
+
+    /*拨打电话*/
+    private void callPhone() {
+        if (null != phone) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                MPermissions.requestPermissions(this, AppSP.PMS_LOCATION, Manifest.permission.CALL_PHONE);
+            } else {
+                pmsLocationSuccess();
+            }
+        }
+    }
+
+
     @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.tv6Click, R.id.quxiaoTV, R.id.okID, R.id.qiuZhiView, R.id.quxiaoHR})
     public void onClick(View v) {
         switch (v.getId()) {
@@ -178,7 +221,9 @@ public class MianShiDetailType1Activity extends BaseActivity {
                 ToastFactory.getToast(mContext, "聊天").show();
                 break;
             case R.id.llView2OnClick:
-                ToastFactory.getToast(mContext, "打电话").show();
+                if (!TextUtils.isEmpty(phone)) {
+                    callPhone();
+                }
                 break;
             case R.id.tv6Click:
                 //ToastFactory.getToast(mContext, "导航").show();
@@ -222,7 +267,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
 
 
     //HR 取消面试
-    private void quXiaoMianShiMe( String interviewId, String cancelReason) {
+    private void quXiaoMianShiMe(String interviewId, String cancelReason) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("interviewId", interviewId);

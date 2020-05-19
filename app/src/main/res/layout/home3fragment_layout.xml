@@ -105,6 +105,7 @@
                         </LinearLayout>
 
                         <TextView
+                            android:id="@+id/userPhone"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_40"
                             android:gravity="center_vertical"
@@ -418,7 +419,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_5"
                             android:gravity="center"
-                            android:text="不合适"
+                            android:text="面试记录"
                             android:textColor="#333"
                             android:textSize="@dimen/sp_14"
                             android:textStyle="bold" />

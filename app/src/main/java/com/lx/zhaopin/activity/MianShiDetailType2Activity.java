@@ -304,7 +304,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
                 if (!TextUtils.isEmpty(resultBean.getRemarks())) {
                     tv7.setText(resultBean.getRemarks());
                 } else {
-                    tv7.setText("该企业暂无备注信息");
+                    tv7.setText("暂无备注信息");
                 }
 
                 MianShiDetailType2Activity.this.lat = resultBean.getLat();

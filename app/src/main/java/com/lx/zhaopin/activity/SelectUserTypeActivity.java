@@ -2,11 +2,9 @@ package com.lx.zhaopin.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
@@ -67,8 +65,7 @@ public class SelectUserTypeActivity extends BaseActivity {
     private void getQiuZhiMyInfo(String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
-        Log.i(TAG, "求职者个人信息: " + NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo + "---" + new Gson().toJson(params));
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.checkPhone, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
 
             @Override
             public void onFailure(Request request, Exception e) {

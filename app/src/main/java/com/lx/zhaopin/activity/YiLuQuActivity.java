@@ -64,7 +64,7 @@ public class YiLuQuActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("已录取");
+        topTitle.setText("求职者已录取");
 
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者

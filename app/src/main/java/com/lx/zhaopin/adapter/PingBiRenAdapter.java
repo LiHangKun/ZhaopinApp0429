@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.PingBiRen;
 import com.lx.zhaopin.utils.ViewUtil;
@@ -46,7 +48,7 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int po) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int po) {
 
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
@@ -54,6 +56,10 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
         viewHolder.tv4.setText(mData.get(po).getAge() + "岁");
         viewHolder.tv5.setText(mData.get(po).getWorkYears() + "年");
         viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
+
+        Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
+                .error(R.mipmap.imageerror)).load(mData.get(po).getAvatar()).into(viewHolder.roundedImageView);
+
 
 
         String openResume = mData.get(po).getOpenResume();
@@ -95,7 +101,15 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(mData.get(po).getId());
+                    itemClickListener.OnItemClickListener(viewHolder.tv7,mData.get(po).getId());
+                }
+            }
+        });
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClickListener(viewHolder.llView,mData.get(po).getId());
                 }
             }
         });
@@ -142,7 +156,7 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
 
 
     public interface OnItemClickListener {
-        void OnItemClickListener(String id);
+        void OnItemClickListener(View view,String id);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

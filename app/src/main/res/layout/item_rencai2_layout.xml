@@ -21,7 +21,7 @@
                 android:id="@+id/imageState"
                 android:layout_width="@dimen/dp_15"
                 android:layout_height="@dimen/dp_15"
-                android:src="@drawable/xingxing" />
+                android:src="@drawable/yuanquan" />
 
             <View
                 android:layout_width="@dimen/dp_1"

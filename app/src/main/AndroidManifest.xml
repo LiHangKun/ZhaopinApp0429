@@ -484,6 +484,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 待面试 -->
         <activity
+            android:name="com.lx.zhaopin.activity.HRDaiMianShiListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- HR待面试 -->
+        <activity
             android:name="com.lx.zhaopin.activity.ShenQingListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
@@ -658,7 +664,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- HR搜索的结果 -->
-
+        <activity
+            android:name=".hractivity.HRBuHeShiActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /><!-- HR不合适 -->
         <!--以下是HR看到的界面-->
 
 

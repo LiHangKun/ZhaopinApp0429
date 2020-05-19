@@ -19,28 +19,25 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.activity.DaiMianShiListActivity;
+import com.lx.zhaopin.activity.HRDaiMianShiListActivity;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
-import com.lx.zhaopin.activity.MyGuanZhuRenActivity;
-import com.lx.zhaopin.activity.MyJianLiActivity;
 import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.MyUserInfoActivity;
-import com.lx.zhaopin.activity.MyYinSiActivity;
 import com.lx.zhaopin.activity.PingBiRenActivity;
-import com.lx.zhaopin.activity.QiuZhiYiXiangActivity;
 import com.lx.zhaopin.activity.SelectUserTypeActivity;
 import com.lx.zhaopin.activity.SettingActivity;
-import com.lx.zhaopin.activity.YiLuQuActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.hractivity.HRMianShiListActivity;
+import com.lx.zhaopin.hractivity.HRYiLuQuActivity;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.TellUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.CirclePercentView;
@@ -90,6 +87,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
     private TextView tv2;
     private TextView tv3;
     private TextView tvJueSe;
+    private TextView userPhone;
 
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
@@ -139,6 +137,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
         tv3 = view.findViewById(R.id.tv3);
+        userPhone = view.findViewById(R.id.userPhone);
         tvJueSe = view.findViewById(R.id.tvJueSe);
 
         llView0.setOnClickListener(this);
@@ -184,7 +183,8 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
     private void getHRMyInfo(String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
-        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.getHRMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
+        params.put("hr", "1");
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
                 smartRefreshLayout.finishRefresh();
@@ -198,6 +198,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
                 smartRefreshLayout.finishRefresh();
+                userPhone.setText(StringUtil.replacePhoneCui(resultBean.getMobile()));
 
                 Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                         .load(resultBean.getAvatar()).into(roundedImageView);
@@ -255,7 +256,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
             case R.id.llView2:
                 //待面试
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), DaiMianShiListActivity.class);
+                    intent = new Intent(getActivity(), HRDaiMianShiListActivity.class);
                     startActivity(intent);
                 } else {
                     ToastFactory.getToast(getActivity(), "请先登录").show();
@@ -266,7 +267,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
             case R.id.llView3:
                 //已录取
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), YiLuQuActivity.class);
+                    intent = new Intent(getActivity(), HRYiLuQuActivity.class);
                     startActivity(intent);
                 } else {
                     ToastFactory.getToast(getActivity(), "请先登录").show();
@@ -287,14 +288,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.relView0:
                 //我的资料进度
-                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), MyJianLiActivity.class);
-                    startActivity(intent);
-                } else {
-                    ToastFactory.getToast(getActivity(), "请先登录").show();
-                    startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
-                    return;
-                }
+               noDianji();
                 break;
             case R.id.relView1:
                 //已屏蔽记录
@@ -309,25 +303,11 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.relView2:
                 //我的关注
-                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), MyGuanZhuRenActivity.class);
-                    startActivity(intent);
-                } else {
-                    ToastFactory.getToast(getActivity(), "请先登录").show();
-                    startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
-                    return;
-                }
+                noDianji();
                 break;
             case R.id.relView3:
                 //求职意向
-                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), QiuZhiYiXiangActivity.class);
-                    startActivity(intent);
-                } else {
-                    ToastFactory.getToast(getActivity(), "请先登录").show();
-                    startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
-                    return;
-                }
+                noDianji();
                 break;
             case R.id.relView4:
                 //在线客服
@@ -337,14 +317,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.relView5:
                 //隐私设置
-                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), MyYinSiActivity.class);
-                    startActivity(intent);
-                } else {
-                    ToastFactory.getToast(getActivity(), "请先登录").show();
-                    startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
-                    return;
-                }
+                noDianji();
                 break;
             case R.id.relView6:
                 //切换身份
@@ -362,6 +335,18 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
                 intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    private void noDianji() {
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    /*intent = new Intent(getActivity(), MyYinSiActivity.class);
+                    startActivity(intent);*/
+            ToastFactory.getToast(getActivity(), "您当前身份为HR,请切换至求职者进行查看").show();
+        } else {
+            ToastFactory.getToast(getActivity(), "请先登录").show();
+            startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
+            return;
         }
     }
 

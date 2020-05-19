@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,22 +66,32 @@ public class PingBiRenActivity extends BaseActivity {
         recyclerView.setAdapter(pingBiRenAdapter);
         pingBiRenAdapter.setOnItemClickListener(new PingBiRenAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(final String rid) {
+            public void OnItemClickListener(View view, final String rid) {
                 //取消屏蔽
-                StyledDialog.init(mContext);
-                StyledDialog.buildIosAlert("", "\r是否取消屏蔽?", new MyDialogListener() {
-                    @Override
-                    public void onFirst() {
+                switch (view.getId()) {
+                    case R.id.llView:
+                        Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
+                        intent.putExtra("rid", rid);
+                        startActivity(intent);
+                        break;
+                    case R.id.tv7:
+                        StyledDialog.init(mContext);
+                        StyledDialog.buildIosAlert("", "\r是否取消屏蔽?", new MyDialogListener() {
+                            @Override
+                            public void onFirst() {
 
-                    }
+                            }
 
-                    @Override
-                    public void onSecond() {
-                        quXiaoPingBiRen(rid);
+                            @Override
+                            public void onSecond() {
+                                quXiaoPingBiRen(rid);
 
 
-                    }
-                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                            }
+                        }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                        break;
+                }
+
 
             }
         });
@@ -121,13 +132,12 @@ public class PingBiRenActivity extends BaseActivity {
     }
 
 
-
     //取消屏蔽
     private void quXiaoPingBiRen(String rid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("rid", rid);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.ShouCangRenCai, params, new BaseCallback<PhoneStateBean>() {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_PingBi_renCaiDetail, params, new BaseCallback<PhoneStateBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
 
@@ -154,6 +164,7 @@ public class PingBiRenActivity extends BaseActivity {
 
     private void getDataList(String pageNo, String pageSize) {
         Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.pingBiRen, params, new SpotsCallBack<PingBiRen>(mContext) {

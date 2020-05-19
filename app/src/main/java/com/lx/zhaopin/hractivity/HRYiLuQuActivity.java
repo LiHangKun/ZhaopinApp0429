@@ -9,10 +9,10 @@ import android.widget.LinearLayout;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
-import com.lx.zhaopin.bean.HRYiLuQuBean;
+import com.lx.zhaopin.bean.HRMianShiListBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
-import com.lx.zhaopin.hradapter.HRYiLuQuAdapter;
+import com.lx.zhaopin.hradapter.HRMianShiListAdapter;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -34,8 +34,9 @@ public class HRYiLuQuActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
-    private HRYiLuQuAdapter hryiLuQuAdapter;
-    private List<HRYiLuQuBean.DataListBean> allList;
+
+    private List<HRMianShiListBean.DataListBean> allList;
+    private HRMianShiListAdapter hrmianShiListAdapter;
     private static final String TAG = "HRYiLuQuActivity";
 
     @Override
@@ -57,14 +58,14 @@ public class HRYiLuQuActivity extends BaseActivity {
         switch (messageType) {
             case 5:
                 //更新个人中心
-                getDataList();
+                getDataList("7");
                 Log.i(TAG, "getEventmessage: 更新Offer的状态了");
                 break;
         }
     }
 
     private void init() {
-        topTitle.setText("已录取");
+        topTitle.setText("HR已录取");
 
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
@@ -73,16 +74,47 @@ public class HRYiLuQuActivity extends BaseActivity {
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
 
-        allList = new ArrayList<>();
-        hryiLuQuAdapter = new HRYiLuQuAdapter(mContext, allList);
+        getDataList("7");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(hryiLuQuAdapter);
-        getDataList();
+        allList = new ArrayList<>();
+        hrmianShiListAdapter = new HRMianShiListAdapter(mContext, allList);
+        recyclerView.setAdapter(hrmianShiListAdapter);
 
 
     }
 
-    //已录取
+
+    private void getDataList(String interviewStatus) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("interviewStatus", interviewStatus);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_mianshiList, params, new SpotsCallBack<HRMianShiListBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, HRMianShiListBean resultBean) {
+                if (resultBean.getDataList() != null) {
+                    if (resultBean.getDataList().size() == 0) {
+                        recyclerView.setVisibility(View.GONE);
+                        noDataLinView.setVisibility(View.VISIBLE);
+                    } else {
+
+                        recyclerView.setVisibility(View.VISIBLE);
+                        noDataLinView.setVisibility(View.GONE);
+                        allList.addAll(resultBean.getDataList());
+                        hrmianShiListAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+
+
+    /*//已录取
     private void getDataList() {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
@@ -110,7 +142,7 @@ public class HRYiLuQuActivity extends BaseActivity {
 
             }
         });
-    }
+    }*/
 
     @Override
     protected void initEvent() {

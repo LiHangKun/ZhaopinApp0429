@@ -54,7 +54,7 @@ public class MyShouCangRenActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("我的收藏");
+        topTitle.setText("HR我的收藏");
         smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
@@ -153,6 +153,7 @@ public class MyShouCangRenActivity extends BaseActivity {
 
     private void getDataList(String pageNo, String pageSize) {
         Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HRShouCangRen, params, new SpotsCallBack<HRShouCangRenBean>(mContext) {

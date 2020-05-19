@@ -39,6 +39,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.TellUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.CirclePercentView;
@@ -88,6 +89,8 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private TextView tv2;
     private TextView tv3;
     private TextView jueSe;
+    private String recruiter = "0";
+    private TextView userPhone;
 
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
@@ -135,6 +138,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         relView7 = view.findViewById(R.id.relView7);
 
 
+        userPhone = view.findViewById(R.id.userPhone);
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
         tv3 = view.findViewById(R.id.tv3);
@@ -183,6 +187,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private void getQiuZhiMyInfo(String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
+        params.put("hr", "0");
         Log.e(TAG, "getQiuZhiMyInfo: http 个人中心请求");
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
             @Override
@@ -198,13 +203,13 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
                 smartRefreshLayout.finishRefresh();
-
+                userPhone.setText(StringUtil.replacePhoneCui(resultBean.getMobile()));
                 Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                         .load(resultBean.getAvatar()).into(roundedImageView);
                 tv1.setText(resultBean.getName());
-                String recruiter = resultBean.getRecruiter();
+                recruiter = resultBean.getRecruiter();
                 //是否具有hr权限
-                switch (recruiter) {
+               /* switch (recruiter) {
                     case "1":
                         tv2.setText("HR");
                         jueSe.setText("招聘者");
@@ -213,7 +218,11 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                         tv2.setText("求职者");
                         jueSe.setText("求职者");
                         break;
-                }
+                }*/
+
+                tv2.setText("求职者");
+                jueSe.setText("求职者");
+
                 tvJinDu.setText(resultBean.getImprovedDegree() + "%");
                 setData1(circlePercentView, 100, Integer.parseInt(resultBean.getImprovedDegree()));
                 tv3.setText(resultBean.getInterviewCount());
@@ -363,8 +372,16 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.relView6:
                 //切换身份
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    intent = new Intent(getActivity(), SelectUserTypeActivity.class);
-                    startActivity(intent);
+
+                    if (recruiter.equals("0")) {
+                        ToastFactory.getToast(getActivity(), "您还不是HR").show();
+                        return;
+                    } else {
+                        intent = new Intent(getActivity(), SelectUserTypeActivity.class);
+                        startActivity(intent);
+                    }
+
+
                 } else {
                     ToastFactory.getToast(getActivity(), "请先登录").show();
                     startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));

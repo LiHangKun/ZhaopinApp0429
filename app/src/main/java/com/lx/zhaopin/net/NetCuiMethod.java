@@ -17,7 +17,7 @@ public class NetCuiMethod {
 
 
     /*------------TODO-----求职者-----------------*/
-    public static final String qiuZhiRToken = "member/jobhunter/rong";//求职者个人信息
+    public static final String qiuZhiRToken = "member/jobhunter/rong";//求职者个人信息Token
     public static final String qiuZhiMyInfo = "member/jobhunter/info";//求职者个人信息
     public static final String xiugaiQiuZhiMyInfo = "member/jobhunter/modify";//修改个人信息
     public static final String myJianLi = "member/jobhunter/resume";//个人简历
@@ -61,7 +61,7 @@ public class NetCuiMethod {
     public static final String caoZuoOffer = "member/jobhunter/offer/deal";//处理offer
     public static final String qiuZheZheDaoDa = "member/jobhunter/interview/arrival";//求职者我已到达
     public static final String qiuZhiFeedList = "member/jobhunter/chat/feedback/page";//求职反馈消息列表
-    public static final String messageDetail = "jobhunter/chat/feedback/detail";//求职反馈消息详情
+    public static final String messageDetail = "member/jobhunter/chat/feedback/detail";//求职反馈消息详情
     public static final String newMessageCount = "member/jobhunter/chat/count";//新消息数量  TODO  还要处理消息已读数量的刷新
     public static final String sysMessageList = "member/jobhunter/chat/system/page";//系统消息列表
     public static final String lookSysMessage = "member/jobhunter/chat/system/view";//查看系统消息
@@ -106,6 +106,7 @@ public class NetCuiMethod {
     public static final String shenQingJiLu = "member/jobhunter/chat/apply/page";//申请记录
     public static final String chuliGouTongShenQing = "member/jobhunter/chat/apply/deal";//处理沟通申请
     public static final String HRSouRenCai = "member/resume/page";//求职者简历分页数据
+    public static final String HRMessageList1 = "member/recruiter/chat/feedback/page";//招聘反馈消息列表
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
 
 }

@@ -41,7 +41,7 @@ public class HRMianShiListAdapter extends RecyclerView.Adapter<HRMianShiListAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.tv1.setText(mData.get(i).getDate());
-        List<HRMianShiListBean.DataListBean.IntervierListBean> interviews = mData.get(i).getIntervierList();
+        List<HRMianShiListBean.DataListBean.InterviewsBean> interviews = mData.get(i).getInterviews();
         HRMianShiList_In_Adapter mianShiList_in_adapter = new HRMianShiList_In_Adapter(mContext, interviews);
         viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         viewHolder.recyclerView.setAdapter(mianShiList_in_adapter);

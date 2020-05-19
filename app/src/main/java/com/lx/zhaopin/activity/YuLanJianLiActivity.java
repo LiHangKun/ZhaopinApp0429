@@ -109,6 +109,7 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
     private void init() {
         topTitle.setText("预览简历");
         rightIcon.setVisibility(View.VISIBLE);
+        rightIcon.setImageResource(R.drawable.gangwei_fenxiang);
         rightIcon.setOnClickListener(this);
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
@@ -145,7 +146,7 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
                     tv3.setText(resultBean.getMinSalary() + "-" + resultBean.getMaxSalary() + "K");
                 }
                 tv4.setText(resultBean.getEducation().getName());
-                tv5.setText(resultBean.getBirthday());
+                tv5.setText(resultBean.getAge() + "岁");
                 tv6.setText(resultBean.getWorkYears() + "年");
                 tv7.setText(resultBean.getLatestCityName());
 
