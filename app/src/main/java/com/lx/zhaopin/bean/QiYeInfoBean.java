@@ -2,53 +2,57 @@ package com.lx.zhaopin.bean;
 
 import com.lx.zhaopin.http.CommonBean;
 
+import java.util.List;
+
 public class QiYeInfoBean extends CommonBean {
 
 
     /**
-     * Industry : {"name":""}
-     * city : {"id":"","name":"名称"}
+     * auditStatus : 2
+     * city : {"children":[""],"id":"410100","name":"郑州市","parentId":"0","sort":""}
      * collected : 1
-     * district : {"id":"","name":"名称"}
-     * financing : {"name":""}
-     * fund :
-     * id :
-     * images :
-     * intro :
-     * lat :
-     * legalPerson :
-     * lng :
-     * location :
-     * logo :
-     * name :
-     * service :
-     * staffNum :
+     * financing : {"id":"4edccb5a934741bc95e509251ddd6896","name":"一轮融资"}
+     * fund : 1000万
+     * id : 7f246b2831254cb1b9ba5c2441668541
+     * images : http://39.96.78.51/userfiles/company/2020/5/qprkzn4q5x.png
+     * industry : {"children":[""],"id":"8342740fa1fe419dac350c34b6031adf","name":"二级2","parentId":"0","sort":""}
+     * intro : 服务好每一个客户
+     * lat : 34.749272
+     * legalPerson : 郝先生
+     * lng : 113.735057
+     * location : 郑东新区通泰路与宏昌街交叉口向东50米
+     * logo : http://39.96.78.51/userfiles/company/2020/5/yqhwombvot.jpg
+     * mobile : 13203812466
+     * name : 立信
+     * service : 致力于app开发
+     * staffNum : 100
      */
 
-    private IndustryBean Industry;
+    private String auditStatus;
     private CityBean city;
     private String collected;
-    private DistrictBean district;
     private FinancingBean financing;
     private String fund;
     private String id;
     private String images;
+    private IndustryBean industry;
     private String intro;
     private String lat;
     private String legalPerson;
     private String lng;
     private String location;
     private String logo;
+    private String mobile;
     private String name;
     private String service;
     private String staffNum;
 
-    public IndustryBean getIndustry() {
-        return Industry;
+    public String getAuditStatus() {
+        return auditStatus;
     }
 
-    public void setIndustry(IndustryBean Industry) {
-        this.Industry = Industry;
+    public void setAuditStatus(String auditStatus) {
+        this.auditStatus = auditStatus;
     }
 
     public CityBean getCity() {
@@ -65,14 +69,6 @@ public class QiYeInfoBean extends CommonBean {
 
     public void setCollected(String collected) {
         this.collected = collected;
-    }
-
-    public DistrictBean getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(DistrictBean district) {
-        this.district = district;
     }
 
     public FinancingBean getFinancing() {
@@ -105,6 +101,14 @@ public class QiYeInfoBean extends CommonBean {
 
     public void setImages(String images) {
         this.images = images;
+    }
+
+    public IndustryBean getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(IndustryBean industry) {
+        this.industry = industry;
     }
 
     public String getIntro() {
@@ -155,6 +159,14 @@ public class QiYeInfoBean extends CommonBean {
         this.logo = logo;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
     public String getName() {
         return name;
     }
@@ -179,30 +191,20 @@ public class QiYeInfoBean extends CommonBean {
         this.staffNum = staffNum;
     }
 
-    public static class IndustryBean {
-        /**
-         * name :
-         */
-
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
     public static class CityBean {
         /**
-         * id :
-         * name : 名称
+         * children : [""]
+         * id : 410100
+         * name : 郑州市
+         * parentId : 0
+         * sort :
          */
 
         private String id;
         private String name;
+        private String parentId;
+        private String sort;
+        private List<String> children;
 
         public String getId() {
             return id;
@@ -219,40 +221,48 @@ public class QiYeInfoBean extends CommonBean {
         public void setName(String name) {
             this.name = name;
         }
-    }
 
-    public static class DistrictBean {
-        /**
-         * id :
-         * name : 名称
-         */
-
-        private String id;
-        private String name;
-
-        public String getId() {
-            return id;
+        public String getParentId() {
+            return parentId;
         }
 
-        public void setId(String id) {
-            this.id = id;
+        public void setParentId(String parentId) {
+            this.parentId = parentId;
         }
 
-        public String getName() {
-            return name;
+        public String getSort() {
+            return sort;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setSort(String sort) {
+            this.sort = sort;
+        }
+
+        public List<String> getChildren() {
+            return children;
+        }
+
+        public void setChildren(List<String> children) {
+            this.children = children;
         }
     }
 
     public static class FinancingBean {
         /**
-         * name :
+         * id : 4edccb5a934741bc95e509251ddd6896
+         * name : 一轮融资
          */
 
+        private String id;
         private String name;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getName() {
             return name;
@@ -260,6 +270,62 @@ public class QiYeInfoBean extends CommonBean {
 
         public void setName(String name) {
             this.name = name;
+        }
+    }
+
+    public static class IndustryBean {
+        /**
+         * children : [""]
+         * id : 8342740fa1fe419dac350c34b6031adf
+         * name : 二级2
+         * parentId : 0
+         * sort :
+         */
+
+        private String id;
+        private String name;
+        private String parentId;
+        private String sort;
+        private List<String> children;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getParentId() {
+            return parentId;
+        }
+
+        public void setParentId(String parentId) {
+            this.parentId = parentId;
+        }
+
+        public String getSort() {
+            return sort;
+        }
+
+        public void setSort(String sort) {
+            this.sort = sort;
+        }
+
+        public List<String> getChildren() {
+            return children;
+        }
+
+        public void setChildren(List<String> children) {
+            this.children = children;
         }
     }
 }

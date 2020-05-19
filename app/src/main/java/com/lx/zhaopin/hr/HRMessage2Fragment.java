@@ -1,5 +1,6 @@
 package com.lx.zhaopin.hr;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,13 +16,13 @@ import android.widget.LinearLayout;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.HRMessage2Bean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.hractivity.HRXiaoXiDetailActivity;
 import com.lx.zhaopin.hradapter.HRMessage2Adapter;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.ToastFactory;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -65,7 +66,10 @@ public class HRMessage2Fragment extends Fragment {
         hrMessage2Adapter.setOnItemClickListener(new HRMessage2Adapter.OnItemClickListener() {
             @Override
             public void OnItemClickListener(String id) {
-                ToastFactory.getToast(getActivity(), "面试管看到的消息详情" + id).show();
+                //ToastFactory.getToast(getActivity(), "面试管看到的消息详情" + id).show();
+                Intent intent = new Intent(getActivity(), HRXiaoXiDetailActivity.class);
+                intent.putExtra("messageId", id);
+                startActivity(intent);
             }
         });
 

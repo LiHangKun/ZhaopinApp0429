@@ -90,7 +90,7 @@ public class NetCuiMethod {
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
     public static final String getHRRongToken = "member/recruiter/rong";//获取招聘者融云token
     public static final String mianshiDetail_HR = "member/recruiter/interview/detail";//面试详情,HR看到的界面  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
-    public static final String getHRMyInfo = "member/recruiter/info";//招聘者个人信息
+    public static final String getHRMyInfo = "member/recruiter/info";//招聘者个人信息    废弃
     public static final String HRShouCangRen = "member/jobhunter/collect/page";//收藏求职者列表
     public static final String ShouCangRenCai = "member/resume/collect";//收藏求职者/取消收藏
     public static final String pingBiRen = "member/jobhunter/improper/page";//屏蔽求职者列表
@@ -107,6 +107,8 @@ public class NetCuiMethod {
     public static final String chuliGouTongShenQing = "member/jobhunter/chat/apply/deal";//处理沟通申请
     public static final String HRSouRenCai = "member/resume/page";//求职者简历分页数据
     public static final String HRMessageList1 = "member/recruiter/chat/feedback/page";//招聘反馈消息列表
+    public static final String HRMessageList2 = "member/recruiter/chat/system/page";//系统消息列表
+    public static final String HRMessageDetail = "member/recruiter/chat/feedback/detail";//HR 看到的消息详情
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
 
 }

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -120,7 +121,12 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             fragments.add(new HRHome2Fragment());
             fragments.add(new HRHome3Fragment());
         }
-        setUserRongInfoMethod();
+
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+            setUserRongInfoMethod();
+        }
+
+
 
         //adapter = new MyPagerAdapter(getSupportFragmentManager());
 
@@ -145,21 +151,21 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         }, true);
         RongIM.setUserInfoProvider(this, true);
 
-        /*final String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
+        final String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
         final String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
-        final String uid = SPTool.getSessionValue(AppSP.UID);*/
+        final String uid = SPTool.getSessionValue(AppSP.UID);
 
 
-        final String nickName = "崔文乐";
+       /* final String nickName = "崔文乐";
         final String userHead = "https://himg2.huanqiucdn.cn/attachment2010/2020/0507/20200507011017575.jpg";
-        final String uid = "123";
+        final String uid = "123";*/
 
         RongIM.getInstance().refreshUserInfoCache(new UserInfo(uid, nickName, Uri.parse(userHead)));
     }
 
 
     private void initC() {
-        RongIM.connect("5EzeuoxRkESv3vBru1S/BvTP18LHSVglo2ejizkCQP8=@z7fh.cn.rongnav.com;z7fh.cn.rongcfg.com", new RongIMClient.ConnectCallback() {
+        RongIM.connect(SPTool.getSessionValue(AppSP.USER_RongToken), new RongIMClient.ConnectCallback() {
 
             /**
              * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token

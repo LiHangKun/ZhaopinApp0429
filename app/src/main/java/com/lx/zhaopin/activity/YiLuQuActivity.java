@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.adapter.YiLuQuAdapter;
+import com.lx.zhaopin.adapter.MianShiListAdapter;
 import com.lx.zhaopin.base.BaseActivity;
-import com.lx.zhaopin.bean.YiLuQuBean;
+import com.lx.zhaopin.bean.MianShiListBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.OkHttpHelper;
@@ -34,9 +34,9 @@ public class YiLuQuActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
-    private YiLuQuAdapter yiLuQuAdapter;
-    private List<YiLuQuBean.DataListBean> allList;
     private static final String TAG = "YiLuQuActivity";
+    private MianShiListAdapter mianShiListAdapter;
+    private List<MianShiListBean.DataListBean> allList;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class YiLuQuActivity extends BaseActivity {
         switch (messageType) {
             case 5:
                 //更新个人中心
-                getDataList();
+                getDataList("7");
                 Log.i(TAG, "getEventmessage: 更新Offer的状态了");
                 break;
         }
@@ -73,22 +73,22 @@ public class YiLuQuActivity extends BaseActivity {
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
 
-        allList = new ArrayList<>();
-        yiLuQuAdapter = new YiLuQuAdapter(mContext, allList);
+        getDataList("7");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.setAdapter(yiLuQuAdapter);
-        getDataList();
+        allList = new ArrayList<>();
+        mianShiListAdapter = new MianShiListAdapter(mContext, allList);
+        recyclerView.setAdapter(mianShiListAdapter);
 
 
     }
 
-    //已录取
-    private void getDataList() {
+    private void getDataList(String interviewStatus) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.yiLuQuList, params, new SpotsCallBack<YiLuQuBean>(mContext) {
+        params.put("interviewStatus", interviewStatus);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.mianshiList, params, new SpotsCallBack<MianShiListBean>(mContext) {
             @Override
-            public void onSuccess(Response response, YiLuQuBean resultBean) {
+            public void onSuccess(Response response, MianShiListBean resultBean) {
                 if (resultBean.getDataList() != null) {
                     if (resultBean.getDataList().size() == 0) {
                         recyclerView.setVisibility(View.GONE);
@@ -98,11 +98,9 @@ public class YiLuQuActivity extends BaseActivity {
                         recyclerView.setVisibility(View.VISIBLE);
                         noDataLinView.setVisibility(View.GONE);
                         allList.addAll(resultBean.getDataList());
-                        yiLuQuAdapter.notifyDataSetChanged();
+                        mianShiListAdapter.notifyDataSetChanged();
                     }
                 }
-
-
             }
 
             @Override

@@ -63,7 +63,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        RongIM.init(this,"pvxdm17jpe7sr");//融云
+        RongIM.init(this, AppSP.RongToken);//融云
         RxToast.setContext(this);
         mContext = this;
         SPTool.init(mContext, AppUtils.getAppName(this));
