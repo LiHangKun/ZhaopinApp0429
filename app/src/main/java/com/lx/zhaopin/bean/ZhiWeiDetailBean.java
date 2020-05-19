@@ -29,6 +29,16 @@ public class ZhiWeiDetailBean extends CommonBean implements Serializable {
      */
 
     private String HRID;
+    private String HRName;
+
+    public String getHRName() {
+        return HRName;
+    }
+
+    public void setHRName(String HRName) {
+        this.HRName = HRName;
+    }
+
     private CityBean city;
     private String collected;
     private CompanyBean company;

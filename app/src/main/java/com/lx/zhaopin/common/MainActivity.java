@@ -150,6 +150,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     }
 
     private void setUserRongInfoMethod(String eventRongToken) {
+
         eventNickName = SPTool.getSessionValue(AppSP.USER_NAME);
         eventUserHead = SPTool.getSessionValue(AppSP.USER_ICON);
         eventUid = SPTool.getSessionValue(AppSP.UID);

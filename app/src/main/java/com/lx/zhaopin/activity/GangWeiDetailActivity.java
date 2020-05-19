@@ -63,6 +63,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -139,6 +140,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     private String pid;
     private String collected;
     private String hrid;
+    private String hrName;
 
 
     private void getLastIndexForLimit(TextView tv, int maxLine, String content) {
@@ -212,6 +214,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
 
                 hrid = resultBean.getHRID();
+                hrName = resultBean.getHRName();
                 //是否收藏  image1
                 collected = resultBean.getCollected();
                 //1表示是，0表示否
@@ -381,6 +384,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     */
 
     private static final String TAG = "GangWeiDetailActivity";
+
     @OnClick({R.id.back, R.id.image1, R.id.image2, R.id.image3, R.id.dibuView1, R.id.liJiGouTongTV, R.id.shenQingZhiwei, R.id.dibuView2, R.id.dibuView3, R.id.dibuView4, R.id.daoHang, R.id.llViewGongSi, R.id.tv7})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -468,8 +472,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                         RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
                     RongIM.getInstance().setMessageAttachedUserInfo(true);
                     //对方的ID 姓名
-                    RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
-
+                    //RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
+                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
 
                     /*Bundle bundle = new Bundle();
                     bundle.putString("Info1", mData.get(i).getUser_Id_ext().getHead_Url());

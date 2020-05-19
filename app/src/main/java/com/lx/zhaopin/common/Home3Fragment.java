@@ -117,7 +117,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+                    if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                         getQiuZhiMyInfo();
                     }
 
@@ -229,6 +229,11 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                         .load(resultBean.getAvatar()).into(roundedImageView);
                 tv1.setText(resultBean.getName());
                 recruiter = resultBean.getRecruiter();
+
+                SPTool.addSessionMap(AppSP.USER_NAME, resultBean.getName());
+                SPTool.addSessionMap(AppSP.USER_ICON, resultBean.getAvatar());
+                SPTool.addSessionMap(AppSP.UID, SPTool.getSessionValue(AppSP.UID));
+
                 //是否具有hr权限
                /* switch (recruiter) {
                     case "1":

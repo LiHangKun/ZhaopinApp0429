@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -17,7 +18,11 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.ActivityManager;
 import com.lx.zhaopin.utils.GaoDeUtils;
 import com.lx.zhaopin.utils.SPTool;
@@ -27,7 +32,12 @@ import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.jpush.android.api.JPushInterface;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -68,7 +78,47 @@ public class SplashActivity extends AppCompatActivity {
 
         xieYi();
 
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+            getQiuZhiMyInfo();
+        }
 
+
+
+    }
+
+
+
+    //求职者个人信息
+    private void getQiuZhiMyInfo() {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("hr", "0");
+        Log.e(TAG, "getQiuZhiMyInfo: http getEventmessage 个人中心请求" + SPTool.getSessionValue(AppSP.UID) + "---");
+        OkHttpHelper.getInstance().post(SplashActivity.this, NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(Response response) {
+            }
+
+            @Override
+            public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
+
+                SPTool.addSessionMap(AppSP.USER_NAME, resultBean.getName());
+                SPTool.addSessionMap(AppSP.USER_ICON, resultBean.getAvatar());
+                SPTool.addSessionMap(AppSP.UID, SPTool.getSessionValue(AppSP.UID));
+
+
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
     }
 
     @PermissionGrant(AppSP.PMS_LOCATION)
