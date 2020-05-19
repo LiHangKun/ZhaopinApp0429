@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -91,6 +92,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private TextView jueSe;
     private String recruiter = "0";
     private TextView userPhone;
+    private String eventUid = "";
 
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
@@ -100,11 +102,30 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             case 2:
                 //更新个人中心
                 smartRefreshLayout.autoRefresh();
-                Log.e(TAG, "getEventmessage: 个人中心收到消息 保存数据  http" + SPTool.getSessionValue(AppSP.UID) + "----");
+                eventUid = event.getKeyWord1();
+                Log.e(TAG, "getEventmessage: 个人中心收到消息 保存数据  http" + SPTool.getSessionValue(AppSP.UID) + "---eventUid" + event.getKeyWord1());
                 break;
         }
     }
 
+    private boolean isFirst = true;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+                        getQiuZhiMyInfo();
+                    }
+
+                }
+            }, 500);
+        }
+
+    }
 
     @Nullable
     @Override
@@ -163,7 +184,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
 
 
         if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-            getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+            getQiuZhiMyInfo();
         }
 
 
@@ -173,7 +194,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
               /*  if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
                 }*/
-                getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+                getQiuZhiMyInfo();
                 Log.e(TAG, "onRefresh: http  执行下拉刷新方法");
             }
         });
@@ -184,11 +205,11 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     }
 
     //求职者个人信息
-    private void getQiuZhiMyInfo(String mid) {
+    private void getQiuZhiMyInfo() {
         Map<String, String> params = new HashMap<>();
-        params.put("mid", mid);
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("hr", "0");
-        Log.e(TAG, "getQiuZhiMyInfo: http 个人中心请求");
+        Log.e(TAG, "getQiuZhiMyInfo: http getEventmessage 个人中心请求" + SPTool.getSessionValue(AppSP.UID) + "---");
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.qiuZhiMyInfo, params, new BaseCallback<QiuZhiZheMyInfoBean>() {
             @Override
             public void onFailure(Request request, Exception e) {

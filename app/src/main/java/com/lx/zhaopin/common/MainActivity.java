@@ -44,6 +44,10 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
     //记录用户首次点击返回键的时间
     private long firstTime = 0;
+    private String eventUid = "";
+    private String eventUserHead = "";
+    private String eventNickName = "";
+    private String eventRongToken = "";
 
     /**
      * 第一种解决办法 通过监听keyUp
@@ -86,9 +90,13 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         int messageType = event.getMessageType();
         switch (messageType) {
             case 2:
-                //setUserRongInfoMethod();
-                setUserType();
-                Log.i(TAG, "getEventmessage:用户  重新链接融云,和更新个人中心");
+                eventUid = event.getKeyWord1();
+                eventNickName = event.getKeyWord2();
+                eventUserHead = event.getKeyWord3();
+                eventRongToken = event.getKeyWord4();
+                setUserType(eventUid);
+                Log.i(TAG, "getEventmessage:用户  重新链接融云,和更新个人中心" + eventUid + "哈哈" + eventNickName + "哈哈" + eventUserHead + "哈哈" + eventRongToken);
+                setUserRongInfoMethod(eventRongToken);
                 break;
         }
     }
@@ -100,12 +108,12 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         }
 
 
-        setUserType();
+        setUserType(eventUid);
 
 
     }
 
-    private void setUserType() {
+    private void setUserType(String eventUid) {
         setViews();
         setListeners();
         fragments = new ArrayList<>();
@@ -122,15 +130,14 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             fragments.add(new HRHome3Fragment());
         }
 
-        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
-            setUserRongInfoMethod();
+        if (!TextUtils.isEmpty(eventUid)) {
+            setUserRongInfoMethod(eventRongToken);
         }
-
 
 
         //adapter = new MyPagerAdapter(getSupportFragmentManager());
 
-        FragmentDreamAdapter fragmentDreamAdapter = new FragmentDreamAdapter(getSupportFragmentManager(),fragments);
+        FragmentDreamAdapter fragmentDreamAdapter = new FragmentDreamAdapter(getSupportFragmentManager(), fragments);
 
         viewPager.setAdapter(fragmentDreamAdapter);
 
@@ -138,8 +145,9 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         viewPager.setOffscreenPageLimit(fragments.size());
     }
 
-    private void setUserRongInfoMethod() {
-        initC();
+    private void setUserRongInfoMethod(String eventRongToken) {
+        Log.i(TAG, "setUserRongInfoMethod: getEventmessage 这个方法执行");
+        initC(eventRongToken);
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
             @Override
@@ -151,21 +159,21 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         }, true);
         RongIM.setUserInfoProvider(this, true);
 
-        final String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
+       /* final String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
         final String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
-        final String uid = SPTool.getSessionValue(AppSP.UID);
+        final String uid = SPTool.getSessionValue(AppSP.UID);*/
+
+        Log.i(TAG, "setUserRongInfoMethod: getEventmessage" + eventNickName + "---" + eventUserHead + "--" + eventUid);
 
 
-       /* final String nickName = "崔文乐";
-        final String userHead = "https://himg2.huanqiucdn.cn/attachment2010/2020/0507/20200507011017575.jpg";
-        final String uid = "123";*/
 
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(uid, nickName, Uri.parse(userHead)));
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(eventUid, eventNickName, Uri.parse(eventUserHead)));
     }
 
 
-    private void initC() {
-        RongIM.connect(SPTool.getSessionValue(AppSP.USER_RongToken), new RongIMClient.ConnectCallback() {
+    private void initC(String eventRongToken) {
+        Log.i(TAG, "initC: getEventmessage" + eventRongToken + "---");
+        RongIM.connect(eventRongToken, new RongIMClient.ConnectCallback() {
 
             /**
              * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
@@ -173,7 +181,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
              */
             @Override
             public void onTokenIncorrect() {
-                Log.e("RongIM", "onTokenIncorrect");
+                Log.e("RongIM", "getEventmessage onTokenIncorrect");
             }
 
             /**
@@ -182,7 +190,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
              */
             @Override
             public void onSuccess(String userid) {
-                Log.e("RongIM", "onSuccess" + userid);
+                Log.e("RongIM", "getEventmessage onSuccess" + userid);
                 //SharePrefUtil.saveString(MainActivity.this, AppConsts.RONGID, userid);
 
 
@@ -194,7 +202,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
              */
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.e("RongIM", "onError" + errorCode);
+                Log.e("RongIM", "getEventmessage onError" + errorCode);
                 if (errorCode == RongIMClient.ErrorCode.RC_DISCONN_KICK) {
 
                 }

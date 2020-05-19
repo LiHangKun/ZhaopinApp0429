@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,11 +101,19 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(fragments.size());
 
-        getUnMessageNumber();
-
 
         return view;
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                getUnMessageNumber();
+            }
+        }
     }
 
     //newMessageCount

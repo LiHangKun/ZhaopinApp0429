@@ -173,7 +173,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
                 String name = resultBean.getName();
                 String avatar = resultBean.getAvatar();
                 String userPhone = resultBean.getMobile();
-                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                EventBus.getDefault().post(new MessageEvent(2, mid, name, avatar, RongToken, null, null));
                 //TODO 保存的数据
                 SPTool.addSessionMap(AppSP.UID, mid);
                 Log.e(TAG, "onSuccess: http 保存数据2" + SPTool.getSessionValue(AppSP.UID) + "-----");

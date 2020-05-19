@@ -186,7 +186,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                 String name = resultBean.getName();
                 String avatar = resultBean.getAvatar();
                 String userPhone = resultBean.getMobile();
-                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                EventBus.getDefault().post(new MessageEvent(2, mid, name, avatar, RongToken, null, null));
                 //TODO 保存的数据
                 SPTool.addSessionMap(AppSP.UID, mid);
                 SPTool.getSessionValue(AppSP.UID);
