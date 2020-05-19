@@ -94,8 +94,8 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                 eventNickName = event.getKeyWord2();
                 eventUserHead = event.getKeyWord3();
                 eventRongToken = event.getKeyWord4();
-                setUserType(eventUid);
                 Log.i(TAG, "getEventmessage:用户  重新链接融云,和更新个人中心" + eventUid + "哈哈" + eventNickName + "哈哈" + eventUserHead + "哈哈" + eventRongToken);
+                setUserType(eventUid);
                 setUserRongInfoMethod(eventRongToken);
                 break;
         }
@@ -132,6 +132,10 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
         if (!TextUtils.isEmpty(eventUid)) {
             setUserRongInfoMethod(eventRongToken);
+        }else {
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_RongToken))){
+                setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_RongToken));
+            }
         }
 
 
@@ -146,7 +150,12 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     }
 
     private void setUserRongInfoMethod(String eventRongToken) {
-        Log.i(TAG, "setUserRongInfoMethod: getEventmessage 这个方法执行");
+        eventNickName = SPTool.getSessionValue(AppSP.USER_NAME);
+        eventUserHead = SPTool.getSessionValue(AppSP.USER_ICON);
+        eventUid = SPTool.getSessionValue(AppSP.UID);
+
+        Log.i(TAG, "setUserRongInfoMethod: 融云 getEventmessage" + eventNickName + "---" + eventUserHead + "--" + eventUid);
+        Log.i(TAG, "setUserRongInfoMethod: 融云 getEventmessage 这个方法执行" + eventRongToken + "----");
         initC(eventRongToken);
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
@@ -159,11 +168,6 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         }, true);
         RongIM.setUserInfoProvider(this, true);
 
-       /* final String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
-        final String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
-        final String uid = SPTool.getSessionValue(AppSP.UID);*/
-
-        Log.i(TAG, "setUserRongInfoMethod: getEventmessage" + eventNickName + "---" + eventUserHead + "--" + eventUid);
 
 
 
@@ -181,7 +185,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
              */
             @Override
             public void onTokenIncorrect() {
-                Log.e("RongIM", "getEventmessage onTokenIncorrect");
+                Log.e("RongIM ", " 融云链接 getEventmessage onTokenIncorrect");
             }
 
             /**
@@ -190,7 +194,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
              */
             @Override
             public void onSuccess(String userid) {
-                Log.e("RongIM", "getEventmessage onSuccess" + userid);
+                Log.e("RongIM", " 融云链接  getEventmessage onSuccess" + userid);
                 //SharePrefUtil.saveString(MainActivity.this, AppConsts.RONGID, userid);
 
 
@@ -202,7 +206,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
              */
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.e("RongIM", "getEventmessage onError" + errorCode);
+                Log.e("RongIM", " 融云链接  getEventmessage onError" + errorCode);
                 if (errorCode == RongIMClient.ErrorCode.RC_DISCONN_KICK) {
 
                 }

@@ -17,6 +17,7 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -61,6 +62,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -135,6 +138,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     private String qiYeID;
     private String pid;
     private String collected;
+    private String hrid;
 
 
     private void getLastIndexForLimit(TextView tv, int maxLine, String content) {
@@ -207,6 +211,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
 
+                hrid = resultBean.getHRID();
                 //是否收藏  image1
                 collected = resultBean.getCollected();
                 //1表示是，0表示否
@@ -375,6 +380,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     预约面试 dibuView4
     */
 
+    private static final String TAG = "GangWeiDetailActivity";
     @OnClick({R.id.back, R.id.image1, R.id.image2, R.id.image3, R.id.dibuView1, R.id.liJiGouTongTV, R.id.shenQingZhiwei, R.id.dibuView2, R.id.dibuView3, R.id.dibuView4, R.id.daoHang, R.id.llViewGongSi, R.id.tv7})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -452,7 +458,27 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.dibuView3:
                 //申请职位
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    ToastFactory.getToast(mContext, "申请职位哈哈").show();
+
+                    String userId = SPTool.getSessionValue(AppSP.UID);
+                    String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
+                    String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
+
+                    Log.i(TAG, "onClick: " + userId + "<>" + nickName + "<>" + userHead);
+                    if (null != userId && null != nickName && null != userHead)
+                        RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    //对方的ID 姓名
+                    RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
+
+
+                    /*Bundle bundle = new Bundle();
+                    bundle.putString("Info1", mData.get(i).getUser_Id_ext().getHead_Url());
+                    bundle.putString("Info2", mData.get(i).getUser_Id_ext().getReal_Name());
+                    bundle.putString("Info3", mData.get(i).getUser_Id_ext().getType_Code());
+                    bundle.putString("Info4", mData.get(i).getUser_Id_ext().getUser_Name());
+                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid + "", "张三的", bundle);*/
+
+
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -531,7 +557,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 }
             });
 
-            getDataList(popupWindow1,recyclerViewShopLei);
+            getDataList(popupWindow1, recyclerViewShopLei);
 
             // 设置背景图片， 必须设置，不然动画没作用
             popupWindow1.setBackgroundDrawable(new BitmapDrawable());
@@ -601,7 +627,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                             return;
                         } else {
                             //预约面试 YuYueMianShi
-                            YuYueMianShiMe(popupWindow1,id);
+                            YuYueMianShiMe(popupWindow1, id);
 
                         }
 
@@ -626,7 +652,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.YuYueMianShi, params, new BaseCallback<PhoneStateBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
-                EventBus.getDefault().post(new MessageEvent(2, null,null,null,null,null,null));
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -637,7 +663,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onResponse(Response response) {
-                EventBus.getDefault().post(new MessageEvent(2, null,null,null,null,null,null));
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -648,7 +674,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                EventBus.getDefault().post(new MessageEvent(2, null,null,null,null,null,null));
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -660,7 +686,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onError(Response response, int code, Exception e) {
-                EventBus.getDefault().post(new MessageEvent(2, null,null,null,null,null,null));
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
