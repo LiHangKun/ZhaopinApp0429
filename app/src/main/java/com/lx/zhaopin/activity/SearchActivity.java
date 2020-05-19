@@ -45,6 +45,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private void init() {
         clearEditText = findViewById(R.id.clearEditText);
         searchTv = findViewById(R.id.searchTv);
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
         searchTv.setOnClickListener(this);
         flowLiner1 = findViewById(R.id.flowLiner1);
@@ -76,7 +83,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             radioButton.setText(str);
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(13);
-            radioButton.setPadding(ViewUtil.dp2px(SearchActivity.this, 18),ViewUtil.dp2px(SearchActivity.this, 6) , ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6));
+            radioButton.setPadding(ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6), ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6));
             radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
             //radioButton.setBackgroundResource(R.drawable.search_selector);
             radioButton.setBackgroundResource(R.drawable.button_shape03);

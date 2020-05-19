@@ -230,7 +230,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 if (resultBean.getExist().equals("0")) {
-                    ToastFactory.getToast(mContext, "手机号不已存在").show();
+                    ToastFactory.getToast(mContext, "手机号不存在").show();
                     return;
                 } else {
                     sendPhoneCode("2", mobile);

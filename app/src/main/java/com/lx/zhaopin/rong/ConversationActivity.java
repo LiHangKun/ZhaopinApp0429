@@ -18,6 +18,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     private String param;
     private static final String TAG = "ConversationActivity";
+    private String userId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,13 +39,18 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             param = uri.getQueryParameter("title");
             if (null != param) {
             }
-            String userId = uri.getQueryParameter("targetId");
+            userId = uri.getQueryParameter("targetId");
 
             Log.i(TAG, "initView: " + param + "-----" + userId);
         }
+
+
+
+
         titleName.setText(param);
 
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void initPhotoError() {

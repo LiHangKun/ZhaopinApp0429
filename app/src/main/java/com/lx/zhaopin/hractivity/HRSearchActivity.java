@@ -46,6 +46,13 @@ public class HRSearchActivity extends BaseActivity implements View.OnClickListen
         clearEditText = findViewById(R.id.clearEditText);
         searchTv = findViewById(R.id.searchTv);
 
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         searchTv.setOnClickListener(this);
         flowLiner1 = findViewById(R.id.flowLiner1);
         delImage1 = findViewById(R.id.delImage1);

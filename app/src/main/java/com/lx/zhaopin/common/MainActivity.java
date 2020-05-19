@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
             @Override
             public UserInfo getUserInfo(String userId) {
-                //MainActivity.this.getUserInfo(userId);
+                MainActivity.this.getUserInfo(userId);
                 return null;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
             }
 
@@ -173,6 +173,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
 
         RongIM.getInstance().refreshUserInfoCache(new UserInfo(eventUid, eventNickName, Uri.parse(eventUserHead)));
+        //RongIM.getInstance().refreshUserInfoCache(new UserInfo("1000333", "电脑", Uri.parse(eventUserHead)));
     }
 
 
