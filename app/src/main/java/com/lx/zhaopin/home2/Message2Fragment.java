@@ -103,15 +103,22 @@ public class Message2Fragment extends Fragment {
         });
 
 
-        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
-            getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
-        }
+
 
 
         return view;
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+                getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+            }
+        }
+    }
 
     private void getDataList(String pageNo, String pageSize) {
         Map<String, String> params = new HashMap<>();

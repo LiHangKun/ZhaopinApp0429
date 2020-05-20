@@ -604,6 +604,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /><!-- 消息详情 -->
 
+        <!--融云部分的功能融云部分的功能融云部分的功能融云部分的功能融云部分的功能-->
 
         <!--解决-->
         <provider
@@ -631,6 +632,19 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name="com.lx.zhaopin.rong.SealNotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+
+
+        <!--融云部分的功能融云部分的功能融云部分的功能融云部分的功能融云部分的功能-->
 
 
         <!--以下是HR看到的界面-->

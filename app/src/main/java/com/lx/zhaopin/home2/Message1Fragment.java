@@ -54,7 +54,6 @@ public class Message1Fragment extends Fragment {
 
 
 
-
        /* ViewPager viewPager = view.findViewById(R.id.viewPager);
 
         fragments = new ArrayList<>();

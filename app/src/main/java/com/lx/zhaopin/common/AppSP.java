@@ -29,6 +29,7 @@ public class AppSP {
     public static final String JupshID = "jupshid";
     public static final String isLogin = "ISLOGIN";//用户是否登录
     public static final String UID = "uid";//用户UID
+    public static final String UID_DUAN = "UID_DUAN";//用户UID,短的
     public static final String USER_NAME = "U_NAME";//用户名称
     public static final String USER_ICON = "U_ICON";//用户头像
     public static final String USER_RongToken = "USER_RongToken";//融云Token

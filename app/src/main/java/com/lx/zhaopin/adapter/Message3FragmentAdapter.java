@@ -80,7 +80,7 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
                 break;
         }
 
-        String unread = mData.get(i).getUnread();
+        /*String unread = mData.get(i).getUnread();
         //1 是 0 否
         switch (unread) {
             case "1":
@@ -89,7 +89,7 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
             case "0":
                 viewHolder.unTV.setVisibility(View.VISIBLE);
                 break;
-        }
+        }*/
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override

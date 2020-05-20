@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     private String eventUserHead = "";
     private String eventNickName = "";
     private String eventRongToken = "";
+    private String duanUid;
 
     /**
      * 第一种解决办法 通过监听keyUp
@@ -94,9 +95,11 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                 eventNickName = event.getKeyWord2();
                 eventUserHead = event.getKeyWord3();
                 eventRongToken = event.getKeyWord4();
-                Log.i(TAG, "getEventmessage:用户  重新链接融云,和更新个人中心" + eventUid + "哈哈" + eventNickName + "哈哈" + eventUserHead + "哈哈" + eventRongToken);
-                setUserType(eventUid);
-                setUserRongInfoMethod(eventRongToken);
+                duanUid = event.getKeyWord5();
+                Log.i(TAG, "getEventmessage:用户  重新链接融云,和更新个人中心" + eventUid + "哈哈" + eventNickName + "哈哈" + eventUserHead + "哈哈" + eventRongToken + "短的" + duanUid);
+                //setUserType(eventUid);
+                setUserType(duanUid);
+                //setUserRongInfoMethod0(eventRongToken);
                 break;
         }
     }
@@ -108,7 +111,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         }
 
 
-        setUserType(eventUid);
+        setUserType(duanUid);
 
 
     }
@@ -131,9 +134,9 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         }
 
         if (!TextUtils.isEmpty(eventUid)) {
-            setUserRongInfoMethod(eventRongToken);
-        }else {
-            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_RongToken))){
+            setUserRongInfoMethod0(eventRongToken);
+        } else {
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_RongToken))) {
                 setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_RongToken));
             }
         }
@@ -149,13 +152,37 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         viewPager.setOffscreenPageLimit(fragments.size());
     }
 
+    private void setUserRongInfoMethod0(String eventRongToken) {
+
+
+        initC(eventRongToken);
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+
+            @Override
+            public UserInfo getUserInfo(String userId) {
+                MainActivity.this.getUserInfo(userId);
+                return null;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
+            }
+
+        }, true);
+        RongIM.setUserInfoProvider(this, true);
+
+
+        //RongIM.getInstance().refreshUserInfoCache(new UserInfo("e6151ce13783416bad54fffc10b19c0d", eventNickName, Uri.parse(eventUserHead)));
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(duanUid, eventNickName, Uri.parse(eventUserHead)));
+        Log.i(TAG, "setUserRongInfoMethod: 第一次登录 融云 getEventmessage00000" + eventNickName + "---" + eventUserHead + "--" + eventUid + "短的" + duanUid + "链接融云" + eventRongToken);
+
+    }
+
+
     private void setUserRongInfoMethod(String eventRongToken) {
 
         eventNickName = SPTool.getSessionValue(AppSP.USER_NAME);
         eventUserHead = SPTool.getSessionValue(AppSP.USER_ICON);
         eventUid = SPTool.getSessionValue(AppSP.UID);
+        duanUid = SPTool.getSessionValue(AppSP.UID_DUAN);
 
-        Log.i(TAG, "setUserRongInfoMethod: 融云 getEventmessage" + eventNickName + "---" + eventUserHead + "--" + eventUid);
+        Log.i(TAG, "setUserRongInfoMethod: 融云 getEventmessage" + eventNickName + "---" + eventUserHead + "--" + eventUid + "短的" + duanUid);
         Log.i(TAG, "setUserRongInfoMethod: 融云 getEventmessage 这个方法执行" + eventRongToken + "----");
         initC(eventRongToken);
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
@@ -170,9 +197,10 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         RongIM.setUserInfoProvider(this, true);
 
 
+        //RongIM.getInstance().refreshUserInfoCache(new UserInfo(eventUid, eventNickName, Uri.parse(eventUserHead)));
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(duanUid, eventNickName, Uri.parse(eventUserHead)));
 
 
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(eventUid, eventNickName, Uri.parse(eventUserHead)));
         //RongIM.getInstance().refreshUserInfoCache(new UserInfo("1000333", "电脑", Uri.parse(eventUserHead)));
     }
 

@@ -475,6 +475,9 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                     //RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
                     RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
 
+
+
+                    //RongIM.getInstance().startPrivateChat(getActivity(), "9527", title);
                     /*Bundle bundle = new Bundle();
                     bundle.putString("Info1", mData.get(i).getUser_Id_ext().getHead_Url());
                     bundle.putString("Info2", mData.get(i).getUser_Id_ext().getReal_Name());

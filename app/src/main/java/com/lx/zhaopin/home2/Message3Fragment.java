@@ -187,14 +187,25 @@ public class Message3Fragment extends Fragment {
             }
         });
 
-        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+       /* if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
             getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
-        }
+        }*/
 
 
 
         return view;
 
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+                getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+            }
+        }
     }
 
 
