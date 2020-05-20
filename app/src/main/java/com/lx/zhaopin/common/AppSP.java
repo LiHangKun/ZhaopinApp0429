@@ -33,6 +33,7 @@ public class AppSP {
     public static final String USER_NAME = "U_NAME";//用户名称
     public static final String USER_ICON = "U_ICON";//用户头像
     public static final String USER_RongToken = "USER_RongToken";//融云Token
+    public static final String USER_HR_RongToken = "USER_HR_RongToken";//HR融云Token
     public static final String USER_PHONE = "user_phone";//用户电话号码
     public static final String isFirstIndex = "ISFIRSTINDEX";  //是否是第一次进入
     public static final String xieyi = "xieyi";//启动的协议

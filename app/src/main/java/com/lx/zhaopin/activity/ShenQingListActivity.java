@@ -24,6 +24,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -182,6 +183,7 @@ public class ShenQingListActivity extends BaseActivity {
 
     private void chuliGouTongShenQingMe(String applyId, final String status) {
         Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("applyId", applyId);
         params.put("status", status);
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.chuliGouTongShenQing, params, new BaseCallback<PhoneStateBean>() {
@@ -201,6 +203,8 @@ public class ShenQingListActivity extends BaseActivity {
                 gouTongCaoZuoBean.setChatApplyStatus(status);
                 EventBus.getDefault().post(new ShuaXinBean(gouTongCaoZuoBean));
 
+                getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+
             }
 
             @Override
@@ -213,6 +217,7 @@ public class ShenQingListActivity extends BaseActivity {
 
     private void getDataList(String pageNo, String pageSize) {
         Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.shenQingJiLu, params, new SpotsCallBack<ShenQingListBean>(mContext) {

@@ -84,7 +84,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
 
         viewHolder.tv1.setText(mData.get(po).getPosition().getName());
         viewHolder.tv2.setText(mData.get(po).getPosition().getMinSalary() + "K - " + mData.get(po).getPosition().getMaxSalary() + "K");
-        viewHolder.tv3.setText(mData.get(po).getCompany().getCity().getName());
+        viewHolder.tv3.setText(mData.get(po).getPosition().getCity().getName() + mData.get(po).getPosition().getDistrict().getName());
         viewHolder.tv4.setText(mData.get(po).getPosition().getExperienceYear().getName() + "年");
         viewHolder.tv5.setText(mData.get(po).getPosition().getEducation().getName());
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
@@ -181,7 +181,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
         TextView caoZuoViewTv2;
 
         @BindView(R.id.caoZuoView)
-        TextView caoZuoView;
+        LinearLayout caoZuoView;
 
         @BindView(R.id.flowLiner)
         FlowLiner flowLiner;

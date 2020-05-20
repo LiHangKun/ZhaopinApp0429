@@ -134,9 +134,9 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                messageNumberTv1.setText(resultBean.getChatApplyCount());
+                /*messageNumberTv1.setText(resultBean.getChatApplyCount());
                 messageNumberTv2.setText(resultBean.getJobFeedbackCount());
-                messageNumberTv3.setText(resultBean.getSystemMessageCount());
+                messageNumberTv3.setText(resultBean.getSystemMessageCount());*/
 
             }
 

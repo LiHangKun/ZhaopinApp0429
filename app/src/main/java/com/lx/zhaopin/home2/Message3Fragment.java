@@ -13,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
+import com.lx.zhaopin.activity.ShenQingListActivity;
 import com.lx.zhaopin.activity.XiaoXiDetailActivity;
 import com.lx.zhaopin.adapter.Message3FragmentAdapter;
+import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
 import com.lx.zhaopin.bean.SystemMessageListBean;
 import com.lx.zhaopin.common.AppSP;
@@ -48,7 +51,7 @@ import java.util.Map;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class Message3Fragment extends Fragment {
+public class Message3Fragment extends Fragment implements View.OnClickListener {
 
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
@@ -61,12 +64,58 @@ public class Message3Fragment extends Fragment {
     private Message3FragmentAdapter message3FragmentAdapter;
     private int positionSelect;
     private Intent intent;
+    private LinearLayout llView;
+    private TextView tv1;
+    private TextView tv2;
+    private TextView tv3;
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
     public void getEventmessage(ShuaXinBean event) {
         GouTongCaoZuoBean gouTongCaoZuoBean = event.getGouTongCaoZuoBean();
         allList.get(positionSelect).setUnread(gouTongCaoZuoBean.getUnread());
         message3FragmentAdapter.notifyDataSetChanged();
+    }
+
+
+    //newMessageCount
+    private void getUnMessageNumber() {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("hr", "0");
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.newMessageCount, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                /*messageNumberTv1.setText(resultBean.getChatApplyCount());
+                messageNumberTv2.setText(resultBean.getJobFeedbackCount());
+                messageNumberTv3.setText(resultBean.getSystemMessageCount());*/
+
+                if (resultBean.getChatApplyCount().equals("0")) {
+                    tv3.setVisibility(View.INVISIBLE);
+                    llView.setVisibility(View.GONE);
+                } else {
+                    tv3.setText(resultBean.getChatApplyCount());
+                    tv2.setText(resultBean.getChatApplyText());
+                    llView.setVisibility(View.VISIBLE);
+                }
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 
@@ -78,7 +127,13 @@ public class Message3Fragment extends Fragment {
         smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
         noDataLinView = view.findViewById(R.id.noDataLinView);
+        llView = view.findViewById(R.id.llView);
+        tv1 = view.findViewById(R.id.tv1);
+        tv2 = view.findViewById(R.id.tv2);
+        tv3 = view.findViewById(R.id.tv3);
 
+
+        llView.setOnClickListener(this);
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
@@ -192,7 +247,6 @@ public class Message3Fragment extends Fragment {
         }*/
 
 
-
         return view;
 
     }
@@ -201,9 +255,13 @@ public class Message3Fragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
-            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+        if (isVisibleToUser) {
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                 getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+            }
+
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                getUnMessageNumber();
             }
         }
     }
@@ -271,5 +329,14 @@ public class Message3Fragment extends Fragment {
                 smartRefreshLayout.finishRefresh();
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.llView:
+                startActivity(new Intent(getActivity(), ShenQingListActivity.class));
+                break;
+        }
     }
 }

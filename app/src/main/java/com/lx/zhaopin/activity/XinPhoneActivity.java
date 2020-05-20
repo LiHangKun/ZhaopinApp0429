@@ -143,7 +143,7 @@ public class XinPhoneActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
-                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 MyCountDownTimer timer = new MyCountDownTimer(mContext, faCode, 60 * 1000, 1000);
                 timer.start();
             }

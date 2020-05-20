@@ -275,7 +275,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_QuXiao, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
 
                 getMianShiDetail(interviewId2);
 

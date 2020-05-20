@@ -21,6 +21,15 @@ public class PhoneStateBean extends CommonBean {
     private String chatApplyCount;
     private String name;
     private String avatar;
+    private String chatApplyText;
+
+    public String getChatApplyText() {
+        return chatApplyText;
+    }
+
+    public void setChatApplyText(String chatApplyText) {
+        this.chatApplyText = chatApplyText;
+    }
 
     public String getName() {
         return name;

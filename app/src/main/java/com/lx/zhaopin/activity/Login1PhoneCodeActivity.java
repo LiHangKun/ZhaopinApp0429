@@ -187,8 +187,10 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                 String avatar = resultBean.getAvatar();
                 String userPhone = resultBean.getMobile();
                 String duanUid = resultBean.getId();
+                String HR_RongToken = resultBean.getrRongToken();
                 EventBus.getDefault().post(new MessageEvent(2, mid, name, avatar, RongToken, duanUid, null));
                 //TODO 保存的数据
+                SPTool.addSessionMap(AppSP.USER_HR_RongToken, HR_RongToken);
                 SPTool.addSessionMap(AppSP.UID, mid);
                 SPTool.getSessionValue(AppSP.UID);
                 Log.e(TAG, "onSuccess: http 保存数据1" + SPTool.getSessionValue(AppSP.UID) + "-----");
@@ -257,7 +259,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
-                ToastFactory.getToast(mContext, resultBean.getAuthCode()).show();
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 MyCountDownTimer timer = new MyCountDownTimer(mContext, faCode, 60 * 1000, 1000);
                 timer.start();
             }

@@ -64,7 +64,8 @@
                             android:paddingLeft="@dimen/dp_6"
                             android:paddingRight="@dimen/dp_6"
                             android:text="0"
-                            android:textColor="#fff" />
+                            android:textColor="#fff"
+                            android:visibility="invisible" />
 
                     </LinearLayout>
 
@@ -117,7 +118,8 @@
                             android:paddingLeft="@dimen/dp_6"
                             android:paddingRight="@dimen/dp_6"
                             android:text="0"
-                            android:textColor="#fff" />
+                            android:textColor="#fff"
+                            android:visibility="invisible" />
 
                     </LinearLayout>
 
@@ -170,7 +172,8 @@
                             android:paddingLeft="@dimen/dp_6"
                             android:paddingRight="@dimen/dp_6"
                             android:text="0"
-                            android:textColor="#fff" />
+                            android:textColor="#fff"
+                            android:visibility="invisible" />
 
                     </LinearLayout>
 

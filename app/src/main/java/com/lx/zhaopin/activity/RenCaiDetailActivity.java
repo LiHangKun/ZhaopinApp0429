@@ -1,13 +1,21 @@
 package com.lx.zhaopin.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +26,9 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.RenCaiDetail1Adapter;
 import com.lx.zhaopin.adapter.RenCaiDetail2Adapter;
 import com.lx.zhaopin.adapter.RenCaiDetail3Adapter;
+import com.lx.zhaopin.adapter.ZhiWeiYaoYueInAdapter;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.GongSiZhiWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.RenCaiDetailBean;
 import com.lx.zhaopin.common.AppSP;
@@ -41,6 +51,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -97,6 +110,11 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
     private List<String> flowData = new ArrayList<>();
 
     private String rid;
+    private String renIcon;
+    private String renName;
+    private String renID;
+    private String renOpenChat;
+    private String yaoYueGangWeiId;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -123,6 +141,11 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
                         .error(R.mipmap.imageerror)).load(resultBean.getAvatar()).into(roundedImageView);
 
+
+                renIcon = resultBean.getAvatar();
+                renName = resultBean.getName();
+                renID = resultBean.getId();
+                renOpenChat = resultBean.getOpenChat();
 
                 String collected = resultBean.getCollected();
                 switch (collected) {
@@ -263,6 +286,7 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    private static final String TAG = "RenCaiDetailActivity";
 
     @OnClick({R.id.back, R.id.image1, R.id.image2, R.id.image3, R.id.tvButton1, R.id.tvButton2})
     public void onClick(View view) {
@@ -300,6 +324,29 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.tvButton1:
                 //立即沟通
                 ToastFactory.getToast(mContext, "立即沟通" + rid).show();
+
+                //renOpenChat
+                switch (renOpenChat) {
+                    case "0":
+                        //不可以聊天
+                        AllGangwei();
+                        lightoff();
+                        break;
+                    case "1":
+                        //可以聊天
+                        String userId = SPTool.getSessionValue(AppSP.UID);
+                        String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
+                        String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
+
+                        Log.i(TAG, "onClick: " + userId + "<>" + nickName + "<>" + userHead);
+                        if (null != userId && null != nickName && null != userHead)
+                            RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
+                        RongIM.getInstance().setMessageAttachedUserInfo(true);
+                        //对方的ID 姓名
+                        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, renID, renName);
+                        break;
+                }
+
                 break;
             case R.id.tvButton2:
                 //职位邀约
@@ -311,6 +358,144 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
         }
     }
+
+    private PopupWindow popupWindow1;
+    private View popupView1;
+    private TranslateAnimation animation1;
+    /*在子日记的pop上 点击发布 在次弹出发布页面*/
+
+    /**
+     * 设置手机屏幕亮度变暗
+     */
+    private void lightoff() {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.3f;
+        getWindow().setAttributes(lp);
+    }
+
+    /**
+     * 设置手机屏幕亮度显示正常
+     */
+    private void lighton() {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 1f;
+        getWindow().setAttributes(lp);
+    }
+
+    private void AllGangwei() {
+        if (popupWindow1 == null) {
+            popupView1 = View.inflate(this, R.layout.pop_layout_allgangwei_list, null);
+            RecyclerView recyclerView = popupView1.findViewById(R.id.recyclerView);
+            popupWindow1 = new PopupWindow(popupView1, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            popupWindow1.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    lighton();
+                }
+            });
+
+
+            getGongSiAllZhiWei(recyclerView);
+
+
+            // 设置背景图片， 必须设置，不然动画没作用
+            popupWindow1.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow1.setFocusable(true);
+            // 设置点击popupwindow外屏幕其它地方消失
+            popupWindow1.setOutsideTouchable(true);
+            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
+            animation1 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
+            animation1.setInterpolator(new AccelerateInterpolator());
+            animation1.setDuration(200);
+            popupView1.findViewById(R.id.cancle).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow1.dismiss();
+                    lighton();
+                }
+            });
+        }
+
+        // 在点击之后设置popupwindow的销毁
+        if (popupWindow1.isShowing()) {
+            popupWindow1.dismiss();
+            lighton();
+        }
+
+        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+        popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popupView1.startAnimation(animation1);
+
+    }
+
+    private void getGongSiAllZhiWei(final RecyclerView recyclerView) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.gongSiAllZhiWei, params, new BaseCallback<GongSiZhiWeiBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GongSiZhiWeiBean resultBean) {
+
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                ZhiWeiYaoYueInAdapter zhiWeiYaoYueInAdapter = new ZhiWeiYaoYueInAdapter(mContext, resultBean.getDataList());
+                recyclerView.setAdapter(zhiWeiYaoYueInAdapter);
+                zhiWeiYaoYueInAdapter.setOnItemClickListener(new ZhiWeiYaoYueInAdapter.OnItemClickListener() {
+                    @Override
+                    public void OnItemClickListener(String id, String name) {
+                        //tv1.setText(name);
+                        yaoYueGangWeiId = id;
+
+                        HRShenQingChat(rid, yaoYueGangWeiId);
+
+
+                        popupWindow1.dismiss();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+
+    }
+
+    private void HRShenQingChat(String rid, String pid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("rid", rid);
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_ShenQingChat, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+    }
+
 
     private void HR_PingBi_renCaiDetailMet(final String rid) {
         Map<String, String> params = new HashMap<>();
