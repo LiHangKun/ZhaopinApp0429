@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.awen.photo.FrescoImageLoader;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.rong.CustomeMatchMessage;
+import com.lx.zhaopin.rong.MyExtensionModule;
 import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.RxToast;
 import com.lx.zhaopin.utils.SPTool;
@@ -21,7 +23,12 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
+import java.util.List;
+
 import cn.jpush.android.api.JPushInterface;
+import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.IExtensionModule;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 
 public class MyApplication extends Application {
@@ -63,7 +70,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        RongIM.init(this, AppSP.RongToken);//融云
+
         RxToast.setContext(this);
         mContext = this;
         SPTool.init(mContext, AppUtils.getAppName(this));
@@ -78,6 +85,19 @@ public class MyApplication extends Application {
         String registrationID = JPushInterface.getRegistrationID(this);
         SPTool.addSessionMap(AppSP.JupshID, registrationID);
         Log.i(TAG, "onCreate:极光信息 " + registrationID);
+
+
+
+        //融云部分
+
+        RongIM.init(this, AppSP.RongToken);//融云
+        RongIM.registerMessageType(CustomeMatchMessage.class);//注册自定义消息
+        //RongIM.registerMessageTemplate(new CustomeMatchMessageItemProvider());
+
+
+        setInputProvider();
+
+        //融云部分
 
 
         /**
@@ -102,6 +122,24 @@ public class MyApplication extends Application {
 
 
     }
+
+    private void setInputProvider() {
+        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
+        IExtensionModule defaultModule = null;
+        if (moduleList != null) {
+            for (IExtensionModule module : moduleList) {
+                if (module instanceof DefaultExtensionModule) {
+                    defaultModule = module;
+                    break;
+                }
+            }
+            if (defaultModule != null) {
+                RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
+                RongExtensionManager.getInstance().registerExtensionModule(new MyExtensionModule());
+            }
+        }
+    }
+
 
 
 }

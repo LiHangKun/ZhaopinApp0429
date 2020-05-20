@@ -124,6 +124,7 @@ dependencies {
     implementation project(':CallLib')
     implementation project(':IMKit')
     implementation project(':IMLib')
+    implementation project(':Sight')
 
     //融云部分
 

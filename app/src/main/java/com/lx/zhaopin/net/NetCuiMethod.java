@@ -85,6 +85,7 @@ public class NetCuiMethod {
     public static final String memberLogout = "member/logout";//退出登录
     public static final String zhuXiaoUID = "member/account/delete";//注销账户
     public static final String versionUpdate = "member/version/update";//更新
+    public static final String getRongUserInfo = "member/rongUserInfo";//获取容云用户信息
 
 
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
