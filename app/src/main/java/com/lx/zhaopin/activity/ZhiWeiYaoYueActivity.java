@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,7 +38,6 @@ import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.GetGouTongZhiWeiBean;
 import com.lx.zhaopin.bean.GongSiZhiWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
-import com.lx.zhaopin.bean.RenCaiDetailBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
@@ -83,6 +83,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
     private String lng;
     private String lat;
     private String rid;
+    private static final String TAG = "ZhiWeiYaoYueActivity";
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -92,11 +93,28 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         init();
     }
 
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 1:
+                time1 = event.getKeyWord1();
+                pvNoLinkOptions.show();
+                break;
+            case 9:
+                rid = SPTool.getSessionValue("rid");
+                Log.i(TAG, "getEventmessage: 取到的信息" + rid);
+                setUserInfo(rid);
+                break;
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 
     private void init() {
         ImageView finishBack = findViewById(R.id.finishBack);
@@ -119,8 +137,10 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         }
 
 
-        rid = getIntent().getStringExtra("rid");
-        RenCaiDetailBean renCaiDetailBean = (RenCaiDetailBean) getIntent().getSerializableExtra("renCaiDetailBean");
+        //rid = getIntent().getStringExtra("rid");
+        rid = SPTool.getSessionValue("rid");
+        Log.i(TAG, "getEventmessage: 取到的信息11>" + rid);
+        //RenCaiDetailBean renCaiDetailBean = (RenCaiDetailBean) getIntent().getSerializableExtra("renCaiDetailBean");
 
         relView1 = findViewById(R.id.relView1);
         relView2 = findViewById(R.id.relView2);
@@ -138,15 +158,46 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         tv3.setOnClickListener(this);
         okID.setOnClickListener(this);
 
-        tv0.setText(renCaiDetailBean.getName());
+
         tv2.setText(SPTool.getSessionValue(AppSP.USER_PHONE));
 
         //getGongSiInfo(tv3, rid);
+        setUserInfo(rid);
+
 
         getGongSiAllZhiWeiMid();
 
 
     }
+
+    private void setUserInfo(final String userId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("userId", userId);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.getRongUserInfo, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                tv0.setText(resultBean.getName());
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
 
     private void getGongSiAllZhiWeiMid() {
         Map<String, String> params = new HashMap<>();
@@ -165,8 +216,8 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Response response, GongSiZhiWeiBean resultBean) {
 
-                if (resultBean.getDataList() != null){
-                    if (resultBean.getDataList().size() != 0){
+                if (resultBean.getDataList() != null) {
+                    if (resultBean.getDataList().size() != 0) {
                         //String location = resultBean.getDataList().get(0).getLocation();
                         tv3.setText(resultBean.getDataList().get(0).getCompany().getLocation());
                         lat = resultBean.getDataList().get(0).getCompany().getLat();
@@ -281,18 +332,6 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         computer.add("周七");
         computer.add("哈哈");
         computer.add("嘻嘻");
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
-    public void getEventmessage(MessageEvent event) {
-        int messageType = event.getMessageType();
-        switch (messageType) {
-            case 1:
-                time1 = event.getKeyWord1();
-                pvNoLinkOptions.show();
-                break;
-        }
     }
 
 
@@ -421,7 +460,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                     return;
                 } else {
                     //发布邀约
-                    fabuYaoYueMe(rid, yaoYueGangWeiId, tv2.getText().toString().trim(), tv4.getText().toString().trim().replace("点",":").replace("分",""));
+                    fabuYaoYueMe(rid, yaoYueGangWeiId, tv2.getText().toString().trim(), tv4.getText().toString().trim().replace("点", ":").replace("分", ""));
                 }
                 break;
             case R.id.tv3:
@@ -445,7 +484,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
-                ToastFactory.getToast(mContext,resultBean.getResultNote()).show();
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

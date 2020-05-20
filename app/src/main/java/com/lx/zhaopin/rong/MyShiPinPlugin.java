@@ -7,12 +7,12 @@ import android.support.v4.app.Fragment;
 
 import com.lx.zhaopin.R;
 
+import io.rong.callkit.VideoPlugin;
 import io.rong.imkit.RongExtension;
-import io.rong.sight.SightPlugin;
 
 
 //视频聊天
-public class MyShiPinPlugin extends SightPlugin {
+public class MyShiPinPlugin extends VideoPlugin {
     @Override
     public Drawable obtainDrawable(Context context) {
         return context.getResources().getDrawable(R.drawable.xiaoxi_shipintonghua);

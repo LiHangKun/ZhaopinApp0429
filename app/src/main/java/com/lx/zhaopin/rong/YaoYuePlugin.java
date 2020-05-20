@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.utils.ToastFactory;
+import com.lx.zhaopin.activity.ZhiWeiYaoYueActivity;
 
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
@@ -27,8 +27,7 @@ public class YaoYuePlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        //GlobalBeans.getSelf().getEventCenter().sendType(EventCenter.EventType.EVT_SENDGIFT);
-        ToastFactory.getToast(fragment.getContext(),"邀约").show();
+        fragment.startActivity(new Intent(fragment.getContext(), ZhiWeiYaoYueActivity.class));
     }
 
     @Override

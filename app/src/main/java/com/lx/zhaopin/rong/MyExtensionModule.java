@@ -20,9 +20,9 @@ public class MyExtensionModule extends DefaultExtensionModule {
         pluginModules.clear();
         //拍照  图片 语音聊天  视频聊天   邀约
         pluginModules.add(new MySightPlugin());//拍照
-        pluginModules.add(new MyImagePlugin());//图片
+        pluginModules.add(new MyImagePlugin());//图片 MyImagePlugin
         pluginModules.add(new AudioPlugin());//语音聊天  MyYinPinPlugin
-        pluginModules.add(new VideoPlugin());//视频聊天  MyShiPinPlugin
+        pluginModules.add(new VideoPlugin());//视频聊天  MyShiPinPlugin   VideoPlugin
         pluginModules.add(new YaoYuePlugin());//邀约
 
 

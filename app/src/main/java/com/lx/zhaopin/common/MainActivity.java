@@ -1,6 +1,7 @@
 package com.lx.zhaopin.common;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,11 +15,19 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.hss01248.dialog.StyledDialog;
+import com.hss01248.dialog.interfaces.MyDialogListener;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.hr.HRHome1Fragment;
 import com.lx.zhaopin.hr.HRHome2Fragment;
 import com.lx.zhaopin.hr.HRHome3Fragment;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.ActivityManager;
 import com.lx.zhaopin.utils.SPTool;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,10 +35,14 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends BaseActivity implements RongIM.UserInfoProvider {
 
@@ -242,6 +255,55 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                 }
             }
         });
+
+
+        RongIM.getInstance().setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
+            @Override
+            public void onChanged(ConnectionStatus connectionStatus) {
+                switch (connectionStatus) {
+                    case CONNECTED://连接成功。
+                        break;
+                    case DISCONNECTED://断开连接。
+                        break;
+                    case CONNECTING://连接中。
+                        break;
+                    case NETWORK_UNAVAILABLE://网络不可用。
+                        break;
+                    case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+
+
+                        StyledDialog.init(mContext);
+                        StyledDialog.buildIosAlert("", "\r该账号在别处登录,请重新登录", new MyDialogListener() {
+                            @Override
+                            public void onFirst() {
+
+                            }
+
+                            @Override
+                            public void onSecond() {
+                                Intent intent = new Intent(MainActivity.this, SplashActivity.class);
+                                startActivity(intent);
+                                SPTool.addSessionMap(AppSP.UID, "");
+                                SPTool.addSessionMap(AppSP.USER_NAME, "");
+                                SPTool.addSessionMap(AppSP.USER_ICON, "");
+                                SPTool.addSessionMap(AppSP.USER_PHONE, "");
+                                SPTool.addSessionMap(AppSP.USER_RongToken, "");
+                                SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                                SPTool.addSessionMap(AppSP.isLogin, false);
+                                RongIM.getInstance().logout();
+                                ActivityManager.finishActivity();
+                                finish();
+
+                            }
+                        }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("确定").show();
+
+
+                        break;
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -250,8 +312,32 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         return null;
     }
 
-    private void setUserInfo(String s) {
+    private void setUserInfo(final String userId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("userId", userId);
+        OkHttpHelper.getInstance().post(MainActivity.this, NetClass.BASE_URL + NetCuiMethod.getRongUserInfo, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
 
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                RongIM.getInstance().refreshUserInfoCache(new UserInfo(userId, resultBean.getName(), Uri.parse(resultBean.getAvatar())));
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 

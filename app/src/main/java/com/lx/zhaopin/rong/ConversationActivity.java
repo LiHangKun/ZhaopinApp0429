@@ -41,6 +41,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void init() {
+
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(this);
         initPhotoError();
@@ -58,9 +59,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
 
         getTitleName(titleName, userId);
-
-
-        //titleName.setText(param);
 
     }
 

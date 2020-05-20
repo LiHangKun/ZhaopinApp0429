@@ -323,7 +323,7 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tvButton1:
                 //立即沟通
-                ToastFactory.getToast(mContext, "立即沟通" + rid).show();
+                //ToastFactory.getToast(mContext, "立即沟通" + rid).show();
 
                 //renOpenChat
                 switch (renOpenChat) {
@@ -334,6 +334,8 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                         break;
                     case "1":
                         //可以聊天
+                        SPTool.addSessionMap("rid", rid);
+
                         String userId = SPTool.getSessionValue(AppSP.UID);
                         String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
                         String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
