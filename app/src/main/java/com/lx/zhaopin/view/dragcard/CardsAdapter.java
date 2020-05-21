@@ -88,6 +88,7 @@ public class CardsAdapter extends BaseAdapter {
         switch (positionType) {
             case "1":
                 imageState.setVisibility(View.INVISIBLE);
+                tv1.setTextColor(mContext.getResources().getColor(R.color.txt_c333));
                 break;
             case "2":
             case "3":
