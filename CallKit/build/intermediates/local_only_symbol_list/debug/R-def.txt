@@ -59,6 +59,7 @@ drawable callkit_mute_unavailable
 drawable callkit_select_ic_nav_back_x
 drawable callkit_selector_icon_search
 drawable callkit_voip_iphone
+drawable rc_ic_bubble_right
 drawable rc_ic_video_selector
 drawable rc_voip_add
 drawable rc_voip_audio_answer

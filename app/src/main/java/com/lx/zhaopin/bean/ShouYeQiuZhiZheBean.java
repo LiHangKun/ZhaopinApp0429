@@ -71,6 +71,15 @@ public class ShouYeQiuZhiZheBean extends CommonBean {
         private String name;
         private String positionType;
         private String workfare;
+        private String workYear;
+
+        public String getWorkYear() {
+            return workYear;
+        }
+
+        public void setWorkYear(String workYear) {
+            this.workYear = workYear;
+        }
 
         public CityBean getCity() {
             return city;
@@ -202,6 +211,8 @@ public class ShouYeQiuZhiZheBean extends CommonBean {
             }
         }
 
+
+
         public static class CompanyBean {
             /**
              * id :
@@ -220,6 +231,46 @@ public class ShouYeQiuZhiZheBean extends CommonBean {
             private String logo;
             private String name;
             private String staffNum;
+            private String financingName;
+            private String industry2Name;
+            private String service;
+            private String images;
+
+
+
+            private String intro;
+
+            public String getImages() {
+                return images;
+            }
+
+            public void setImages(String images) {
+                this.images = images;
+            }
+
+            public String getFinancingName() {
+                return financingName;
+            }
+
+            public void setFinancingName(String financingName) {
+                this.financingName = financingName;
+            }
+
+            public String getIndustry2Name() {
+                return industry2Name;
+            }
+
+            public void setIndustry2Name(String industry2Name) {
+                this.industry2Name = industry2Name;
+            }
+
+            public String getService() {
+                return service;
+            }
+
+            public void setService(String service) {
+                this.service = service;
+            }
 
             public String getId() {
                 return id;

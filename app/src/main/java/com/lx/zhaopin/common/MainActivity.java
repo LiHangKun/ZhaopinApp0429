@@ -29,6 +29,7 @@ import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.ActivityManager;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.view.NoScrollViewPager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,7 +47,8 @@ import okhttp3.Response;
 
 public class MainActivity extends BaseActivity implements RongIM.UserInfoProvider {
 
-    public ViewPager viewPager;
+    //public ViewPager viewPager;
+    public NoScrollViewPager viewPager;
     private ArrayList<Fragment> fragments;
     //private MyPagerAdapter adapter;
     private RadioButton rB1;

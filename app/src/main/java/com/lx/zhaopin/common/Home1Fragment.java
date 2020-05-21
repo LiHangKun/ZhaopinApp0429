@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.home1.ShouYe1Fragment;
 import com.lx.zhaopin.home1.ShouYe2Fragment;
-import com.lx.zhaopin.home1.ShouYe3Fragment;
+import com.lx.zhaopin.home1.ShouYe4Fragment;
 import com.lx.zhaopin.utils.SPTool;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,6 +87,8 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
         tv3 = view.findViewById(R.id.tv3);
+        ImageView selectView = view.findViewById(R.id.selectView);
+        selectView.setOnClickListener(this);
         llSearchView = view.findViewById(R.id.llSearchView);
         llSearchView.setOnClickListener(this);
         tv1.setOnClickListener(this);
@@ -107,7 +110,8 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         fragments = new ArrayList<>();
         fragments.add(new ShouYe1Fragment());
         fragments.add(new ShouYe2Fragment());
-        fragments.add(new ShouYe3Fragment());
+        fragments.add(new ShouYe4Fragment());
+        //fragments.add(new ShouYe3Fragment());
 
         adapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
@@ -204,6 +208,10 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.addView:
                 //选择城市
                 startActivity(new Intent(getActivity(), SelectCityPro1ListActivity.class));
+                break;
+            case R.id.selectView:
+                //切换卡片
+
                 break;
         }
     }
