@@ -48,7 +48,7 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int po) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int po) {
         String positionType = mData.get(po).getPositionType();
         switch (positionType) {
             case "1":
@@ -83,7 +83,16 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(mData.get(po).getId());
+                    itemClickListener.OnItemClickListener(viewHolder.tv7,mData.get(po).getId());
+                }
+            }
+        });
+
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClickListener(viewHolder.llView,mData.get(po).getId());
                 }
             }
         });
@@ -163,7 +172,7 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(String id);
+        void OnItemClickListener(View view,String id);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

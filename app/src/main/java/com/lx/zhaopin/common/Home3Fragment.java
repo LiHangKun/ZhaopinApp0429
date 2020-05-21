@@ -376,11 +376,17 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView4:
                 //在线客服
-                if (!TextUtils.isEmpty(phone)) {
-                    callPhone();
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    if (!TextUtils.isEmpty(phone)) {
+                        callPhone();
+                    }
+                } else {
+                    ToastFactory.getToast(getActivity(), "请先登录").show();
+                    startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
+                    return;
                 }
 
-                /*intent = new Intent(getActivity(), SelectHangYeActivity.class);
+               /* intent = new Intent(getActivity(), SelectHangYeActivity.class);
                 startActivity(intent);*/
 
                 break;

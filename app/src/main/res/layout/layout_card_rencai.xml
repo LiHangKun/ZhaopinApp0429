@@ -244,11 +244,19 @@
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginRight="10dp" />
 
-            <View
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginTop="@dimen/dp_5"
-                android:background="#e7e7e7" />
+                android:background="#e7e7e7" />-->
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:src="@drawable/shouye_hengxian" />
+
 
             <TextView
                 android:layout_width="match_parent"

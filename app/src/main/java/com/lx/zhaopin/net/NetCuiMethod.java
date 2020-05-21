@@ -80,6 +80,7 @@ public class NetCuiMethod {
 
 
     public static final String quXiaoMianShi_Type1 = "member/jobhunter/interview/cancel";//取消面试,求职者
+    public static final String NewUserChoose = "member/choose/category";//首次登录选择职位类型
 
     public static final String logout = "member/logout";//退出登录
     public static final String memberLogout = "member/logout";//退出登录

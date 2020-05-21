@@ -33,7 +33,6 @@ import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.ToastFactory;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -153,7 +152,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                             case "1":
                                 positionSelect = position;
                                 getReadMess(messID);
-                                ToastFactory.getToast(getActivity(), "系统消息").show();
+                                //ToastFactory.getToast(getActivity(), "系统消息").show();
                                 intent = new Intent(getActivity(), NoticeDetailActivity.class);
                                 intent.putExtra("title", title);
                                 intent.putExtra("titleUrl", url);
@@ -162,7 +161,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                             case "2":
                                 positionSelect = position;
                                 getReadMess(messID);
-                                ToastFactory.getToast(getActivity(), "收到Offer").show();
+                                //ToastFactory.getToast(getActivity(), "收到Offer").show();
                                 intent = new Intent(getActivity(), QiuZhiFeedActivity.class);
                                 intent.putExtra("offerID", Correlation);
                                 intent.putExtra("userType", "0");
@@ -171,7 +170,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                             case "3":
                                 positionSelect = position;
                                 getReadMess(messID);
-                                ToastFactory.getToast(getActivity(), "求职反馈").show();
+                                //ToastFactory.getToast(getActivity(), "求职反馈").show();
                                 intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
                                 intent.putExtra("messageId", Correlation);
                                 startActivity(intent);
@@ -179,7 +178,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                             case "4":
                                 positionSelect = position;
                                 getReadMess(messID);
-                                ToastFactory.getToast(getActivity(), "面试邀请").show();
+                                //ToastFactory.getToast(getActivity(), "面试邀请").show();
                                 //interviewId
                                 intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
                                 intent.putExtra("interviewId", Correlation);
@@ -188,7 +187,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                             case "5":
                                 positionSelect = position;
                                 getReadMess(messID);
-                                ToastFactory.getToast(getActivity(), "面试取消").show();
+                                //ToastFactory.getToast(getActivity(), "面试取消").show();
                                 intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
@@ -196,7 +195,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                             case "6":
                                 positionSelect = position;
                                 getReadMess(messID);
-                                ToastFactory.getToast(getActivity(), "面试超时").show();
+                                //ToastFactory.getToast(getActivity(), "面试超时").show();
                                 intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
@@ -204,7 +203,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                             case "7":
                                 positionSelect = position;
                                 getReadMess(messID);
-                                ToastFactory.getToast(getActivity(), "举报结果").show();
+                                //ToastFactory.getToast(getActivity(), "举报结果").show();
                                 break;
                         }
                         break;

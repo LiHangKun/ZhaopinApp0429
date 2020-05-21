@@ -184,9 +184,22 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
                 SPTool.addSessionMap(AppSP.USER_PHONE, userPhone);
                 SPTool.addSessionMap(AppSP.USER_RongToken, RongToken);
                 SPTool.addSessionMap(AppSP.USER_TYPE, "0");
-                intent = new Intent(mContext, MainActivity.class);
-                startActivity(intent);
-                finish();
+
+
+                //1 进入界面 SelectHangYeActivity
+                //0 进入主页
+                String neverLogin = resultBean.getNeverLogin();
+                if (neverLogin.equals("1")) {
+                    intent = new Intent(mContext, SelectHangYeActivity.class);
+                    intent.putExtra("mid", mid);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    intent = new Intent(mContext, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
 
             }
 

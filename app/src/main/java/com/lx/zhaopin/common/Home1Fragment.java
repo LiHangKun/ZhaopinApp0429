@@ -42,7 +42,6 @@ import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.FastBlurUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
-import com.lx.zhaopin.view.NoScrollViewPager;
 import com.lx.zhaopin.view.dragcard.CardsAdapter;
 import com.lx.zhaopin.view.dragcard.DragCardsView;
 import com.squareup.picasso.Picasso;
@@ -63,7 +62,7 @@ import okhttp3.Response;
 //求职者看到的首页
 public class Home1Fragment extends BaseFragment implements View.OnClickListener {
 
-    public NoScrollViewPager viewPager;
+    public ViewPager viewPager;
     private TextView tv1;
     private TextView tv2;
     private ArrayList<Fragment> fragments;

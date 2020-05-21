@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <FrameLayout
+    <!--<FrameLayout
         android:id="@+id/frViewClick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -26,7 +26,13 @@
             android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher"
             android:visibility="invisible" />
-    </FrameLayout>
+    </FrameLayout>-->
+
+    <ImageView
+        android:id="@+id/frViewClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xuanzhangye" />
 
 
     <!--此处是流布局的地方-->

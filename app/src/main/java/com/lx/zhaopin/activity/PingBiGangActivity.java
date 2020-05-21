@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -110,22 +111,32 @@ public class PingBiGangActivity extends BaseActivity {
     private PingBiGangAdapter.OnItemClickListener getOnItemClickListener() {
         return new PingBiGangAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(final String id) {
-                //取消屏蔽岗位
-                StyledDialog.init(mContext);
-                StyledDialog.buildIosAlert("", "\r是否取消屏蔽岗位?", new MyDialogListener() {
-                    @Override
-                    public void onFirst() {
+            public void OnItemClickListener(View view, final String id) {
+                switch (view.getId()) {
+                    case R.id.tv7:
+                        //取消屏蔽岗位
+                        StyledDialog.init(mContext);
+                        StyledDialog.buildIosAlert("", "\r是否取消屏蔽岗位?", new MyDialogListener() {
+                            @Override
+                            public void onFirst() {
 
-                    }
+                            }
 
-                    @Override
-                    public void onSecond() {
-                        quXiaoPingBiGang(id);
+                            @Override
+                            public void onSecond() {
+                                quXiaoPingBiGang(id);
 
 
-                    }
-                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                            }
+                        }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                        break;
+                    case R.id.llView:
+                        Intent intent = new Intent(mContext, GangWeiDetailActivity.class);
+                        intent.putExtra("pid", id);
+                        startActivity(intent);
+                        break;
+                }
+
 
             }
         };

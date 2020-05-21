@@ -278,23 +278,12 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                         StyledDialog.buildIosAlert("", "\r该账号在别处登录,请重新登录", new MyDialogListener() {
                             @Override
                             public void onFirst() {
-
+                                logoutMe();
                             }
 
                             @Override
                             public void onSecond() {
-                                Intent intent = new Intent(MainActivity.this, SplashActivity.class);
-                                startActivity(intent);
-                                SPTool.addSessionMap(AppSP.UID, "");
-                                SPTool.addSessionMap(AppSP.USER_NAME, "");
-                                SPTool.addSessionMap(AppSP.USER_ICON, "");
-                                SPTool.addSessionMap(AppSP.USER_PHONE, "");
-                                SPTool.addSessionMap(AppSP.USER_RongToken, "");
-                                SPTool.addSessionMap(AppSP.USER_TYPE, "0");
-                                SPTool.addSessionMap(AppSP.isLogin, false);
-                                RongIM.getInstance().logout();
-                                ActivityManager.finishActivity();
-                                finish();
+
 
                             }
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("确定").show();
@@ -307,6 +296,47 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
 
     }
+
+
+    private void logoutMe() {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.logout, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                Intent intent = new Intent(MainActivity.this, SplashActivity.class);
+                startActivity(intent);
+                SPTool.addSessionMap(AppSP.UID, "");
+                SPTool.addSessionMap(AppSP.USER_NAME, "");
+                SPTool.addSessionMap(AppSP.USER_ICON, "");
+                SPTool.addSessionMap(AppSP.USER_PHONE, "");
+                SPTool.addSessionMap(AppSP.USER_RongToken, "");
+                SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                SPTool.addSessionMap(AppSP.isLogin, false);
+                RongIM.getInstance().logout();
+                ActivityManager.finishActivity();
+                finish();
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+    }
+
 
     @Override
     public UserInfo getUserInfo(String s) {
