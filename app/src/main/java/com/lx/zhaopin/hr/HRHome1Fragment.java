@@ -1,33 +1,60 @@
 package com.lx.zhaopin.hr;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.RenCaiListBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.home3.RenCaiCardsAdapter;
 import com.lx.zhaopin.hractivity.HRSearchActivity;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.FastBlurUtil;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.ToastFactory;
+import com.lx.zhaopin.view.dragcard.DragCardsView;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 //HR看到的首页
 public class HRHome1Fragment extends BaseFragment implements View.OnClickListener {
@@ -39,6 +66,23 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     private MyPagerAdapter adapter;
     private LinearLayout llSearchView;
     private TextView tvCity;
+
+    private LinearLayout viewType1;
+    private FrameLayout viewType2;
+
+
+    private boolean kaPian = false;
+    private boolean hasNo = false;
+    private DragCardsView mDragCardsView;
+    private List<RenCaiListBean.DataListBean> list;
+    private List<RenCaiListBean.DataListBean> list1;
+    private int total = 0, currentPositon = 0;
+    private RenCaiCardsAdapter mCardAdapter;
+
+    private int nowPageIndex = 1;
+    private int totalPage = 1;
+    private static final String TAG = "HRHome1Fragment";
+    private String cityId = "";
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -87,6 +131,13 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
 
+        ImageView selectView = view.findViewById(R.id.selectView);
+        selectView.setOnClickListener(this);
+
+        viewType1 = view.findViewById(R.id.ViewType1);
+        viewType2 = view.findViewById(R.id.ViewType2);
+
+
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
@@ -106,6 +157,13 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         adapter = new MyPagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(fragments.size());
+
+
+        list = new ArrayList<>();
+        list1 = new ArrayList<>();
+        mDragCardsView = view.findViewById(R.id.dragCardsView);
+
+        getDataList("1", "", String.valueOf(nowPageIndex), AppSP.pageCount);
 
 
         return view;
@@ -176,6 +234,264 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                 //选择城市
                 startActivity(new Intent(getActivity(), SelectCityPro1ListActivity.class));
                 break;
+            case R.id.selectView:
+                //切换
+                if (kaPian) {
+                    viewType1.setVisibility(View.VISIBLE);
+                    viewType2.setVisibility(View.GONE);
+                } else {
+                    viewType1.setVisibility(View.GONE);
+                    viewType2.setVisibility(View.VISIBLE);
+                }
+                kaPian = !kaPian;
+                break;
         }
     }
+
+
+    //-------------------------TODO 卡片----------------------------------------
+    //职位分页列表求职者
+    private void getDataList(String dataType, String name, String pageNo, String pageSize) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("dataType", dataType);
+        params.put("name", name);
+        params.put("pageNo", pageNo);
+        params.put("pageSize", "200");
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.HRSouRenCai, params, new SpotsCallBack<RenCaiListBean>(getActivity()) {
+            @Override
+            public void onSuccess(Response response, RenCaiListBean resultBean) {
+                if (resultBean.getDataList() != null) {
+                    totalPage = resultBean.getTotalPage();
+                    if (resultBean.getDataList().size() == 0) {
+                        //没有数据
+                    } else {
+                        //有数据
+                        list.addAll(resultBean.getDataList());
+                        list1.addAll(resultBean.getDataList());
+                        total = list.size();
+                        initData();
+                        final String head = list.get(currentPositon).getAvatar();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (!TextUtils.isEmpty(head) && head.startsWith("http")) {
+                                        Bitmap bmp = Picasso.with(getContext()).load(head).get();
+                                        Message message = new Message();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putParcelable("bitmap", bmp);
+                                        message.setData(bundle);
+                                        mHandler.sendMessage(message);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+            }
+        });
+
+    }
+
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bitmap bitmap = msg.getData().getParcelable("bitmap");
+            Bitmap blurBitmap = FastBlurUtil.toBlur(bitmap, 8);
+            //ivBg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            //ivBg.setImageBitmap(blurBitmap);
+        }
+    };
+
+
+    private void initData() {
+        mCardAdapter = new RenCaiCardsAdapter(getContext(), list);
+        mDragCardsView.setAdapter(mCardAdapter);
+        mDragCardsView.setOnItemClickListener(new DragCardsView.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int itemPosition, Object dataObject) {
+
+                //ToastFactory.getToast(getActivity(), "处理点击事件" + list1.get(currentPositon).getId()).show();
+                //TODO  处理点击事件
+                Intent intent = new Intent(getActivity(), RenCaiDetailActivity.class);
+                intent.putExtra("rid", list1.get(currentPositon).getId());
+                startActivity(intent);
+
+            }
+        });
+        mDragCardsView.setFlingListener(new DragCardsView.onDragListener() {
+
+            @Override
+            public void removeFirstObjectInAdapter(boolean isLeft) {
+                // TODO Auto-generated method stub
+                if (isLeft) {
+                    browseyujian(currentPositon);
+                    next();
+                } else {
+                    sendLove(currentPositon);
+                    next();
+                }
+                if (list.size() > 0) {
+                    list.remove(0);
+                }
+                mCardAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onSelectLeft(double distance) {
+                // TODO Auto-generated method stub
+
+
+            }
+
+
+            @Override
+            public void onSelectRight(double distance) {
+                // TODO Auto-generated method stub
+
+            }
+
+
+            @Override
+            public void onCardReturn() {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onCardMoveDistance(double distance) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                // TODO Auto-generated method stub
+//                ToastUtil.show("需要补牌了");
+
+            }
+        });
+    }
+
+
+    /**
+     * 喜欢
+     */
+    private void sendLove(int position) {
+
+        if (hasNo) {
+            //ToastFactory.getToast(getActivity(), "喜欢0000000").show();
+            return;
+        } else {
+            //ToastFactory.getToast(getActivity(), "喜欢---------------CCCCCCCCCCCCCCCCC" + list1.get(position).getId()).show();
+            Log.i(TAG, "sendLove:喜欢 " + list1.get(position).getId());
+
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                xiHuan(list1.get(position).getId());
+            }
+
+
+        }
+
+    }
+
+
+    private void xiHuan(String pid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("rid", pid);
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.ShouCangRenCai, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+
+    private void next() {
+        if (currentPositon < (total - 1)) {
+            currentPositon++;
+        } else {
+            ToastFactory.getToast(getActivity(), "没有更多推荐数据了").show();
+            /*nowPageIndex++;
+            getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);*/
+            hasNo = true;
+        }
+    }
+
+
+    /**
+     * 遇见
+     */
+    private void browseyujian(int position) {
+        if (hasNo) {
+            //ToastFactory.getToast(getActivity(), "呵呵-----0").show();
+            return;
+        } else {
+            //ToastFactory.getToast(getActivity(), "不喜欢" + list1.get(position).getId()).show();
+            Log.i(TAG, "browseyujian: 不喜欢" + list1.get(position).getId());
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                buXiHuan(list1.get(position).getId());
+            }
+
+
+        }
+
+    }
+
+    private void buXiHuan(String pid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("rid", pid);
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.HR_PingBi_renCaiDetail, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+    //-------------------------TODO 卡片----------------------------------------
+
+
 }

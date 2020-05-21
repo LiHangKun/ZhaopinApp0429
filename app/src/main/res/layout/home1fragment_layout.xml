@@ -190,22 +190,24 @@
 
             <ImageView
                 android:id="@+id/iv_no"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="130dp"
-                android:layout_marginBottom="150dp"
-                android:src="@mipmap/wu_yj" />
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="100dp"
+                android:src="@drawable/kongbai1" />
 
             <com.lx.zhaopin.view.dragcard.DragCardsView
                 android:id="@+id/dragCardsView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="80dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="@dimen/dp_50"
                 android:background="#00ffffff"
-                app:cards_height="330dp"
+                app:cards_height="450dp"
                 app:cards_shift="20"
                 app:cards_width="300dp"
                 app:max_visible="3"
