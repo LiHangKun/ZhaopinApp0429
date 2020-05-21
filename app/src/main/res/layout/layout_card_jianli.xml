@@ -181,7 +181,7 @@
                 <ImageView
                     android:layout_width="@dimen/sp_20"
                     android:layout_height="@dimen/sp_20"
-                    android:src="@drawable/shouye_zhize" />
+                    android:src="@drawable/shouye_dingwei2" />
 
                 <TextView
                     android:id="@+id/tv7"
