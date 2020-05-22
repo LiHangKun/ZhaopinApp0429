@@ -81,7 +81,7 @@ public class AboutMeActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, AboutMeBean resultBean) {
                 tv1.setText(resultBean.getCompany());
-                tv2.setText(resultBean.getPhone());
+                tv2.setText(resultBean.getPhone() + " >");
                 tv3.setText(resultBean.getEmail());
                 tv4.setText(resultBean.getWebsite());
                 tv5.setText(resultBean.getAddress());

@@ -84,9 +84,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(13);
             radioButton.setPadding(ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6), ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6));
-            radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+            radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d_2));
             //radioButton.setBackgroundResource(R.drawable.search_selector);
-            radioButton.setBackgroundResource(R.drawable.button_shape03);
+            radioButton.setBackgroundResource(R.drawable.button_shape04);
             radioButton.setFocusable(true);
             radioButton.setOnClickListener(new View.OnClickListener() {
                 @Override

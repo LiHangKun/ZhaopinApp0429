@@ -19,7 +19,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/button_shapew"
         android:gravity="top"
-        android:hint="请输入您的在校经历"
+        android:hint="请输入您的反馈信息"
         android:minHeight="300dp"
         android:paddingLeft="@dimen/dp_5"
         android:paddingTop="@dimen/dp_5"

@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,12 @@ public class YuLan2Adapter extends RecyclerView.Adapter<YuLan2Adapter.ViewHolder
         viewHolder.tv1.setText(mData.get(po).getCompanyName());
         viewHolder.tv2.setText(mData.get(po).getBeginDate() + "-" + mData.get(po).getEndDate());
         viewHolder.tv3.setText(mData.get(po).getPositionName());
-        viewHolder.tv4.setText(mData.get(po).getExperience());
+
+        if (!TextUtils.isEmpty(mData.get(po).getExperience())) {
+            viewHolder.tv4.setText(mData.get(po).getExperience());
+        } else {
+            viewHolder.tv4.setVisibility(View.GONE);
+        }
 
 
         List<String> flowData = new ArrayList<>();
@@ -72,10 +78,8 @@ public class YuLan2Adapter extends RecyclerView.Adapter<YuLan2Adapter.ViewHolder
             radioButton.setText(str);
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(13);
-            radioButton.setPadding(ViewUtil.dp2px(mContext, 18),
-                    ViewUtil.dp2px(mContext, 6)
-                    , ViewUtil.dp2px(mContext, 18),
-                    ViewUtil.dp2px(mContext, 6));
+            radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
+
             radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
             //radioButton.setBackgroundResource(R.drawable.search_selector);
             radioButton.setBackgroundResource(R.drawable.button_shape03);

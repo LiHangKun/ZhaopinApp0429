@@ -135,8 +135,8 @@
                         android:gravity="center"
                         android:maxLength="20"
                         android:singleLine="true"
-                        android:text=""
-                        android:textColor="#333"
+                        android:text="111"
+                        android:textColor="#4989FF"
                         android:textIsSelectable="true"
                         android:textSize="@dimen/sp_14"
                         android:textStyle="normal" />
@@ -148,7 +148,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/jiantouyou" />
+                        android:src="@drawable/jiantouyou"
+                        android:visibility="invisible" />
 
                 </LinearLayout>
 

@@ -265,7 +265,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
 
                 tv1.setText(resultBean.getName());
-                tv2.setText(resultBean.getMinSalary() + "--" + resultBean.getMaxSalary() + "K");
+                tv2.setText(resultBean.getMinSalary() + "-" + resultBean.getMaxSalary() + "K");
                 tv3.setText(resultBean.getCity().getName() + resultBean.getDistrict().getName());
                 tv4.setText(resultBean.getExperienceYear().getName() + "年");
                 tv5.setText(resultBean.getEducation().getName());

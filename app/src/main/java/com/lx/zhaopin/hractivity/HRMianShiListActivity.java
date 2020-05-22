@@ -38,7 +38,7 @@ public class HRMianShiListActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("HR面试记录");
+        topTitle.setText("面试记录");
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
 

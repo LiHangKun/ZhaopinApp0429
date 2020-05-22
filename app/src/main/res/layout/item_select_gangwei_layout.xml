@@ -44,9 +44,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:visibility="gone"
                     android:layout_toRightOf="@+id/tv1"
-                    android:src="@drawable/shouye_biaoqian2" />
+                    android:src="@drawable/shouye_biaoqian2"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -73,7 +73,8 @@
                     android:gravity="center_vertical"
                     android:text="10K-20K"
                     android:textColor="#1678FF"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

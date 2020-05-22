@@ -1,11 +1,11 @@
 package com.lx.zhaopin.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +15,6 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.YuLan1Adapter;
 import com.lx.zhaopin.adapter.YuLan2Adapter;
 import com.lx.zhaopin.adapter.YuLan3Adapter;
-import com.lx.zhaopin.adapter.YuLan4Adapter;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.YuLanBean;
 import com.lx.zhaopin.common.AppSP;
@@ -26,6 +25,7 @@ import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
+import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -33,6 +33,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,7 +218,7 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
                 //TODO 学历信息 recyclerView3
 
                 //TODO 专业技能 recyclerView4
-                List<YuLanBean.ResumeSkillListBean> resumeSkillList = resultBean.getResumeSkillList();
+               /* List<YuLanBean.ResumeSkillListBean> resumeSkillList = resultBean.getResumeSkillList();
                 recyclerView4.setLayoutManager(new LinearLayoutManager(mContext));
                 YuLan4Adapter yuLan4Adapter = new YuLan4Adapter(mContext, resumeSkillList);
                 recyclerView4.setAdapter(yuLan4Adapter);
@@ -230,7 +231,38 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
                         startActivity(intent);
 
                     }
-                });
+                });*/
+
+                List<YuLanBean.ResumeSkillListBean> resumeSkillList = resultBean.getResumeSkillList();
+
+                List<String> flowData = new ArrayList<>();
+                for (int i = 0; i < resumeSkillList.size(); i++) {
+                    flowData.add(resumeSkillList.get(i).getName());
+                }
+
+                flowLiner.removeAllViews();
+                for (int i = 0; i < flowData.size(); i++) {
+                    final TextView radioButton = new TextView(mContext);
+                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
+                    radioButton.setLayoutParams(layoutParams);
+                    final String str = flowData.get(i);
+                    radioButton.setText(str);
+                    radioButton.setGravity(Gravity.CENTER);
+                    radioButton.setTextSize(13);
+                    radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6));
+                    radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                    //radioButton.setBackgroundResource(R.drawable.search_selector);
+                    radioButton.setBackgroundResource(R.drawable.button_shape03);
+                    radioButton.setFocusable(true);
+                    radioButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                    flowLiner.addView(radioButton);
+                }
                 //TODO 专业技能 recyclerView4
 
 

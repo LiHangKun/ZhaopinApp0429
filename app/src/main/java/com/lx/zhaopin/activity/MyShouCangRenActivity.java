@@ -54,7 +54,7 @@ public class MyShouCangRenActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("HR我的收藏");
+        topTitle.setText("我的收藏");
         smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);

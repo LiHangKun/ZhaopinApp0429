@@ -39,7 +39,7 @@ public class DaiMianShiListActivity extends BaseActivity implements View.OnClick
     }
 
     private void init() {
-        topTitle.setText("求职者待面试");
+        topTitle.setText("待面试");
         rightText.setText("面试记录");
         rightText.setVisibility(View.VISIBLE);
         rightText.setOnClickListener(this);

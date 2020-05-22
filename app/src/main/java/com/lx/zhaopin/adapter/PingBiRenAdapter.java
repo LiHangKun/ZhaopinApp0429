@@ -82,7 +82,7 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
             radioButton.setText(str);
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(13);
-            radioButton.setPadding(ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 18), ViewUtil.dp2px(mContext, 6));
+            radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
             radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
             //radioButton.setBackgroundResource(R.drawable.search_selector);
             radioButton.setBackgroundResource(R.drawable.button_shape03);

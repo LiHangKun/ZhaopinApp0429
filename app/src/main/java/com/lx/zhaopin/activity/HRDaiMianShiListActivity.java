@@ -40,7 +40,7 @@ public class HRDaiMianShiListActivity extends BaseActivity implements View.OnCli
     }
 
     private void init() {
-        topTitle.setText("HR待面试");
+        topTitle.setText("待面试");
         rightText.setText("面试记录");
         rightText.setVisibility(View.VISIBLE);
         rightText.setOnClickListener(this);
