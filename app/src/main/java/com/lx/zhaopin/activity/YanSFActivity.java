@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,12 +12,14 @@ import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.MyCountDownTimer;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 
@@ -31,7 +34,7 @@ import okhttp3.Response;
 
 public class YanSFActivity extends BaseActivity {
     @BindView(R.id.edit1)
-    EditText edit1;
+    TextView edit1;
     @BindView(R.id.edit2)
     EditText edit2;
     @BindView(R.id.faCode)
@@ -49,6 +52,7 @@ public class YanSFActivity extends BaseActivity {
 
     private void init() {
         topTitle.setText("验证身份");
+        edit1.setText(SPTool.getSessionValue(AppSP.USER_PHONE));
     }
 
     @Override
@@ -94,8 +98,39 @@ public class YanSFActivity extends BaseActivity {
         }
     }
 
-    private void YanSFMethod(String trim, String trim1) {
-        Log.i(TAG, "YanSFMethod: " + trim + "---" + trim1);
+    private void YanSFMethod(String mobile, String authCode) {
+        //yzUser
+        Map<String, String> params = new HashMap<>();
+        params.put("type", "3");
+        params.put("mobile", mobile);
+        params.put("authCode", authCode);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.yzUser, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                startActivity(new Intent(mContext, XinPhoneActivity.class));
+                finish();
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+
+
+
 
     }
 
@@ -118,10 +153,10 @@ public class YanSFActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 if (resultBean.getExist().equals("1")) {
-                    ToastFactory.getToast(mContext, "手机号已存在").show();
-                    return;
+                    sendPhoneCode("3", mobile);
                 } else {
-                    sendPhoneCode("1", mobile);
+                    ToastFactory.getToast(mContext, "手机号不存在").show();
+                    return;
                 }
 
             }
@@ -143,7 +178,7 @@ public class YanSFActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
-                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                //ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 MyCountDownTimer timer = new MyCountDownTimer(mContext, faCode, 60 * 1000, 1000);
                 timer.start();
             }

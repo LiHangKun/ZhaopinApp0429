@@ -1,6 +1,7 @@
 package com.lx.zhaopin.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,14 +12,19 @@ import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.MyCountDownTimer;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.ToastFactory;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +53,18 @@ public class XinPhoneActivity extends BaseActivity {
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void init() {
+
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }*/
+
         topTitle.setText("绑定新手机号");
     }
 
@@ -94,8 +111,30 @@ public class XinPhoneActivity extends BaseActivity {
         }
     }
 
-    private void BindNewPhoneMethod(String trim, String trim1) {
-        Log.i(TAG, "BindNewPhoneMethod: " + trim + "---" + trim1);
+    private void BindNewPhoneMethod(final String mobile, String authCode) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("mobile", mobile);
+        params.put("authCode", authCode);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.newUserPhone, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                SPTool.addSessionMap(AppSP.USER_PHONE, mobile);
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
 
     }
 
@@ -121,7 +160,7 @@ public class XinPhoneActivity extends BaseActivity {
                     ToastFactory.getToast(mContext, "手机号已存在").show();
                     return;
                 } else {
-                    sendPhoneCode("1", mobile);
+                    sendPhoneCode("4", mobile);
                 }
 
             }
@@ -143,7 +182,7 @@ public class XinPhoneActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
-                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                //ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 MyCountDownTimer timer = new MyCountDownTimer(mContext, faCode, 60 * 1000, 1000);
                 timer.start();
             }

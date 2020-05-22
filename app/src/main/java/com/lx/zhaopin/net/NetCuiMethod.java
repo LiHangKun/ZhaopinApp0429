@@ -87,6 +87,8 @@ public class NetCuiMethod {
     public static final String zhuXiaoUID = "member/account/delete";//注销账户
     public static final String versionUpdate = "member/version/update";//更新
     public static final String getRongUserInfo = "member/rongUserInfo";//获取容云用户信息
+    public static final String newUserPhone = "member/mobile/change";//修改绑定手机号
+    public static final String yzUser = "member/auth";//校验验证码
 
 
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/

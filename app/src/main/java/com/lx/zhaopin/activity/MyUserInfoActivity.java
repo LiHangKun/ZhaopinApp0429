@@ -65,6 +65,8 @@ import com.zhy.m.permission.PermissionDenied;
 import com.zhy.m.permission.PermissionGrant;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -88,7 +90,7 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
     private RelativeLayout relView1, relView2, relView3, relView4, relView5, relView6;
     private CircleImageView circleImageView;
     private EditText edit1;
-    private EditText edit2;
+    private TextView edit2;
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
@@ -101,6 +103,18 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
     private ArrayList<String> mSelectPath;
     private UpFileUtil upFileUtil;
     private String dataType = "1";
+
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 2:
+                Log.i(TAG, "getEventmessage: 个人信息收到刷新");
+                getQiuZhiMyInfo(SPTool.getSessionValue(AppSP.UID));
+                break;
+        }
+    }
 
 
     //-----------时间选择器--------------------------
@@ -528,6 +542,10 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
             case R.id.relView5:
                 KeyAllboardUtil.hideKeyboard(MyUserInfoActivity.this);
                 pvCustomLunar2.show();
+                break;
+            case R.id.relView6:
+                //修改手机号
+                startActivity(new Intent(mContext, YanSFActivity.class));
                 break;
 
         }
