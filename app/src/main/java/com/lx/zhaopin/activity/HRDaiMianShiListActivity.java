@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.adapter.DaiMianShiListAdapter;
 import com.lx.zhaopin.base.BaseActivity;
-import com.lx.zhaopin.bean.MianShiListBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.hractivity.HRMianShiListActivity;
+import com.lx.zhaopin.hradapter.HRDaiMianShiListAdapter;
+import com.lx.zhaopin.hradapter.HRDaiMianShiListBean;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -30,8 +30,8 @@ public class HRDaiMianShiListActivity extends BaseActivity implements View.OnCli
 
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
-    private List<MianShiListBean.DataListBean> allList;
-    private DaiMianShiListAdapter daiMianShiListAdapter;
+    private List<HRDaiMianShiListBean.DataListBean> allList;
+    private HRDaiMianShiListAdapter daiMianShiListAdapter;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class HRDaiMianShiListActivity extends BaseActivity implements View.OnCli
         init();
     }
 
+    //HR 待面试
     private void init() {
         topTitle.setText("待面试");
         rightText.setText("面试记录");
@@ -51,7 +52,7 @@ public class HRDaiMianShiListActivity extends BaseActivity implements View.OnCli
         getDataList("3");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         allList = new ArrayList<>();
-        daiMianShiListAdapter = new DaiMianShiListAdapter(mContext, allList);
+        daiMianShiListAdapter = new HRDaiMianShiListAdapter(mContext, allList);
         recyclerView.setAdapter(daiMianShiListAdapter);
 
 
@@ -62,9 +63,9 @@ public class HRDaiMianShiListActivity extends BaseActivity implements View.OnCli
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("interviewStatus", interviewStatus);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_mianshiList, params, new SpotsCallBack<MianShiListBean>(mContext) {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_mianshiList, params, new SpotsCallBack<HRDaiMianShiListBean>(mContext) {
             @Override
-            public void onSuccess(Response response, MianShiListBean resultBean) {
+            public void onSuccess(Response response, HRDaiMianShiListBean resultBean) {
                 if (resultBean.getDataList() != null) {
                     if (resultBean.getDataList().size() == 0) {
                         recyclerView.setVisibility(View.GONE);

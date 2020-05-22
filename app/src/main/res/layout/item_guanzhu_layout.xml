@@ -118,7 +118,7 @@
                     android:layout_marginTop="@dimen/dp_15"
                     android:layout_marginRight="@dimen/dp_5"
                     android:layout_marginBottom="@dimen/dp_15"
-                    android:background="#e7e7e7" />
+                    android:background="#333" />
 
                 <TextView
                     android:id="@+id/tv4"
@@ -139,7 +139,7 @@
                     android:layout_marginTop="@dimen/dp_15"
                     android:layout_marginRight="@dimen/dp_5"
                     android:layout_marginBottom="@dimen/dp_15"
-                    android:background="#e7e7e7" />
+                    android:background="#333" />
 
 
                 <TextView
@@ -159,7 +159,7 @@
                     android:layout_marginTop="@dimen/dp_15"
                     android:layout_marginRight="@dimen/dp_5"
                     android:layout_marginBottom="@dimen/dp_15"
-                    android:background="#e7e7e7" />
+                    android:background="#333" />
 
 
             </LinearLayout>

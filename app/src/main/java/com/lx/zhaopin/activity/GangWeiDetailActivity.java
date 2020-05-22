@@ -49,6 +49,7 @@ import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
+import com.lx.zhaopin.view.MyDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -141,6 +142,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     private String collected;
     private String hrid;
     private String hrName;
+    private String delivered;
 
 
     private void getLastIndexForLimit(TextView tv, int maxLine, String content) {
@@ -212,7 +214,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiDetail, params, new SpotsCallBack<ZhiWeiDetailBean>(mContext) {
             @Override
             public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
-
+                delivered = resultBean.getDelivered();
                 hrid = resultBean.getHRID();
                 hrName = resultBean.getHRName();
                 //是否收藏  image1
@@ -256,10 +258,12 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                     case "2":
                         noGouTongView.setVisibility(View.VISIBLE);
                         dibuView3.setVisibility(View.VISIBLE);
+                        tv6.setText("该岗位无需沟通，可直接发送简历，并到指定位置面试");
                         break;
                     case "3":
                         noGouTongView.setVisibility(View.VISIBLE);
                         dibuView4.setVisibility(View.VISIBLE);
+                        tv6.setText("该岗位无需沟通，可直接预约面试，并到指定位置面试");
                         break;
                 }
 
@@ -348,7 +352,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 tv9.setText(resultBean.getCompany().getFinancing().getName());
                 tv10.setText(resultBean.getCompany().getStaffNum() + "人");
                 tv11.setText(resultBean.getCompany().getIndustry().getName());
-                tv12.setText(resultBean.getCity().getName() + "" + resultBean.getDistrict().getName());
+                tv12.setText(resultBean.getCompany().getLocation());
                 qiYeID = resultBean.getCompany().getId();
                 lat = resultBean.getCompany().getLat();
                 lng = resultBean.getCompany().getLng();
@@ -383,11 +387,24 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     预约面试 dibuView4
     */
 
+
+
+
+
+    //RongIM.getInstance().startPrivateChat(getActivity(), "9527", title);
+    /*Bundle bundle = new Bundle();
+    bundle.putString("Info1", mData.get(i).getUser_Id_ext().getHead_Url());
+    bundle.putString("Info2", mData.get(i).getUser_Id_ext().getReal_Name());
+    bundle.putString("Info3", mData.get(i).getUser_Id_ext().getType_Code());
+    bundle.putString("Info4", mData.get(i).getUser_Id_ext().getUser_Name());
+    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid + "", "张三的", bundle);*/
+
+
     private static final String TAG = "GangWeiDetailActivity";
 
     @OnClick({R.id.back, R.id.image1, R.id.image2, R.id.image3, R.id.dibuView1, R.id.liJiGouTongTV, R.id.shenQingZhiwei, R.id.dibuView2, R.id.dibuView3, R.id.dibuView4, R.id.daoHang, R.id.llViewGongSi, R.id.tv7})
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.back:
                 finish();
                 break;
@@ -430,7 +447,30 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 //立即沟通
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     //ToastFactory.getToast(mContext, "立即沟通长的").show();
-                    goLiaoTianMethod();
+                    if (delivered.equals("0")) {
+
+                        View view3 = getLayoutInflater().inflate(R.layout.dialog_goutong3, null);
+                        final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view3, R.style.DialogTheme2);
+                        mMyDialog.setCancelable(true);
+                        mMyDialog.show();
+
+                        view3.findViewById(R.id.guanbi).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mMyDialog.dismiss();
+                            }
+                        });
+
+                        view3.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                touPid(pid);
+                                mMyDialog.dismiss();
+                            }
+                        });
+                    } else {
+                        goLiaoTianMethod();
+                    }
 
 
                 } else {
@@ -445,6 +485,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                     //ToastFactory.getToast(mContext, "立即沟通短的").show();
 
                     goLiaoTianMethod();
+
+
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -454,10 +496,26 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.shenQingZhiwei:
                 //申请职位
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    //申请职位  短的
 
-                    touPid(pid);
+                    View view0 = getLayoutInflater().inflate(R.layout.dialog_goutong0, null);
+                    final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view0, R.style.DialogTheme2);
+                    mMyDialog.setCancelable(true);
+                    mMyDialog.show();
 
+                    view0.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMyDialog.dismiss();
+                        }
+                    });
 
+                    view0.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            touPid(pid);
+                        }
+                    });
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -471,16 +529,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 //申请职位
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
 
+                    //申请职位 长的
                     goLiaoTianMethod();
-
-
-                    //RongIM.getInstance().startPrivateChat(getActivity(), "9527", title);
-                    /*Bundle bundle = new Bundle();
-                    bundle.putString("Info1", mData.get(i).getUser_Id_ext().getHead_Url());
-                    bundle.putString("Info2", mData.get(i).getUser_Id_ext().getReal_Name());
-                    bundle.putString("Info3", mData.get(i).getUser_Id_ext().getType_Code());
-                    bundle.putString("Info4", mData.get(i).getUser_Id_ext().getUser_Name());
-                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid + "", "张三的", bundle);*/
 
 
                 } else {
@@ -509,7 +559,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv7:
                 //岗位详情的文本,查看全部
-                if (view.isSelected()) {
+                if (v.isSelected()) {
                     //如果是收起的状态
                     tv7.setText(Cui);
                     tv7.setSelected(false);
@@ -523,14 +573,33 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void touPid(String pid3) {
-        //shenQingZhiwei   goLiaoTianMethod();
+        //shenQingZhiwei
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pid", pid3);
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.shenQingZhiwei, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                goLiaoTianMethod();
+                getZhiWeiDetail(pid);
+                View view1 = getLayoutInflater().inflate(R.layout.dialog_goutong1, null);
+                final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view1, R.style.DialogTheme2);
+                mMyDialog.setCancelable(true);
+                mMyDialog.show();
+
+                view1.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMyDialog.dismiss();
+                    }
+                });
+
+                view1.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        goLiaoTianMethod();
+                    }
+                });
+
             }
 
             @Override

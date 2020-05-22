@@ -31,25 +31,28 @@
 
             <ImageView
                 android:id="@+id/image1"
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
                 android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dp_5"
                 android:src="@drawable/gangwei_shoucang1" />
 
             <ImageView
                 android:id="@+id/image2"
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
                 android:src="@drawable/gangwei_fenxiang" />
 
             <ImageView
                 android:id="@+id/image3"
-                android:layout_width="@dimen/dp_20"
-                android:layout_height="@dimen/dp_20"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
                 android:src="@drawable/gangwei_jubao" />
 
 
@@ -217,8 +220,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="@dimen/dp_20"

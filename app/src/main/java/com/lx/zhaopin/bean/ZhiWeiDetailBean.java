@@ -43,6 +43,16 @@ public class ZhiWeiDetailBean extends CommonBean implements Serializable {
     private String collected;
     private CompanyBean company;
     private String deliverResume;
+    private String delivered;
+
+    public String getDelivered() {
+        return delivered;
+    }
+
+    public void setDelivered(String delivered) {
+        this.delivered = delivered;
+    }
+
     private DistrictBean district;
     private String duty;
     private EducationBean education;

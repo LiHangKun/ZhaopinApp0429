@@ -63,7 +63,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
         }*/
 
         topTitle.setVisibility(View.INVISIBLE);
-        view.setVisibility(View.INVISIBLE);
+        viewBase.setVisibility(View.INVISIBLE);
 
         baseback.setImageResource(R.drawable.guanbi_hei);
 
