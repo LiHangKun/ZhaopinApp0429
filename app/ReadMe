@@ -85,6 +85,7 @@ EventBus.getDefault().post(new MessageEvent(1, null, null, null, null, null, nul
 //TODO  7  处理编辑求职期望中  行业
 //TODO  8  刷新求职意向数据
 //TODO  9  聊天界面的邀约发送用户的简历 rid
+//TODO  10  取消面试,面试记录状态更新
 
 
 //TODO  消息类型

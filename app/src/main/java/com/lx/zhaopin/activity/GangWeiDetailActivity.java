@@ -429,7 +429,10 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.dibuView1:
                 //立即沟通
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    ToastFactory.getToast(mContext, "立即沟通长的").show();
+                    //ToastFactory.getToast(mContext, "立即沟通长的").show();
+                    goLiaoTianMethod();
+
+
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -439,7 +442,9 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.liJiGouTongTV:
                 //立即沟通
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    ToastFactory.getToast(mContext, "立即沟通短的").show();
+                    //ToastFactory.getToast(mContext, "立即沟通短的").show();
+
+                    goLiaoTianMethod();
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -449,7 +454,10 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.shenQingZhiwei:
                 //申请职位
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    ToastFactory.getToast(mContext, "申请职位").show();
+
+                    touPid(pid);
+
+
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -463,18 +471,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 //申请职位
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
 
-                    String userId = SPTool.getSessionValue(AppSP.UID);
-                    String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
-                    String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
-
-                    Log.i(TAG, "onClick: " + userId + "<>" + nickName + "<>" + userHead);
-                    if (null != userId && null != nickName && null != userHead)
-                        RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
-                    RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    //对方的ID 姓名
-                    //RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
-                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
-
+                    goLiaoTianMethod();
 
 
                     //RongIM.getInstance().startPrivateChat(getActivity(), "9527", title);
@@ -523,6 +520,38 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
         }
+    }
+
+    private void touPid(String pid3) {
+        //shenQingZhiwei   goLiaoTianMethod();
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pid", pid3);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.shenQingZhiwei, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                goLiaoTianMethod();
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+    private void goLiaoTianMethod() {
+        String userId = SPTool.getSessionValue(AppSP.UID);
+        String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
+        String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
+
+        Log.i(TAG, "onClick: " + userId + "<>" + nickName + "<>" + userHead);
+        if (null != userId && null != nickName && null != userHead)
+            RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
+        RongIM.getInstance().setMessageAttachedUserInfo(true);
+        //对方的ID 姓名
+        //RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
+        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
     }
 
 

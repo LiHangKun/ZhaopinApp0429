@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.MianShiDetailBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -35,6 +37,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionGrant;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +48,9 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.Response;
 
 //面试官看到的--面试详情
@@ -83,6 +90,8 @@ public class MianShiDetailType1Activity extends BaseActivity {
     private String id;
     private String interviewId2;
     private String phone;
+    private String hrName;
+    private String hrid;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -95,7 +104,9 @@ public class MianShiDetailType1Activity extends BaseActivity {
         topTitle.setText("面试详情");
 
         interviewId2 = getIntent().getStringExtra("interviewId");
-
+       /* if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }*/
         getMianShiDetail(interviewId2);
 
 
@@ -111,7 +122,8 @@ public class MianShiDetailType1Activity extends BaseActivity {
             @Override
             public void onSuccess(Response response, MianShiDetailBean resultBean) {
                 tv1.setText(resultBean.getJobhunter().getName());
-
+                hrid = resultBean.getJobhunter().getId();
+                hrName = resultBean.getJobhunter().getName();
 
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
                         .error(R.mipmap.imageerror)).load(resultBean.getJobhunter().getAvatar()).into(roundedImageView);
@@ -213,12 +225,27 @@ public class MianShiDetailType1Activity extends BaseActivity {
         }
     }
 
+    private static final String TAG = "MianShiDetailType1Activ";
+    private void goLiaoTianMethod() {
+        String userId = SPTool.getSessionValue(AppSP.UID);
+        String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
+        String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
+
+        Log.i(TAG, "onClick: " + userId + "<>" + nickName + "<>" + userHead);
+        if (null != userId && null != nickName && null != userHead)
+            RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
+        RongIM.getInstance().setMessageAttachedUserInfo(true);
+        //对方的ID 姓名
+        //RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
+        RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
+    }
 
     @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.tv6Click, R.id.quxiaoTV, R.id.okID, R.id.qiuZhiView, R.id.quxiaoHR})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llView1OnClick:
-                ToastFactory.getToast(mContext, "聊天").show();
+                //ToastFactory.getToast(mContext, "聊天").show();
+                goLiaoTianMethod();
                 break;
             case R.id.llView2OnClick:
                 if (!TextUtils.isEmpty(phone)) {
@@ -276,7 +303,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
-
+                EventBus.getDefault().post(new MessageEvent(10, null, null, null, null, null, null));
                 getMianShiDetail(interviewId2);
 
             }

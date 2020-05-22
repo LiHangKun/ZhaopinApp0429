@@ -89,6 +89,7 @@ public class NetCuiMethod {
     public static final String getRongUserInfo = "member/rongUserInfo";//获取容云用户信息
     public static final String newUserPhone = "member/mobile/change";//修改绑定手机号
     public static final String yzUser = "member/auth";//校验验证码
+    public static final String shenQingZhiwei = "member/deliver/resume";//投递简历
 
 
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
