@@ -6,7 +6,7 @@
     <color name="separate">#EFEFEF</color>
     <color name="white">#FFFFFF</color>
     <color name="press">#cccccc</color>
-    <color name="red_them">#FE7A38</color>
+    <color name="red_them">#FEB53C</color>
     <color name="app_text">#8A8989</color>
     <color name="txt_orange0">#23B7AC</color>
     <color name="txt_orange1">#73D242</color>
@@ -27,6 +27,7 @@
 
 
     <color name="mainColor888">#1560EC</color>
+    <color name="mainColor999">#1678FF</color>
     <color name="mainColor888bj">#F7F9FA</color>
     <color name="mainColorLine">#e7e7e7</color>
     <color name="space_light">#FAFAFA</color>

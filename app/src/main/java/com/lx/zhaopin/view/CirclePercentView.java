@@ -17,7 +17,7 @@ import com.lx.zhaopin.R;
 
 public class CirclePercentView extends View {
 
-    public static final int WIDTH_RADIUS_RATIO = 5;     // 弧线半径 : 弧线线宽 (比例)
+    public static final int WIDTH_RADIUS_RATIO = 4;     // 弧线半径 : 弧线线宽 (比例)
     public static final int MAX = 100;
     private Paint mPaint;
     private float progressPercent;
