@@ -292,11 +292,17 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:src="@drawable/shouye_hengxian" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
                 android:gravity="center_vertical"
-                android:text="毕业院校"
+                android:text="专业技能"
                 android:textColor="#333"
                 android:textSize="@dimen/sp_16"
                 android:textStyle="bold" />

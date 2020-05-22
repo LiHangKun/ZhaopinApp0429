@@ -257,8 +257,8 @@ public class MianShiDetailType2Activity extends BaseActivity {
             public void onSuccess(Response response, MianShiDetailBean resultBean) {
                 tv1.setText(resultBean.getCompany().getName());
                 tv2.setText(resultBean.getInterviewDate() + " 面试");
-                hrid = resultBean.getCompany().getId();
-                hrName = resultBean.getCompany().getName();
+                hrid = resultBean.getHRID();
+                hrName = resultBean.getHRName();
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
                         .error(R.mipmap.imageerror)).load(resultBean.getCompany().getLogo()).into(roundedImageView);
 

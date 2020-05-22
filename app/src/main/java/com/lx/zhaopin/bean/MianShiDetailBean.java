@@ -34,6 +34,25 @@ public class MianShiDetailBean extends CommonBean {
     private String lat;
     private String lng;
     private String location;
+    private String HRID;
+    private String HRName;
+
+    public String getHRID() {
+        return HRID;
+    }
+
+    public void setHRID(String HRID) {
+        this.HRID = HRID;
+    }
+
+    public String getHRName() {
+        return HRName;
+    }
+
+    public void setHRName(String HRName) {
+        this.HRName = HRName;
+    }
+
     private String mobile;
     private String nullifier;
     private String offer;

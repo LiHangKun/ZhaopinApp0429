@@ -388,9 +388,6 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     */
 
 
-
-
-
     //RongIM.getInstance().startPrivateChat(getActivity(), "9527", title);
     /*Bundle bundle = new Bundle();
     bundle.putString("Info1", mData.get(i).getUser_Id_ext().getHead_Url());
@@ -514,6 +511,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                         @Override
                         public void onClick(View view) {
                             touPid(pid);
+                            mMyDialog.dismiss();
                         }
                     });
                 } else {
@@ -597,6 +595,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onClick(View view) {
                         goLiaoTianMethod();
+                        mMyDialog.dismiss();
                     }
                 });
 
