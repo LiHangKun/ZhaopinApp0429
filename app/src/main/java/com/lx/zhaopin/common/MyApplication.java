@@ -10,6 +10,12 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.rong.MyExtensionModule;
 import com.lx.zhaopin.rongmessage.Custome1Message;
 import com.lx.zhaopin.rongmessage.Custome1MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome2Message;
+import com.lx.zhaopin.rongmessage.Custome2MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome3Message;
+import com.lx.zhaopin.rongmessage.Custome3MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome4Message;
+import com.lx.zhaopin.rongmessage.Custome4MessageItemProvider;
 import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.RxToast;
 import com.lx.zhaopin.utils.SPTool;
@@ -91,8 +97,31 @@ public class MyApplication extends Application {
         //------TODO-------融云部分------
         RongIM.init(this, AppSP.RongToken);//融云
 
-        RongIM.registerMessageType(Custome1Message.class);//HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
+        //简历：RCD:JianLiMsg
+        //面试：RCD:MianShiMsg
+        //白底：RCD:TipMsg
+        //提示：RCD:GrayTipMsg
+
+
+        //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
+        RongIM.registerMessageType(Custome1Message.class);//简历：RCD:JianLiMsg
         RongIM.registerMessageTemplate(new Custome1MessageItemProvider());
+        //---------TODO 自定义消息1的类型结束--------------
+
+        //HR 或求职者 界面的白底消息, type 1,查看详情; 可以点击 type 2 您已向对方发送面试邀约,不可以点击; 3 您已接受面试邀请 不可以点击
+        RongIM.registerMessageType(Custome2Message.class);//白底：RCD:TipMsg
+        RongIM.registerMessageTemplate(new Custome2MessageItemProvider());
+        //---------TODO 自定义消息2的类型结束--------------
+
+        //所有人的灰底白字的提示 content 就是提示文本类型
+        RongIM.registerMessageType(Custome3Message.class);//提示：RCD:GrayTipMsg
+        RongIM.registerMessageTemplate(new Custome3MessageItemProvider());
+        //---------TODO 自定义消息3的类型结束--------------
+
+        //发出面试邀请,点击进入面试详情,拒绝和同意按钮的操作
+        RongIM.registerMessageType(Custome4Message.class);//面试：RCD:MianShiMsg
+        RongIM.registerMessageTemplate(new Custome4MessageItemProvider());
+        //---------TODO 自定义消息3的类型结束--------------
 
 
         setInputProvider();

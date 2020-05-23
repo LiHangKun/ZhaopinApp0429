@@ -29,7 +29,7 @@
                 android:paddingRight="@dimen/dp_30"
                 android:paddingBottom="@dimen/dp_3"
                 android:singleLine="true"
-                android:text="您已接收收简历，点击查看详情"
+                android:text="您的简历已成功发送给HR"
                 android:textColor="#fff"
                 android:textSize="@dimen/sp_13" />
 

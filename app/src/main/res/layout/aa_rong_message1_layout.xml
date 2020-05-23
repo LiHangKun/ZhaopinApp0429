@@ -7,13 +7,17 @@
         android:id="@+id/llView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
-        android:orientation="vertical">
+        android:background="@drawable/rc_white_bg_shape"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_5"
             android:gravity="center_vertical"
             android:text="对方给您发了一份求职简历"
             android:textColor="#333"

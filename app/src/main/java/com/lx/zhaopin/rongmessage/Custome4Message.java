@@ -21,12 +21,12 @@ import io.rong.imlib.model.UserInfo;
 //提示：RCD:GrayTipMsg
 
 //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
-@MessageTag(value = "RCD:JianLiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
-public class Custome1Message extends MessageContent {
+@MessageTag(value = "RCD:MianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+public class Custome4Message extends MessageContent {
 
-    private static final String TAG = "Custome1Message";
-    public String content;//这个就是简历的 ID
-    public String type;
+    private static final String TAG = "Custome4Message";
+    public String content;//接收的邀约ID
+    public String type;//企业的ID 用于查询企业的名字和 企业的头像
 
     public String getContent() {
         return content;
@@ -44,38 +44,38 @@ public class Custome1Message extends MessageContent {
         this.type = type;
     }
 
-    public Custome1Message() {
+    public Custome4Message() {
     }
 
-    public Custome1Message(String content, String type) {
+    public Custome4Message(String content, String type) {
         this.content = content;
         this.type = type;
     }
 
-    public Custome1Message(Parcel in) {
+    public Custome4Message(Parcel in) {
         content = in.readString();
         type = in.readString();
         setUserInfo(ParcelUtils.readFromParcel(in, UserInfo.class));
     }
 
-    public static Custome1Message obtain(String content, String type) {
-        return new Custome1Message(content, type);
+    public static Custome4Message obtain(String content, String type) {
+        return new Custome4Message(content, type);
     }
 
-    public static final Creator<Custome1Message> CREATOR = new Creator<Custome1Message>() {
+    public static final Creator<Custome4Message> CREATOR = new Creator<Custome4Message>() {
         @Override
-        public Custome1Message createFromParcel(Parcel source) {
-            return new Custome1Message(source);
+        public Custome4Message createFromParcel(Parcel source) {
+            return new Custome4Message(source);
         }
 
         @Override
-        public Custome1Message[] newArray(int size) {
-            return new Custome1Message[size];
+        public Custome4Message[] newArray(int size) {
+            return new Custome4Message[size];
         }
     };
 
 
-    public Custome1Message(byte[] data) {
+    public Custome4Message(byte[] data) {
         String jsonStr = null;
 
         try {

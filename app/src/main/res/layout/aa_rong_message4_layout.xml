@@ -5,16 +5,20 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/llView"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/rc_white_bg_shape"
         android:orientation="vertical"
-        android:paddingTop="@dimen/dp_8">
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10">
 
         <LinearLayout
+            android:id="@+id/llView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
             android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -40,7 +44,7 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:padding="@dimen/dp_3"
