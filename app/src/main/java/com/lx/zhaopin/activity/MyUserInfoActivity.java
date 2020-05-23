@@ -546,6 +546,7 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
             case R.id.relView6:
                 //修改手机号
                 startActivity(new Intent(mContext, YanSFActivity.class));
+                finish();
                 break;
 
         }

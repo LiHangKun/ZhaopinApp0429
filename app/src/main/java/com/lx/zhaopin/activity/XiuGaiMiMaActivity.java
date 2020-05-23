@@ -127,7 +127,7 @@ public class XiuGaiMiMaActivity extends BaseActivity implements View.OnClickList
     private void faPhoneCode(String mobile) {
         Map<String, String> params = new HashMap<>();
         params.put("mobile", mobile);
-        params.put("type", "2");
+        params.put("type", "5");
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.sendPhoneCode, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
