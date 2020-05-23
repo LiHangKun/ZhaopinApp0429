@@ -14,7 +14,7 @@ public class AppSP {
     public static final String pageCount = "10";
     public static final String ManJine = "1";
     public static boolean isToHome = false;//个人中心
-
+    public static final String ACCOUNTS = "accounts"; //保存的账号
 
     public static boolean isToShopCar = false;//返回首页到购物车  //index = 2
 

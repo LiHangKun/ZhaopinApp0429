@@ -7,8 +7,9 @@ import android.util.Log;
 
 import com.awen.photo.FrescoImageLoader;
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.rong.CustomeMatchMessage;
 import com.lx.zhaopin.rong.MyExtensionModule;
+import com.lx.zhaopin.rongmessage.Custome1Message;
+import com.lx.zhaopin.rongmessage.Custome1MessageItemProvider;
 import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.RxToast;
 import com.lx.zhaopin.utils.SPTool;
@@ -87,34 +88,24 @@ public class MyApplication extends Application {
         Log.i(TAG, "onCreate:极光信息 " + registrationID);
 
 
-
-        //融云部分
-
+        //------TODO-------融云部分------
         RongIM.init(this, AppSP.RongToken);//融云
-        RongIM.registerMessageType(CustomeMatchMessage.class);//注册自定义消息
-        //RongIM.registerMessageTemplate(new CustomeMatchMessageItemProvider());
+
+        RongIM.registerMessageType(Custome1Message.class);//HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
+        RongIM.registerMessageTemplate(new Custome1MessageItemProvider());
 
 
         setInputProvider();
 
-        //融云部分
+        //------TODO-------融云部分------
 
-
-        /**
-         * 设置组件化的Log开关
-         * 参数: boolean 默认为false，如需查看LOG设置为true
-         */
+        //设置组件化的Log开关  参数: boolean 默认为false，如需查看LOG设置为true
         UMConfigure.setLogEnabled(true);
-
-        /**
-         * 设置日志加密
-         * 参数：boolean 默认为false（不加密）
-         */
+        //设置日志加密  参数：boolean 默认为false（不加密）
         UMConfigure.setEncryptEnabled(false);
 
         //初始化友盟,Key在清单文件写过这里就不在需要了,推送不需要传入空字符串
         UMConfigure.init(this, "5de708d1570df3243e000b63", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
-
         //三方登录
         PlatformConfig.setWeixin("wxfb8381274ed0fee4", "c8572c6ef231a4495703d96f0fec8e1c");
         PlatformConfig.setQQZone("1110049772", "NbnAvFzVYpJoiPiB");//
@@ -139,7 +130,6 @@ public class MyApplication extends Application {
             }
         }
     }
-
 
 
 }

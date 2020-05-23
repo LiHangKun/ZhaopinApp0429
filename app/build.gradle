@@ -140,6 +140,7 @@ dependencies {
     //申请权限
     implementation project(':permissiongen')
     implementation project(':permission-annotation')
+    implementation project(':pictureselector')
     //申请权限
     //鸿洋的流布局
     implementation project(':flowlayout-lib')
@@ -213,5 +214,8 @@ dependencies {
     //视频播放
     compile 'com.github.xiaoyanger0825:NiceVieoPlayer:v2.2'
     compile 'com.github.Awent:PhotoPick-Master:v1.096'
+
+    //选择图片
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
 }
