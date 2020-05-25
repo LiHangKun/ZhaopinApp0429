@@ -395,22 +395,22 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                 switch (position) {
                     case 0:
                         rB1.setChecked(true);
-                        rB1.setTextColor(getResources().getColor(R.color.mainColor888));
-                        rB2.setTextColor(getResources().getColor(R.color.txt_orange2));
-                        rB3.setTextColor(getResources().getColor(R.color.txt_orange2));
+                        //rB1.setTextColor(getResources().getColor(R.color.mainColor888));
+                        //rB2.setTextColor(getResources().getColor(R.color.txt_orange2));
+                        //rB3.setTextColor(getResources().getColor(R.color.txt_orange2));
 
                         break;
                     case 1:
                         rB2.setChecked(true);
-                        rB2.setTextColor(getResources().getColor(R.color.mainColor888));
-                        rB1.setTextColor(getResources().getColor(R.color.txt_orange2));
-                        rB3.setTextColor(getResources().getColor(R.color.txt_orange2));
+                        //rB2.setTextColor(getResources().getColor(R.color.mainColor888));
+                        //rB1.setTextColor(getResources().getColor(R.color.txt_orange2));
+                        //rB3.setTextColor(getResources().getColor(R.color.txt_orange2));
                         break;
                     case 2:
                         rB3.setChecked(true);
-                        rB3.setTextColor(getResources().getColor(R.color.mainColor888));
-                        rB1.setTextColor(getResources().getColor(R.color.txt_orange2));
-                        rB2.setTextColor(getResources().getColor(R.color.txt_orange2));
+                        // rB3.setTextColor(getResources().getColor(R.color.mainColor888));
+                        //rB1.setTextColor(getResources().getColor(R.color.txt_orange2));
+                        //rB2.setTextColor(getResources().getColor(R.color.txt_orange2));
                         break;
 
                     default:

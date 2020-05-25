@@ -85,7 +85,7 @@ public class ShenQingListActivity extends BaseActivity {
                 switch (view.getId()) {
                     case R.id.AllllView:
                         if (open.equals("1")) {
-                            ToastFactory.getToast(mContext, "简历已关闭").show();
+                            ToastFactory.getToast(mContext, "职位已关闭").show();
                             return;
                         } else {
                             // qiYeID QiYeInfoActivity

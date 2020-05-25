@@ -48,7 +48,7 @@
                         android:onClick="doClick"
                         android:paddingTop="2dp"
                         android:text="首页"
-                        android:textColor="@color/mainColor888"
+                        android:textColor="@drawable/text_color"
                         android:textSize="11sp" />
 
                     <RadioButton
@@ -64,7 +64,7 @@
                         android:onClick="doClick"
                         android:paddingTop="2dp"
                         android:text="消息"
-                        android:textColor="#6B6B6B"
+                        android:textColor="@drawable/text_color"
                         android:textSize="11sp" />
 
                     <RadioButton
@@ -80,7 +80,7 @@
                         android:onClick="doClick"
                         android:paddingTop="2dp"
                         android:text="我的"
-                        android:textColor="#6B6B6B"
+                        android:textColor="@drawable/text_color"
                         android:textSize="11sp" />
 
 
