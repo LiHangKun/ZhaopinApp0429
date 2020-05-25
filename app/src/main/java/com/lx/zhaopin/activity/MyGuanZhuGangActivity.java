@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -108,22 +109,34 @@ public class MyGuanZhuGangActivity extends BaseActivity {
     private MyGuanZhuAdapter.OnItemClickListener getOnItemClickListener() {
         return new MyGuanZhuAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(final String cid) {
-                //取消关注公司
-                StyledDialog.init(mContext);
-                StyledDialog.buildIosAlert("", "\r是否取消关注该公司?", new MyDialogListener() {
-                    @Override
-                    public void onFirst() {
+            public void OnItemClick(View view, final String cid) {
 
-                    }
+                switch (view.getId()){
+                    case R.id.tv2:
+                        //取消关注公司
+                        StyledDialog.init(mContext);
+                        StyledDialog.buildIosAlert("", "\r是否取消关注该公司?", new MyDialogListener() {
+                            @Override
+                            public void onFirst() {
 
-                    @Override
-                    public void onSecond() {
-                        quXiaoGuanZhuGongSi(cid);
+                            }
+
+                            @Override
+                            public void onSecond() {
+                                quXiaoGuanZhuGongSi(cid);
 
 
-                    }
-                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                            }
+                        }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                        break;
+                    case R.id.llView:
+                        Intent  intent = new Intent(mContext, QiYeInfoActivity.class);
+                        intent.putExtra("qiYeID", cid);
+                        startActivity(intent);
+                        break;
+                }
+
+
 
             }
         };

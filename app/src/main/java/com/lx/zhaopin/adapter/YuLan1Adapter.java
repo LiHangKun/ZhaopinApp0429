@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,6 +43,7 @@ public class YuLan1Adapter extends RecyclerView.Adapter<YuLan1Adapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.tv1.setText(mData.get(i).getPositionCategory3().getName());
         viewHolder.tv2.setText(mData.get(i).getCity().getName());
+        viewHolder.imageState.setVisibility(View.INVISIBLE);
         viewHolder.tv3.setText(mData.get(i).getMinSalary() + "K" + " - " + mData.get(i).getMaxSalary() + "K");
     }
 
@@ -59,6 +61,9 @@ public class YuLan1Adapter extends RecyclerView.Adapter<YuLan1Adapter.ViewHolder
         TextView tv3;
         @BindView(R.id.llView)
         LinearLayout llView;
+        @BindView(R.id.imageState)
+        ImageView imageState;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

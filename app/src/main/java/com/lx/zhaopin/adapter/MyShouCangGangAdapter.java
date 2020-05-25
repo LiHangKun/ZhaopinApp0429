@@ -74,7 +74,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
 
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
-        viewHolder.tv3.setText(mData.get(po).getCity().getName());
+        viewHolder.tv3.setText(mData.get(po).getCity().getName() + mData.get(po).getDistrict().getName());
         viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() + "年");
         viewHolder.tv5.setText(mData.get(po).getEducation().getName());
 
@@ -88,7 +88,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.tv7,mData.get(po).getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId());
                 }
             }
         });
@@ -98,7 +98,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.llView,mData.get(po).getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId());
                 }
             }
         });
@@ -178,7 +178,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
 
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view,String id);
+        void OnItemClickListener(View view, String id);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

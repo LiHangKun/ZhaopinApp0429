@@ -42,7 +42,7 @@ public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                 .load(mData.get(i).getLogo()).into(viewHolder.roundedImageView);
 
@@ -55,7 +55,16 @@ public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.View
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClick(mData.get(i).getId());
+                    itemClickListener.OnItemClick(viewHolder.tv2,mData.get(i).getId());
+                }
+            }
+        });
+
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClick(viewHolder.llView,mData.get(i).getId());
                 }
             }
         });
@@ -91,7 +100,7 @@ public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.View
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(String id);
+        void OnItemClick(View view ,String id);
     }
 
     public void SetOnItemClickListener(OnItemClickListener OnItemClickListener) {
