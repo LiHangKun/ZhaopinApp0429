@@ -96,7 +96,7 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
             viewHolder.flowLiner.addView(radioButton);
         }
 
-
+        viewHolder.tv7.setText("移除屏蔽");
         viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

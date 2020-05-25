@@ -21,84 +21,80 @@ import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Message;
 
 //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
-@ProviderTag(messageContent = Custome1Message.class, centerInHorizontal = true, showSummaryWithName = false)
-public class Custome1MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome1Message> {
+
+//llView1 是  对方给您发了一份求职简历  带拒绝和同意 tvTitle  tvCancel  tvOk
+//llView2 您已接收对方简历  tvTitle2
+//llView3 所有的灰底白字  tvTitle3
+//llView4 郑州立信科技向您发出面试邀约,点击查看  llViewGongSi  roundedImageView  tvTitle4  tvCancel4  tvOk4
+
+
+@ProviderTag(messageContent = Custome01Message.class, centerInHorizontal = true, showSummaryWithName = false)
+public class Custome01MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome01Message> {
 
     private Context mContext;
-    private static final String TAG = "Custome1MessageItemProv";
+    private static final String TAG = "Custome01MessageItemPro";
 
     @Override
-    public void bindView(View view, int i, final Custome1Message custome1Message, UIMessage uiMessage) {
+    public void bindView(View view, int i, final Custome01Message custome01Message, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
-
+        holder.llView1.setVisibility(View.GONE);
+        holder.llView2.setVisibility(View.GONE);
+        holder.llView3.setVisibility(View.VISIBLE);
+        holder.llView4.setVisibility(View.GONE);
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
             //这是发送方
             Log.i(TAG, "onClick: 简历ID  + 这是发送方");
-            if (custome1Message.getContent() != null) {
+            if (custome01Message.getContent() != null) {
                 holder.llView1.setVisibility(View.GONE);
                 holder.llView2.setVisibility(View.GONE);
                 holder.llView3.setVisibility(View.VISIBLE);
                 holder.llView4.setVisibility(View.GONE);
 
                 //您的简历已成功发送给HR
-                holder.tvTitle3.setText("您的简历已成功发送给HR");
+                holder.tvTitle3.setText("对方已同意,您的简历已发送给对方");
 
             }
         } else if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             //这是接收方
             Log.i(TAG, "onClick: 简历ID  + 这是接收方");
-            if (custome1Message.getContent() != null) {
+
+            if (custome01Message.getContent() != null) {
                 Gson gson = new Gson();
 
-                holder.llView1.setVisibility(View.VISIBLE);
-                holder.llView2.setVisibility(View.GONE);
+                holder.llView1.setVisibility(View.GONE);
+                holder.llView2.setVisibility(View.VISIBLE);
                 holder.llView3.setVisibility(View.GONE);
                 holder.llView4.setVisibility(View.GONE);
 
 
-                final RongMessageInBean rongMessageInBean = gson.fromJson(custome1Message.getContent(), RongMessageInBean.class);
+                final RongMessageInBean rongMessageInBean = gson.fromJson(custome01Message.getContent(), RongMessageInBean.class);
 
-                //拒绝
-                holder.tvCancel.setOnClickListener(new View.OnClickListener() {
+                //您的简历已成功发送给HR
+                holder.tvTitle2.setText("您已接收对方简历,点击查看详情");
+                holder.tvTitle2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ToastFactory.getToast(mContext, "拒绝的简历ID " + rongMessageInBean.getId()).show();
-                    }
-                });
-
-                //同意
-                holder.tvOk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ToastFactory.getToast(mContext, "同意的简历ID ---------->" + rongMessageInBean.getId()).show();
-                    }
-                });
-
-                holder.llView1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ToastFactory.getToast(mContext, "同意的简历ID ---------->进入人才详情" + rongMessageInBean.getId()).show();
+                        ToastFactory.getToast(mContext, "简历详情的ID---->" + rongMessageInBean.getId()).show();
                     }
                 });
 
             }
 
+
         }
-
-
 
 
     }
 
     @Override
-    public Spannable getContentSummary(Custome1Message custome1Message) {
+    public Spannable getContentSummary(Custome01Message custome01Message) {
         return null;
     }
 
     @Override
-    public void onItemClick(View view, int i, Custome1Message custome1Message, UIMessage uiMessage) {
+    public void onItemClick(View view, int i, Custome01Message custome01Message, UIMessage uiMessage) {
 
     }
 
@@ -107,19 +103,16 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
         mContext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.aa_rong_message1_layout, null);
         ViewHolder holder = new ViewHolder();
+        holder.llView1 = view.findViewById(R.id.llView1);
         holder.tvTitle = view.findViewById(R.id.tvTitle);
         holder.tvCancel = view.findViewById(R.id.tvCancel);
         holder.tvOk = view.findViewById(R.id.tvOk);
+        holder.tvTitle2 = view.findViewById(R.id.tvTitle2);
 
 
-        holder.llView1 = view.findViewById(R.id.llView1);
         holder.llView2 = view.findViewById(R.id.llView2);
         holder.llView3 = view.findViewById(R.id.llView3);
         holder.llView4 = view.findViewById(R.id.llView4);
-
-
-
-
         holder.tvTitle3 = view.findViewById(R.id.tvTitle3);
 
         view.setTag(holder);
@@ -129,6 +122,6 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
 
     class ViewHolder {
         LinearLayout llView1, llView2, llView3, llView4;
-        TextView tvTitle, tvCancel, tvOk, tvTitle3;
+        TextView tvTitle, tvCancel, tvOk, tvTitle3, tvTitle2;
     }
 }

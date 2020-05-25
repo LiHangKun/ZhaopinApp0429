@@ -21,7 +21,7 @@ import io.rong.imlib.model.UserInfo;
 //提示：RCD:GrayTipMsg
 
 //所有人的灰底白字的提示 content 就是提示文本类型
-@MessageTag(value = "RCD:GrayTipMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+@MessageTag(value = "RCD:RefuseJianLiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class Custome3Message extends MessageContent {
 
     private static final String TAG = "Custome3Message";

@@ -11,7 +11,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.utils.ToastFactory;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -25,34 +30,60 @@ import io.rong.imlib.model.Message;
 //llView4 郑州立信科技向您发出面试邀约,点击查看  llViewGongSi  roundedImageView  tvTitle4  tvCancel4  tvOk4
 
 
-@ProviderTag(messageContent = Custome3Message.class, showPortrait = false, centerInHorizontal = true, showSummaryWithName = false)
-public class Custome3MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome3Message> {
+@ProviderTag(messageContent = Custome03Message.class, showPortrait = false, centerInHorizontal = true, showSummaryWithName = false)
+public class Custome03MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome03Message> {
 
     private Context mContext;
-    private static final String TAG = "Custome3MessageItemProv";
+    private static final String TAG = "Custome03MessageItemPro";
 
     @Override
-    public void bindView(View view, int i, final Custome3Message custome3Message, UIMessage uiMessage) {
+    public void bindView(View view, int i, final Custome03Message custome03Message, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
             //这是发送方
             Log.i(TAG, "onClick: 简历ID  + 这是发送方");
-            holder.llView3.setVisibility(View.VISIBLE);
+            holder.llView4.setVisibility(View.VISIBLE);
             holder.llView1.setVisibility(View.GONE);
             holder.llView3.setVisibility(View.GONE);
-            holder.llView4.setVisibility(View.GONE);
-            holder.tvTitle3.setText("对方已拒绝您的简历");
+            holder.llView2.setVisibility(View.GONE);
+
+            if (custome03Message.getContent() != null) {
+                Gson gson = new Gson();
+                final RongMessageInBean rongMessageInBean = gson.fromJson(custome03Message.getContent(), RongMessageInBean.class);
+                Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                        .load(rongMessageInBean.getIcon()).into(holder.roundedImageView);
+                holder.tvTitle4.setText(rongMessageInBean.getName());
+                holder.llViewGongSi.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ToastFactory.getToast(mContext, "进入公司详情---或者简历详情" + rongMessageInBean.getId()).show();
+                    }
+                });
+                holder.tvCancel4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ToastFactory.getToast(mContext, "拒绝简历详情" + rongMessageInBean.getId()).show();
+                    }
+                });
+                holder.tvOk4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ToastFactory.getToast(mContext, "拒绝简历详情" + rongMessageInBean.getId()).show();
+                    }
+                });
+
+            }
 
 
         } else if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             //这是接收方
             Log.i(TAG, "onClick: 简历ID  + 这是接收方");
-            holder.llView3.setVisibility(View.VISIBLE);
+            holder.llView2.setVisibility(View.VISIBLE);
             holder.llView1.setVisibility(View.GONE);
             holder.llView3.setVisibility(View.GONE);
             holder.llView4.setVisibility(View.GONE);
-            holder.tvTitle3.setText("您已拒绝接收对方的简历");
+            holder.tvTitle2.setText("您已向对方发送了面试邀请");
         }
 
         //所有人的灰底白字的提示 content 就是提示文本类型
@@ -82,12 +113,12 @@ public class Custome3MessageItemProvider extends IContainerItemProvider.MessageP
     }
 
     @Override
-    public Spannable getContentSummary(Custome3Message custome3Message) {
+    public Spannable getContentSummary(Custome03Message custome03Message) {
         return null;
     }
 
     @Override
-    public void onItemClick(View view, int i, Custome3Message custome3Message, UIMessage uiMessage) {
+    public void onItemClick(View view, int i, Custome03Message custome03Message, UIMessage uiMessage) {
 
     }
 
@@ -98,11 +129,17 @@ public class Custome3MessageItemProvider extends IContainerItemProvider.MessageP
         ViewHolder holder = new ViewHolder();
         holder.tvTitle = view.findViewById(R.id.tvTitle);
         holder.tvTitle3 = view.findViewById(R.id.tvTitle3);
+        holder.tvTitle4 = view.findViewById(R.id.tvTitle4);
+        holder.tvCancel4 = view.findViewById(R.id.tvCancel4);
+        holder.tvOk4 = view.findViewById(R.id.tvOk4);
+        holder.tvTitle2 = view.findViewById(R.id.tvTitle2);
 
         holder.llView1 = view.findViewById(R.id.llView1);
         holder.llView2 = view.findViewById(R.id.llView2);
         holder.llView3 = view.findViewById(R.id.llView3);
         holder.llView4 = view.findViewById(R.id.llView4);
+        holder.llViewGongSi = view.findViewById(R.id.llViewGongSi);
+        holder.roundedImageView = view.findViewById(R.id.roundedImageView);
 
         view.setTag(holder);
 
@@ -110,7 +147,8 @@ public class Custome3MessageItemProvider extends IContainerItemProvider.MessageP
     }
 
     class ViewHolder {
-        TextView tvTitle, tvTitle3;
-        LinearLayout llView1, llView2, llView3, llView4;
+        TextView tvTitle, tvTitle3, tvTitle4, tvCancel4, tvOk4, tvTitle2;
+        LinearLayout llView1, llView2, llView3, llView4, llViewGongSi;
+        RoundedImageView roundedImageView;
     }
 }

@@ -25,7 +25,7 @@ import io.rong.imlib.model.UserInfo;
 //HR取消面试：RCD:HRCancleMianShiMsg
 
 @MessageTag(value = "RCD:TipMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
-public class Custome2Message extends MessageContent {
+public class Custome02Message extends MessageContent {
 
     private static final String TAG = "Custome2Message";
     public String content;//这个就是简历的 ID
@@ -47,38 +47,38 @@ public class Custome2Message extends MessageContent {
         this.type = type;
     }
 
-    public Custome2Message() {
+    public Custome02Message() {
     }
 
-    public Custome2Message(String content, String type) {
+    public Custome02Message(String content, String type) {
         this.content = content;
         this.type = type;
     }
 
-    public Custome2Message(Parcel in) {
+    public Custome02Message(Parcel in) {
         content = in.readString();
         type = in.readString();
         setUserInfo(ParcelUtils.readFromParcel(in, UserInfo.class));
     }
 
-    public static Custome2Message obtain(String content, String type) {
-        return new Custome2Message(content, type);
+    public static Custome02Message obtain(String content, String type) {
+        return new Custome02Message(content, type);
     }
 
-    public static final Creator<Custome2Message> CREATOR = new Creator<Custome2Message>() {
+    public static final Creator<Custome02Message> CREATOR = new Creator<Custome02Message>() {
         @Override
-        public Custome2Message createFromParcel(Parcel source) {
-            return new Custome2Message(source);
+        public Custome02Message createFromParcel(Parcel source) {
+            return new Custome02Message(source);
         }
 
         @Override
-        public Custome2Message[] newArray(int size) {
-            return new Custome2Message[size];
+        public Custome02Message[] newArray(int size) {
+            return new Custome02Message[size];
         }
     };
 
 
-    public Custome2Message(byte[] data) {
+    public Custome02Message(byte[] data) {
         String jsonStr = null;
 
         try {

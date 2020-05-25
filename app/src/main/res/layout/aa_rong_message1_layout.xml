@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+    <!--
+    llView1 是  对方给您发了一份求职简历  带拒绝和同意 tvTitle  tvCancel  tvOk
+    llView2 您已接收对方简历  tvTitle2
+    llView3 所有的灰底白字  tvTitle3
+    llView4 郑州立信科技向您发出面试邀约,点击查看  llViewGongSi  roundedImageView  tvTitle4  tvCancel4  tvOk4
+    -->
     <LinearLayout
-        android:id="@+id/llView"
+        android:id="@+id/llView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rc_white_bg_shape"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_10">
+        android:paddingBottom="@dimen/dp_10"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvTitle"
@@ -53,6 +62,174 @@
 
                 <TextView
                     android:id="@+id/tvOk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:background="@drawable/button_shape"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="同意"
+                    android:textColor="#fff" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_8">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/xiaoxi_chengg" />
+
+        <TextView
+            android:id="@+id/tvTitle2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:text="您已接收对方简历"
+            android:textColor="#333"
+            android:textSize="@dimen/sp_14" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llView3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_margin="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/tvTitle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@drawable/button_shape0"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp_30"
+                android:paddingTop="@dimen/dp_3"
+                android:paddingRight="@dimen/dp_30"
+                android:paddingBottom="@dimen/dp_3"
+                android:singleLine="true"
+                android:text="您的简历已成功发送给HR"
+                android:textColor="#fff"
+                android:textSize="@dimen/sp_13" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_white_bg_shape"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/llViewGongSi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/roundedImageView"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerCrop"
+                android:src="@drawable/splashbj"
+                app:riv_border_width="0dip"
+                app:riv_corner_radius_bottom_left="@dimen/dp_5"
+                app:riv_corner_radius_bottom_right="@dimen/dp_5"
+                app:riv_corner_radius_top_left="@dimen/dp_5"
+                app:riv_corner_radius_top_right="@dimen/dp_5"
+                app:riv_mutate_background="true"
+                app:riv_oval="false" />
+
+            <TextView
+                android:id="@+id/tvTitle4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:padding="@dimen/dp_3"
+                android:text="郑州立信科技向您发出面试邀请,\n点击查看"
+                android:textColor="#333"
+                android:textSize="@dimen/sp_13" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvCancel4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_8"
+                    android:background="@drawable/edittext_shape"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:text="拒绝"
+                    android:textColor="#1678FF" />
+
+
+                <TextView
+                    android:id="@+id/tvOk4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_8"

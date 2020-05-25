@@ -61,6 +61,11 @@ public class SouRenCaiAdapter extends RecyclerView.Adapter<SouRenCaiAdapter.View
         viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
 
         List<String> flowData = new ArrayList<>();
+        List<RenCaiListBean.DataListBean.ResumeSkillListBean> resumeSkillList = mData.get(po).getResumeSkillList();
+        for (int i = 0; i < resumeSkillList.size(); i++) {
+            flowData.add(resumeSkillList.get(i).getName());
+        }
+
         viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
@@ -127,6 +132,7 @@ public class SouRenCaiAdapter extends RecyclerView.Adapter<SouRenCaiAdapter.View
         TextView tv7;
         @BindView(R.id.llView)
         LinearLayout llView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

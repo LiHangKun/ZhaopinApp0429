@@ -352,8 +352,10 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tvButton2:
                 //职位邀约
+                //ToastFactory.getToast(mContext,"职位邀约").show();
+                SPTool.addSessionMap("rid", rid);
                 Intent intent = new Intent(mContext, ZhiWeiYaoYueActivity.class);
-                intent.putExtra("rid", rid);
+                //intent.putExtra("rid", rid);
                 RenCaiDetailBean renCaiDetailBean = new RenCaiDetailBean();
                 intent.putExtra("renCaiDetailBean", renCaiDetailBean);
                 startActivity(intent);

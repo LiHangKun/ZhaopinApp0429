@@ -48,7 +48,7 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int po) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int po) {
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                 .load(mData.get(po).getAvatar()).into(viewHolder.roundedImageView);
 
@@ -84,11 +84,21 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
             viewHolder.flowLiner.addView(radioButton);
         }
 
+
         viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(mData.get(po).getId());
+                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(),mData.get(po).getOpenResume());
+                }
+            }
+        });
+
+        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(),mData.get(po).getOpenResume());
                 }
             }
         });
@@ -137,7 +147,7 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(String id);
+        void OnItemClickListener(View view, String id, String openResume);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

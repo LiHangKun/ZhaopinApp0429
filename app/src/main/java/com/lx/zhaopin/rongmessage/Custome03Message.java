@@ -15,19 +15,16 @@ import io.rong.imlib.model.UserInfo;
 
 //参考  CustomeGroupTipMessage
 
-//发送简历：RCD:SendJianLiMsg    ---->   JianLiMsg
-//接收简历：RCD: ReceiveJianLiMsg
-//拒绝接收简历：RCD: RefuseJianLiMsg
-//面试邀约：RCD:SendMianShiMsg      ---->   MianShiMsg
-//接受面试：RCD:ReceiveMianShiMsg
-//拒绝面试：RCD:RefuseMianShiMsg
-//求职者取消面试：RCD:CancleMianShiMsg
-//HR取消面试：RCD:HRCancleMianShiMsg
+//简历：RCD:JianLiMsg
+//面试：RCD:MianShiMsg
+//白底：RCD:TipMsg
+//提示：RCD:GrayTipMsg
 
-@MessageTag(value = "RCD:TipMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
-public class Custome2Message extends MessageContent {
+//所有人的灰底白字的提示 content 就是提示文本类型
+@MessageTag(value = "RCD:SendMianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+public class Custome03Message extends MessageContent {
 
-    private static final String TAG = "Custome2Message";
+    private static final String TAG = "Custome03Message";
     public String content;//这个就是简历的 ID
     public String type;
 
@@ -47,38 +44,38 @@ public class Custome2Message extends MessageContent {
         this.type = type;
     }
 
-    public Custome2Message() {
+    public Custome03Message() {
     }
 
-    public Custome2Message(String content, String type) {
+    public Custome03Message(String content, String type) {
         this.content = content;
         this.type = type;
     }
 
-    public Custome2Message(Parcel in) {
+    public Custome03Message(Parcel in) {
         content = in.readString();
         type = in.readString();
         setUserInfo(ParcelUtils.readFromParcel(in, UserInfo.class));
     }
 
-    public static Custome2Message obtain(String content, String type) {
-        return new Custome2Message(content, type);
+    public static Custome03Message obtain(String content, String type) {
+        return new Custome03Message(content, type);
     }
 
-    public static final Creator<Custome2Message> CREATOR = new Creator<Custome2Message>() {
+    public static final Creator<Custome03Message> CREATOR = new Creator<Custome03Message>() {
         @Override
-        public Custome2Message createFromParcel(Parcel source) {
-            return new Custome2Message(source);
+        public Custome03Message createFromParcel(Parcel source) {
+            return new Custome03Message(source);
         }
 
         @Override
-        public Custome2Message[] newArray(int size) {
-            return new Custome2Message[size];
+        public Custome03Message[] newArray(int size) {
+            return new Custome03Message[size];
         }
     };
 
 
-    public Custome2Message(byte[] data) {
+    public Custome03Message(byte[] data) {
         String jsonStr = null;
 
         try {

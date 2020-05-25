@@ -8,6 +8,12 @@ import android.util.Log;
 import com.awen.photo.FrescoImageLoader;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.rong.MyExtensionModule;
+import com.lx.zhaopin.rongmessage.Custome01Message;
+import com.lx.zhaopin.rongmessage.Custome01MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome02Message;
+import com.lx.zhaopin.rongmessage.Custome02MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome03Message;
+import com.lx.zhaopin.rongmessage.Custome03MessageItemProvider;
 import com.lx.zhaopin.rongmessage.Custome1Message;
 import com.lx.zhaopin.rongmessage.Custome1MessageItemProvider;
 import com.lx.zhaopin.rongmessage.Custome2Message;
@@ -109,16 +115,22 @@ public class MyApplication extends Application {
         //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
         RongIM.registerMessageType(Custome1Message.class);//简历：RCD:SendJianLiMsg
         RongIM.registerMessageTemplate(new Custome1MessageItemProvider());
+        RongIM.registerMessageType(Custome01Message.class);//简历：RCD:ReceiveJianLiMsg
+        RongIM.registerMessageTemplate(new Custome01MessageItemProvider());
         //---------TODO 自定义消息1的类型结束--------------
 
         //HR 或求职者 界面的白底消息, type 1,查看详情; 可以点击 type 2 您已向对方发送面试邀约,不可以点击; 3 您已接受面试邀请 不可以点击
         RongIM.registerMessageType(Custome2Message.class);//白底：RCD:TipMsg
         RongIM.registerMessageTemplate(new Custome2MessageItemProvider());
+        RongIM.registerMessageType(Custome02Message.class);//白底：RCD:TipMsg
+        RongIM.registerMessageTemplate(new Custome02MessageItemProvider());
         //---------TODO 自定义消息2的类型结束--------------
 
         //所有人的灰底白字的提示 content 就是提示文本类型
         RongIM.registerMessageType(Custome3Message.class);//提示：RCD:GrayTipMsg
         RongIM.registerMessageTemplate(new Custome3MessageItemProvider());
+        RongIM.registerMessageType(Custome03Message.class);//提示：RCD:GrayTipMsg
+        RongIM.registerMessageTemplate(new Custome03MessageItemProvider());
         //---------TODO 自定义消息3的类型结束--------------
 
         //发出面试邀请,点击进入面试详情,拒绝和同意按钮的操作

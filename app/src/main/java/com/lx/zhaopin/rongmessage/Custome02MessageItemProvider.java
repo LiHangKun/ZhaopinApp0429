@@ -21,14 +21,14 @@ import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Message;
 
 //HR 或求职者 界面的白底消息, type 1,查看详情; 可以点击 type 2 您已向对方发送面试邀约,不可以点击; 3 您已接受面试邀请 不可以点击
-@ProviderTag(messageContent = Custome2Message.class,  centerInHorizontal = true, showSummaryWithName = false)
-public class Custome2MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome2Message> {
+@ProviderTag(messageContent = Custome02Message.class,  centerInHorizontal = true, showSummaryWithName = false)
+public class Custome02MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome02Message> {
 
     private Context mContext;
     private static final String TAG = "Custome1MessageItemProv";
 
     @Override
-    public void bindView(View view, int i, final Custome2Message custome2Message, UIMessage uiMessage) {
+    public void bindView(View view, int i, final Custome02Message custome02Message, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
@@ -40,11 +40,11 @@ public class Custome2MessageItemProvider extends IContainerItemProvider.MessageP
         }
 
         //  content   就是简历的ID
-        if (custome2Message.getContent() != null) {
+        if (custome02Message.getContent() != null) {
             //拒绝
-            if (custome2Message.getType() != null) {
+            if (custome02Message.getType() != null) {
                 Gson gson = new Gson();
-                final RongMessageInBean rongMessageInBean = gson.fromJson(custome2Message.getContent(), RongMessageInBean.class);
+                final RongMessageInBean rongMessageInBean = gson.fromJson(custome02Message.getContent(), RongMessageInBean.class);
                 switch (rongMessageInBean.getType()) {
                     case "1":
                         holder.tvTitle2.setText("您已接收对方简历，点击查看详情");
@@ -81,12 +81,12 @@ public class Custome2MessageItemProvider extends IContainerItemProvider.MessageP
     }
 
     @Override
-    public Spannable getContentSummary(Custome2Message custome2Message) {
+    public Spannable getContentSummary(Custome02Message custome02Message) {
         return null;
     }
 
     @Override
-    public void onItemClick(View view, int i, Custome2Message custome2Message, UIMessage uiMessage) {
+    public void onItemClick(View view, int i, Custome02Message custome02Message, UIMessage uiMessage) {
 
     }
 

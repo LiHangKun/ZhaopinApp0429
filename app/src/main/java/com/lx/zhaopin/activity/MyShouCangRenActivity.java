@@ -1,5 +1,6 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,22 +66,43 @@ public class MyShouCangRenActivity extends BaseActivity {
         recyclerView.setAdapter(myShouCangRenAdapter);
         myShouCangRenAdapter.setOnItemClickListener(new MyShouCangRenAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(final String rid) {
-                //取消收藏
-                StyledDialog.init(mContext);
-                StyledDialog.buildIosAlert("", "\r是否取消收藏?", new MyDialogListener() {
-                    @Override
-                    public void onFirst() {
+            public void OnItemClickListener(View view, final String rid, String openResume) {
 
-                    }
+                switch (view.getId()) {
+                    case R.id.tv7:
+                        //取消收藏
+                        StyledDialog.init(mContext);
+                        StyledDialog.buildIosAlert("", "\r是否取消收藏?", new MyDialogListener() {
+                            @Override
+                            public void onFirst() {
 
-                    @Override
-                    public void onSecond() {
-                        quXiaoShouCangRen(rid);
+                            }
+
+                            @Override
+                            public void onSecond() {
+                                quXiaoShouCangRen(rid);
 
 
-                    }
-                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                            }
+                        }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
+                        break;
+                    case R.id.llView:
+
+                        switch (openResume) {
+                            case "0":
+                                ToastFactory.getToast(mContext, "简历已关闭").show();
+                                break;
+                            case "1":
+                                Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
+                                intent.putExtra("rid", rid);
+                                startActivity(intent);
+                                break;
+                        }
+
+
+                        break;
+                }
+
 
             }
         });

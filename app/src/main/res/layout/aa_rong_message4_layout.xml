@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-
+        android:id="@+id/llView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rc_white_bg_shape"
