@@ -22,6 +22,24 @@ public class PhoneStateBean extends CommonBean {
     private String name;
     private String avatar;
     private String chatApplyText;
+    private String id;
+    private String HRId;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getHRId() {
+        return HRId;
+    }
+
+    public void setHRId(String HRId) {
+        this.HRId = HRId;
+    }
 
     public String getChatApplyText() {
         return chatApplyText;

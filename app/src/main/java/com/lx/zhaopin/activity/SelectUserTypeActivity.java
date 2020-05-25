@@ -138,7 +138,7 @@ public class SelectUserTypeActivity extends BaseActivity {
     }
 
     //获取求职者融云Token
-    private void getQiuZhiRongToken(String mid) {
+    private void getQiuZhiRongToken(final String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.qiuZhiRToken, params, new SpotsCallBack<PhoneStateBean>(mContext) {
@@ -146,7 +146,8 @@ public class SelectUserTypeActivity extends BaseActivity {
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 SPTool.addSessionMap(AppSP.USER_TYPE, "0");
                 startActivity(new Intent(mContext, MainActivity.class));
-                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                //EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                EventBus.getDefault().post(new MessageEvent(2, mid, resultBean.getName(), resultBean.getAvatar(), resultBean.getrRongToken(), resultBean.getId(), null));
                 finish();
 
             }
@@ -160,15 +161,16 @@ public class SelectUserTypeActivity extends BaseActivity {
     }
 
     //获取HR融云Token
-    private void getHrRongToken(String mid) {
+    private void getHrRongToken(final String mid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", mid);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.getHRRongToken, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.qiuZhiRToken, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 SPTool.addSessionMap(AppSP.USER_TYPE, "1");
                 startActivity(new Intent(mContext, MainActivity.class));
-                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                //EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+                EventBus.getDefault().post(new MessageEvent(2, mid, resultBean.getName(), resultBean.getAvatar(), resultBean.getrRongToken(), resultBean.getHRId(), null));
                 finish();
 
             }
