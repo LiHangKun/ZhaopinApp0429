@@ -47,7 +47,6 @@ import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.KeyAllboardUtil;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.SharedPreferencesUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
@@ -56,14 +55,11 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -338,7 +334,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void init() {
-        topTitle.setText("工作经验");
+        topTitle.setText("新增或者修改工作经验");
         rightText.setText("删除");
         workID = getIntent().getStringExtra("workID");
         if (!TextUtils.isEmpty(workID)) {
@@ -360,7 +356,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
         initLunarPickerEnd();
 
 
-        oldSearchStr = (String) SharedPreferencesUtil.getData(MyGongZuoActivity.this, AppSP.WORK_JINENG, "");
+        /*oldSearchStr = (String) SharedPreferencesUtil.getData(MyGongZuoActivity.this, AppSP.WORK_JINENG, "");
         if (!TextUtils.isEmpty(oldSearchStr)) {
             String oldArray[] = oldSearchStr.split(",");
             List list = Arrays.asList(oldArray);
@@ -368,7 +364,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
             oldArray = (String[]) set.toArray(new String[0]);
             flowData = Arrays.asList(oldArray);
             setUpFlowLinear();
-        }
+        }*/
 
     }
 
@@ -399,12 +395,12 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                 edit2.setText(resultBean.getExperience());
 
                 oldSearchStr = resultBean.getSkills();
-
                 String skills = resultBean.getSkills();
                 String[] split = skills.split(",");
                 for (int i = 0; i < split.length; i++) {
                     flowData.add(split[i]);
                 }
+                flowLiner.removeAllViews();
 
                 for (int i = 0; i < flowData.size(); i++) {
                     final TextView radioButton = new TextView(mContext);
@@ -510,7 +506,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                     } else if (tv3.getText().toString().trim().startsWith("请")) {
                         ToastFactory.getToast(mContext, "结束时间不能为空").show();
                         return;
-                    } else if (TextUtils.isEmpty(oldSearchStr)) {
+                    } else if (TextUtils.isEmpty(skills)) {
                         ToastFactory.getToast(mContext, "专业技能不能为空").show();
                         return;
                     } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
@@ -519,7 +515,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                     } else {
                         addWorkJingYan(edit1.getText().toString().trim(),
                                 edit0.getText().toString().trim(),
-                                oldSearchStr,
+                                skills,
                                 tv2.getText().toString().trim(),
                                 tv3.getText().toString().trim(),
                                 edit2.getText().toString().trim());
@@ -538,7 +534,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                     } else if (tv3.getText().toString().trim().startsWith("请")) {
                         ToastFactory.getToast(mContext, "结束时间不能为空").show();
                         return;
-                    } else if (TextUtils.isEmpty(oldSearchStr)) {
+                    } else if (TextUtils.isEmpty(skills)) {
                         ToastFactory.getToast(mContext, "专业技能不能为空").show();
                         return;
                     } else if (TextUtils.isEmpty(edit2.getText().toString().trim())) {
@@ -547,7 +543,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                     } else {
                         editWorkJingYan(workID, edit1.getText().toString().trim(),
                                 edit0.getText().toString().trim(),
-                                oldSearchStr,
+                                skills,
                                 tv2.getText().toString().trim(),
                                 tv3.getText().toString().trim(),
                                 edit2.getText().toString().trim());
@@ -588,7 +584,6 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
 
             }
         });
-
 
 
     }
@@ -644,11 +639,14 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
      * @param resultCode  表示的是启动后的Activity回传值时的resultCode值
      * @param data        表示的是启动后的Activity回传过来的Intent对象
      */
+
+    String skills = "";
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 判断请求码和返回码是不是正确的，这两个码都是我们自己设置的
-        if (requestCode == 100) {
+       /* if (requestCode == 100) {
 
             oldSearchStr = (String) SharedPreferencesUtil.getData(MyGongZuoActivity.this, AppSP.WORK_JINENG, "");
             if (!TextUtils.isEmpty(oldSearchStr)) {
@@ -659,8 +657,59 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                 flowData = Arrays.asList(oldArray);
                 setUpFlowLinear();
             }
+        }*/
+
+
+        switch (requestCode) {
+            case 100: // 这里的2 与上面的startActivityForResult(intent, 2);里的2 是对应的。
+                if (resultCode == RESULT_OK) {
+                    String WorkName = data.getStringExtra("WorkName");
+                    skills += WorkName + ",";
+                    Log.i(TAG, "onActivityResult: 保存的信息文字是" + skills);  // 在,的,哈,
+
+                    flowLiner.removeAllViews();
+                    flowData.clear();
+                    String[] split = skills.split(",");
+                    for (int i = 0; i < split.length; i++) {
+                        flowData.add(split[i]);
+                    }
+
+                    for (int i = 0; i < flowData.size(); i++) {
+                        final TextView radioButton = new TextView(mContext);
+                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
+                        radioButton.setLayoutParams(layoutParams);
+                        final String str = flowData.get(i);
+                        radioButton.setText(str);
+                        radioButton.setGravity(Gravity.CENTER);
+                        radioButton.setTextSize(13);
+                        radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
+                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                        //radioButton.setBackgroundResource(R.drawable.search_selector);
+                        radioButton.setBackgroundResource(R.drawable.button_shape03);
+                        radioButton.setFocusable(true);
+                        radioButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                               /* Intent intent = new Intent(mContext, AddZhuanYeJiNengActivity.class);
+                                intent.putExtra("id", "");
+                                intent.putExtra("name", str);
+                                startActivity(intent);*/
+                            }
+                        });
+                        flowLiner.addView(radioButton);
+                    }
+
+
+
+
+                }
+                break;
+
 
         }
+
+
     }
 
 

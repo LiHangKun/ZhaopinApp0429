@@ -28,7 +28,7 @@ public class NetCuiMethod {
     public static final String delEidInfo = "member/jobhunter/resume/education/delete";//删除教育经历
     public static final String zhiWeiDetail = "member/position/detail";//职位详情
     public static final String zhiWeiShouCang = "member/position/collect";//职位收藏/取消收藏
-    public static final String zhiWeiPageList = "member/position/page";//职位分页列表  TODO  卡片没有写
+    public static final String zhiWeiPageList = "member/position/page";//职位分页列表
     public static final String zhiWeiIsHeShi = "member/position/improper";//职位不合适/取消不合适  TODO  还没有写
     public static final String zhiWeiJuBao = "member/position/report";//职位举报
     public static final String mianShiTimeList = "member/position/time";//预约面试时间列表   TODO  还没有写
@@ -44,8 +44,8 @@ public class NetCuiMethod {
     public static final String EditZyJN = "member/jobhunter/resume/skill/edit";//修改专业技能
     public static final String delWorkJingLi = "member/jobhunter/resume/work/delete";//删除工作经历
     public static final String getWokJingLi = "member/jobhunter/resume/work/get";//获取工作经历
-    public static final String editWokJingLi = "member/jobhunter/resume/work/edit";//修改工作经历  //TODO  可能会有问题
-    public static final String addWokJingLi = "member/jobhunter/resume/work/add";//新增工作经历  //TODO  可能会有问题
+    public static final String editWokJingLi = "member/jobhunter/resume/work/edit";//修改工作经历
+    public static final String addWokJingLi = "member/jobhunter/resume/work/add";//新增工作经历
     public static final String qiuZhiYiXiang = "member/jobhunter/expectation";//求职意向
     public static final String zhuCiZhiWei = "member/jobhunter/expectation/get";//获取主次职位
     public static final String addzhuCiZhiWei = "member/jobhunter/expectation/add";//新增主次职位
@@ -54,8 +54,8 @@ public class NetCuiMethod {
     public static final String shouCangZhiWeiList = "member/postion/collect/page";//收藏职位列表
     public static final String pingBiGangList = "member/postion/improper/page";//不合适职位列表
     public static final String guanzhuGongSi = "member/company/collect/page";//关注公司列表
-    public static final String mianshiList = "member/jobhunter/interview/list";//面试记录  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
-    public static final String mianshiDetail_qiuZhi1 = "member/jobhunter/interview/detail";//面试详情,求职者看到的界面  //TODO  里面的状态图片资源少,暂时没有替换完  待面试   已到达  不合适
+    public static final String mianshiList = "member/jobhunter/interview/list";//面试记录
+    public static final String mianshiDetail_qiuZhi1 = "member/jobhunter/interview/detail";//面试详情,求职者看到的界面
     public static final String yiLuQuList = "member/jobhunter/offer/list";//录取记录
     public static final String offerDetail = "member/jobhunter/offer/detail";//offer详情
     public static final String caoZuoOffer = "member/jobhunter/offer/deal";//处理offer

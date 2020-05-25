@@ -20,7 +20,6 @@ import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.SharedPreferencesUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 
 import org.greenrobot.eventbus.EventBus;
@@ -129,8 +128,14 @@ public class AddZhuanYeJiNengWorkActivity extends BaseActivity implements View.O
                     ToastFactory.getToast(mContext, "专业技能不能为空").show();
                     return;
                 } else {
-                    SharedPreferencesUtil.saveData(AddZhuanYeJiNengWorkActivity.this, AppSP.WORK_JINENG, edit1.getText().toString().trim());
+                    /*SharedPreferencesUtil.saveData(AddZhuanYeJiNengWorkActivity.this, AppSP.WORK_JINENG, edit1.getText().toString().trim());
+                    finish();*/
+
+                    Intent intent = new Intent();
+                    intent.putExtra("WorkName", edit1.getText().toString().trim());
+                    setResult(RESULT_OK, intent);
                     finish();
+
                 }
 
 
