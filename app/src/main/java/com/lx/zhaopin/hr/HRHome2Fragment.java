@@ -88,6 +88,7 @@ public class HRHome2Fragment extends BaseFragment implements View.OnClickListene
         fragments.add(new HRMessage1Fragment());
         fragments.add(new HRMessage2Fragment());
         fragments.add(new HRMessage3Fragment());
+        SPTool.addSessionMap(AppSP.chatWhere, "1");
 
 
         tv1.setTextColor(getResources().getColor(R.color.appColor));

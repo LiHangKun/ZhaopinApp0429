@@ -339,7 +339,7 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                         String userId = SPTool.getSessionValue(AppSP.UID);
                         String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
                         String userHead = SPTool.getSessionValue(AppSP.USER_ICON);
-
+                        SPTool.addSessionMap(AppSP.chatWhere, "1");
                         Log.i(TAG, "onClick: " + userId + "<>" + nickName + "<>" + userHead);
                         if (null != userId && null != nickName && null != userHead)
                             RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));

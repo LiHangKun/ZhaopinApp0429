@@ -1,6 +1,11 @@
 package com.lx.zhaopin.rong;
 
 
+import android.util.Log;
+
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.utils.SPTool;
+
 import java.util.List;
 
 import io.rong.callkit.AudioPlugin;
@@ -14,6 +19,8 @@ import io.rong.imlib.model.Conversation;
  */
 public class MyExtensionModule extends DefaultExtensionModule {
 
+    private static final String TAG = "MyExtensionModule";
+
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModules = super.getPluginModules(conversationType);
@@ -23,7 +30,16 @@ public class MyExtensionModule extends DefaultExtensionModule {
         pluginModules.add(new MyImagePlugin());//图片 MyImagePlugin
         pluginModules.add(new AudioPlugin());//语音聊天  MyYinPinPlugin
         pluginModules.add(new VideoPlugin());//视频聊天  MyShiPinPlugin   VideoPlugin
-        pluginModules.add(new YaoYuePlugin());//邀约
+
+        String chatWhere = SPTool.getSessionValue(AppSP.chatWhere);
+        Log.i(TAG, "getPluginModules: 角色的跳转进入 " + chatWhere);  //1是 HR 角色的跳转进入
+
+        if (chatWhere.equals("1")) {
+            pluginModules.add(new YaoYuePlugin());//邀约
+        }
+
+
+
 
 
 

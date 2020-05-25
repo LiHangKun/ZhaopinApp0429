@@ -37,6 +37,7 @@ public class AppSP {
     public static final String USER_PHONE = "user_phone";//用户电话号码
     public static final String isFirstIndex = "ISFIRSTINDEX";  //是否是第一次进入
     public static final String xieyi = "xieyi";//启动的协议
+    public static final String chatWhere = "chatWhere";//  1是 HR 角色的跳转进入
 
 
     public static final int PMS_LOCATION = 1003;// 权限编号，自定义----定位  打电话
