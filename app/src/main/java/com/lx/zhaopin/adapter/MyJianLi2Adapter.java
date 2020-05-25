@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,10 +50,18 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
         viewHolder.tv3.setText(mData.get(po).getPositionName());
         viewHolder.tv4.setText(mData.get(po).getExperience());
 
+        if (TextUtils.isEmpty(mData.get(po).getExperience())){
+            viewHolder.tv4.setVisibility(View.GONE);
+        }else {
+            viewHolder.tv4.setVisibility(View.VISIBLE);
+        }
+
+
+
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (itemClickListener != null){
+                if (itemClickListener != null) {
                     itemClickListener.OnItemClickListener(mData.get(po).getId());
                 }
             }
@@ -64,7 +73,7 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
         viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < split.length; i++) {
             final TextView radioButton = new TextView(mContext);
-            FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT,  FlowLiner.LayoutParams.WRAP_CONTENT);
+            FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
 
             layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
             radioButton.setLayoutParams(layoutParams);
@@ -118,11 +127,11 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
     }
 
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void OnItemClickListener(String id);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         itemClickListener = onItemClickListener;
     }
 

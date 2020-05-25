@@ -172,7 +172,7 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
                 //TODO 工作经验
 
                 //TODO 专业技能
-                List<MyJianLiBean.ResumeSkillListBean> resumeSkillList = resultBean.getResumeSkillList();
+                final List<MyJianLiBean.ResumeSkillListBean> resumeSkillList = resultBean.getResumeSkillList();
                 List<String> resumeSkillListString = new ArrayList<>();
                 for (int i = 0; i < resumeSkillList.size(); i++) {
                     resumeSkillListString.add(resumeSkillList.get(i).getName());
@@ -193,11 +193,23 @@ public class MyJianLiActivity extends BaseActivity implements View.OnClickListen
                     //radioButton.setBackgroundResource(R.drawable.search_selector);
                     radioButton.setBackgroundResource(R.drawable.button_shape03);
                     radioButton.setFocusable(true);
+                    final int finalI = i;
                     radioButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             /*TODO ACTION*/
                             // doSearch(str);
+
+                            String name = resumeSkillList.get(finalI).getName();
+                            String id = resumeSkillList.get(finalI).getId();
+
+                            Log.i(TAG, "onClick: 点击的专业技能" + name + "---" + id);
+                            Intent intent = new Intent(mContext, AddZhuanYeJiNengActivity.class);
+                            intent.putExtra("id", id);
+                            intent.putExtra("name", name);
+                            startActivity(intent);
+
+
                         }
                     });
                     flowLiner.addView(radioButton);

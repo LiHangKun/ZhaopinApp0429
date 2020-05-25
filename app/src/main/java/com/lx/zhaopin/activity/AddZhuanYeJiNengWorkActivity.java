@@ -180,7 +180,7 @@ public class AddZhuanYeJiNengWorkActivity extends BaseActivity implements View.O
                     public void run() {
                         Intent intent = new Intent();
                         intent.putExtra("WorkName", name);
-                        setResult(111, intent);
+                        setResult(100, intent);
                         finish();
                     }
                 }, 500);

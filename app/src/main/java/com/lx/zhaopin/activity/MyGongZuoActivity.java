@@ -398,6 +398,8 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                 tv3.setText(resultBean.getEndDate());
                 edit2.setText(resultBean.getExperience());
 
+                oldSearchStr = resultBean.getSkills();
+
                 String skills = resultBean.getSkills();
                 String[] split = skills.split(",");
                 for (int i = 0; i < split.length; i++) {
