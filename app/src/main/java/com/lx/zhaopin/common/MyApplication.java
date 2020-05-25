@@ -10,18 +10,20 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.rong.MyExtensionModule;
 import com.lx.zhaopin.rongmessage.Custome01Message;
 import com.lx.zhaopin.rongmessage.Custome01MessageItemProvider;
-import com.lx.zhaopin.rongmessage.Custome02Message;
-import com.lx.zhaopin.rongmessage.Custome02MessageItemProvider;
 import com.lx.zhaopin.rongmessage.Custome03Message;
 import com.lx.zhaopin.rongmessage.Custome03MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome04Message;
+import com.lx.zhaopin.rongmessage.Custome04MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome05Message;
+import com.lx.zhaopin.rongmessage.Custome05MessageItemProvider;
 import com.lx.zhaopin.rongmessage.Custome1Message;
 import com.lx.zhaopin.rongmessage.Custome1MessageItemProvider;
-import com.lx.zhaopin.rongmessage.Custome2Message;
-import com.lx.zhaopin.rongmessage.Custome2MessageItemProvider;
 import com.lx.zhaopin.rongmessage.Custome3Message;
 import com.lx.zhaopin.rongmessage.Custome3MessageItemProvider;
 import com.lx.zhaopin.rongmessage.Custome4Message;
 import com.lx.zhaopin.rongmessage.Custome4MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome5Message;
+import com.lx.zhaopin.rongmessage.Custome5MessageItemProvider;
 import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.RxToast;
 import com.lx.zhaopin.utils.SPTool;
@@ -104,8 +106,8 @@ public class MyApplication extends Application {
         RongIM.init(this, AppSP.RongToken);//融云
 
         //发送简历：RCD:SendJianLiMsg    ---->   JianLiMsg    1
-        //接收简历：RCD: ReceiveJianLiMsg
-        //拒绝接收简历：RCD: RefuseJianLiMsg
+        //接收简历：RCD:ReceiveJianLiMsg
+        //拒绝接收简历：RCD:RefuseJianLiMsg
         //面试邀约：RCD:SendMianShiMsg      ---->   MianShiMsg  4
         //接受面试：RCD:ReceiveMianShiMsg
         //拒绝面试：RCD:RefuseMianShiMsg
@@ -115,28 +117,33 @@ public class MyApplication extends Application {
         //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
         RongIM.registerMessageType(Custome1Message.class);//简历：RCD:SendJianLiMsg
         RongIM.registerMessageTemplate(new Custome1MessageItemProvider());
-        RongIM.registerMessageType(Custome01Message.class);//简历：RCD:ReceiveJianLiMsg
+        RongIM.registerMessageType(Custome01Message.class);//接收简历：RCD:ReceiveJianLiMsg
         RongIM.registerMessageTemplate(new Custome01MessageItemProvider());
         //---------TODO 自定义消息1的类型结束--------------
 
-        //HR 或求职者 界面的白底消息, type 1,查看详情; 可以点击 type 2 您已向对方发送面试邀约,不可以点击; 3 您已接受面试邀请 不可以点击
-        RongIM.registerMessageType(Custome2Message.class);//白底：RCD:TipMsg
-        RongIM.registerMessageTemplate(new Custome2MessageItemProvider());
-        RongIM.registerMessageType(Custome02Message.class);//白底：RCD:TipMsg
-        RongIM.registerMessageTemplate(new Custome02MessageItemProvider());
-        //---------TODO 自定义消息2的类型结束--------------
 
         //所有人的灰底白字的提示 content 就是提示文本类型
-        RongIM.registerMessageType(Custome3Message.class);//提示：RCD:GrayTipMsg
+        RongIM.registerMessageType(Custome3Message.class);//拒绝接收简历：RCD:RefuseJianLiMsg
         RongIM.registerMessageTemplate(new Custome3MessageItemProvider());
-        RongIM.registerMessageType(Custome03Message.class);//提示：RCD:GrayTipMsg
+        RongIM.registerMessageType(Custome03Message.class);//RCD:SendMianShiMsg
         RongIM.registerMessageTemplate(new Custome03MessageItemProvider());
         //---------TODO 自定义消息3的类型结束--------------
 
         //发出面试邀请,点击进入面试详情,拒绝和同意按钮的操作
-        RongIM.registerMessageType(Custome4Message.class);//面试：RCD:SendMianShiMsg
+        RongIM.registerMessageType(Custome4Message.class); //接受面试：RCD:ReceiveMianShiMsg
         RongIM.registerMessageTemplate(new Custome4MessageItemProvider());
+        RongIM.registerMessageType(Custome04Message.class);//拒绝面试：RCD:RefuseMianShiMsg
+        RongIM.registerMessageTemplate(new Custome04MessageItemProvider());
         //---------TODO 自定义消息3的类型结束--------------
+
+
+        //发出面试邀请,点击进入面试详情,拒绝和同意按钮的操作
+        RongIM.registerMessageType(Custome5Message.class);//求职者取消面试：RCD:CancleMianShiMsg
+        RongIM.registerMessageTemplate(new Custome5MessageItemProvider());
+        RongIM.registerMessageType(Custome05Message.class);//HR取消面试：RCD:HRCancleMianShiMsg
+        RongIM.registerMessageTemplate(new Custome05MessageItemProvider());
+        //---------TODO 自定义消息4的类型结束--------------
+
 
 
         setInputProvider();

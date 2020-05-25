@@ -55,6 +55,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             }
             userId = uri.getQueryParameter("targetId");
 
+            SPTool.addSessionMap("rid", userId);
             Log.i(TAG, "initView: " + param + "-----" + userId);
         }
 

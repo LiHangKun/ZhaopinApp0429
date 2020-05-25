@@ -24,12 +24,13 @@ import io.rong.imlib.model.UserInfo;
 //求职者取消面试：RCD:CancleMianShiMsg
 //HR取消面试：RCD:HRCancleMianShiMsg
 
-@MessageTag(value = "RCD:TipMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
-public class Custome02Message extends MessageContent {
+//HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
+@MessageTag(value = "RCD:CancleMianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+public class Custome5Message extends MessageContent {
 
-    private static final String TAG = "Custome2Message";
-    public String content;//这个就是简历的 ID
-    public String type;
+    private static final String TAG = "Custome5Message";
+    public String content;//接收的邀约ID
+    public String type;//企业的ID 用于查询企业的名字和 企业的头像
 
     public String getContent() {
         return content;
@@ -47,38 +48,38 @@ public class Custome02Message extends MessageContent {
         this.type = type;
     }
 
-    public Custome02Message() {
+    public Custome5Message() {
     }
 
-    public Custome02Message(String content, String type) {
+    public Custome5Message(String content, String type) {
         this.content = content;
         this.type = type;
     }
 
-    public Custome02Message(Parcel in) {
+    public Custome5Message(Parcel in) {
         content = in.readString();
         type = in.readString();
         setUserInfo(ParcelUtils.readFromParcel(in, UserInfo.class));
     }
 
-    public static Custome02Message obtain(String content, String type) {
-        return new Custome02Message(content, type);
+    public static Custome5Message obtain(String content, String type) {
+        return new Custome5Message(content, type);
     }
 
-    public static final Creator<Custome02Message> CREATOR = new Creator<Custome02Message>() {
+    public static final Creator<Custome5Message> CREATOR = new Creator<Custome5Message>() {
         @Override
-        public Custome02Message createFromParcel(Parcel source) {
-            return new Custome02Message(source);
+        public Custome5Message createFromParcel(Parcel source) {
+            return new Custome5Message(source);
         }
 
         @Override
-        public Custome02Message[] newArray(int size) {
-            return new Custome02Message[size];
+        public Custome5Message[] newArray(int size) {
+            return new Custome5Message[size];
         }
     };
 
 
-    public Custome02Message(byte[] data) {
+    public Custome5Message(byte[] data) {
         String jsonStr = null;
 
         try {

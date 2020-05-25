@@ -3,16 +3,21 @@ package com.lx.zhaopin.rongmessage;
 //参考  CustomeGroupTipMessageItemProvider
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Spannable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.RenCaiDetailActivity;
+import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 
 import io.rong.imkit.model.ProviderTag;
@@ -29,8 +34,7 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
 
     @Override
     public void bindView(View view, int i, final Custome1Message custome1Message, UIMessage uiMessage) {
-        ViewHolder holder = (ViewHolder) view.getTag();
-
+        final ViewHolder holder = (ViewHolder) view.getTag();
 
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
@@ -60,11 +64,14 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
 
                 final RongMessageInBean rongMessageInBean = gson.fromJson(custome1Message.getContent(), RongMessageInBean.class);
 
+
                 //拒绝
                 holder.tvCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ToastFactory.getToast(mContext, "拒绝的简历ID " + rongMessageInBean.getId()).show();
+                        SPTool.addSessionMap("jianLiID", "0");
+                        holder.caoZuoView.setVisibility(View.GONE);
+                        //ToastFactory.getToast(mContext, "拒绝的简历ID " + rongMessageInBean.getId()).show();
                     }
                 });
 
@@ -72,22 +79,41 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
                 holder.tvOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ToastFactory.getToast(mContext, "同意的简历ID ---------->" + rongMessageInBean.getId()).show();
+                        SPTool.addSessionMap("jianLiID", "1");
+                        holder.caoZuoView.setVisibility(View.GONE);
+                        //ToastFactory.getToast(mContext, "同意的简历ID ---------->" + rongMessageInBean.getId()).show();
                     }
                 });
 
                 holder.llView1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ToastFactory.getToast(mContext, "同意的简历ID ---------->进入人才详情" + rongMessageInBean.getId()).show();
+
+                        String jianLiID = SPTool.getSessionValue("jianLiID");
+
+                        if (!TextUtils.isEmpty(jianLiID)) {
+                            holder.caoZuoView.setVisibility(View.GONE);
+                            if (jianLiID.equals("1")) {
+                                ToastFactory.getToast(mContext, "同意的简历ID ---------->进入人才详情" + rongMessageInBean.getId()).show();
+                                Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
+                                intent.putExtra("rid", rongMessageInBean.getId());
+                                mContext.startActivity(intent);
+                            } else {
+                                ToastFactory.getToast(mContext, "您已拒绝了该简历").show();
+                                return;
+                            }
+                        } else {
+                            ToastFactory.getToast(mContext, "请先同意简历").show();
+                            return;
+                        }
+
+
                     }
                 });
 
             }
 
         }
-
-
 
 
     }
@@ -118,9 +144,8 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
         holder.llView4 = view.findViewById(R.id.llView4);
 
 
-
-
         holder.tvTitle3 = view.findViewById(R.id.tvTitle3);
+        holder.caoZuoView = view.findViewById(R.id.caoZuoView);
 
         view.setTag(holder);
 
@@ -130,5 +155,6 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
     class ViewHolder {
         LinearLayout llView1, llView2, llView3, llView4;
         TextView tvTitle, tvCancel, tvOk, tvTitle3;
+        RelativeLayout caoZuoView;
     }
 }

@@ -25,8 +25,8 @@ import io.rong.imlib.model.UserInfo;
 //HR取消面试：RCD:HRCancleMianShiMsg
 
 //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
-@MessageTag(value = "RCD:ReceiveMianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
-public class Custome4Message extends MessageContent {
+@MessageTag(value = "RCD:RefuseMianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+public class Custome04Message extends MessageContent {
 
     private static final String TAG = "Custome4Message";
     public String content;//接收的邀约ID
@@ -48,38 +48,38 @@ public class Custome4Message extends MessageContent {
         this.type = type;
     }
 
-    public Custome4Message() {
+    public Custome04Message() {
     }
 
-    public Custome4Message(String content, String type) {
+    public Custome04Message(String content, String type) {
         this.content = content;
         this.type = type;
     }
 
-    public Custome4Message(Parcel in) {
+    public Custome04Message(Parcel in) {
         content = in.readString();
         type = in.readString();
         setUserInfo(ParcelUtils.readFromParcel(in, UserInfo.class));
     }
 
-    public static Custome4Message obtain(String content, String type) {
-        return new Custome4Message(content, type);
+    public static Custome04Message obtain(String content, String type) {
+        return new Custome04Message(content, type);
     }
 
-    public static final Creator<Custome4Message> CREATOR = new Creator<Custome4Message>() {
+    public static final Creator<Custome04Message> CREATOR = new Creator<Custome04Message>() {
         @Override
-        public Custome4Message createFromParcel(Parcel source) {
-            return new Custome4Message(source);
+        public Custome04Message createFromParcel(Parcel source) {
+            return new Custome04Message(source);
         }
 
         @Override
-        public Custome4Message[] newArray(int size) {
-            return new Custome4Message[size];
+        public Custome04Message[] newArray(int size) {
+            return new Custome04Message[size];
         }
     };
 
 
-    public Custome4Message(byte[] data) {
+    public Custome04Message(byte[] data) {
         String jsonStr = null;
 
         try {

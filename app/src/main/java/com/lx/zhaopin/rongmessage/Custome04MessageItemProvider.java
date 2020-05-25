@@ -20,8 +20,8 @@ import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Message;
 
 //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意  showPortrait = false,
-@ProviderTag(messageContent = Custome4Message.class, centerInHorizontal = true, showSummaryWithName = false)
-public class Custome4MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome4Message> {
+@ProviderTag(messageContent = Custome04Message.class, centerInHorizontal = true, showSummaryWithName = false)
+public class Custome04MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome04Message> {
 
     private Context mContext;
     private static final String TAG = "Custome4MessageItemProv";
@@ -33,18 +33,18 @@ public class Custome4MessageItemProvider extends IContainerItemProvider.MessageP
 
 
     @Override
-    public void bindView(View view, int i, final Custome4Message custome4Message, UIMessage uiMessage) {
+    public void bindView(View view, int i, final Custome04Message custome04Message, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
             //这是发送方
             Log.i(TAG, "onClick: 简历ID  + 这是发送方");
 
-            holder.llView2.setVisibility(View.VISIBLE);
+            holder.llView3.setVisibility(View.VISIBLE);
             holder.llView1.setVisibility(View.GONE);
-            holder.llView3.setVisibility(View.GONE);
+            holder.llView2.setVisibility(View.GONE);
             holder.llView4.setVisibility(View.GONE);
-            holder.tvTitle2.setText("您已接受面试邀约");
+            holder.tvTitle3.setText("您已拒绝了HR的面试邀约");
 
 
         } else if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
@@ -55,7 +55,7 @@ public class Custome4MessageItemProvider extends IContainerItemProvider.MessageP
             holder.llView1.setVisibility(View.GONE);
             holder.llView2.setVisibility(View.GONE);
             holder.llView4.setVisibility(View.GONE);
-            holder.tvTitle3.setText("对方已接受您的面试邀约");
+            holder.tvTitle3.setText("对方已拒绝您的面试邀约");
 
         }
 
@@ -63,12 +63,12 @@ public class Custome4MessageItemProvider extends IContainerItemProvider.MessageP
     }
 
     @Override
-    public Spannable getContentSummary(Custome4Message custome4Message) {
+    public Spannable getContentSummary(Custome04Message custome04Message) {
         return null;
     }
 
     @Override
-    public void onItemClick(View view, int i, Custome4Message custome4Message, UIMessage uiMessage) {
+    public void onItemClick(View view, int i, Custome04Message custome04Message, UIMessage uiMessage) {
 
     }
 

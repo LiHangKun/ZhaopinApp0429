@@ -3,6 +3,7 @@ package com.lx.zhaopin.rongmessage;
 //参考  CustomeGroupTipMessageItemProvider
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Spannable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.utils.ToastFactory;
 
 import io.rong.imkit.model.ProviderTag;
@@ -77,6 +79,9 @@ public class Custome01MessageItemProvider extends IContainerItemProvider.Message
                     @Override
                     public void onClick(View view) {
                         ToastFactory.getToast(mContext, "简历详情的ID---->" + rongMessageInBean.getId()).show();
+                        Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
+                        intent.putExtra("rid", rongMessageInBean.getId());
+                        mContext.startActivity(intent);
                     }
                 });
 
