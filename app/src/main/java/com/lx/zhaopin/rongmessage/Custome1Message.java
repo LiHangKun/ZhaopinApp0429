@@ -15,13 +15,18 @@ import io.rong.imlib.model.UserInfo;
 
 //参考  CustomeGroupTipMessage
 
-//简历：RCD:JianLiMsg
-//面试：RCD:MianShiMsg
-//白底：RCD:TipMsg
-//提示：RCD:GrayTipMsg
+//发送简历：RCD:SendJianLiMsg    ---->   JianLiMsg
+//接收简历：RCD: ReceiveJianLiMsg
+//拒绝接收简历：RCD: RefuseJianLiMsg
+//面试邀约：RCD:SendMianShiMsg      ---->   MianShiMsg
+//接受面试：RCD:ReceiveMianShiMsg
+//拒绝面试：RCD:RefuseMianShiMsg
+//求职者取消面试：RCD:CancleMianShiMsg
+//HR取消面试：RCD:HRCancleMianShiMsg
+
 
 //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
-@MessageTag(value = "RCD:JianLiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+@MessageTag(value = "RCD:SendJianLiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class Custome1Message extends MessageContent {
 
     private static final String TAG = "Custome1Message";

@@ -97,14 +97,17 @@ public class MyApplication extends Application {
         //------TODO-------融云部分------
         RongIM.init(this, AppSP.RongToken);//融云
 
-        //简历：RCD:JianLiMsg
-        //面试：RCD:MianShiMsg
-        //白底：RCD:TipMsg
-        //提示：RCD:GrayTipMsg
-
+        //发送简历：RCD:SendJianLiMsg    ---->   JianLiMsg    1
+        //接收简历：RCD: ReceiveJianLiMsg
+        //拒绝接收简历：RCD: RefuseJianLiMsg
+        //面试邀约：RCD:SendMianShiMsg      ---->   MianShiMsg  4
+        //接受面试：RCD:ReceiveMianShiMsg
+        //拒绝面试：RCD:RefuseMianShiMsg
+        //求职者取消面试：RCD:CancleMianShiMsg
+        //HR取消面试：RCD:HRCancleMianShiMsg
 
         //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
-        RongIM.registerMessageType(Custome1Message.class);//简历：RCD:JianLiMsg
+        RongIM.registerMessageType(Custome1Message.class);//简历：RCD:SendJianLiMsg
         RongIM.registerMessageTemplate(new Custome1MessageItemProvider());
         //---------TODO 自定义消息1的类型结束--------------
 
@@ -119,7 +122,7 @@ public class MyApplication extends Application {
         //---------TODO 自定义消息3的类型结束--------------
 
         //发出面试邀请,点击进入面试详情,拒绝和同意按钮的操作
-        RongIM.registerMessageType(Custome4Message.class);//面试：RCD:MianShiMsg
+        RongIM.registerMessageType(Custome4Message.class);//面试：RCD:SendMianShiMsg
         RongIM.registerMessageTemplate(new Custome4MessageItemProvider());
         //---------TODO 自定义消息3的类型结束--------------
 

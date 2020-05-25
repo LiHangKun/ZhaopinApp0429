@@ -570,6 +570,11 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void run() {
                         finish();
+                        /*Intent intent = new Intent(mContext, MainActivity.class);
+                        intent.putExtra("pagerName", "0");
+                        AppSP.isToShopCar = true;
+                        startActivity(intent);
+                        finish();*/
                     }
                 }, 500);
 
