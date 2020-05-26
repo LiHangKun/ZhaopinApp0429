@@ -148,6 +148,9 @@ SHA-256: 0B:53:83:0B:4F:68:C5:7B:CD:62:78:B9:72:3C:73:6B:A7:B6:96:CC:F2:B0:33:C5
 //HR消息的类型  1 系统消息 2 收到Offer 3 求职反馈 4 面试邀请 5 HR取消面试 6 面试超时 7 举报结果 8 求职者点击已到达 9 求职者同意沟通 10 求职者取消面试
 
 
+2X2的列表
+StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
 gotoGaode(lat, lng);
 
 
