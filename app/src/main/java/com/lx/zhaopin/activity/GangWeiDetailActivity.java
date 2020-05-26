@@ -45,6 +45,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.rongmessage.RongUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
@@ -617,9 +618,15 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         if (null != userId && null != nickName && null != userHead)
             RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
         RongIM.getInstance().setMessageAttachedUserInfo(true);
+
+        RongUtil.sendZhiWeiMessage(hrid, hrName);
+
+
         //对方的ID 姓名
         //RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
         RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
+
+
     }
 
 

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.activity.MianShiDetailType2Activity;
+import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class HRDaiMianShi_In_ListAdapter extends RecyclerView.Adapter<HRDaiMianS
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, MianShiDetailType2Activity.class);
+                Intent intent = new Intent(mContext, MianShiDetailType1Activity.class);
                 intent.putExtra("interviewId", mData.get(i).getId());
                 mContext.startActivity(intent);
             }

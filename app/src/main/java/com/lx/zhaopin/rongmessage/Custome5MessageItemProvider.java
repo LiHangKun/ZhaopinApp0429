@@ -28,7 +28,7 @@ import io.rong.imlib.model.Message;
 public class Custome5MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome5Message> {
 
     private Context mContext;
-    private static final String TAG = "Custome4MessageItemProv";
+    private static final String TAG = "Custome5MessageItemProv";
 
     //llView1 是  对方给您发了一份求职简历  带拒绝和同意 tvTitle  tvCancel  tvOk
     //llView2 您已接收对方简历  tvTitle2  对号和白底黑字

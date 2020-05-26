@@ -104,6 +104,25 @@ public class RongUtil {
     }
 
 
+    //发送职位消息
+    public static void sendZhiWeiMessage(String targetId, String gameName) {
+        RongMessageInBean rongMessageInBean = new RongMessageInBean();
+        rongMessageInBean.setIcon(gameName);
+        Custome1Message custome1Message = new Custome1Message();
+        custome1Message.content = new Gson().toJson(rongMessageInBean);
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome1Message, "发送职位消息", "", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+            }
+        });
+    }
+
+
+
     //发送游戏消息
     public static void sendGameMessage(String targetId, String gameName) {
         /*MsgBean msgBean = new MsgBean();

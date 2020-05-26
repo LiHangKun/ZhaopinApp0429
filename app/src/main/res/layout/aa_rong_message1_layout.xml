@@ -13,10 +13,10 @@
     llView4 郑州立信科技向您发出面试邀约,点击查看  llViewGongSi  roundedImageView  tvTitle4  tvCancel4  tvOk4
     -->
     <LinearLayout
-        android:background="@drawable/rc_white_bg_shape"
         android:id="@+id/llView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rc_white_bg_shape"
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
@@ -83,11 +83,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/rc_white_bg_shape"
         android:id="@+id/llView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp_5"
+        android:background="@drawable/rc_white_bg_shape"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_15"
         android:paddingTop="@dimen/dp_8"
@@ -118,8 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_30"
         android:layout_margin="@dimen/dp_10"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,8 +158,7 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:paddingBottom="@dimen/dp_10"
-        android:visibility="gone">
+        android:paddingBottom="@dimen/dp_10">
 
         <LinearLayout
             android:id="@+id/llViewGongSi"

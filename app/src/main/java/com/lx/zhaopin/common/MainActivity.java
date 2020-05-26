@@ -64,6 +64,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     private String eventNickName = "";
     private String eventRongToken = "";
     private String duanUid;
+    private String userType;
 
     /**
      * 第一种解决办法 通过监听keyUp
@@ -136,7 +137,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         setListeners();
         fragments = new ArrayList<>();
 
-        String userType = SPTool.getSessionValue(AppSP.USER_TYPE);
+        userType = SPTool.getSessionValue(AppSP.USER_TYPE);
         Log.i(TAG, "setUserType: 用户" + userType);
         if (userType.equals("0")) {
             fragments.add(new Home1Fragment());
@@ -151,9 +152,19 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         if (!TextUtils.isEmpty(eventUid)) {
             setUserRongInfoMethod0(eventRongToken);
         } else {
-            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_RongToken))) {
-                setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_RongToken));
+
+            if (userType.equals("0")){
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_RongToken))) {
+                    setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_RongToken));
+                }
+            }else {
+                //用招聘者连接融云
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_HR_RongToken))) {
+                    setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_HR_RongToken));
+                }
             }
+
+
         }
 
 
@@ -169,7 +180,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
     private void setUserRongInfoMethod0(String eventRongToken) {
 
-
+        Log.i(TAG, "setUserRongInfoMethod0: 第一次连接融云" + eventRongToken);
         initC(eventRongToken);
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
 
@@ -196,7 +207,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         eventUserHead = SPTool.getSessionValue(AppSP.USER_ICON);
         eventUid = SPTool.getSessionValue(AppSP.UID);
         duanUid = SPTool.getSessionValue(AppSP.UID_DUAN);
-
+        Log.i(TAG, "setUserRongInfoMethod: 第2次连接融云222222222222222222222" + eventRongToken);
         Log.i(TAG, "setUserRongInfoMethod: 融云 getEventmessage" + eventNickName + "---" + eventUserHead + "--" + eventUid + "短的" + duanUid);
         Log.i(TAG, "setUserRongInfoMethod: 融云 getEventmessage 这个方法执行" + eventRongToken + "----");
         initC(eventRongToken);
