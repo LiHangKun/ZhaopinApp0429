@@ -48,7 +48,12 @@ public class HRMessage2Adapter extends RecyclerView.Adapter<HRMessage2Adapter.Vi
         viewHolder.tv1.setText(mData.get(i).getJobhunter().getName());
         viewHolder.tv2.setText(mData.get(i).getLastChatDate());
 
-        viewHolder.tv4.setText(mData.get(i).getUnreadCount());
+        if (mData.get(i).getUnreadCount().equals("0")) {
+            viewHolder.tv4.setVisibility(View.GONE);
+        } else {
+            viewHolder.tv4.setText(mData.get(i).getUnreadCount());
+        }
+
         String chatStatus = mData.get(i).getChatStatus();
         //聊天状态 chatStatus  1 已沟通 2 已投递 3 已预约 4 待面试 5 已到达 6 面试已取消 7 已反馈 8 同意入职 9 拒绝入职
 

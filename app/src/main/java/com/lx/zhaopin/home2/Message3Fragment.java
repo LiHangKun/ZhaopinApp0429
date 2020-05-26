@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.MianShiDetailType1Activity;
+import com.lx.zhaopin.activity.MianShiDetailType2Activity;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.activity.ShenQingListActivity;
 import com.lx.zhaopin.activity.XiaoXiDetailActivity;
@@ -181,14 +183,14 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                                 //ToastFactory.getToast(getActivity(), "面试邀请").show();
                                 //interviewId
                                 intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
-                                intent.putExtra("interviewId", Correlation);
+                                intent.putExtra("messageId", Correlation);
                                 startActivity(intent);
                                 break;
                             case "5":
                                 positionSelect = position;
                                 getReadMess(messID);
                                 //ToastFactory.getToast(getActivity(), "面试取消").show();
-                                intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
+                                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;
@@ -196,7 +198,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                                 positionSelect = position;
                                 getReadMess(messID);
                                 //ToastFactory.getToast(getActivity(), "面试超时").show();
-                                intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
+                                intent = new Intent(getActivity(), MianShiDetailType2Activity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;
@@ -285,7 +287,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
                 GouTongCaoZuoBean gouTongCaoZuoBean = new GouTongCaoZuoBean();
-                gouTongCaoZuoBean.setChatApplyStatus("1");
+                gouTongCaoZuoBean.setUnread("0");
                 EventBus.getDefault().post(new ShuaXinBean(gouTongCaoZuoBean));
 
             }

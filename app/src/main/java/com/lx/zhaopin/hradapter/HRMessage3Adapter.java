@@ -45,6 +45,21 @@ public class HRMessage3Adapter extends RecyclerView.Adapter<HRMessage3Adapter.Vi
         viewHolder.tv2.setText(mData.get(i).getSendDate());
         viewHolder.tv3.setText(mData.get(i).getSubhead());
         viewHolder.unTV.setText("1");
+
+        try {
+            String unread = mData.get(i).getUnread();
+            switch (unread) {
+                case "0":
+                    viewHolder.unTV.setVisibility(View.GONE);
+                    break;
+                case "1":
+                    viewHolder.unTV.setVisibility(View.VISIBLE);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         String MessageType = mData.get(i).getMessageType();
         //聊天状态 MessageType  1 系统消息 2 收到Offer 3 求职反馈 4 面试邀请
         //5 HR取消面试 6 面试超时 7 举报结果 8 求职者点击已到达 9 求职者同意沟通 10 求职者取消面试
@@ -83,7 +98,7 @@ public class HRMessage3Adapter extends RecyclerView.Adapter<HRMessage3Adapter.Vi
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.llView, i, mData.get(i).getCorrelation(), mData.get(i).getMessageType(), mData.get(i).getUrl(), mData.get(i).getTitle(),mData.get(i).getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.llView, i, mData.get(i).getCorrelation(), mData.get(i).getMessageType(), mData.get(i).getUrl(), mData.get(i).getTitle(), mData.get(i).getId());
                 }
             }
         });
@@ -117,7 +132,7 @@ public class HRMessage3Adapter extends RecyclerView.Adapter<HRMessage3Adapter.Vi
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, int i, String Correlation, String messageType, String url, String title,String messID);
+        void OnItemClickListener(View view, int i, String Correlation, String messageType, String url, String title, String messID);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

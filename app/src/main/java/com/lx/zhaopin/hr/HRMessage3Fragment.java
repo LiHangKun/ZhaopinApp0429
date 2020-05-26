@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.activity.XiaoXiDetailActivity;
 import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
@@ -28,7 +29,6 @@ import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.ToastFactory;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -113,14 +113,14 @@ public class HRMessage3Fragment extends Fragment {
                                 positionSelect = position;
                                 getReadMess(messID);
                                 intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
-                                intent.putExtra("interviewId", Correlation);
+                                intent.putExtra("messageId", Correlation);
                                 startActivity(intent);
                                 break;
                             case "5":
                                 //5 HR取消面试
                                 positionSelect = position;
                                 getReadMess(messID);
-                                intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
+                                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;
@@ -128,7 +128,7 @@ public class HRMessage3Fragment extends Fragment {
                                 //6 面试超时
                                 positionSelect = position;
                                 getReadMess(messID);
-                                intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
+                                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;
@@ -141,6 +141,9 @@ public class HRMessage3Fragment extends Fragment {
                                 //8 求职者点击已到达
                                 positionSelect = position;
                                 getReadMess(messID);
+                                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
+                                intent.putExtra("interviewId", Correlation);
+                                startActivity(intent);
                                 break;
                             case "9":
                                 //9 求职者同意沟通
@@ -151,6 +154,9 @@ public class HRMessage3Fragment extends Fragment {
                                 //10 求职者取消面试
                                 positionSelect = position;
                                 getReadMess(messID);
+                                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
+                                intent.putExtra("interviewId", Correlation);
+                                startActivity(intent);
                                 break;
 
                         }
@@ -216,7 +222,7 @@ public class HRMessage3Fragment extends Fragment {
             @Override
             public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
                 GouTongCaoZuoBean gouTongCaoZuoBean = new GouTongCaoZuoBean();
-                gouTongCaoZuoBean.setChatApplyStatus("1");
+                gouTongCaoZuoBean.setUnread("0");
                 EventBus.getDefault().post(new ShuaXinBean(gouTongCaoZuoBean));
 
             }

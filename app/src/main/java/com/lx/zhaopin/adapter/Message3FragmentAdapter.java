@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3FragmentAdapter.ViewHolder> {
 
 
+    private static final String TAG = "Message3FragmentAdapter";
     private List<SystemMessageListBean.DataListBean> mData;
     private Context mContext;
     private OnItemClickListener itemClickListener;
@@ -80,22 +82,27 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
                 break;
         }
 
-        /*String unread = mData.get(i).getUnread();
-        //1 是 0 否
-        switch (unread) {
-            case "1":
-                viewHolder.unTV.setVisibility(View.GONE);
-                break;
-            case "0":
-                viewHolder.unTV.setVisibility(View.VISIBLE);
-                break;
-        }*/
+        try {
+            String unread = mData.get(i).getUnread();
+            Log.i(TAG, "onBindViewHolder: 是否已读" + unread + "<<<<<<-------");
+            //1 是 0 否
+            switch (unread) {
+                case "1":
+                    viewHolder.unTV.setVisibility(View.VISIBLE);
+                    break;
+                case "0":
+                    viewHolder.unTV.setVisibility(View.GONE);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.llView, i, mData.get(i).getCorrelation(), mData.get(i).getMessageType(), mData.get(i).getUrl(), mData.get(i).getTitle(),mData.get(i).getId());
+                    itemClickListener.OnItemClickListener(viewHolder.llView, i, mData.get(i).getCorrelation(), mData.get(i).getMessageType(), mData.get(i).getUrl(), mData.get(i).getTitle(), mData.get(i).getId());
                 }
             }
         });
@@ -131,7 +138,7 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, int i, String Correlation, String messageType, String url, String title,String messID);
+        void OnItemClickListener(View view, int i, String Correlation, String messageType, String url, String title, String messID);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {
