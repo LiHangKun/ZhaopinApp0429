@@ -144,6 +144,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     private String hrid;
     private String hrName;
     private String delivered;
+    private String jianliID;
 
 
     private void getLastIndexForLimit(TextView tv, int maxLine, String content) {
@@ -580,6 +581,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 getZhiWeiDetail(pid);
+                jianliID = resultBean.getId();
                 View view1 = getLayoutInflater().inflate(R.layout.dialog_goutong1, null);
                 final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view1, R.style.DialogTheme2);
                 mMyDialog.setCancelable(true);
@@ -619,7 +621,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
         RongIM.getInstance().setMessageAttachedUserInfo(true);
 
-        RongUtil.sendZhiWeiMessage(hrid, hrName);
+        //pid
+        RongUtil.sendZhiWeiMessage(hrid, SPTool.getSessionValue(AppSP.UID_DUAN), SPTool.getSessionValue(AppSP.USER_ICON));
 
 
         //对方的ID 姓名

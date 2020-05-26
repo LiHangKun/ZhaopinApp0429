@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.activity.MianShiDetailType1Activity;
 import com.lx.zhaopin.activity.MianShiDetailType2Activity;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.activity.ShenQingListActivity;
@@ -182,15 +181,15 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                                 getReadMess(messID);
                                 //ToastFactory.getToast(getActivity(), "面试邀请").show();
                                 //interviewId
-                                intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
-                                intent.putExtra("messageId", Correlation);
+                                intent = new Intent(getActivity(), MianShiDetailType2Activity.class);
+                                intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;
                             case "5":
                                 positionSelect = position;
                                 getReadMess(messID);
                                 //ToastFactory.getToast(getActivity(), "面试取消").show();
-                                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
+                                intent = new Intent(getActivity(), MianShiDetailType2Activity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;

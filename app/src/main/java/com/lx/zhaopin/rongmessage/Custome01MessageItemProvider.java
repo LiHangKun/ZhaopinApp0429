@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
-import com.lx.zhaopin.utils.ToastFactory;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -45,7 +44,7 @@ public class Custome01MessageItemProvider extends IContainerItemProvider.Message
         holder.llView3.setVisibility(View.VISIBLE);
         holder.llView4.setVisibility(View.GONE);
 
-        if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
+        if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             //这是发送方
             Log.i(TAG, "onClick: 简历ID  + 这是发送方");
             if (custome01Message.getContent() != null) {
@@ -58,7 +57,7 @@ public class Custome01MessageItemProvider extends IContainerItemProvider.Message
                 holder.tvTitle3.setText("对方已同意,您的简历已发送给对方");
 
             }
-        } else if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
+        } else if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
             //这是接收方
             Log.i(TAG, "onClick: 简历ID  + 这是接收方");
 
@@ -78,9 +77,8 @@ public class Custome01MessageItemProvider extends IContainerItemProvider.Message
                 holder.tvTitle2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ToastFactory.getToast(mContext, "简历详情的ID---->" + rongMessageInBean.getId()).show();
                         Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
-                        intent.putExtra("rid", rongMessageInBean.getId());
+                        intent.putExtra("rid", rongMessageInBean.getLocatin());
                         mContext.startActivity(intent);
                     }
                 });

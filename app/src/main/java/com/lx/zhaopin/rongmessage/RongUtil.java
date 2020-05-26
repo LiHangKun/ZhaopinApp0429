@@ -105,9 +105,10 @@ public class RongUtil {
 
 
     //发送职位消息
-    public static void sendZhiWeiMessage(String targetId, String gameName) {
+    public static void sendZhiWeiMessage(String targetId, String gameName, String icon) {
         RongMessageInBean rongMessageInBean = new RongMessageInBean();
-        rongMessageInBean.setIcon(gameName);
+        rongMessageInBean.setId(gameName);
+        rongMessageInBean.setIcon(icon);
         Custome1Message custome1Message = new Custome1Message();
         custome1Message.content = new Gson().toJson(rongMessageInBean);
         RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome1Message, "发送职位消息", "", new RongIMClient.SendMessageCallback() {
@@ -121,6 +122,25 @@ public class RongUtil {
         });
     }
 
+
+    //查看简历,拒绝和同意  //  type 0 同意  1 拒绝
+    public static void jujueAndTongYi(String targetId, String type, String icon,String duanID) {
+        RongMessageInBean rongMessageInBean = new RongMessageInBean();
+        rongMessageInBean.setType(type);
+        rongMessageInBean.setIcon(icon);
+        rongMessageInBean.setLocatin(duanID);
+        Custome3Message custome3Message = new Custome3Message();
+        custome3Message.content = new Gson().toJson(rongMessageInBean);
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome3Message, "查看简历,拒绝和同意", "", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+            }
+        });
+    }
 
 
     //发送游戏消息

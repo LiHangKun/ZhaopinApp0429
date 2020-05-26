@@ -5,7 +5,6 @@ package com.lx.zhaopin.rongmessage;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Spannable;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
+import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.ToastFactory;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -33,7 +32,7 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
     private static final String TAG = "Custome1MessageItemProv";
 
     @Override
-    public void bindView(View view, int i, final Custome1Message custome1Message, UIMessage uiMessage) {
+    public void bindView(View view, int i, final Custome1Message custome1Message, final UIMessage uiMessage) {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
 
@@ -65,13 +64,11 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
                 final RongMessageInBean rongMessageInBean = gson.fromJson(custome1Message.getContent(), RongMessageInBean.class);
 
 
-                //拒绝
+                //拒绝  //查看简历,拒绝和同意  //  type 0 同意  1 拒绝
                 holder.tvCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        SPTool.addSessionMap("jianLiID", "0");
-                        holder.caoZuoView.setVisibility(View.GONE);
-                        //ToastFactory.getToast(mContext, "拒绝的简历ID " + rongMessageInBean.getId()).show();
+                        RongUtil.jujueAndTongYi(uiMessage.getTargetId(), "1", SPTool.getSessionValue(AppSP.USER_ICON), SPTool.getSessionValue(AppSP.UID_DUAN));
                     }
                 });
 
@@ -79,9 +76,7 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
                 holder.tvOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        SPTool.addSessionMap("jianLiID", "1");
-                        holder.caoZuoView.setVisibility(View.GONE);
-                        //ToastFactory.getToast(mContext, "同意的简历ID ---------->" + rongMessageInBean.getId()).show();
+                        RongUtil.jujueAndTongYi(uiMessage.getTargetId(), "0", SPTool.getSessionValue(AppSP.USER_ICON), SPTool.getSessionValue(AppSP.UID_DUAN));
                     }
                 });
 
@@ -89,23 +84,9 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
                     @Override
                     public void onClick(View view) {
 
-                        String jianLiID = SPTool.getSessionValue("jianLiID");
-
-                        if (!TextUtils.isEmpty(jianLiID)) {
-                            holder.caoZuoView.setVisibility(View.GONE);
-                            if (jianLiID.equals("1")) {
-                                ToastFactory.getToast(mContext, "同意的简历ID ---------->进入人才详情" + rongMessageInBean.getId()).show();
-                                Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
-                                intent.putExtra("rid", rongMessageInBean.getId());
-                                mContext.startActivity(intent);
-                            } else {
-                                ToastFactory.getToast(mContext, "您已拒绝了该简历").show();
-                                return;
-                            }
-                        } else {
-                            ToastFactory.getToast(mContext, "请先同意简历").show();
-                            return;
-                        }
+                        Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
+                        intent.putExtra("rid", rongMessageInBean.getId());
+                        mContext.startActivity(intent);
 
 
                     }

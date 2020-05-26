@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -169,7 +170,14 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                         tv2.setText("女");
                         break;
                 }
-                tv3.setText(resultBean.getMinSalary() + "K - " + resultBean.getMaxSalary() + "K");
+
+                if (!TextUtils.isEmpty(resultBean.getMinSalary())) {
+                    tv3.setText(resultBean.getMinSalary() + "K - " + resultBean.getMaxSalary() + "K");
+                } else {
+                    tv3.setVisibility(View.INVISIBLE);
+                }
+
+
                 tv4.setText(resultBean.getEducation().getName());
                 tv5.setText(resultBean.getBirthday() + "岁");
                 tv6.setText(resultBean.getWorkYears() + "年");
