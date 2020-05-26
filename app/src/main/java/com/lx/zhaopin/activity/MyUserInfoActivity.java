@@ -46,6 +46,7 @@ import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.QiuZhiZheMyInfoBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MainActivity;
 import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
@@ -569,12 +570,12 @@ public class MyUserInfoActivity extends BaseActivity implements View.OnClickList
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        finish();
-                        /*Intent intent = new Intent(mContext, MainActivity.class);
-                        intent.putExtra("pagerName", "0");
+                        //finish();
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        intent.putExtra("pagerName", "2");
                         AppSP.isToShopCar = true;
                         startActivity(intent);
-                        finish();*/
+                        finish();
                     }
                 }, 500);
 

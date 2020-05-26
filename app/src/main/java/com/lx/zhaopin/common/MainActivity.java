@@ -463,4 +463,18 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     protected void initData() {
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AppSP.isToShopCar) {
+            viewPager.setCurrentItem(2);
+            AppSP.isToShopCar = false;
+        } else if (AppSP.isToHome) {
+            viewPager.setCurrentItem(0);
+            AppSP.isToHome = false;
+        }
+    }
+
 }

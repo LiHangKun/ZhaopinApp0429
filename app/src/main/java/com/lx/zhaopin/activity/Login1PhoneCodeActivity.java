@@ -211,7 +211,8 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                     startActivity(intent);
                     finish();
                 } else {
-                    intent = new Intent(mContext, MainActivity.class);
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    AppSP.isToShopCar = true;
                     startActivity(intent);
                     finish();
                 }

@@ -195,7 +195,8 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
                     startActivity(intent);
                     finish();
                 } else {
-                    intent = new Intent(mContext, MainActivity.class);
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    AppSP.isToShopCar = true;
                     startActivity(intent);
                     finish();
                 }
