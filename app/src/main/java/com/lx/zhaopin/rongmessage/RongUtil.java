@@ -124,7 +124,7 @@ public class RongUtil {
 
 
     //查看简历,拒绝和同意  //  type 0 同意  1 拒绝
-    public static void jujueAndTongYi(String targetId, String type, String icon,String duanID) {
+    public static void jujueAndTongYi(String targetId, String type, String icon, String duanID) {
         RongMessageInBean rongMessageInBean = new RongMessageInBean();
         rongMessageInBean.setType(type);
         rongMessageInBean.setIcon(icon);
@@ -141,6 +141,67 @@ public class RongUtil {
             }
         });
     }
+
+
+    //发送邀约
+    public static void faYaoYue(String targetId, String gongSiName, String icon, String duanID, String gongSiID) {
+        RongMessageInBean rongMessageInBean = new RongMessageInBean();
+        rongMessageInBean.setType(gongSiName);
+        rongMessageInBean.setIcon(icon);
+        rongMessageInBean.setLocatin(duanID);
+        rongMessageInBean.setId(gongSiID);
+        Custome03Message custome03Message = new Custome03Message();
+        custome03Message.content = new Gson().toJson(rongMessageInBean);
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome03Message, "发送邀约", "", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+            }
+        });
+    }
+
+
+    //发送职位邀约,拒绝和同意  //  type 0 同意  1 拒绝
+    public static void YaoYueJujueAndTongYi(String targetId, String type, String icon, String duanID) {
+        RongMessageInBean rongMessageInBean = new RongMessageInBean();
+        rongMessageInBean.setType(type);
+        rongMessageInBean.setIcon(icon);
+        rongMessageInBean.setLocatin(duanID);
+        Custome4Message custome4Message = new Custome4Message();
+        custome4Message.content = new Gson().toJson(rongMessageInBean);
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome4Message, "查看简历,拒绝和同意", "", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+            }
+        });
+    }
+
+
+    //邀约拒绝和同意的显示  //  type 0 同意  1 拒绝
+    public static void yaoYueCaoZao(String targetId, String type) {
+        RongMessageInBean rongMessageInBean = new RongMessageInBean();
+        rongMessageInBean.setType(type);
+        Custome4Message custome4Message = new Custome4Message();
+        custome4Message.content = new Gson().toJson(rongMessageInBean);
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome4Message, "查看简历,拒绝和同意", "", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+            }
+        });
+    }
+
+
 
 
     //发送游戏消息

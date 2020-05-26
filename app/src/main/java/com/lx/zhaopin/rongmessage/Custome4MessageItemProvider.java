@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -36,26 +37,66 @@ public class Custome4MessageItemProvider extends IContainerItemProvider.MessageP
     public void bindView(View view, int i, final Custome4Message custome4Message, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
+        //  type 0 同意  1 拒绝
+
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
             //这是发送方
             Log.i(TAG, "onClick: 简历ID  + 这是发送方");
+            //  type 1 同意  0 拒绝
 
-            holder.llView2.setVisibility(View.VISIBLE);
-            holder.llView1.setVisibility(View.GONE);
-            holder.llView3.setVisibility(View.GONE);
-            holder.llView4.setVisibility(View.GONE);
-            holder.tvTitle2.setText("您已接受面试邀约");
+            if (custome4Message.getContent() != null) {
+                Gson gson = new Gson();
+                final RongMessageInBean rongMessageInBean = gson.fromJson(custome4Message.getContent(), RongMessageInBean.class);
+
+                String type = rongMessageInBean.getType();
+                switch (type) {
+                    case "0":
+                        holder.llView3.setVisibility(View.VISIBLE);
+                        holder.llView1.setVisibility(View.GONE);
+                        holder.llView2.setVisibility(View.GONE);
+                        holder.llView4.setVisibility(View.GONE);
+                        holder.tvTitle3.setText("您已拒绝对方的面试邀请");
+                        break;
+                    case "1":
+                        holder.llView2.setVisibility(View.VISIBLE);
+                        holder.llView1.setVisibility(View.GONE);
+                        holder.llView3.setVisibility(View.GONE);
+                        holder.llView4.setVisibility(View.GONE);
+                        holder.tvTitle2.setText("您已接受面试邀约");
+                        break;
+                }
+
+            }
 
 
         } else if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             //这是接收方
             Log.i(TAG, "onClick: 简历ID  + 这是接收方");
 
-            holder.llView3.setVisibility(View.VISIBLE);
-            holder.llView1.setVisibility(View.GONE);
-            holder.llView2.setVisibility(View.GONE);
-            holder.llView4.setVisibility(View.GONE);
-            holder.tvTitle3.setText("对方已接受您的面试邀约");
+            if (custome4Message.getContent() != null) {
+                Gson gson = new Gson();
+                final RongMessageInBean rongMessageInBean = gson.fromJson(custome4Message.getContent(), RongMessageInBean.class);
+                //  type 1 同意  0 拒绝
+                String type = rongMessageInBean.getType();
+                switch (type) {
+                    case "0":
+                        holder.llView3.setVisibility(View.VISIBLE);
+                        holder.llView1.setVisibility(View.GONE);
+                        holder.llView2.setVisibility(View.GONE);
+                        holder.llView4.setVisibility(View.GONE);
+                        holder.tvTitle3.setText("对方已拒绝您的面试邀请");
+                        break;
+                    case "1":
+                        holder.llView2.setVisibility(View.VISIBLE);
+                        holder.llView1.setVisibility(View.GONE);
+                        holder.llView3.setVisibility(View.GONE);
+                        holder.llView4.setVisibility(View.GONE);
+                        holder.tvTitle2.setText("对方已接受您的面试邀约");
+                        break;
+                }
+
+            }
+
 
         }
 

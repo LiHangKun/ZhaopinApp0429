@@ -45,6 +45,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.rongmessage.RongUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.StringUtil;
 import com.lx.zhaopin.utils.ToastFactory;
@@ -84,6 +85,9 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
     private String lat;
     private String rid;
     private static final String TAG = "ZhiWeiYaoYueActivity";
+    private String icon;
+    private String name;
+    private String gongSiID;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -222,6 +226,11 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                         tv3.setText(resultBean.getDataList().get(0).getCompany().getLocation());
                         lat = resultBean.getDataList().get(0).getCompany().getLat();
                         lng = resultBean.getDataList().get(0).getCompany().getLng();
+                        icon = resultBean.getDataList().get(0).getCompany().getLogo();
+                        name = resultBean.getDataList().get(0).getCompany().getName();
+                        gongSiID = resultBean.getDataList().get(0).getCompany().getId();
+
+
                     }
                 }
 
@@ -473,7 +482,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
 
 
     //yaoQingMianShi
-    private void fabuYaoYueMe(String rid, String pid, String mobile, String interviewDate) {
+    private void fabuYaoYueMe(final String rid, String pid, String mobile, String interviewDate) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("rid", rid);
@@ -484,6 +493,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
+                RongUtil.faYaoYue(rid, name, icon, SPTool.getSessionValue(AppSP.UID_DUAN), gongSiID);
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
