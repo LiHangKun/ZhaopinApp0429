@@ -15,10 +15,6 @@ import io.rong.imlib.model.UserInfo;
 
 //参考  CustomeGroupTipMessage
 
-//简历：RCD:JianLiMsg
-//面试：RCD:MianShiMsg
-//白底：RCD:TipMsg
-//提示：RCD:GrayTipMsg
 
 //所有人的灰底白字的提示 content 就是提示文本类型
 @MessageTag(value = "RCD:SendMianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)

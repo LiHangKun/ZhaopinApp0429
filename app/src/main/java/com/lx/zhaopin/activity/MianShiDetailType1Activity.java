@@ -29,6 +29,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.rongmessage.RongUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.TellUtil;
 import com.lx.zhaopin.utils.ToastFactory;
@@ -303,6 +304,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_QuXiao, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
+                RongUtil.HRQuXiao(SPTool.getSessionValue(AppSP.UID), interviewId2);
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 EventBus.getDefault().post(new MessageEvent(10, null, null, null, null, null, null));
                 getMianShiDetail(interviewId2);

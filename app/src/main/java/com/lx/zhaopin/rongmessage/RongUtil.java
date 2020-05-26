@@ -184,13 +184,13 @@ public class RongUtil {
     }
 
 
-    //邀约拒绝和同意的显示  //  type 0 同意  1 拒绝
-    public static void yaoYueCaoZao(String targetId, String type) {
+    //求职者取消面试
+    public static void qiuZhiQuXiao(String targetId, String mianShiID) {
         RongMessageInBean rongMessageInBean = new RongMessageInBean();
-        rongMessageInBean.setType(type);
-        Custome4Message custome4Message = new Custome4Message();
-        custome4Message.content = new Gson().toJson(rongMessageInBean);
-        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome4Message, "查看简历,拒绝和同意", "", new RongIMClient.SendMessageCallback() {
+        rongMessageInBean.setId(mianShiID);
+        Custome5Message custome5Message = new Custome5Message();
+        custome5Message.content = new Gson().toJson(rongMessageInBean);
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome5Message, "求职者取消面试", "", new RongIMClient.SendMessageCallback() {
             @Override
             public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
             }
@@ -201,7 +201,22 @@ public class RongUtil {
         });
     }
 
+    //求职者取消面试
+    public static void HRQuXiao(String targetId, String mianShiID) {
+        RongMessageInBean rongMessageInBean = new RongMessageInBean();
+        rongMessageInBean.setId(mianShiID);
+        Custome05Message custome05Message = new Custome05Message();
+        custome05Message.content = new Gson().toJson(rongMessageInBean);
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome05Message, "求职者取消面试", "", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+            }
 
+            @Override
+            public void onSuccess(Integer integer) {
+            }
+        });
+    }
 
 
     //发送游戏消息

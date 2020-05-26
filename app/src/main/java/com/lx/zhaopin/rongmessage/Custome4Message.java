@@ -15,14 +15,6 @@ import io.rong.imlib.model.UserInfo;
 
 //参考  CustomeGroupTipMessage
 
-//发送简历：RCD:SendJianLiMsg    ---->   JianLiMsg
-//接收简历：RCD: ReceiveJianLiMsg
-//拒绝接收简历：RCD: RefuseJianLiMsg
-//面试邀约：RCD:SendMianShiMsg      ---->   MianShiMsg
-//接受面试：RCD:ReceiveMianShiMsg
-//拒绝面试：RCD:RefuseMianShiMsg
-//求职者取消面试：RCD:CancleMianShiMsg
-//HR取消面试：RCD:HRCancleMianShiMsg
 
 //HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
 @MessageTag(value = "RCD:ReceiveMianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)

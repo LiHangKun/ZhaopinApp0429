@@ -39,10 +39,10 @@ public class Custome01MessageItemProvider extends IContainerItemProvider.Message
     public void bindView(View view, int i, final Custome01Message custome01Message, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        holder.llView1.setVisibility(View.GONE);
+        /*holder.llView1.setVisibility(View.GONE);
         holder.llView2.setVisibility(View.GONE);
         holder.llView3.setVisibility(View.VISIBLE);
-        holder.llView4.setVisibility(View.GONE);
+        holder.llView4.setVisibility(View.GONE);*/
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             //这是发送方
