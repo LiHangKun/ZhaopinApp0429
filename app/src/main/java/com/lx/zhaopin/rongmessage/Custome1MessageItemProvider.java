@@ -18,6 +18,7 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.ToastFactory;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -34,8 +35,7 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
     @Override
     public void bindView(View view, int i, final Custome1Message custome1Message, final UIMessage uiMessage) {
         final ViewHolder holder = (ViewHolder) view.getTag();
-
-
+        final boolean isDo = SPTool.getSessionValue(String.valueOf(uiMessage.getSentTime()), false);
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
             //这是发送方
             Log.i(TAG, "onClick: 简历ID  + 这是发送方");
@@ -62,12 +62,22 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
 
                 final RongMessageInBean rongMessageInBean = gson.fromJson(custome1Message.getContent(), RongMessageInBean.class);
 
-
-                //拒绝  //查看简历,拒绝和同意  //  type 0 同意  1 拒绝
+                //拒绝  //查看简历,拒绝和同意  //  type 0 同意  1 拒绝   button_shapehuihui
                 holder.tvCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         RongUtil.jujueAndTongYi(uiMessage.getTargetId(), "1", SPTool.getSessionValue(AppSP.USER_ICON), uiMessage.getTargetId());
+                        SPTool.addSessionMap(String.valueOf(uiMessage.getSentTime()), true);
+
+                        holder.tvCancel.setBackground(mContext.getDrawable(R.drawable.button_shapehuihui));
+                        holder.tvCancel.setTextColor(mContext.getResources().getColor(R.color.white));
+
+                        holder.tvOk.setBackground(mContext.getDrawable(R.drawable.button_shapehuihui));
+                        holder.tvOk.setTextColor(mContext.getResources().getColor(R.color.white));
+
+                        holder.tvOk.setEnabled(false);
+                        holder.tvCancel.setEnabled(false);
+
                     }
                 });
 
@@ -76,20 +86,36 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
                     @Override
                     public void onClick(View view) {
                         RongUtil.jujueAndTongYi(uiMessage.getTargetId(), "0", SPTool.getSessionValue(AppSP.USER_ICON), uiMessage.getTargetId());
+                        SPTool.addSessionMap(String.valueOf(uiMessage.getSentTime()), true);
+
+
+                        holder.tvCancel.setBackground(mContext.getDrawable(R.drawable.button_shapehuihui));
+                        holder.tvCancel.setTextColor(mContext.getResources().getColor(R.color.white));
+
+                        holder.tvOk.setBackground(mContext.getDrawable(R.drawable.button_shapehuihui));
+                        holder.tvOk.setTextColor(mContext.getResources().getColor(R.color.white));
+
+                        holder.tvOk.setEnabled(false);
+                        holder.tvCancel.setEnabled(false);
+
                     }
                 });
+
 
                 holder.llView1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
-                        intent.putExtra("rid", rongMessageInBean.getId());
-                        mContext.startActivity(intent);
-
-
+                        if (isDo) {
+                            Intent intent = new Intent(mContext, RenCaiDetailActivity.class);
+                            intent.putExtra("rid", rongMessageInBean.getId());
+                            mContext.startActivity(intent);
+                        } else {
+                            ToastFactory.getToast(mContext, "请先同意接收简历").show();
+                            return;
+                        }
                     }
                 });
+
 
             }
 
