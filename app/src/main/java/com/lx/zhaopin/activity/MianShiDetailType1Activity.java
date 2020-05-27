@@ -147,7 +147,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
                         break;
                     case "3":
                         imageState.setImageResource(R.drawable.daimianshi);
-                        quxiaoHR.setVisibility(View.GONE);
+                        //quxiaoHR.setVisibility(View.GONE);
                         break;
                     case "4":
                         imageState.setImageResource(R.drawable.yichaoshi);

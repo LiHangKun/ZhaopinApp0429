@@ -27,8 +27,9 @@ import io.rong.imlib.model.Message;
 //llView3 所有的灰底白字  tvTitle3
 //llView4 郑州立信科技向您发出面试邀约,点击查看  llViewGongSi  roundedImageView  tvTitle4  tvCancel4  tvOk4
 
+//  这个加上 就没有头像了  showPortrait = false,
 
-@ProviderTag(messageContent = Custome3Message.class, showPortrait = false, centerInHorizontal = true, showSummaryWithName = false)
+@ProviderTag(messageContent = Custome3Message.class,  centerInHorizontal = true, showSummaryWithName = false)
 public class Custome3MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome3Message> {
 
     private Context mContext;

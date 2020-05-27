@@ -71,7 +71,7 @@ public class Custome03MessageItemProvider extends IContainerItemProvider.Message
                     }
                 });
                 //  type 0 同意  1 拒绝
-                //同意
+                //同意   edittext_shapehuihui
                 holder.tvCancel4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
