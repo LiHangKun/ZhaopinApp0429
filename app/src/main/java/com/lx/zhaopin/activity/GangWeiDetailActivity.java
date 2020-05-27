@@ -530,8 +530,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
 
                     //申请职位 长的
-                    goLiaoTianMethod();
-
+                    //goLiaoTianMethod();
+                    touPid(pid);
 
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
@@ -582,6 +582,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 getZhiWeiDetail(pid);
                 jianliID = resultBean.getId();
+                //pid
+                RongUtil.sendZhiWeiMessage(hrid, jianliID, SPTool.getSessionValue(AppSP.USER_ICON));
                 View view1 = getLayoutInflater().inflate(R.layout.dialog_goutong1, null);
                 final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view1, R.style.DialogTheme2);
                 mMyDialog.setCancelable(true);
@@ -598,6 +600,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                     @Override
                     public void onClick(View view) {
                         goLiaoTianMethod();
+
                         mMyDialog.dismiss();
                     }
                 });
@@ -621,8 +624,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
         RongIM.getInstance().setMessageAttachedUserInfo(true);
 
-        //pid
-        RongUtil.sendZhiWeiMessage(hrid, SPTool.getSessionValue(AppSP.UID_DUAN), SPTool.getSessionValue(AppSP.USER_ICON));
+
 
 
         //对方的ID 姓名

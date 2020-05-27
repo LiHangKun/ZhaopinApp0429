@@ -371,10 +371,10 @@
             </LinearLayout>
             <!--此处是横向滑动的图片展示-->
 
-            <!-- <android.support.v7.widget.RecyclerView
+             <android.support.v7.widget.RecyclerView
                  android:id="@+id/recyclerView"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content" />-->
+                 android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:id="@+id/allImageView"
@@ -407,7 +407,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_8"
                 android:ellipsize="end"
-                android:maxLines="5"
+                android:maxLines="15"
                 android:text="是上海络科技有限是1111上海络科技有限公司旗下素材在线交易网站于2016年7月上线运营是上海络科技有限公司旗下素材在线交易网站于2016年7月上线运营公司旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频、psd源文件等主要服务是提供图片等旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频、psd源文件等。" />
 
 

@@ -251,7 +251,14 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
 
                 tvJinDu.setText(resultBean.getImprovedDegree() + "%");
                 setData1(circlePercentView, 100, Integer.parseInt(resultBean.getImprovedDegree()));
-                tv3.setText(resultBean.getInterviewCount());
+
+                if (!resultBean.getInterviewCount().equals("0")) {
+                    tv3.setText(resultBean.getInterviewCount());
+                } else {
+                    tv3.setVisibility(View.INVISIBLE);
+                }
+
+
                 phone = resultBean.getServicePhone();
 
 

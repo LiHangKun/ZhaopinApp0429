@@ -274,7 +274,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
                 switch (interviewStatus) {
                     case "1":
                         imageState.setImageResource(R.drawable.daitongyi);
-                        qiuZhiView.setVisibility(View.VISIBLE);
+                        qiuZhiView.setVisibility(View.GONE);
                         break;
                     case "2":
                         imageState.setImageResource(R.drawable.yijujue);
@@ -282,6 +282,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
                         break;
                     case "3":
                         imageState.setImageResource(R.drawable.daimianshi);
+                        qiuZhiView.setVisibility(View.VISIBLE);
                         break;
                     case "4":
                         imageState.setImageResource(R.drawable.yichaoshi);
@@ -471,6 +472,9 @@ public class MianShiDetailType2Activity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 getMianShiDetail(interviewId2);
+                EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
+
+
             }
 
             @Override

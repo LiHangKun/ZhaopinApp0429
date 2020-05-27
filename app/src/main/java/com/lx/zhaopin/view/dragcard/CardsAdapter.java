@@ -1,6 +1,8 @@
 package com.lx.zhaopin.view.dragcard;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +14,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.adapter.PingJiaImageAdapter;
 import com.lx.zhaopin.bean.ShouYeQiuZhiZheBean;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -74,6 +78,7 @@ public class CardsAdapter extends BaseAdapter {
         TextView tv10 = cardView.findViewById(R.id.tv10);
         TextView tv11 = cardView.findViewById(R.id.tv11);
         TextView tv12 = cardView.findViewById(R.id.tv12);
+        RecyclerView recyclerView = cardView.findViewById(R.id.recyclerView);
         LinearLayout allImageView = cardView.findViewById(R.id.allImageView);
         ImageView gongSiImage1 = cardView.findViewById(R.id.gongSiImage1);
         ImageView gongSiImage2 = cardView.findViewById(R.id.gongSiImage2);
@@ -133,7 +138,6 @@ public class CardsAdapter extends BaseAdapter {
         }*/
 
 
-        /*
         //列表的展示形式
         List<String> gongSiImageList = new ArrayList<>();
         String images = cardList.get(position).getCompany().getImages();
@@ -152,7 +156,7 @@ public class CardsAdapter extends BaseAdapter {
             public void OnItemClickListener(int position) {
                 //showImage(new ImageView(getActivity()), position);
             }
-        });*/
+        });
 
         return cardView;
     }

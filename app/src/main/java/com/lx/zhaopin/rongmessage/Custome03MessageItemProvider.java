@@ -17,12 +17,24 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.MianShiDetailType2Activity;
+import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.http.BaseCallback;
+import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.net.NetClass;
+import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.SPTool;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Message;
+import okhttp3.Request;
+import okhttp3.Response;
 
 ////所有人的灰底白字的提示 content 就是提示文本类型
 //llView1 是  对方给您发了一份求职简历  带拒绝和同意 tvTitle  tvCancel  tvOk
@@ -31,7 +43,7 @@ import io.rong.imlib.model.Message;
 //llView4 郑州立信科技向您发出面试邀约,点击查看  llViewGongSi  roundedImageView  tvTitle4  tvCancel4  tvOk4
 
 
-@ProviderTag(messageContent = Custome03Message.class, showPortrait = false, centerInHorizontal = true, showSummaryWithName = false)
+@ProviderTag(messageContent = Custome03Message.class, centerInHorizontal = true, showSummaryWithName = false)
 public class Custome03MessageItemProvider extends IContainerItemProvider.MessageProvider<Custome03Message> {
 
     private Context mContext;
@@ -39,8 +51,8 @@ public class Custome03MessageItemProvider extends IContainerItemProvider.Message
 
     @Override
     public void bindView(View view, int i, final Custome03Message custome03Message, final UIMessage uiMessage) {
-        ViewHolder holder = (ViewHolder) view.getTag();
-
+        final ViewHolder holder = (ViewHolder) view.getTag();
+        final boolean isDo = SPTool.getSessionValue(String.valueOf(uiMessage.getSentTime()), false);
         if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             //这是发送方
             Log.i(TAG, "onClick: 简历ID  + 这是发送方");
@@ -71,18 +83,48 @@ public class Custome03MessageItemProvider extends IContainerItemProvider.Message
                     }
                 });
                 //  type 0 同意  1 拒绝
-                //同意   edittext_shapehuihui
+                //拒绝   edittext_shapehuihui
                 holder.tvCancel4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         RongUtil.YaoYueJujueAndTongYi(uiMessage.getTargetId(), "0", rongMessageInBean.getIcon(), rongMessageInBean.getLocatin());
+                        String id = rongMessageInBean.getId();
+
+                        acceptYaoYue(id, "0");
+
+                        SPTool.addSessionMap(String.valueOf(uiMessage.getSentTime()), true);
+
+                        holder.tvCancel4.setBackground(mContext.getDrawable(R.drawable.button_shapehuihui));
+                        holder.tvCancel4.setTextColor(mContext.getResources().getColor(R.color.white));
+
+                        holder.tvOk4.setBackground(mContext.getDrawable(R.drawable.button_shapehuihui));
+                        holder.tvCancel4.setTextColor(mContext.getResources().getColor(R.color.white));
+
+                        holder.tvOk4.setEnabled(false);
+                        holder.tvCancel4.setEnabled(false);
+
+
                     }
                 });
-                //拒绝
+                //同意
                 holder.tvOk4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         RongUtil.YaoYueJujueAndTongYi(uiMessage.getTargetId(), "1", rongMessageInBean.getIcon(), rongMessageInBean.getLocatin());
+                        String id = rongMessageInBean.getId();
+                        acceptYaoYue(id, "1");
+
+                        SPTool.addSessionMap(String.valueOf(uiMessage.getSentTime()), true);
+
+                        holder.tvCancel4.setBackground(mContext.getDrawable(R.drawable.button_shapehuihui));
+                        holder.tvCancel4.setTextColor(mContext.getResources().getColor(R.color.white));
+
+                        holder.tvOk4.setBackground(mContext.getDrawable(R.drawable.button_shapehuihui));
+                        holder.tvCancel4.setTextColor(mContext.getResources().getColor(R.color.white));
+
+                        holder.tvOk4.setEnabled(false);
+                        holder.tvCancel4.setEnabled(false);
+
                     }
                 });
 
@@ -100,6 +142,35 @@ public class Custome03MessageItemProvider extends IContainerItemProvider.Message
         }
 
 
+    }
+
+    private void acceptYaoYue(String interviewId, String status) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("interviewId", interviewId);
+        params.put("status", status);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.qiuzhiZheCaoJianLi, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
     @Override

@@ -48,22 +48,26 @@ public class Custome4MessageItemProvider extends IContainerItemProvider.MessageP
                 Gson gson = new Gson();
                 final RongMessageInBean rongMessageInBean = gson.fromJson(custome4Message.getContent(), RongMessageInBean.class);
 
-                String type = rongMessageInBean.getType();
-                switch (type) {
-                    case "0":
-                        holder.llView3.setVisibility(View.VISIBLE);
-                        holder.llView1.setVisibility(View.GONE);
-                        holder.llView2.setVisibility(View.GONE);
-                        holder.llView4.setVisibility(View.GONE);
-                        holder.tvTitle3.setText("您已拒绝对方的面试邀请");
-                        break;
-                    case "1":
-                        holder.llView2.setVisibility(View.VISIBLE);
-                        holder.llView1.setVisibility(View.GONE);
-                        holder.llView3.setVisibility(View.GONE);
-                        holder.llView4.setVisibility(View.GONE);
-                        holder.tvTitle2.setText("您已接受面试邀约");
-                        break;
+                try {
+                    String type = rongMessageInBean.getType();
+                    switch (type) {
+                        case "0":
+                            holder.llView3.setVisibility(View.VISIBLE);
+                            holder.llView1.setVisibility(View.GONE);
+                            holder.llView2.setVisibility(View.GONE);
+                            holder.llView4.setVisibility(View.GONE);
+                            holder.tvTitle3.setText("您已拒绝对方的面试邀请");
+                            break;
+                        case "1":
+                            holder.llView2.setVisibility(View.VISIBLE);
+                            holder.llView1.setVisibility(View.GONE);
+                            holder.llView3.setVisibility(View.GONE);
+                            holder.llView4.setVisibility(View.GONE);
+                            holder.tvTitle2.setText("您已接受面试邀约");
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }
@@ -77,22 +81,26 @@ public class Custome4MessageItemProvider extends IContainerItemProvider.MessageP
                 Gson gson = new Gson();
                 final RongMessageInBean rongMessageInBean = gson.fromJson(custome4Message.getContent(), RongMessageInBean.class);
                 //  type 1 同意  0 拒绝
-                String type = rongMessageInBean.getType();
-                switch (type) {
-                    case "0":
-                        holder.llView3.setVisibility(View.VISIBLE);
-                        holder.llView1.setVisibility(View.GONE);
-                        holder.llView2.setVisibility(View.GONE);
-                        holder.llView4.setVisibility(View.GONE);
-                        holder.tvTitle3.setText("对方已拒绝您的面试邀请");
-                        break;
-                    case "1":
-                        holder.llView2.setVisibility(View.VISIBLE);
-                        holder.llView1.setVisibility(View.GONE);
-                        holder.llView3.setVisibility(View.GONE);
-                        holder.llView4.setVisibility(View.GONE);
-                        holder.tvTitle2.setText("对方已接受您的面试邀约");
-                        break;
+                try {
+                    String type = rongMessageInBean.getType();
+                    switch (type) {
+                        case "0":
+                            holder.llView3.setVisibility(View.VISIBLE);
+                            holder.llView1.setVisibility(View.GONE);
+                            holder.llView2.setVisibility(View.GONE);
+                            holder.llView4.setVisibility(View.GONE);
+                            holder.tvTitle3.setText("对方已拒绝您的面试邀请");
+                            break;
+                        case "1":
+                            holder.llView2.setVisibility(View.VISIBLE);
+                            holder.llView1.setVisibility(View.GONE);
+                            holder.llView3.setVisibility(View.GONE);
+                            holder.llView4.setVisibility(View.GONE);
+                            holder.tvTitle2.setText("对方已接受您的面试邀约");
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }
