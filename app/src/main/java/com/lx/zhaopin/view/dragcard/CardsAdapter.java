@@ -106,7 +106,7 @@ public class CardsAdapter extends BaseAdapter {
         tv4.setText(cardList.get(position).getExperienceYear().getName() + "年");
         tv5.setText(cardList.get(position).getEducation().getName());
         tv6.setText(cardList.get(position).getDuty());
-        tv7.setText(cardList.get(position).getLocation());
+        tv7.setText(cardList.get(position).getCity().getName() + cardList.get(position).getDistrict().getName() + cardList.get(position).getLocation());
         tv8.setText(cardList.get(position).getCompany().getName());
         tv9.setText(cardList.get(position).getCompany().getFinancingName());
         tv10.setText(cardList.get(position).getCompany().getIndustry2Name());

@@ -254,6 +254,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
 
                 if (!resultBean.getInterviewCount().equals("0")) {
                     tv3.setText(resultBean.getInterviewCount());
+                    tv3.setVisibility(View.VISIBLE);
                 } else {
                     tv3.setVisibility(View.INVISIBLE);
                 }

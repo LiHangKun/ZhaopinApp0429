@@ -52,14 +52,30 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                 .load(mData.get(po).getAvatar()).into(viewHolder.roundedImageView);
 
+
+        String openResume = mData.get(po).getOpenResume();
+        switch (openResume) {
+            case "0":
+                viewHolder.imageView1.setVisibility(View.INVISIBLE);
+                break;
+            case "1":
+                viewHolder.imageView1.setVisibility(View.VISIBLE);
+                break;
+        }
+
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(po).getEducation().getName());
         viewHolder.tv4.setText(mData.get(po).getAge() + "岁");
         viewHolder.tv5.setText(mData.get(po).getWorkYears() + "年");
         viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
-
         List<String> flowData = new ArrayList<>();
+        List<HRShouCangRenBean.DataListBean.ResumeSkillListBean> resumeSkillList = mData.get(po).getResumeSkillList();
+        for (int i = 0; i < resumeSkillList.size(); i++) {
+            flowData.add(resumeSkillList.get(i).getName());
+        }
+
+
         viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
@@ -89,7 +105,7 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(),mData.get(po).getOpenResume());
+                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(), mData.get(po).getOpenResume());
                 }
             }
         });
@@ -98,7 +114,7 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(),mData.get(po).getOpenResume());
+                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(), mData.get(po).getOpenResume());
                 }
             }
         });

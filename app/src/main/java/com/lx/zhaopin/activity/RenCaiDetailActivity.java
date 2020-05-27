@@ -179,7 +179,7 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
 
 
                 tv4.setText(resultBean.getEducation().getName());
-                tv5.setText(resultBean.getBirthday() + "岁");
+                tv5.setText(resultBean.getAge() + "岁");
                 tv6.setText(resultBean.getWorkYears() + "年");
                 tv7.setText(resultBean.getLatestCityName());
                 String jobNature = resultBean.getJobNature();

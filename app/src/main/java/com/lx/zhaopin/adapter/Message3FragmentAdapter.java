@@ -46,38 +46,38 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
         viewHolder.tv2.setText(mData.get(i).getSendDate());
-        viewHolder.tv3.setText(mData.get(i).getTitle());
+        viewHolder.tv3.setText(mData.get(i).getSubhead());
 
 
         String messageType = mData.get(i).getMessageType();
         // 1 系统消息 2 收到Offer 3 求职反馈 4 面试邀请 5 面试取消 6 面试超时  7 举报结果
         switch (messageType) {
             case "1":
-                viewHolder.tv1.setText("系统消息");
+                viewHolder.tv1.setText(mData.get(i).getTitle());
                 viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
                 break;
             case "2":
-                viewHolder.tv1.setText("收到Offer");
+                viewHolder.tv1.setText(mData.get(i).getTitle());
                 viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
                 break;
             case "3":
-                viewHolder.tv1.setText("求职反馈");
+                viewHolder.tv1.setText(mData.get(i).getTitle());
                 viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
                 break;
             case "4":
-                viewHolder.tv1.setText("面试邀请");
+                viewHolder.tv1.setText(mData.get(i).getTitle());
                 viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
                 break;
             case "5":
-                viewHolder.tv1.setText("面试取消");
+                viewHolder.tv1.setText(mData.get(i).getTitle());
                 viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
                 break;
             case "6":
-                viewHolder.tv1.setText("面试超时");
+                viewHolder.tv1.setText(mData.get(i).getTitle());
                 viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
                 break;
             case "7":
-                viewHolder.tv1.setText("举报结果");
+                viewHolder.tv1.setText(mData.get(i).getTitle());
                 viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
                 break;
         }

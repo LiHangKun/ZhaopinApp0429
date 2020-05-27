@@ -23,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
+import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
@@ -132,7 +134,9 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         tv2.setOnClickListener(this);
 
         ImageView selectView = view.findViewById(R.id.selectView);
+        ImageView fl_list = view.findViewById(R.id.fl_list);
         selectView.setOnClickListener(this);
+        fl_list.setOnClickListener(this);
 
         viewType1 = view.findViewById(R.id.ViewType1);
         viewType2 = view.findViewById(R.id.ViewType2);
@@ -244,6 +248,16 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                     viewType2.setVisibility(View.VISIBLE);
                 }
                 kaPian = !kaPian;
+                break;
+            case R.id.fl_list:
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    startActivity(new Intent(getActivity(), MyShouCangRenActivity.class));
+                } else {
+                    ToastFactory.getToast(getActivity(), "请先登录").show();
+                    startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
+                    return;
+                }
+
                 break;
         }
     }

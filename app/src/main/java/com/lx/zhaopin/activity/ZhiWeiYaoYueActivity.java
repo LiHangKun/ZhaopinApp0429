@@ -206,7 +206,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
     private void getGongSiAllZhiWeiMid() {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.gongSiAllZhiWei, params, new BaseCallback<GongSiZhiWeiBean>() {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.gongsiInfo, params, new BaseCallback<PhoneStateBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
 
@@ -218,21 +218,14 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             }
 
             @Override
-            public void onSuccess(Response response, GongSiZhiWeiBean resultBean) {
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
 
-                if (resultBean.getDataList() != null) {
-                    if (resultBean.getDataList().size() != 0) {
-                        //String location = resultBean.getDataList().get(0).getLocation();
-                        tv3.setText(resultBean.getDataList().get(0).getCompany().getLocation());
-                        lat = resultBean.getDataList().get(0).getCompany().getLat();
-                        lng = resultBean.getDataList().get(0).getCompany().getLng();
-                        icon = resultBean.getDataList().get(0).getCompany().getLogo();
-                        name = resultBean.getDataList().get(0).getCompany().getName();
-                        gongSiID = resultBean.getDataList().get(0).getCompany().getId();
-
-
-                    }
-                }
+                tv3.setText(resultBean.getLocation());
+                lat = resultBean.getLat();
+                lng = resultBean.getLng();
+                icon = resultBean.getLogo();
+                name = resultBean.getName();
+                gongSiID = resultBean.getId();
 
 
             }

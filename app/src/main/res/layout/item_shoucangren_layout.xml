@@ -78,7 +78,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp_5"
                             android:layout_toRightOf="@+id/tv1"
-                            android:src="@drawable/hom1s"
+                            android:src="@drawable/jianliyiguanbi"
                             android:visibility="gone" />
 
                         <ImageView

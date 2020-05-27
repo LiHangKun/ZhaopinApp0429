@@ -14,7 +14,7 @@ import java.util.List;
  * Created by namee on 2015. 11. 18..
  */
 final public class Utils {
-  private Utils(){}
+  public Utils(){}
 
   public static boolean isOverMarshmallow() {
     return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;

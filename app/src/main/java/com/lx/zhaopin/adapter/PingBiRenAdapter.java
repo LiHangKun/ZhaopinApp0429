@@ -61,7 +61,6 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
                 .error(R.mipmap.imageerror)).load(mData.get(po).getAvatar()).into(viewHolder.roundedImageView);
 
 
-
         String openResume = mData.get(po).getOpenResume();
         //是否开放简历  1 是 0 否
         switch (openResume) {
@@ -72,6 +71,13 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
                 viewHolder.imageView1.setVisibility(View.VISIBLE);
         }
         List<String> flowData = new ArrayList<>();
+
+        List<PingBiRen.DataListBean.ResumeSkillListBean> resumeSkillList = mData.get(po).getResumeSkillList();
+        for (int i = 0; i < resumeSkillList.size(); i++) {
+            flowData.add(resumeSkillList.get(i).getName());
+        }
+
+
         viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
             final TextView radioButton = new TextView(mContext);
@@ -101,7 +107,7 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.tv7,mData.get(po).getId());
+                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId());
                 }
             }
         });
@@ -109,7 +115,7 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.llView,mData.get(po).getId());
+                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId());
                 }
             }
         });
@@ -156,7 +162,7 @@ public class PingBiRenAdapter extends RecyclerView.Adapter<PingBiRenAdapter.View
 
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view,String id);
+        void OnItemClickListener(View view, String id);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

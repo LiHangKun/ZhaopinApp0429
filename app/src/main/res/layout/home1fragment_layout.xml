@@ -110,6 +110,7 @@
 
 
     <LinearLayout
+
         android:id="@+id/ViewType1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -172,10 +173,10 @@
 
 
     <FrameLayout
+        android:visibility="gone"
         android:id="@+id/ViewType2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -207,9 +208,9 @@
                 android:layout_marginRight="@dimen/dp_20"
                 android:layout_marginBottom="@dimen/dp_50"
                 android:background="#00ffffff"
-                app:cards_height="450dp"
+                app:cards_height="750dp"
                 app:cards_shift="20"
-                app:cards_width="300dp"
+                app:cards_width="400dp"
                 app:max_visible="3"
                 app:rotation_degrees="15" />
 

@@ -140,6 +140,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
                 switch (interviewStatus) {
                     case "1":
                         imageState.setImageResource(R.drawable.daitongyi);
+                        quxiaoHR.setVisibility(View.GONE);
                         break;
                     case "2":
                         imageState.setImageResource(R.drawable.yijujue);

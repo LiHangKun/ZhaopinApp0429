@@ -101,7 +101,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
 
                 if (resultBean.getChatApplyCount().equals("0")) {
                     tv3.setVisibility(View.INVISIBLE);
-                    llView.setVisibility(View.GONE);
+                    llView.setVisibility(View.VISIBLE);
                 } else {
                     tv3.setText(resultBean.getChatApplyCount());
                     tv2.setText(resultBean.getChatApplyText());

@@ -34,6 +34,16 @@ public class RenCaiDetailBean extends CommonBean implements Serializable {
     private String arrivalTime;
     private String avatar;
     private String birthday;
+    private String age;
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
     private String collected;
     private EducationBean education;
     private String id;

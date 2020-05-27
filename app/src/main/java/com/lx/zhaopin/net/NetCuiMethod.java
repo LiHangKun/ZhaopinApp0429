@@ -91,6 +91,7 @@ public class NetCuiMethod {
     public static final String yzUser = "member/auth";//校验验证码
     public static final String shenQingZhiwei = "member/deliver/resume";//投递简历
     public static final String qiuzhiZheCaoJianLi = "/member/interview/accept";//接受面试邀约
+    public static final String gongsiInfo = "/member/recruiter/company";//招聘者所在公司信息
 
 
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/

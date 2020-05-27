@@ -17,7 +17,6 @@ import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.ToastFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -69,9 +68,9 @@ public class QiuZhiFeedActivity extends BaseActivity {
         userType = getIntent().getStringExtra("userType");
 
         offerID = getIntent().getStringExtra("offerID");
-        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+        /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
-        }
+        }*/
         //userType  0 求职者  1 HR
 
         switch (userType) {
@@ -173,13 +172,14 @@ public class QiuZhiFeedActivity extends BaseActivity {
 
     private void caoZuoOfferMe(String offerId, String status) {
         Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("offerId", offerId);
         params.put("status", status);
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.caoZuoOffer, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 EventBus.getDefault().post(new MessageEvent(5, null, null, null, null, null, null));
-                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                //ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

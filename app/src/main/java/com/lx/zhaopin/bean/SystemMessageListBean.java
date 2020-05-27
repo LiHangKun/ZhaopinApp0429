@@ -58,6 +58,15 @@ public class SystemMessageListBean extends CommonBean {
         private String title;
         private String unread;
         private String url;
+        private String subhead;
+
+        public String getSubhead() {
+            return subhead;
+        }
+
+        public void setSubhead(String subhead) {
+            this.subhead = subhead;
+        }
 
         public String getUrl() {
             return url;

@@ -24,6 +24,42 @@ public class PhoneStateBean extends CommonBean {
     private String chatApplyText;
     private String id;
     private String HRId;
+    private String logo;
+    private String location;
+    private String lat;
+    private String lng;
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
 
     public String getId() {
         return id;
