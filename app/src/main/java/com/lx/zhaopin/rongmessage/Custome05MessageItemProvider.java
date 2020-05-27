@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.MianShiDetailType2Activity;
-import com.lx.zhaopin.utils.ToastFactory;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import io.rong.imkit.model.ProviderTag;
@@ -44,34 +43,21 @@ public class Custome05MessageItemProvider extends IContainerItemProvider.Message
             //这是发送方
             Log.i(TAG, "onClick: 简历ID  + 这是发送方");
 
-            holder.llView2.setVisibility(View.VISIBLE);
-            holder.llView1.setVisibility(View.GONE);
-            holder.llView3.setVisibility(View.GONE);
-            holder.llView4.setVisibility(View.GONE);
-            holder.tvTitle2.setText("HR已取消面试");
+
 
 
 
             if (custome05Message.getContent() != null) {
                 Gson gson = new Gson();
 
-                holder.llView1.setVisibility(View.VISIBLE);
+                holder.llView3.setVisibility(View.VISIBLE);
+                holder.llView1.setVisibility(View.GONE);
                 holder.llView2.setVisibility(View.GONE);
-                holder.llView3.setVisibility(View.GONE);
                 holder.llView4.setVisibility(View.GONE);
+                holder.tvTitle3.setText("您已取消面试");
 
 
-                final RongMessageInBean rongMessageInBean = gson.fromJson(custome05Message.getContent(), RongMessageInBean.class);
 
-                holder.tvTitle2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ToastFactory.getToast(mContext, "进入面试详情" + rongMessageInBean.getId()).show();
-                        Intent intent = new Intent(mContext, MianShiDetailType2Activity.class);
-                        intent.putExtra("interviewId", rongMessageInBean.getId());
-                        mContext.startActivity(intent);
-                    }
-                });
 
             }
 
@@ -79,13 +65,29 @@ public class Custome05MessageItemProvider extends IContainerItemProvider.Message
 
         } else if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             //这是接收方
-            Log.i(TAG, "onClick: 简历ID  + 这是接收方");
+            if (custome05Message.getContent() != null) {
+                Gson gson = new Gson();
 
-            holder.llView3.setVisibility(View.VISIBLE);
-            holder.llView1.setVisibility(View.GONE);
-            holder.llView2.setVisibility(View.GONE);
-            holder.llView4.setVisibility(View.GONE);
-            holder.tvTitle3.setText("您已取消面试");
+                holder.llView2.setVisibility(View.VISIBLE);
+                holder.llView1.setVisibility(View.GONE);
+                holder.llView3.setVisibility(View.GONE);
+                holder.llView4.setVisibility(View.GONE);
+                holder.tvTitle2.setText("HR已取消您的面试,点击查看详情");
+
+
+                final RongMessageInBean rongMessageInBean = gson.fromJson(custome05Message.getContent(), RongMessageInBean.class);
+
+                holder.tvTitle2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //ToastFactory.getToast(mContext, "进入面试详情" + rongMessageInBean.getId()).show();
+                        Intent intent = new Intent(mContext, MianShiDetailType2Activity.class);
+                        intent.putExtra("interviewId", rongMessageInBean.getId());
+                        mContext.startActivity(intent);
+                    }
+                });
+
+            }
 
 
 

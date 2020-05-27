@@ -93,6 +93,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
     private String phone;
     private String hrName;
     private String hrid;
+    private String jobId;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -129,10 +130,10 @@ public class MianShiDetailType1Activity extends BaseActivity {
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
                         .error(R.mipmap.imageerror)).load(resultBean.getJobhunter().getAvatar()).into(roundedImageView);
 
-
+                jobId = resultBean.getJobhunter().getId();
                 phone = resultBean.getJobhunter().getMobile();
                 tv2.setText(resultBean.getInterviewDate() + " 面试");
-                id = resultBean.getId();
+                MianShiDetailType1Activity.this.id = resultBean.getId();
                 String interviewStatus = resultBean.getInterviewStatus();
                 tv3.setVisibility(View.GONE);
                 //1 待接受  2 已拒绝 3 待面试 4 已超时 5 已到达 6 已取消 7 已录取 8 不合适
@@ -228,6 +229,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
     }
 
     private static final String TAG = "MianShiDetailType1Activ";
+
     private void goLiaoTianMethod() {
         String userId = SPTool.getSessionValue(AppSP.UID);
         String nickName = SPTool.getSessionValue(AppSP.USER_NAME);
@@ -304,7 +306,7 @@ public class MianShiDetailType1Activity extends BaseActivity {
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.HR_QuXiao, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                RongUtil.HRQuXiao(SPTool.getSessionValue(AppSP.UID), interviewId2);
+                RongUtil.HRQuXiao(jobId, interviewId2);
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 EventBus.getDefault().post(new MessageEvent(10, null, null, null, null, null, null));
                 getMianShiDetail(interviewId2);

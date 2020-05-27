@@ -51,7 +51,6 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
             }
         } else if (uiMessage.getMessageDirection() == Message.MessageDirection.RECEIVE) {
             //这是接收方
-            Log.i(TAG, "onClick: 简历ID  + 这是接收方");
             if (custome1Message.getContent() != null) {
                 Gson gson = new Gson();
 
@@ -68,7 +67,7 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
                 holder.tvCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        RongUtil.jujueAndTongYi(uiMessage.getTargetId(), "1", SPTool.getSessionValue(AppSP.USER_ICON), SPTool.getSessionValue(AppSP.UID_DUAN));
+                        RongUtil.jujueAndTongYi(uiMessage.getTargetId(), "1", SPTool.getSessionValue(AppSP.USER_ICON), uiMessage.getTargetId());
                     }
                 });
 
@@ -76,7 +75,7 @@ public class Custome1MessageItemProvider extends IContainerItemProvider.MessageP
                 holder.tvOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        RongUtil.jujueAndTongYi(uiMessage.getTargetId(), "0", SPTool.getSessionValue(AppSP.USER_ICON), SPTool.getSessionValue(AppSP.UID_DUAN));
+                        RongUtil.jujueAndTongYi(uiMessage.getTargetId(), "0", SPTool.getSessionValue(AppSP.USER_ICON), uiMessage.getTargetId());
                     }
                 });
 

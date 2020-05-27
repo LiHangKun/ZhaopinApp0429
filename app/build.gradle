@@ -140,7 +140,7 @@ dependencies {
     //申请权限
     implementation project(':permissiongen')
     implementation project(':permission-annotation')
-    implementation project(':pictureselector')
+    //implementation project(':pictureselector')
     //申请权限
     //鸿洋的流布局
     implementation project(':flowlayout-lib')

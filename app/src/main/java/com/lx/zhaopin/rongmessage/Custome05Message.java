@@ -28,7 +28,7 @@ import io.rong.imlib.model.UserInfo;
 @MessageTag(value = "RCD:HRCancleMianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class Custome05Message extends MessageContent {
 
-    private static final String TAG = "Custome5Message";
+    private static final String TAG = "Custome05Message";
     public String content;//接收的邀约ID
     public String type;//企业的ID 用于查询企业的名字和 企业的头像
 

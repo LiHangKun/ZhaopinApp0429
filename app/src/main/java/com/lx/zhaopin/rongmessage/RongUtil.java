@@ -123,7 +123,7 @@ public class RongUtil {
     }
 
 
-    //查看简历,拒绝和同意  //  type 0 同意  1 拒绝
+    //查看简历,拒绝和同意  //  type 0 同意  1 拒绝    RefuseJianLiMsg
     public static void jujueAndTongYi(String targetId, String type, String icon, String duanID) {
         RongMessageInBean rongMessageInBean = new RongMessageInBean();
         rongMessageInBean.setType(type);
@@ -164,7 +164,7 @@ public class RongUtil {
     }
 
 
-    //发送职位邀约,拒绝和同意  //  type 0 同意  1 拒绝
+    //发送职位邀约,拒绝和同意  //  type 0 同意  1 拒绝   ReceiveMianShiMsg
     public static void YaoYueJujueAndTongYi(String targetId, String type, String icon, String duanID) {
         RongMessageInBean rongMessageInBean = new RongMessageInBean();
         rongMessageInBean.setType(type);

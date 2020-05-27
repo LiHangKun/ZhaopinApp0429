@@ -16,7 +16,6 @@ import io.rong.imlib.model.UserInfo;
 //参考  CustomeGroupTipMessage
 
 
-//HR 看到求职者给我发送的一份求职简历,HR的操作是拒绝或者同意
 @MessageTag(value = "RCD:ReceiveMianShiMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class Custome4Message extends MessageContent {
 

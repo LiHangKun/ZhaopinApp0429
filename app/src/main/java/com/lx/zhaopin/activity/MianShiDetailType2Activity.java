@@ -489,7 +489,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.quXiaoMianShi_Type1, params, new SpotsCallBack<PhoneStateBean>(mContext) {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                RongUtil.qiuZhiQuXiao(SPTool.getSessionValue(AppSP.UID), interviewId2);
+                RongUtil.qiuZhiQuXiao(hrid, interviewId2);
                 EventBus.getDefault().post(new MessageEvent(10, null, null, null, null, null, null));
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 getMianShiDetail(interviewId2);
