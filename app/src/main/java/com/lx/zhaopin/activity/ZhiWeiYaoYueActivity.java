@@ -493,7 +493,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
-                RongUtil.faYaoYue(rid, name, icon, SPTool.getSessionValue(AppSP.UID_DUAN), gongSiID);
+                RongUtil.faYaoYue(rid, name, icon, SPTool.getSessionValue(AppSP.UID_DUAN), resultBean.getInterviewId());
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override

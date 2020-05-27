@@ -146,7 +146,7 @@ public class RongUtil {
     //发送邀约
     public static void faYaoYue(String targetId, String gongSiName, String icon, String duanID, String gongSiID) {
         RongMessageInBean rongMessageInBean = new RongMessageInBean();
-        rongMessageInBean.setType(gongSiName);
+        rongMessageInBean.setName(gongSiName);
         rongMessageInBean.setIcon(icon);
         rongMessageInBean.setLocatin(duanID);
         rongMessageInBean.setId(gongSiID);
