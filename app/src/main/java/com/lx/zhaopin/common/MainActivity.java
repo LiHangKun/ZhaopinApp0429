@@ -15,20 +15,27 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyDialogListener;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.VersionBean;
 import com.lx.zhaopin.hr.HRHome1Fragment;
 import com.lx.zhaopin.hr.HRHome2Fragment;
 import com.lx.zhaopin.hr.HRHome3Fragment;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
+import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.APKVersionCodeUtils;
 import com.lx.zhaopin.utils.ActivityManager;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.NoScrollViewPager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -153,11 +160,11 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             setUserRongInfoMethod0(eventRongToken);
         } else {
 
-            if (userType.equals("0")){
+            if (userType.equals("0")) {
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_RongToken))) {
                     setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_RongToken));
                 }
-            }else {
+            } else {
                 //用招聘者连接融云
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_HR_RongToken))) {
                     setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_HR_RongToken));
@@ -486,6 +493,62 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             viewPager.setCurrentItem(0);
             AppSP.isToHome = false;
         }
+
+        versionUpdateMe();
+
+    }
+
+    private void versionUpdateMe() {
+        Map<String, String> params = new HashMap<>();
+
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.versionUpdate, params, new SpotsCallBack<VersionBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, VersionBean resultBean) {
+
+                String result = resultBean.getResult();
+                String resultNote = resultBean.getResultNote();
+
+
+                if (result.equals("0")) {
+                    String number = resultBean.getNumber();
+                    String version = resultBean.getVersion();
+                    String type = resultBean.getType();
+                    String url = resultBean.getAndroidUrl();
+                    String content = resultBean.getContent();
+                    int numberServer = Integer.parseInt(number);
+                    int verCode = APKVersionCodeUtils.getVersionCode(mContext);
+                    if (numberServer > verCode) {
+                        Log.i(TAG, "xuanZe: 执行1111111111");
+                        AllenVersionChecker
+                                .getInstance()
+                                .downloadOnly(
+                                        UIData.create().setDownloadUrl(url).setTitle("发现新版本").setContent("是否立即更新")
+                                ).setNotificationBuilder(
+                                NotificationBuilder.create()
+                                        .setRingtone(true)
+                                        .setIcon(R.mipmap.logo)
+                                        .setTicker("版本更新")
+                                        .setContentTitle("版本更新")
+                                        .setContentText("正在下载....")
+                        ).setShowDownloadingDialog(false).executeMission(mContext);
+                    } else {
+                        //ToastFactory.getToast(mContext, "没有发现新版本").show();
+                    }
+                } else {
+                    showToast(resultNote);
+                    return;
+                }
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
+
     }
 
 }
