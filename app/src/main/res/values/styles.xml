@@ -32,13 +32,20 @@
     <!--冷启动-->
     <style name="AppWelcome" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@mipmap/yindao1</item>
+        <item name="android:windowBackground">@mipmap/qidongye</item>
 
     </style>
 
 
+    <style name="AppTheme.Launcher">
+        <item name="android:windowFullscreen">true</item>
+        <!--<item name="android:windowDisablePreview">true</item>-->
+        <item name="android:windowBackground">@mipmap/qidongye</item>
+    </style>
+
+
     <style name="SplashTheme" parent="AppTheme.NoActionBar">
-        <item name="android:background">@drawable/yindao1</item>
+        <item name="android:background">@mipmap/qidongye</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
