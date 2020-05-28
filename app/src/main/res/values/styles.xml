@@ -32,7 +32,7 @@
     <!--冷启动-->
     <style name="AppWelcome" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@mipmap/qidongye</item>
+        <item name="android:windowBackground">@mipmap/qidong0</item>
 
     </style>
 

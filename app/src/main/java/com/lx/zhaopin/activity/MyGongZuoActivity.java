@@ -334,7 +334,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void init() {
-        topTitle.setText("新增或者修改工作经验");
+        topTitle.setText("工作经验");
         rightText.setText("删除");
         workID = getIntent().getStringExtra("workID");
         if (!TextUtils.isEmpty(workID)) {
@@ -394,7 +394,7 @@ public class MyGongZuoActivity extends BaseActivity implements View.OnClickListe
                 tv3.setText(resultBean.getEndDate());
                 edit2.setText(resultBean.getExperience());
 
-                oldSearchStr = resultBean.getSkills();
+                skills = resultBean.getSkills();
                 String skills = resultBean.getSkills();
                 String[] split = skills.split(",");
                 for (int i = 0; i < split.length; i++) {

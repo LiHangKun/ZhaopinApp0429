@@ -49,7 +49,7 @@ public class AddZhuanYeJiNengWorkActivity extends BaseActivity implements View.O
     }
 
     private void init() {
-        topTitle.setText("工作经验专业技能");
+        topTitle.setText("专业技能");
        /* if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }*/

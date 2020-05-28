@@ -1,5 +1,6 @@
 package com.lx.zhaopin.common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.home2.Message1Fragment;
@@ -112,9 +114,13 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
         if (isVisibleToUser) {
             if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                 getUnMessageNumber();
+            } else {
+                startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
+                getActivity().finish();
             }
         }
     }
+
 
     //newMessageCount
     private void getUnMessageNumber() {

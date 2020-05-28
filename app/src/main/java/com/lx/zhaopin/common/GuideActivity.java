@@ -39,7 +39,7 @@ import java.util.ArrayList;
 public class GuideActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
-    private int[] mImageIds = new int[]{R.drawable.yindao1, R.drawable.yindao2, R.drawable.yindao3};
+    private int[] mImageIds = new int[]{R.mipmap.qidong1, R.mipmap.qidong2, R.mipmap.qidong3};
     private ArrayList<ImageView> mImageViewList;
     private LinearLayout llContainer;
     private ImageView ivRedPoint;
