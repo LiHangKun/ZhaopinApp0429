@@ -112,7 +112,8 @@
         android:id="@+id/ViewType1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
 
         <LinearLayout
@@ -159,7 +160,6 @@
     </LinearLayout>
 
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/ViewType2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -210,8 +210,8 @@
         -->
 
         <LinearLayout
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
             android:layout_gravity="right"
             android:layout_marginRight="@dimen/dp_10"
             android:background="@drawable/biankuang18">

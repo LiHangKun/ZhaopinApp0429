@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.lx.zhaopin.view.RoundImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/image"
-    android:layout_width="@dimen/dp_80"
+    android:layout_width="@dimen/dp_150"
     android:layout_height="@dimen/dp_80"
     android:layout_marginLeft="@dimen/dp_10"
     android:orientation="horizontal"

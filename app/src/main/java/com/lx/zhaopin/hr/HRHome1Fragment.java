@@ -73,7 +73,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     private FrameLayout viewType2;
 
 
-    private boolean kaPian = false;
+    private boolean kaPian = true;
     private boolean hasNo = false;
     private DragCardsView mDragCardsView;
     private List<RenCaiListBean.DataListBean> list;

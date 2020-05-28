@@ -74,7 +74,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private FrameLayout viewType2;
 
 
-    private boolean kaPian = false;
+    private boolean kaPian = true;
     private boolean hasNo = false;
     private DragCardsView mDragCardsView;
     private List<ShouYeQiuZhiZheBean.DataListBean> list;

@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_100"
                     android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_30"
+                    android:layout_marginTop="@dimen/dp_50"
                     android:layout_marginRight="@dimen/dp_10"
                     android:orientation="horizontal">
 
@@ -48,7 +48,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_gravity="center_vertical"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/splashbj"
+                        android:src="@drawable/newicon"
                         app:riv_border_width="0dip"
                         app:riv_corner_radius_bottom_left="@dimen/dp_5"
                         app:riv_corner_radius_bottom_right="@dimen/dp_5"
@@ -145,13 +145,14 @@
                             android:orientation="horizontal">
 
                             <TextView
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="我的资料"
                                 android:textColor="#333"
-                                android:textSize="@dimen/sp_14"
-                                android:textStyle="normal" />
+                                android:textSize="@dimen/sp_16"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -166,18 +167,18 @@
                                 android:text="去完善"
                                 android:textColor="#4690FF"
                                 android:textSize="@dimen/sp_13"
-                                android:textStyle="normal" />
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:text="完善简历提升您的录取率"
                             android:textColor="#666"
-                            android:textSize="@dimen/sp_14" />
+                            android:textSize="@dimen/sp_16" />
 
 
                     </LinearLayout>
@@ -271,7 +272,7 @@
                             android:text="已收藏"
                             android:textColor="#333"
                             android:textSize="@dimen/sp_14"
-                            android:textStyle="bold" />
+                            android:textStyle="normal" />
 
 
                     </LinearLayout>
@@ -307,7 +308,8 @@
                                     android:paddingLeft="@dimen/dp_6"
                                     android:paddingRight="@dimen/dp_6"
                                     android:text="0"
-                                    android:textColor="#fff" />
+                                    android:textColor="#fff"
+                                    android:visibility="invisible" />
 
                             </LinearLayout>
 
@@ -322,7 +324,7 @@
                             android:text="待面试"
                             android:textColor="#333"
                             android:textSize="@dimen/sp_14"
-                            android:textStyle="bold" />
+                            android:textStyle="normal" />
 
 
                     </LinearLayout>
@@ -356,7 +358,7 @@
                                     android:background="@drawable/button_shape40"
                                     android:paddingLeft="@dimen/dp_6"
                                     android:paddingRight="@dimen/dp_6"
-                                    android:text="111"
+                                    android:text="0"
                                     android:visibility="invisible" />
 
                             </LinearLayout>
@@ -372,7 +374,7 @@
                             android:text="已录取"
                             android:textColor="#333"
                             android:textSize="@dimen/sp_14"
-                            android:textStyle="bold" />
+                            android:textStyle="normal" />
 
 
                     </LinearLayout>
@@ -422,7 +424,7 @@
                             android:text="面试记录"
                             android:textColor="#333"
                             android:textSize="@dimen/sp_14"
-                            android:textStyle="bold" />
+                            android:textStyle="normal" />
 
 
                     </LinearLayout>
@@ -438,7 +440,7 @@
                 <RelativeLayout
                     android:id="@+id/relView1"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_55"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_20"
                     android:layout_marginRight="@dimen/dp_10">
@@ -460,7 +462,7 @@
                             android:gravity="center"
                             android:text="已屏蔽记录"
                             android:textColor="#333"
-                            android:textSize="@dimen/sp_14"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="normal" />
 
 
@@ -485,7 +487,7 @@
                 <RelativeLayout
                     android:id="@+id/relView2"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_55"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10">
 
@@ -506,7 +508,7 @@
                             android:gravity="center"
                             android:text="我的关注"
                             android:textColor="#333"
-                            android:textSize="@dimen/sp_14"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="normal" />
 
 
@@ -531,7 +533,7 @@
                 <RelativeLayout
                     android:id="@+id/relView3"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_55"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10">
 
@@ -552,7 +554,7 @@
                             android:gravity="center"
                             android:text="求职意向"
                             android:textColor="#333"
-                            android:textSize="@dimen/sp_14"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="normal" />
 
 
@@ -577,7 +579,7 @@
                 <RelativeLayout
                     android:id="@+id/relView4"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_55"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10">
 
@@ -598,7 +600,7 @@
                             android:gravity="center"
                             android:text="在线客服"
                             android:textColor="#333"
-                            android:textSize="@dimen/sp_14"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="normal" />
 
 
@@ -623,7 +625,7 @@
                 <RelativeLayout
                     android:id="@+id/relView5"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_55"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10">
 
@@ -644,7 +646,7 @@
                             android:gravity="center"
                             android:text="隐私设置"
                             android:textColor="#333"
-                            android:textSize="@dimen/sp_14"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="normal" />
 
 
@@ -669,7 +671,7 @@
                 <RelativeLayout
                     android:id="@+id/relView6"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_55"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10">
 
@@ -690,7 +692,7 @@
                             android:gravity="center"
                             android:text="切换身份"
                             android:textColor="#333"
-                            android:textSize="@dimen/sp_14"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="normal" />
 
 
@@ -711,7 +713,7 @@
                             android:gravity="center"
                             android:text="招聘者"
                             android:textColor="#333"
-                            android:textSize="@dimen/sp_14"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="normal" />
 
 
@@ -737,7 +739,7 @@
                 <RelativeLayout
                     android:id="@+id/relView7"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_45"
+                    android:layout_height="@dimen/dp_55"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10">
 
@@ -758,7 +760,7 @@
                             android:gravity="center"
                             android:text="我的设置"
                             android:textColor="#333"
-                            android:textSize="@dimen/sp_14"
+                            android:textSize="@dimen/sp_15"
                             android:textStyle="normal" />
 
 
