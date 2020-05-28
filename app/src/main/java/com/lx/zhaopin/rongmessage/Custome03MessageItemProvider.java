@@ -66,7 +66,7 @@ public class Custome03MessageItemProvider extends IContainerItemProvider.Message
                 final RongMessageInBean rongMessageInBean = gson.fromJson(custome03Message.getContent(), RongMessageInBean.class);
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                         .load(rongMessageInBean.getIcon()).into(holder.roundedImageView);
-                holder.tvTitle4.setText(rongMessageInBean.getName());
+                holder.tvTitle4.setText(rongMessageInBean.getName() + "给您发来面试邀请");
                 holder.llViewGongSi.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

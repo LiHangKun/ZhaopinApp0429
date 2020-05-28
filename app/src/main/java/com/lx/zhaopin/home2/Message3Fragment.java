@@ -151,8 +151,8 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
 
                         switch (messageType) {
                             case "1":
-                                positionSelect = position;
                                 getReadMess(messID);
+                                positionSelect = position;
                                 //ToastFactory.getToast(getActivity(), "系统消息").show();
                                 intent = new Intent(getActivity(), NoticeDetailActivity.class);
                                 intent.putExtra("title", title);
@@ -160,8 +160,8 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                                 startActivity(intent);
                                 break;
                             case "2":
-                                positionSelect = position;
                                 getReadMess(messID);
+                                positionSelect = position;
                                 //ToastFactory.getToast(getActivity(), "收到Offer").show();
                                 intent = new Intent(getActivity(), QiuZhiFeedActivity.class);
                                 intent.putExtra("offerID", Correlation);
@@ -169,16 +169,16 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                                 startActivity(intent);
                                 break;
                             case "3":
-                                positionSelect = position;
                                 getReadMess(messID);
+                                positionSelect = position;
                                 //ToastFactory.getToast(getActivity(), "求职反馈").show();
                                 intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
                                 intent.putExtra("messageId", Correlation);
                                 startActivity(intent);
                                 break;
                             case "4":
-                                positionSelect = position;
                                 getReadMess(messID);
+                                positionSelect = position;
                                 //ToastFactory.getToast(getActivity(), "面试邀请").show();
                                 //interviewId
                                 intent = new Intent(getActivity(), MianShiDetailType2Activity.class);
@@ -186,24 +186,27 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
                                 startActivity(intent);
                                 break;
                             case "5":
-                                positionSelect = position;
                                 getReadMess(messID);
+                                positionSelect = position;
                                 //ToastFactory.getToast(getActivity(), "面试取消").show();
                                 intent = new Intent(getActivity(), MianShiDetailType2Activity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;
                             case "6":
-                                positionSelect = position;
+                            case "8":
+                            case "10":
                                 getReadMess(messID);
+                                positionSelect = position;
                                 //ToastFactory.getToast(getActivity(), "面试超时").show();
                                 intent = new Intent(getActivity(), MianShiDetailType2Activity.class);
                                 intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;
                             case "7":
-                                positionSelect = position;
+                            case "9":
                                 getReadMess(messID);
+                                positionSelect = position;
                                 //ToastFactory.getToast(getActivity(), "举报结果").show();
                                 break;
                         }

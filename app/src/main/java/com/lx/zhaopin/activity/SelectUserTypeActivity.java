@@ -115,6 +115,7 @@ public class SelectUserTypeActivity extends BaseActivity {
 
                 SPTool.addSessionMap(AppSP.USER_TYPE, "0");
                 startActivity(new Intent(mContext, MainActivity.class));
+                AppSP.isToShopCar = true;
                 EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 SPTool.addSessionMap(AppSP.chatWhere, "0");
                 finish();
@@ -131,6 +132,7 @@ public class SelectUserTypeActivity extends BaseActivity {
 
                 SPTool.addSessionMap(AppSP.USER_TYPE, "1");
                 startActivity(new Intent(mContext, MainActivity.class));
+                AppSP.isToShopCar = true;
                 EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 SPTool.addSessionMap(AppSP.chatWhere, "1");
                 finish();

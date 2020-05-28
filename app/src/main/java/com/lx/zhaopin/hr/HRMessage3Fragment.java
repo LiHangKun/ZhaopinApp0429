@@ -112,8 +112,8 @@ public class HRMessage3Fragment extends Fragment {
                                 //4 面试邀请
                                 positionSelect = position;
                                 getReadMess(messID);
-                                intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
-                                intent.putExtra("messageId", Correlation);
+                                intent = new Intent(getActivity(), MianShiDetailType1Activity.class);
+                                intent.putExtra("interviewId", Correlation);
                                 startActivity(intent);
                                 break;
                             case "5":

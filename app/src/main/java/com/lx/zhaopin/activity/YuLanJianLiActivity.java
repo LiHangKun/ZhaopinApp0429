@@ -151,48 +151,52 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
                 tv6.setText(resultBean.getWorkYears() + "年");
                 tv7.setText(resultBean.getLatestCityName());
 
-                String jobNature = resultBean.getJobNature();
-                //工作性质 1.全职，2.兼职
-                switch (jobNature) {
-                    case "1":
-                        tv8.setText("全职");
-                        break;
-                    case "2":
-                        tv8.setText("兼职");
-                        break;
-                }
+                try {
+                    String jobNature = resultBean.getJobNature();
+                    //工作性质 1.全职，2.兼职
+                    switch (jobNature) {
+                        case "1":
+                            tv8.setText("全职");
+                            break;
+                        case "2":
+                            tv8.setText("兼职");
+                            break;
+                    }
 
-                tv9.setText(resultBean.getLatestCityName());
+                    tv9.setText(resultBean.getLatestCityName());
 
-                String jobStatus = resultBean.getJobStatus();
-                //工作状态 1.离职-随时到岗，2.在职-月内到岗 3.在职-考虑机会 4.在职-暂不考虑
-                switch (jobStatus) {
-                    case "1":
-                        tv10.setText("离职-随时到岗");
-                        break;
-                    case "2":
-                        tv10.setText("在职-月内到岗");
-                        break;
-                    case "3":
-                        tv10.setText("在职-考虑机会");
-                        break;
-                    case "4":
-                        tv10.setText("在职-暂不考虑");
-                        break;
-                }
+                    String jobStatus = resultBean.getJobStatus();
+                    //工作状态 1.离职-随时到岗，2.在职-月内到岗 3.在职-考虑机会 4.在职-暂不考虑
+                    switch (jobStatus) {
+                        case "1":
+                            tv10.setText("离职-随时到岗");
+                            break;
+                        case "2":
+                            tv10.setText("在职-月内到岗");
+                            break;
+                        case "3":
+                            tv10.setText("在职-考虑机会");
+                            break;
+                        case "4":
+                            tv10.setText("在职-暂不考虑");
+                            break;
+                    }
 
-                String arrivalTime = resultBean.getArrivalTime();
-                //到岗时间 1.一周 2.半个月 3.一个月
-                switch (arrivalTime) {
-                    case "1":
-                        tv11.setText("一周");
-                        break;
-                    case "2":
-                        tv11.setText("半个月");
-                        break;
-                    case "3":
-                        tv11.setText("一个月");
-                        break;
+                    String arrivalTime = resultBean.getArrivalTime();
+                    //到岗时间 1.一周 2.半个月 3.一个月
+                    switch (arrivalTime) {
+                        case "1":
+                            tv11.setText("一周");
+                            break;
+                        case "2":
+                            tv11.setText("半个月");
+                            break;
+                        case "3":
+                            tv11.setText("一个月");
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 //TODO 求职意向 recyclerView1
