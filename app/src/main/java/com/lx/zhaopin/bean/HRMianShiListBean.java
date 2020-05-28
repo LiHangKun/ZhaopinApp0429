@@ -65,6 +65,25 @@ public class HRMianShiListBean extends CommonBean {
             private String mobile;
             private String nullifier;
             private String offerStatus;
+            private String offer;
+
+            public String getOffer() {
+                return offer;
+            }
+
+            public void setOffer(String offer) {
+                this.offer = offer;
+            }
+
+            public String getSendDate() {
+                return sendDate;
+            }
+
+            public void setSendDate(String sendDate) {
+                this.sendDate = sendDate;
+            }
+
+            private String sendDate;
             private PositionBean position;
 
             public String getCancelReason() {

@@ -78,6 +78,7 @@ public class QiuZhiFeedActivity extends BaseActivity {
                 getOfferDetail(offerID);
                 break;
             case "1":
+                caoZuoView.setVisibility(View.GONE);
                 getOfferDetailHR(offerID);
                 break;
         }

@@ -59,6 +59,34 @@ public class MianShiListBean extends CommonBean {
             private String interviewDate;
             private String interviewStatus;
             private String offer;
+            private String offerStatus;
+            private String content;
+            private String sendDate;
+
+            public String getOfferStatus() {
+                return offerStatus;
+            }
+
+            public void setOfferStatus(String offerStatus) {
+                this.offerStatus = offerStatus;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public String getSendDate() {
+                return sendDate;
+            }
+
+            public void setSendDate(String sendDate) {
+                this.sendDate = sendDate;
+            }
+
             private PositionBean position;
 
             public CompanyBean getCompany() {

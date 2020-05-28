@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.MianShiDetailType1Activity;
+import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.bean.HRMianShiListBean;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -28,6 +29,7 @@ public class HRMianShiList_In_Adapter extends RecyclerView.Adapter<HRMianShiList
 
     private List<HRMianShiListBean.DataListBean.InterviewsBean> mData;
     private Context mContext;
+    private Intent intent;
 
     public HRMianShiList_In_Adapter() {
     }
@@ -53,7 +55,7 @@ public class HRMianShiList_In_Adapter extends RecyclerView.Adapter<HRMianShiList
         viewHolder.tv3.setText(mData.get(i).getInterviewDate().substring(11, mData.get(i).getInterviewDate().length()));
         viewHolder.tv2.setText("面试：" + mData.get(i).getPosition().getName() + " " + mData.get(i).getPosition().getMinSalary() + "-" + mData.get(i).getPosition().getMaxSalary() + "K");
 
-        String interviewStatus = mData.get(i).getInterviewStatus();
+        final String interviewStatus = mData.get(i).getInterviewStatus();
         //1 待接受  2 已拒绝 3 待面试 4 已超时 5 已到达 6 已取消 7 已录取 8 不合适
         switch (interviewStatus) {
             case "1":
@@ -86,10 +88,20 @@ public class HRMianShiList_In_Adapter extends RecyclerView.Adapter<HRMianShiList
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //跳转到HR的面试详情
-                Intent intent = new Intent(mContext, MianShiDetailType1Activity.class);
-                intent.putExtra("interviewId", mData.get(i).getId());
-                mContext.startActivity(intent);
+                switch (interviewStatus) {
+                    case "7":
+                        intent = new Intent(mContext, QiuZhiFeedActivity.class);
+                        //userType  0 求职者  1 HR
+                        intent.putExtra("userType", "1");
+                        intent.putExtra("offerID", mData.get(i).getOffer());
+                        mContext.startActivity(intent);
+                        break;
+                    default:
+                        intent = new Intent(mContext, MianShiDetailType1Activity.class);
+                        intent.putExtra("interviewId", mData.get(i).getId());
+                        mContext.startActivity(intent);
+                        break;
+                }
             }
         });
 
