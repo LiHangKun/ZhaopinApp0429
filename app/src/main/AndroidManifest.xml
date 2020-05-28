@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lx.zhaopin">
 
-
-    <!--SDK 必须使用的权限-->
-
+    <!-- SDK 必须使用的权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,45 +10,29 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!--APP 需要使用的部分权限-->
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- APP 需要使用的部分权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
-
-    <!-- 极光推送 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- 极光推送 -->
     <!-- 极光推送 -->
     <!-- Required -->
     <permission
         android:name="com.lx.zhaopin.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <!-- Required  一些系统要求的权限，如访问网络等 -->
+        android:protectionLevel="signature" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.lx.zhaopin.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
-    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> <!-- Optional for location -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 极光推送 -->
     <!-- 极光推送 -->
-
-
-    <!-- 极光推送 -->
-
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -65,18 +47,16 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
-
-    <!-- 安卓8.0打开apk安装更新 -->
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" /> <!-- 安卓8.0打开apk安装更新 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-
     <application
-        android:name="com.lx.zhaopin.common.MyApplication"
+        android:name=".common.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/zhaopinlogo"
         android:label="@string/app_name"
@@ -86,28 +66,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--安卓适配全面屏-->
+
+        <service
+            android:name=".common.ExampleService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="location" />
+
+        <!-- 安卓适配全面屏 -->
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.1" />
-
-
-        <!-- 高德地图 -->
+            android:value="2.1" /> <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="089be2732466dcc777aa88d4c6dd3e52" />
-        <service android:name="com.amap.api.location.APSService" />
-        <!-- 高德地图 -->
 
-
+        <service android:name="com.amap.api.location.APSService" /> <!-- 高德地图 -->
         <!-- 推送 -->
         <!-- Rich push 核心功能 since 2.0.6 -->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
-            android:theme="@style/MyDialogStyle" />
-
-        <!-- Required SDK核心功能 -->
+            android:theme="@style/MyDialogStyle" /> <!-- Required SDK核心功能 -->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -119,9 +99,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.lx.zhaopin" />
             </intent-filter>
-        </activity>
-
-        <!-- Required SDK 核心功能 -->
+        </activity> <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -133,15 +111,12 @@
                 <action android:name="cn.jpush.android.intent.PushService" />
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
             </intent-filter>
-        </service>
-        <!-- since 3.0.9 Required SDK 核心功能 -->
+        </service> <!-- since 3.0.9 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DataProvider"
             android:authorities="com.lx.zhaopin.DataProvider"
             android:exported="false"
-            android:process=":pushcore" />
-
-        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+            android:process=":pushcore" /> <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
         <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
         <service
             android:name="cn.jpush.android.service.DaemonService"
@@ -152,13 +127,11 @@
 
                 <category android:name="com.lx.zhaopin" />
             </intent-filter>
-        </service>
-        <!-- since 3.1.0 Required SDK 核心功能 -->
+        </service> <!-- since 3.1.0 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DownloadProvider"
             android:authorities="com.lx.zhaopin.DownloadProvider"
-            android:exported="true" />
-        <!-- Required SDK核心功能 -->
+            android:exported="true" /> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
@@ -178,14 +151,10 @@
 
                 <data android:scheme="package" />
             </intent-filter>
-        </receiver>
-
-        <!-- Required SDK核心功能 -->
+        </receiver> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false" />
-
-        <!-- Since JCore2.0.0 Required SDK核心功能 -->
+            android:exported="false" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
         <!-- 这个Service要继承JCommonService -->
         <service
             android:name=".jpushservice.PushService"
@@ -193,9 +162,7 @@
             <intent-filter>
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
-        </service>
-
-        <!-- User defined.  For test only  用户自定义的广播接收器 -->
+        </service> <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
             android:name=".jpushservice.MyReceiver"
             android:enabled="true"
@@ -208,40 +175,29 @@
                 <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.lx.zhaopin" />
             </intent-filter>
-        </receiver>
-
-        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
+        </receiver> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
         <receiver android:name=".jpushservice.MyJPushMessageReceiver">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
 
                 <category android:name="com.lx.zhaopin" />
             </intent-filter>
-        </receiver>
-        <!-- Required  . Enable it you can get statistics data with channel -->
+        </receiver> <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="ea9a7c2ccc265fa5741cebe1" /> <!-- </>值来自开发者平台取得的AppKey -->
-
-
         <!-- 极光推送完完完 -->
-
-
         <activity
             android:name=".common.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
-
-        <!--
-        android:theme="@style/SplashTheme"
-        -->
+        <!--         android:theme="@style/SplashTheme" -->
         <activity
-            android:name="com.lx.zhaopin.common.SplashActivity"
+            android:name=".common.SplashActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -252,362 +208,357 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity><!-- 欢迎页 -->
-
+        </activity> <!-- 欢迎页 -->
         <activity
-            android:name="com.lx.zhaopin.common.GuideActivity"
+            android:name=".common.GuideActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 引导页 -->
-
-
+            android:windowSoftInputMode="adjustPan" /> <!-- 引导页 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyUserInfoActivity"
+            android:name=".activity.MyUserInfoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 我的资料 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 我的资料 -->
         <activity
-            android:name="com.lx.zhaopin.activity.YanSFActivity"
+            android:name=".activity.YanSFActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 三方登录,验证身份 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 三方登录,验证身份 -->
         <activity
-            android:name="com.lx.zhaopin.activity.XinPhoneActivity"
+            android:name=".activity.XinPhoneActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 绑定新的手机号 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 绑定新的手机号 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyJianLiActivity"
+            android:name=".activity.MyJianLiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 我的简历 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 我的简历 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyJiaoYuActivity"
+            android:name=".activity.MyJiaoYuActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 教育经历 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 教育经历 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyGongZuoActivity"
+            android:name=".activity.MyGongZuoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 工作经验 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 工作经验 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyYinSiActivity"
+            android:name=".activity.MyYinSiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 隐私设置 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 隐私设置 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SettingActivity"
+            android:name=".activity.SettingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 设置 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 设置 -->
         <activity
-            android:name="com.lx.zhaopin.activity.ZhuXiaoActivity"
+            android:name=".activity.ZhuXiaoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 设置 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 设置 -->
         <activity
-            android:name="com.lx.zhaopin.activity.XiuGaiMiMaActivity"
+            android:name=".activity.XiuGaiMiMaActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 修改密码 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 修改密码 -->
         <activity
-            android:name="com.lx.zhaopin.activity.FeedActivity"
+            android:name=".activity.FeedActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 反馈 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 反馈 -->
         <activity
-            android:name="com.lx.zhaopin.activity.ChangJianWenTiActivity"
+            android:name=".activity.ChangJianWenTiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 常见问题 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 常见问题 -->
         <activity
-            android:name="com.lx.zhaopin.activity.AboutMeActivity"
+            android:name=".activity.AboutMeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 关于我们 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 关于我们 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyGuanZhuGangActivity"
+            android:name=".activity.MyGuanZhuGangActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 我的关注 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 我的关注 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyGuanZhuRenActivity"
+            android:name=".activity.MyGuanZhuRenActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 我的关注人才 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 我的关注人才 -->
         <activity
-            android:name="com.lx.zhaopin.activity.QiuZhiYiXiangActivity"
+            android:name=".activity.QiuZhiYiXiangActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 求职意向 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 求职意向 -->
         <activity
-            android:name="com.lx.zhaopin.activity.QiuZhiQiWangActivity"
+            android:name=".activity.QiuZhiQiWangActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 编辑求职期望 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 编辑求职期望 -->
         <activity
-            android:name="com.lx.zhaopin.activity.ZhiWuLeiXingActivity"
+            android:name=".activity.ZhiWuLeiXingActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 选择职位类型 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 选择职位类型 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SelectQiWangType1_1Activity"
+            android:name=".activity.SelectQiWangType1_1Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 选择行业 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 选择行业 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SelectQiWangType1_2Activity"
+            android:name=".activity.SelectQiWangType1_2Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 选择行业 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 选择行业 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SelectQiWangType1_3Activity"
+            android:name=".activity.SelectQiWangType1_3Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 选择行业 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 选择行业 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SelectQiWangType2Activity"
+            android:name=".activity.SelectQiWangType2Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 选择行业 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 选择行业 -->
         <activity
-            android:name="com.lx.zhaopin.activity.AddZhuanYeJiNengActivity"
+            android:name=".activity.AddZhuanYeJiNengActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 添加和删除专业技能 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 添加和删除专业技能 -->
         <activity
-            android:name="com.lx.zhaopin.activity.AddZhuanYeJiNengWorkActivity"
+            android:name=".activity.AddZhuanYeJiNengWorkActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 工作经验添加和删除专业技能 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 工作经验添加和删除专业技能 -->
         <activity
-            android:name="com.lx.zhaopin.activity.YuLanJianLiActivity"
+            android:name=".activity.YuLanJianLiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 简历预览 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 简历预览 -->
         <activity
-            android:name="com.lx.zhaopin.activity.QiuZhiFeedActivity"
+            android:name=".activity.QiuZhiFeedActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 求职反馈 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 求职反馈 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MianShiListActivity"
+            android:name=".activity.MianShiListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 面试记录 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 面试记录 -->
         <activity
-            android:name="com.lx.zhaopin.activity.YiLuQuActivity"
+            android:name=".activity.YiLuQuActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 已录取 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 已录取 -->
         <activity
-            android:name="com.lx.zhaopin.activity.PingBiGangActivity"
+            android:name=".activity.PingBiGangActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 屏蔽岗位 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 屏蔽岗位 -->
         <activity
-            android:name="com.lx.zhaopin.activity.PingBiRenActivity"
+            android:name=".activity.PingBiRenActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 屏蔽人才 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 屏蔽人才 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyShouCangGangActivity"
+            android:name=".activity.MyShouCangGangActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 我的收藏岗位 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 我的收藏岗位 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SelectUserTypeActivity"
+            android:name=".activity.SelectUserTypeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 切换身份 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 切换身份 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MianShiDetailType1Activity"
+            android:name=".activity.MianShiDetailType1Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 面试官面试详情 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 面试官面试详情 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MianShiDetailType2Activity"
+            android:name=".activity.MianShiDetailType2Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 面试详情招聘者 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 面试详情招聘者 -->
         <activity
-            android:name="com.lx.zhaopin.activity.ZhiWeiYaoYueActivity"
+            android:name=".activity.ZhiWeiYaoYueActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 发送职位邀约 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 发送职位邀约 -->
         <activity
-            android:name="com.lx.zhaopin.activity.MyShouCangRenActivity"
+            android:name=".activity.MyShouCangRenActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 我的收藏人才 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 我的收藏人才 -->
         <activity
-            android:name="com.lx.zhaopin.activity.DaiMianShiListActivity"
+            android:name=".activity.DaiMianShiListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 待面试 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 待面试 -->
         <activity
-            android:name="com.lx.zhaopin.activity.HRDaiMianShiListActivity"
+            android:name=".activity.HRDaiMianShiListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- HR待面试 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- HR待面试 -->
         <activity
-            android:name="com.lx.zhaopin.activity.ShenQingListActivity"
+            android:name=".activity.ShenQingListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 申请记录 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 申请记录 -->
         <activity
-            android:name="com.lx.zhaopin.activity.RenCaiDetailActivity"
+            android:name=".activity.RenCaiDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 人才详情 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 人才详情 -->
         <activity
-            android:name="com.lx.zhaopin.activity.QiYeInfoActivity"
+            android:name=".activity.QiYeInfoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 企业信息 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 企业信息 -->
         <activity
-            android:name="com.lx.zhaopin.activity.JinDuDetailActivity"
+            android:name=".activity.JinDuDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 求职反馈的进度详情 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 求职反馈的进度详情 -->
         <activity
-            android:name="com.lx.zhaopin.activity.JuBaoActivity"
+            android:name=".activity.JuBaoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 举报 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 举报 -->
         <activity
-            android:name="com.lx.zhaopin.activity.JuBaoSuccessActivity"
+            android:name=".activity.JuBaoSuccessActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 举报结果 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 举报结果 -->
         <activity
-            android:name="com.lx.zhaopin.activity.GangWeiDetailActivity"
+            android:name=".activity.GangWeiDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 岗位详情 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 岗位详情 -->
         <activity
-            android:name="com.lx.zhaopin.activity.Login1PhoneCodeActivity"
+            android:name=".activity.Login1PhoneCodeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 短信验证码登录 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 短信验证码登录 -->
         <activity
-            android:name="com.lx.zhaopin.activity.Login2PassWordActivity"
+            android:name=".activity.Login2PassWordActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 密码登录 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 密码登录 -->
         <activity
-            android:name="com.lx.zhaopin.activity.RegActivity"
+            android:name=".activity.RegActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 注册 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 注册 -->
         <activity
-            android:name="com.lx.zhaopin.activity.ResetPwActivity"
+            android:name=".activity.ResetPwActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 找回密码 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 找回密码 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SearchActivity"
+            android:name=".activity.SearchActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 搜索 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 搜索 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SearchSuccessActivity"
+            android:name=".activity.SearchSuccessActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 搜索结果 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 搜索结果 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SelectCityPro1ListActivity"
+            android:name=".activity.SelectCityPro1ListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 选择城市省 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 选择城市省 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SelectCityCity2ListActivity"
+            android:name=".activity.SelectCityCity2ListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 选择城市市 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 选择城市市 -->
         <activity
-            android:name="com.lx.zhaopin.activity.SelectHangYeActivity"
+            android:name=".activity.SelectHangYeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 选择行业 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 选择行业 -->
         <activity
-            android:name="com.lx.zhaopin.common.NoticeDetailActivity"
+            android:name=".common.NoticeDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 网页 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 网页 -->
         <activity
-            android:name="com.lx.zhaopin.activity.TestActivity"
+            android:name=".activity.TestActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 测试页面 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- 测试页面 -->
         <activity
-            android:name="com.lx.zhaopin.activity.XiaoXiDetailActivity"
+            android:name=".activity.XiaoXiDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- 消息详情 -->
-
-        <!--融云部分的功能融云部分的功能融云部分的功能融云部分的功能融云部分的功能-->
-
-        <!--解决-->
+            android:windowSoftInputMode="adjustPan" /> <!-- 消息详情 -->
+        <!-- 融云部分的功能融云部分的功能融云部分的功能融云部分的功能融云部分的功能 -->
+        <!-- 解决 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.lx.zhaopin.FileProvider"
@@ -616,10 +567,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
-        </provider>
-        <!--融云自定义画面-->
+        </provider> <!-- 融云自定义画面 -->
         <activity
-            android:name="com.lx.zhaopin.rong.ConversationActivity"
+            android:name=".rong.ConversationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -635,65 +585,56 @@
         </activity>
 
         <receiver
-            android:name="com.lx.zhaopin.rong.SealNotificationReceiver"
+            android:name=".rong.SealNotificationReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
                 <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
-        </receiver>
-
-
-        <!--融云部分的功能融云部分的功能融云部分的功能融云部分的功能融云部分的功能-->
-
-
-        <!--以下是HR看到的界面-->
+        </receiver> <!-- 融云部分的功能融云部分的功能融云部分的功能融云部分的功能融云部分的功能 -->
+        <!-- 以下是HR看到的界面 -->
         <activity
-            android:name="com.lx.zhaopin.hr.MainHRActivity"
+            android:name=".hr.MainHRActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".hractivity.HRMianShiListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- HR面试记录 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- HR面试记录 -->
         <activity
             android:name=".hractivity.HRYiLuQuActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- HR已录取 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- HR已录取 -->
         <activity
             android:name=".hractivity.HRSearchActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- HR搜索 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- HR搜索 -->
         <activity
             android:name=".hractivity.HRSearchSuccessActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- HR搜索的结果 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- HR搜索的结果 -->
         <activity
             android:name=".hractivity.HRBuHeShiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- HR不合适 -->
+            android:windowSoftInputMode="adjustPan" /> <!-- HR不合适 -->
         <activity
             android:name=".hractivity.HRXiaoXiDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" /><!-- HR消息详情 -->
-        <!--以下是HR看到的界面-->
-
-
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
