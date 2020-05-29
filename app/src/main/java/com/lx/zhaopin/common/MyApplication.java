@@ -160,8 +160,8 @@ public class MyApplication extends Application {
         //初始化友盟,Key在清单文件写过这里就不在需要了,推送不需要传入空字符串
         UMConfigure.init(this, "5de708d1570df3243e000b63", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
         //三方登录
-        PlatformConfig.setWeixin("wxfb8381274ed0fee4", "c8572c6ef231a4495703d96f0fec8e1c");
-        PlatformConfig.setQQZone("1110049772", "NbnAvFzVYpJoiPiB");//
+        PlatformConfig.setWeixin("wx97944e0b3dab9df1", "c8572c6ef231a4495703d96f0fec8e1c");
+        PlatformConfig.setQQZone("1110409775", "2EzUEeVxyRt6PCaO");//
         PlatformConfig.setSinaWeibo("353419546", "a091c5a7c817086d9c7b1b5fc654810f", "https://api.weibo.com/oauth2/default.html");
 
 
