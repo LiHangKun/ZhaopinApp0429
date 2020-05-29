@@ -45,6 +45,16 @@ public class YuLanBean extends CommonBean {
     private String latestCityName;
     private String mobile;
     private String name;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     private String sex;
     private String minSalary;
     private String maxSalary;

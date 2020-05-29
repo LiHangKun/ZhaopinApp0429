@@ -19,12 +19,13 @@ import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.YuLanBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.common.ShareUtils;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -81,6 +82,8 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
     FlowLiner flowLiner;
 
     private static final String TAG = "YuLanJianLiActivity";
+    private String shareTitle;
+    private String rid;
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
     public void getEventmessage(MessageEvent event) {
@@ -125,10 +128,10 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.jianLiPreview, params, new SpotsCallBack<YuLanBean>(mContext) {
             @Override
             public void onSuccess(Response response, YuLanBean resultBean) {
-
+                rid = resultBean.getId();
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                         .load(resultBean.getAvatar()).into(roundedImageView);
-
+                shareTitle = resultBean.getName() + "的简历";
                 tv1.setText(resultBean.getName());
                 String sex = resultBean.getSex();
                 //性别，1.男，2.女
@@ -295,7 +298,11 @@ public class YuLanJianLiActivity extends BaseActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.rightIcon:
                 //分享
-                ToastFactory.getToast(mContext, "分享").show();
+                if (!TextUtils.isEmpty(shareTitle)) {
+                    String ShareUrl = NetClass.Share_Ren + rid;
+                    Log.i(TAG, "onClick: 分享" + ShareUrl);
+                    new ShareUtils(YuLanJianLiActivity.this).share(ShareUrl, AppUtils.getAppName(YuLanJianLiActivity.this), shareTitle, NetClass.Share_AppLogo);
+                }
                 break;
         }
     }

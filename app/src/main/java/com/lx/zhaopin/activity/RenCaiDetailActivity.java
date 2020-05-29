@@ -33,11 +33,13 @@ import com.lx.zhaopin.bean.GongSiZhiWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.RenCaiDetailBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.ShareUtils;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
@@ -116,6 +118,7 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
     private String renID;
     private String renOpenChat;
     private String yaoYueGangWeiId;
+    private String shareTitle;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -142,6 +145,7 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
                         .error(R.mipmap.imageerror)).load(resultBean.getAvatar()).into(roundedImageView);
 
+                shareTitle = resultBean.getName() + "的简历";
 
                 renIcon = resultBean.getAvatar();
                 renName = resultBean.getName();
@@ -308,7 +312,11 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.image2:
                 //分享
-                ToastFactory.getToast(mContext, "分享简历" + rid).show();
+                if (!TextUtils.isEmpty(shareTitle)) {
+                    String ShareUrl = NetClass.Share_Ren + rid;
+                    Log.i(TAG, "onClick: 分享" + ShareUrl);
+                    new ShareUtils(RenCaiDetailActivity.this).share(ShareUrl, AppUtils.getAppName(RenCaiDetailActivity.this), shareTitle, NetClass.Share_AppLogo);
+                }
                 break;
             case R.id.image3:
                 //举报,屏蔽

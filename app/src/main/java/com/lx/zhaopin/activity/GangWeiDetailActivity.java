@@ -40,12 +40,14 @@ import com.lx.zhaopin.bean.YuYueMianListBean;
 import com.lx.zhaopin.bean.ZhiWeiDetailBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.common.ShareUtils;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.rongmessage.RongUtil;
+import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
@@ -145,6 +147,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     private String hrName;
     private String delivered;
     private String jianliID;
+    private String shareTitle;
 
 
     private void getLastIndexForLimit(TextView tv, int maxLine, String content) {
@@ -216,6 +219,9 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiDetail, params, new SpotsCallBack<ZhiWeiDetailBean>(mContext) {
             @Override
             public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
+
+                shareTitle = resultBean.getCompany().getName() + "" + resultBean.getName();
+
                 delivered = resultBean.getDelivered();
                 hrid = resultBean.getHRID();
                 hrName = resultBean.getHRName();
@@ -420,7 +426,11 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.image2:
                 //分享
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    ToastFactory.getToast(mContext, "分享").show();
+                    if (!TextUtils.isEmpty(shareTitle)) {
+                        String shareUrl = NetClass.Share_Gang + pid;
+                        Log.i(TAG, "onClick: 分享" + shareUrl);
+                        new ShareUtils(GangWeiDetailActivity.this).share(shareUrl, AppUtils.getAppName(GangWeiDetailActivity.this), shareTitle, NetClass.Share_AppLogo);
+                    }
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -623,8 +633,6 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         if (null != userId && null != nickName && null != userHead)
             RongIM.getInstance().setCurrentUserInfo(new UserInfo(userId, nickName, Uri.parse(userHead)));
         RongIM.getInstance().setMessageAttachedUserInfo(true);
-
-
 
 
         //对方的ID 姓名

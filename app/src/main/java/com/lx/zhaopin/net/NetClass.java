@@ -30,5 +30,14 @@ public class NetClass {
     public static final String Web_XieYi11 = BASE_URL + "settle";//结算说明
     public static final String Web_XieYi12 = BASE_URL + "expand";//活动规则
 
+    //http://39.96.78.51/share/#/?pid=
+    //http://39.96.78.51/share/#/pages/index/cv?rid=
+
+
+    public static final String Share_Gang = "http://39.96.78.51/share/#/?pid=";
+    public static final String Share_Ren = "http://39.96.78.51/share/#/pages/index/cv?rid=";
+    public static final String Share_AppLogo = "http://39.96.78.51/zhaopinlogo.png";
+    public static final String title = "欢迎使用";
+
 
 }
