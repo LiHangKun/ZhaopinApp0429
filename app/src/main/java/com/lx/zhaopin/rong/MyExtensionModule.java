@@ -11,6 +11,7 @@ import java.util.List;
 import io.rong.callkit.AudioPlugin;
 import io.rong.callkit.VideoPlugin;
 import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.emoticon.IEmoticonTab;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imlib.model.Conversation;
 
@@ -26,7 +27,7 @@ public class MyExtensionModule extends DefaultExtensionModule {
         List<IPluginModule> pluginModules = super.getPluginModules(conversationType);
         pluginModules.clear();
         //拍照  图片 语音聊天  视频聊天   邀约
-        pluginModules.add(new MySightPlugin());//拍照
+        //pluginModules.add(new MySightPlugin());//拍照  MySightPlugin
         pluginModules.add(new MyImagePlugin());//图片 MyImagePlugin
         pluginModules.add(new AudioPlugin());//语音聊天  MyYinPinPlugin
         pluginModules.add(new VideoPlugin());//视频聊天  MyShiPinPlugin   VideoPlugin
@@ -63,4 +64,10 @@ public class MyExtensionModule extends DefaultExtensionModule {
         emoticonTabs.add(new MyGirlEmoticon());
         return emoticonTabs;
     }*/
+
+
+    @Override
+    public List<IEmoticonTab> getEmoticonTabs() {
+        return super.getEmoticonTabs();
+    }
 }

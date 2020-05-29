@@ -11,7 +11,7 @@ import io.rong.imkit.RongExtension;
 import io.rong.sight.SightPlugin;
 
 
-//拍摄
+//拍摄  SightExtensionModule
 public class MySightPlugin extends SightPlugin {
     @Override
     public Drawable obtainDrawable(Context context) {

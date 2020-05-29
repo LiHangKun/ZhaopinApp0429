@@ -45,6 +45,7 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.sight.SightExtensionModule;
 
 public class MyApplication extends Application {
 
@@ -147,6 +148,7 @@ public class MyApplication extends Application {
 
 
         setInputProvider();
+        RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
 
         //------TODO-------融云部分------
 
