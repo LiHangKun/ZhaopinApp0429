@@ -400,6 +400,8 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView5:
                 //隐私设置
+
+
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     intent = new Intent(getActivity(), MyYinSiActivity.class);
                     startActivity(intent);
@@ -430,8 +432,14 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.relView7:
                 //我的设置
-                intent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent);
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    intent = new Intent(getActivity(), SettingActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToastFactory.getToast(getActivity(), "请先登录").show();
+                    startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
+                    return;
+                }
                 break;
         }
     }

@@ -35,6 +35,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -257,7 +258,21 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
                 String time2 = food.get(options1) + " - " + clothes.get(options2);
                 minK = food.get(options1).substring(0, food.get(options1).length() - 1);
                 maxK = clothes.get(options2).substring(0, clothes.get(options2).length() - 1);
-                tv4.setText(time2);
+
+                Log.i(TAG, "onOptionsSelect: " + minK + maxK);
+
+                BigDecimal num1 = new BigDecimal(minK);
+                BigDecimal num2 = new BigDecimal(maxK);
+
+                int i = num1.compareTo(num2); // 0 相等
+                Log.i(TAG, "onOptionsSelect: 1==" + i);
+                if (i > 0) {
+                    ToastFactory.getToast(mContext, "薪资范围错误,请重新选择").show();
+                    return;
+                } else {
+                    tv4.setText(time2);
+                }
+
 
                 //Toast.makeText(mContext, time2, Toast.LENGTH_SHORT).show();
             }

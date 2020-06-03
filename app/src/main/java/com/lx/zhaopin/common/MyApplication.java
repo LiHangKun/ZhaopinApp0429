@@ -35,6 +35,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
@@ -163,7 +164,8 @@ public class MyApplication extends Application {
         PlatformConfig.setWeixin("wx97944e0b3dab9df1", "c8572c6ef231a4495703d96f0fec8e1c");
         PlatformConfig.setQQZone("1110409775", "2EzUEeVxyRt6PCaO");//
         PlatformConfig.setSinaWeibo("353419546", "a091c5a7c817086d9c7b1b5fc654810f", "https://api.weibo.com/oauth2/default.html");
-
+        //腾讯Bugly手机错误日志
+        CrashReport.initCrashReport(getApplicationContext(), "ad759c334d", true);
 
     }
 

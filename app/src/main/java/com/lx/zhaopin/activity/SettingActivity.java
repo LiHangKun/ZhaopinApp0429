@@ -69,8 +69,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         relViewCui2.setOnClickListener(this);
         relViewCui3.setOnClickListener(this);
 
+        try {
+            String totalCacheSize = DataCleanManager.getTotalCacheSize(this);
+            text1.setText(totalCacheSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        clearAllCachecatch();
+
+
 
 
     }
