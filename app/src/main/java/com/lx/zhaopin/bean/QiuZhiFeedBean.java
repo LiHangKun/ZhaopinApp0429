@@ -55,6 +55,15 @@ public class QiuZhiFeedBean extends CommonBean {
         private String id;
         private String lastChatDate;
         private String unreadCount;
+        private String positionName;
+
+        public String getPositionName() {
+            return positionName;
+        }
+
+        public void setPositionName(String positionName) {
+            this.positionName = positionName;
+        }
 
         public String getChatStatus() {
             return chatStatus;

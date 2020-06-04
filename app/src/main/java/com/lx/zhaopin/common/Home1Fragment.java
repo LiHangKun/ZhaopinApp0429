@@ -112,7 +112,14 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                 String cityName = event.getKeyWord1();
                 String cityNameID = event.getKeyWord2();
                 tvCity.setText(cityName);
+
+
                 break;
+            case 11:
+                getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
+
+                Log.i(TAG, "getEventmessage: 收到消息更新卡片");
+               break;
         }
     }
 
@@ -310,6 +317,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.zhiWeiPageList, params, new SpotsCallBack<ShouYeQiuZhiZheBean>(getActivity()) {
             @Override
             public void onSuccess(Response response, ShouYeQiuZhiZheBean resultBean) {
+                Log.e(TAG, "onSuccess: http 收到消息更新卡片");
                 if (resultBean.getDataList() != null) {
                     totalPage = resultBean.getTotalPage();
                     if (resultBean.getDataList().size() == 0) {

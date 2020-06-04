@@ -47,6 +47,7 @@ public class HRMessage2Adapter extends RecyclerView.Adapter<HRMessage2Adapter.Vi
                 .load(mData.get(i).getJobhunter().getAvatar()).into(viewHolder.roundedImageView);
         viewHolder.tv1.setText(mData.get(i).getJobhunter().getName());
         viewHolder.tv2.setText(mData.get(i).getLastChatDate());
+        viewHolder.positionName.setText(mData.get(i).getPositionName());
 
         if (mData.get(i).getUnreadCount().equals("0")) {
             viewHolder.tv4.setVisibility(View.GONE);
@@ -115,6 +116,8 @@ public class HRMessage2Adapter extends RecyclerView.Adapter<HRMessage2Adapter.Vi
         TextView tv3;
         @BindView(R.id.tv4)
         TextView tv4;
+        @BindView(R.id.positionName)
+        TextView positionName;
         @BindView(R.id.llView)
         LinearLayout llView;
 

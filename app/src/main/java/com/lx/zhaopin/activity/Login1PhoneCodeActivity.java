@@ -87,12 +87,14 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
         TextView tv2 = findViewById(R.id.tv2);
         TextView tv3 = findViewById(R.id.tv3);
         TextView tv4 = findViewById(R.id.tv4);
+        TextView tv0 =  findViewById(R.id.tv0);
 
         faCode.setOnClickListener(this);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
         tv3.setOnClickListener(this);
         tv4.setOnClickListener(this);
+        tv0.setOnClickListener(this);
 
 
     }
@@ -166,6 +168,10 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                 intent.putExtra("title", "隐私政策");
                 intent.putExtra("titleUrl", NetClass.Web_XieYi2);
                 startActivity(intent);
+                break;
+            case R.id.tv0:
+                //注册
+                startActivity(new Intent(mContext, RegActivity.class));
                 break;
         }
     }

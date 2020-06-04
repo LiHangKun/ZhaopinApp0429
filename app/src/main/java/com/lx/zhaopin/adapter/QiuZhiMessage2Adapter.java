@@ -47,6 +47,7 @@ public class QiuZhiMessage2Adapter extends RecyclerView.Adapter<QiuZhiMessage2Ad
                 .load(mData.get(i).getCompany().getLogo()).into(viewHolder.roundedImageView);
         viewHolder.tv1.setText(mData.get(i).getCompany().getName());
         viewHolder.tv2.setText(mData.get(i).getLastChatDate());
+        viewHolder.positionName.setText(mData.get(i).getPositionName());
 
         if (mData.get(i).getUnreadCount().equals("0")) {
             viewHolder.tv4.setVisibility(View.GONE);
@@ -113,6 +114,8 @@ public class QiuZhiMessage2Adapter extends RecyclerView.Adapter<QiuZhiMessage2Ad
         TextView tv2;
         @BindView(R.id.tv3)
         TextView tv3;
+        @BindView(R.id.positionName)
+        TextView positionName;
         @BindView(R.id.tv4)
         TextView tv4;
         @BindView(R.id.llView)

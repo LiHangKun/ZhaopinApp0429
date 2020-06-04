@@ -17,6 +17,7 @@ import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.ShouCangZhiWeiBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
@@ -27,6 +28,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -152,6 +155,7 @@ public class MyShouCangGangActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
                 getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+                EventBus.getDefault().post(new MessageEvent(11, null, null, null, null, null, null));
 
             }
 

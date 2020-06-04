@@ -150,7 +150,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_25"
                 android:gravity="center"
-                android:text="最近"
+                android:text="附近"
                 android:textColor="#666"
                 android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />

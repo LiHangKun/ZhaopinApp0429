@@ -55,6 +55,15 @@ public class HRMessage2Bean extends CommonBean {
         private JobhunterBean jobhunter;
         private String lastChatDate;
         private String unreadCount;
+        private String positionName;
+
+        public String getPositionName() {
+            return positionName;
+        }
+
+        public void setPositionName(String positionName) {
+            this.positionName = positionName;
+        }
 
         public String getChatStatus() {
             return chatStatus;

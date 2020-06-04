@@ -112,6 +112,9 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                 String cityNameID = event.getKeyWord2();
                 tvCity.setText(cityName);
                 break;
+            case 11:
+                getDataList("1", "", String.valueOf(nowPageIndex), AppSP.pageCount);
+                break;
         }
     }
 

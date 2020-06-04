@@ -57,20 +57,20 @@
                     android:textStyle="bold" />
 
 
-                <TextView
-                    android:id="@+id/tv2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="@dimen/dp_8"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="2019-12 ---至今"
-                    android:textColor="#666"
-                    android:textSize="@dimen/sp_13" />
+
 
 
             </LinearLayout>
-
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp_8"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="2019-12 ---至今"
+                android:textColor="#666"
+                android:textSize="@dimen/sp_13" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_35"
