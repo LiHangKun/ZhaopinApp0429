@@ -92,7 +92,7 @@ public class HRMessage2Adapter extends RecyclerView.Adapter<HRMessage2Adapter.Vi
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(mData.get(i).getId());
+                    onItemClickListener.OnItemClickListener(i,mData.get(i).getId());
                 }
             }
         });
@@ -128,7 +128,7 @@ public class HRMessage2Adapter extends RecyclerView.Adapter<HRMessage2Adapter.Vi
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(String id);
+        void OnItemClickListener(int i,String id);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.HRMessage2Bean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.event.EvenDyname;
+import com.lx.zhaopin.event.VideoActionBean;
 import com.lx.zhaopin.hractivity.HRXiaoXiDetailActivity;
 import com.lx.zhaopin.hradapter.HRMessage2Adapter;
 import com.lx.zhaopin.http.OkHttpHelper;
@@ -27,6 +29,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,12 +51,25 @@ public class HRMessage2Fragment extends Fragment {
     private static final String TAG = "HRMessage2Fragment";
     private List<HRMessage2Bean.DataListBean> allList;
     private HRMessage2Adapter hrMessage2Adapter;
+    private int ii;
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(EvenDyname event) {
+        VideoActionBean dynameitenbean = event.getVideoActionBean();
+        allList.get(ii).setUnreadCount(dynameitenbean.getUnreadCount());
+        hrMessage2Adapter.notifyDataSetChanged();
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //HRMessageList1
+
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
 
         view = View.inflate(container.getContext(), R.layout.message2fragment_layout, null);
         smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
@@ -65,8 +84,14 @@ public class HRMessage2Fragment extends Fragment {
 
         hrMessage2Adapter.setOnItemClickListener(new HRMessage2Adapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(String id) {
+            public void OnItemClickListener(int position,String id) {
                 //ToastFactory.getToast(getActivity(), "面试管看到的消息详情" + id).show();
+
+                ii = position;
+                VideoActionBean videoActionBean = new VideoActionBean();
+                videoActionBean.setUnreadCount("0");
+                EventBus.getDefault().post(new EvenDyname(videoActionBean));
+
                 Intent intent = new Intent(getActivity(), HRXiaoXiDetailActivity.class);
                 intent.putExtra("messageId", id);
                 startActivity(intent);
