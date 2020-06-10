@@ -19,6 +19,8 @@ import com.lx.zhaopin.activity.XiaoXiDetailActivity;
 import com.lx.zhaopin.adapter.QiuZhiMessage2Adapter;
 import com.lx.zhaopin.bean.QiuZhiFeedBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.event.EvenDyname;
+import com.lx.zhaopin.event.VideoActionBean;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -28,6 +30,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,11 +53,24 @@ public class Message2Fragment extends Fragment {
     private int totalPage = 1;
     private List<QiuZhiFeedBean.DataListBean> allList;
     private QiuZhiMessage2Adapter qiuZhiMessage2Adapter;
+    private int ii;
+
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(EvenDyname event) {
+        VideoActionBean dynameitenbean = event.getVideoActionBean();
+        allList.get(ii).setUnreadCount(dynameitenbean.getUnreadCount());
+        qiuZhiMessage2Adapter.notifyDataSetChanged();
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
 
         View view = View.inflate(container.getContext(), R.layout.message2fragment_layout, null);
         smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
@@ -65,7 +84,12 @@ public class Message2Fragment extends Fragment {
 
         qiuZhiMessage2Adapter.setOnItemClickListener(new QiuZhiMessage2Adapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(String id) {
+            public void OnItemClickListener(int position, String id) {
+                ii = position;
+                VideoActionBean videoActionBean = new VideoActionBean();
+                videoActionBean.setUnreadCount("0");
+                EventBus.getDefault().post(new EvenDyname(videoActionBean));
+
                 Intent intent = new Intent(getActivity(), XiaoXiDetailActivity.class);
                 intent.putExtra("messageId", id);
                 startActivity(intent);
@@ -103,9 +127,6 @@ public class Message2Fragment extends Fragment {
         });
 
 
-
-
-
         return view;
 
     }
@@ -113,8 +134,8 @@ public class Message2Fragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
-            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+        if (isVisibleToUser) {
+            if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                 getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
             }
         }

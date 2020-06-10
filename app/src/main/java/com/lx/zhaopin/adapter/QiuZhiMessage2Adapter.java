@@ -92,7 +92,7 @@ public class QiuZhiMessage2Adapter extends RecyclerView.Adapter<QiuZhiMessage2Ad
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(mData.get(i).getId());
+                    onItemClickListener.OnItemClickListener(i,mData.get(i).getId());
                 }
             }
         });
@@ -128,7 +128,7 @@ public class QiuZhiMessage2Adapter extends RecyclerView.Adapter<QiuZhiMessage2Ad
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(String id);
+        void OnItemClickListener(int i,String id);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {
