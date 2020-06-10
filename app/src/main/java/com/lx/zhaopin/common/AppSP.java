@@ -22,6 +22,7 @@ public class AppSP {
     public static final String Tan_Map = "TAN_MAP";
     private static final String TAG = "YunDongSP";
     public static final String sCity = "scity";
+    public static final String tuCeng = "tuCeng";
     public static final String sCityAll3 = "sCityAll3";//省市区
     public static final String sCityAll = "sCityAll";
     public static final String sStringW = "sstringw";

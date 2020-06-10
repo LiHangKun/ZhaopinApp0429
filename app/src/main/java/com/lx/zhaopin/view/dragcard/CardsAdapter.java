@@ -55,13 +55,8 @@ public class CardsAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        //View cardView = LayoutInflater.from(context).inflate(R.layout.layout_card, parent, false);
+        //View cardView = LayoutInflater.from(mContext).inflate(R.layout.layout_card_jianli, parent, false);
         View cardView = LayoutInflater.from(mContext).inflate(R.layout.layout_card_jianli00, parent, false);
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), cardList.get(position));
-
-
-        //MyImageView iv_image = (MyImageView) cardView.findViewById(R.id.iv_image);
-        //PicassoUtil.setImag(context, cardList.get(position), iv_image);
 
 
         LinearLayout llViewALL = cardView.findViewById(R.id.llViewALL);

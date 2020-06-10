@@ -86,6 +86,9 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private int totalPage = 1;
     private static final String TAG = "Home1Fragment";
     private String cityId = "";
+    private ImageView tuCeng1;
+    private ImageView tuCeng2;
+    private LinearLayout allTuCeng;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -119,7 +122,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                 getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
 
                 Log.i(TAG, "getEventmessage: 收到消息更新卡片");
-               break;
+                break;
         }
     }
 
@@ -141,6 +144,21 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         tv3 = view.findViewById(R.id.tv3);
         viewType1 = view.findViewById(R.id.ViewType1);
         viewType2 = view.findViewById(R.id.ViewType2);
+
+        tuCeng1 = view.findViewById(R.id.tuCeng1);
+        tuCeng2 = view.findViewById(R.id.tuCeng2);
+        allTuCeng = view.findViewById(R.id.allTuCeng);
+
+        boolean tuCeng = SPTool.getSessionValue(AppSP.tuCeng, false);
+
+        if (tuCeng) {
+            allTuCeng.setVisibility(View.GONE);
+        } else {
+            allTuCeng.setVisibility(View.VISIBLE);
+        }
+
+        tuCeng1.setOnClickListener(this);
+        tuCeng2.setOnClickListener(this);
 
 
         ImageView selectView = view.findViewById(R.id.selectView);
@@ -295,8 +313,16 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                     startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
                     return;
                 }
-
-
+                break;
+            case R.id.tuCeng1:
+                tuCeng1.setVisibility(View.GONE);
+                tuCeng2.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tuCeng2:
+                tuCeng1.setVisibility(View.GONE);
+                tuCeng2.setVisibility(View.GONE);
+                allTuCeng.setVisibility(View.GONE);
+                SPTool.addSessionMap(AppSP.tuCeng, true);
                 break;
         }
     }
