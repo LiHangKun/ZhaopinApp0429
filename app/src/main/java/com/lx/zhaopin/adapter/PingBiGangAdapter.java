@@ -52,9 +52,9 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
         String positionType = mData.get(po).getPositionType();
         switch (positionType) {
             case "1":
+            case "2":
                 viewHolder.imageView1.setVisibility(View.GONE);
                 break;
-            case "2":
             case "3":
                 viewHolder.imageView1.setVisibility(View.VISIBLE);
                 break;

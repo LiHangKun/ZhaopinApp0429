@@ -3,7 +3,6 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,10 +54,8 @@ public class ZaiZhaoGangAdapter extends RecyclerView.Adapter<ZaiZhaoGangAdapter.
         //职位类型1.需沟通，2.无需沟通，3.直接面试
         switch (positionType) {
             case "1":
-                viewHolder.imageView1.setVisibility(View.INVISIBLE);
-                break;
             case "2":
-                viewHolder.imageView1.setVisibility(View.VISIBLE);
+                viewHolder.imageView1.setVisibility(View.INVISIBLE);
                 break;
             case "3":
                 viewHolder.imageView1.setVisibility(View.VISIBLE);

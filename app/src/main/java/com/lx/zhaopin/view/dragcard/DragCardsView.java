@@ -162,7 +162,8 @@ public class DragCardsView extends AdapterView {
 
     public void layoutChildren(int startingIndex, int adapterCount) {
         while (startingIndex < Math.min(adapterCount, MAX_VISIBLE)) {
-            AntiAliasView newUnderChild = (AntiAliasView) mAdapter.getView(startingIndex, null, this);
+            //AntiAliasView newUnderChild = (AntiAliasView) mAdapter.getView(startingIndex, null, this);
+            LinearLayout newUnderChild = (LinearLayout) mAdapter.getView(startingIndex, null, this);
             if (newUnderChild.getVisibility() != GONE) {
                 makeAndAddView(newUnderChild, startingIndex);
                 LAST_OBJECT_IN_STACK = startingIndex;

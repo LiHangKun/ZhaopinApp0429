@@ -56,7 +56,7 @@ public class CardsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         //View cardView = LayoutInflater.from(context).inflate(R.layout.layout_card, parent, false);
-        View cardView = LayoutInflater.from(mContext).inflate(R.layout.layout_card_jianli, parent, false);
+        View cardView = LayoutInflater.from(mContext).inflate(R.layout.layout_card_jianli00, parent, false);
 //        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), cardList.get(position));
 
 
@@ -92,10 +92,10 @@ public class CardsAdapter extends BaseAdapter {
         String positionType = cardList.get(position).getPositionType();
         switch (positionType) {
             case "1":
+            case "2":
                 imageState.setVisibility(View.INVISIBLE);
                 tv1.setTextColor(mContext.getResources().getColor(R.color.txt_c333));
                 break;
-            case "2":
             case "3":
                 imageState.setVisibility(View.VISIBLE);
                 break;
