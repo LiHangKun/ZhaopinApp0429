@@ -69,33 +69,40 @@ public class MyJianLi2Adapter extends RecyclerView.Adapter<MyJianLi2Adapter.View
 
 
         String skills = mData.get(po).getSkills();
-        String[] split = skills.split(",");
-        viewHolder.flowLiner.removeAllViews();
-        for (int i = 0; i < split.length; i++) {
-            final TextView radioButton = new TextView(mContext);
-            FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
 
-            layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
-            radioButton.setLayoutParams(layoutParams);
-            final String str = split[i];
-            radioButton.setText(str);
-            radioButton.setGravity(Gravity.CENTER);
-            radioButton.setTextSize(13);
-            radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
-            radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
-            //radioButton.setBackgroundResource(R.drawable.search_selector);
-            radioButton.setBackgroundResource(R.drawable.button_shape03);
-            radioButton.setFocusable(true);
-            radioButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    /*TODO ACTION*/
-                    // doSearch(str);
+        if (!TextUtils.isEmpty(skills)){
+            String[] split = skills.split(",");
+            viewHolder.flowLiner.removeAllViews();
+            for (int i = 0; i < split.length; i++) {
+                final TextView radioButton = new TextView(mContext);
+                FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
 
-                }
-            });
-            viewHolder.flowLiner.addView(radioButton);
+                layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 10));
+                radioButton.setLayoutParams(layoutParams);
+                final String str = split[i];
+                radioButton.setText(str);
+                radioButton.setGravity(Gravity.CENTER);
+                radioButton.setTextSize(13);
+                radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
+                radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                //radioButton.setBackgroundResource(R.drawable.search_selector);
+                radioButton.setBackgroundResource(R.drawable.button_shape03);
+                radioButton.setFocusable(true);
+                radioButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /*TODO ACTION*/
+                        // doSearch(str);
+
+                    }
+                });
+                viewHolder.flowLiner.addView(radioButton);
+            }
+        }else {
+            viewHolder.flowLiner.setVisibility(View.GONE);
         }
+
+
 
     }
 

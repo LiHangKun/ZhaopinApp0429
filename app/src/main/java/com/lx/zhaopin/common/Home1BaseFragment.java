@@ -12,10 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,15 +22,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.GangWeiDetailActivity;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
 import com.lx.zhaopin.activity.MyShouCangGangActivity;
 import com.lx.zhaopin.activity.SearchActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
-import com.lx.zhaopin.adapter.PingJiaImageAdapter;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.ShouYeQiuZhiZheBean;
@@ -51,26 +44,23 @@ import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.dragcard.CardsAdapter;
 import com.lx.zhaopin.view.dragcard.DragCardsView;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.yuqirong.cardswipelayout.CardConfig;
-import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
-import me.yuqirong.cardswipelayout.CardLayoutManager;
-import me.yuqirong.cardswipelayout.OnSwipeListener;
 import okhttp3.Request;
 import okhttp3.Response;
 
 //求职者看到的首页
-public class Home1Fragment extends BaseFragment implements View.OnClickListener {
+public class Home1BaseFragment extends BaseFragment implements View.OnClickListener {
 
     public ViewPager viewPager;
     private TextView tv1;
@@ -99,13 +89,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private ImageView tuCeng1;
     private ImageView tuCeng2;
     private LinearLayout allTuCeng;
-    private RecyclerView recyclerViewKa;
-
-    private int kaPositon = 0;
-
-    private List<ShouYeQiuZhiZheBean.DataListBean> allList;
-    private List<ShouYeQiuZhiZheBean.DataListBean> allListKa;
-    private MyAdapter myAdapter;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -154,7 +137,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = View.inflate(container.getContext(), R.layout.home1fragment_layout, null);
+        View view = View.inflate(container.getContext(), R.layout.home1basefragment_layout, null);
         viewPager = view.findViewById(R.id.viewPager);
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
@@ -165,7 +148,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         tuCeng1 = view.findViewById(R.id.tuCeng1);
         tuCeng2 = view.findViewById(R.id.tuCeng2);
         allTuCeng = view.findViewById(R.id.allTuCeng);
-        recyclerViewKa = view.findViewById(R.id.recyclerViewKa);
 
         boolean tuCeng = SPTool.getSessionValue(AppSP.tuCeng, false);
 
@@ -217,213 +199,9 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
 
         fl_list.setOnClickListener(this);
 
-
-        allList = new ArrayList<>();
-        allListKa = new ArrayList<>();
-        recyclerViewKa.setItemAnimator(new DefaultItemAnimator());
-        myAdapter = new MyAdapter();
-        recyclerViewKa.setAdapter(myAdapter);
-
-        //kaPositon
-
-        CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(recyclerViewKa.getAdapter(), allList);
-        cardCallback.setOnSwipedListener(new OnSwipeListener<ShouYeQiuZhiZheBean.DataListBean>() {
-
-            @Override
-            public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
-
-                MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
-                viewHolder.itemView.setAlpha(1 - Math.abs(ratio) * 0.2f);
-                if (direction == CardConfig.SWIPING_LEFT) {
-                    //myHolder.dislikeImageView.setAlpha(Math.abs(ratio));
-                } else if (direction == CardConfig.SWIPING_RIGHT) {
-                    //myHolder.likeImageView.setAlpha(Math.abs(ratio));
-                } else {
-                    //myHolder.dislikeImageView.setAlpha(0f);
-                    //myHolder.likeImageView.setAlpha(0f);
-                }
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, ShouYeQiuZhiZheBean.DataListBean o, int direction) {
-                MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
-                viewHolder.itemView.setAlpha(1f);
-                //myHolder.dislikeImageView.setAlpha(0f);
-                //myHolder.likeImageView.setAlpha(0f);
-
-                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    if (direction == CardConfig.SWIPED_LEFT) {
-                        //不喜欢
-                        buXiHuan(o.getId());
-                    } else {
-                        //喜欢
-                        xiHuan(o.getId());
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onSwipedClear() {
-                recyclerViewKa.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        nowPageIndex++;
-                        getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
-                        recyclerViewKa.getAdapter().notifyDataSetChanged();
-                    }
-                }, 1000L);
-            }
-
-        });
-        final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
-        final CardLayoutManager cardLayoutManager = new CardLayoutManager(recyclerViewKa, touchHelper);
-        recyclerViewKa.setLayoutManager(cardLayoutManager);
-        touchHelper.attachToRecyclerView(recyclerViewKa);
-
-
         getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
 
         return view;
-
-    }
-
-
-    private class MyAdapter extends RecyclerView.Adapter {
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-            return new MyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-            RoundedImageView avatarImageView = ((MyViewHolder) holder).roundedImageView;
-            ImageView imageState = ((MyViewHolder) holder).imageState;
-            TextView tv1 = ((MyViewHolder) holder).tv1;
-            TextView tv2 = ((MyViewHolder) holder).tv2;
-            TextView tv3 = ((MyViewHolder) holder).tv3;
-            TextView tv4 = ((MyViewHolder) holder).tv4;
-            TextView tv5 = ((MyViewHolder) holder).tv5;
-            TextView tv6 = ((MyViewHolder) holder).tv6;
-            TextView tv7 = ((MyViewHolder) holder).tv7;
-            TextView tv8 = ((MyViewHolder) holder).tv8;
-            TextView tv9 = ((MyViewHolder) holder).tv9;
-            TextView tv10 = ((MyViewHolder) holder).tv10;
-            TextView tv11 = ((MyViewHolder) holder).tv11;
-            TextView tv12 = ((MyViewHolder) holder).tv12;
-            RecyclerView recyclerViewGongSi = ((MyViewHolder) holder).recyclerViewGongSi;
-            FrameLayout onClickView = ((MyViewHolder) holder).onClickView;
-
-
-            Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
-                    .error(R.mipmap.imageerror)).load(allList.get(position).getCompany().getLogo()).into(avatarImageView);
-
-            tv1.setText(allList.get(position).getName());
-
-            String positionType = allList.get(position).getPositionType();
-            switch (positionType) {
-                case "1":
-                case "2":
-                    imageState.setVisibility(View.INVISIBLE);
-                    tv1.setTextColor(getActivity().getResources().getColor(R.color.txt_lv7));
-                    break;
-                case "3":
-                    imageState.setVisibility(View.VISIBLE);
-                    tv1.setTextColor(getActivity().getResources().getColor(R.color.white));
-                    break;
-
-            }
-            tv2.setText(allList.get(position).getMinSalary() + "K - " + allList.get(position).getMaxSalary() + "K");
-            tv3.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName());
-            tv4.setText(allList.get(position).getExperienceYear().getName() + "年");
-            tv5.setText(allList.get(position).getEducation().getName());
-            tv6.setText(allList.get(position).getDuty());
-            tv7.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName() + allList.get(position).getLocation());
-            tv8.setText(allList.get(position).getCompany().getName());
-            tv9.setText(allList.get(position).getCompany().getFinancingName());
-            tv10.setText(allList.get(position).getCompany().getIndustry2Name());
-            tv11.setText(allList.get(position).getCompany().getStaffNum());
-            tv12.setText(allList.get(position).getCompany().getService());
-
-            //列表的展示形式
-            List<String> gongSiImageList = new ArrayList<>();
-            String images = allList.get(position).getCompany().getImages();
-            String[] split = images.split("\\|");
-            for (int i = 0; i < split.length; i++) {
-                gongSiImageList.add(split[i]);
-            }
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);//
-            recyclerViewGongSi.setLayoutManager(linearLayoutManager);
-            PingJiaImageAdapter pingJiaImageAdapter = new PingJiaImageAdapter(getActivity(), gongSiImageList);
-            recyclerViewGongSi.setAdapter(pingJiaImageAdapter);
-            pingJiaImageAdapter.setOnItemClickListener(new PingJiaImageAdapter.OnItemClickListener() {
-                @Override
-                public void OnItemClickListener(int position) {
-                    //showImage(new ImageView(getActivity()), position);
-                }
-            });
-
-
-            onClickView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    /*if (itemCliCkListener != null) {
-                        itemCliCkListener.onItemClickListener(position, allList.get(position).getId());
-                    }*/
-
-                    Intent intent = new Intent(getActivity(), GangWeiDetailActivity.class);
-                    intent.putExtra("pid", allList.get(position).getId());
-                    startActivity(intent);
-
-
-                }
-            });
-
-
-        }
-
-        @Override
-        public int getItemCount() {
-            Log.i(TAG, "getItemCount: 集合的个数" + allList.size());
-            return allList == null ? 0 : allList.size();
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
-
-            RoundedImageView roundedImageView;
-            ImageView imageState;
-            FrameLayout onClickView;
-            RecyclerView recyclerViewGongSi;
-            TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tv9, tv10, tv11, tv12;
-
-            MyViewHolder(View itemView) {
-                super(itemView);
-                roundedImageView = itemView.findViewById(R.id.roundedImageView);
-                imageState = itemView.findViewById(R.id.imageState);
-                tv1 = itemView.findViewById(R.id.tv1);
-                tv2 = itemView.findViewById(R.id.tv2);
-
-                tv3 = itemView.findViewById(R.id.tv3);
-                tv4 = itemView.findViewById(R.id.tv4);
-                tv5 = itemView.findViewById(R.id.tv5);
-                tv6 = itemView.findViewById(R.id.tv6);
-                tv7 = itemView.findViewById(R.id.tv7);
-
-                tv8 = itemView.findViewById(R.id.tv8);
-                tv9 = itemView.findViewById(R.id.tv9);
-                tv10 = itemView.findViewById(R.id.tv10);
-                tv11 = itemView.findViewById(R.id.tv11);
-                tv12 = itemView.findViewById(R.id.tv12);
-                recyclerViewGongSi = itemView.findViewById(R.id.recyclerView);
-                onClickView = itemView.findViewById(R.id.onClickView);
-            }
-
-        }
-
 
     }
 
@@ -572,8 +350,28 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                         //没有数据
                     } else {
                         //有数据
-                        allList.addAll(resultBean.getDataList());
-                        myAdapter.notifyDataSetChanged();
+                        list.addAll(resultBean.getDataList());
+                        list1.addAll(resultBean.getDataList());
+                        total = list.size();
+                        initData();
+                        final String head = list.get(currentPositon).getCompany().getLogo();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (!TextUtils.isEmpty(head) && head.startsWith("http")) {
+                                        Bitmap bmp = Picasso.with(getContext()).load(head).get();
+                                        Message message = new Message();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putParcelable("bitmap", bmp);
+                                        message.setData(bundle);
+                                        mHandler.sendMessage(message);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                     }
                 }
             }

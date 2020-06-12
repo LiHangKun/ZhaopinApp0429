@@ -287,70 +287,84 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
                 //TODO 专业技能 flowLiner1
                 String skills = resultBean.getSkills();
-                List<String> flowData = new ArrayList<>();
-                String[] split = skills.split(",");
 
-                for (int i = 0; i < split.length; i++) {
-                    flowData.add(split[i]);
+                if (!TextUtils.isEmpty(skills)) {
+                    List<String> flowData = new ArrayList<>();
+                    String[] split = skills.split(",");
+
+                    for (int i = 0; i < split.length; i++) {
+                        flowData.add(split[i]);
+                    }
+                    flowLiner1.removeAllViews();
+                    for (int i = 0; i < flowData.size(); i++) {
+                        final TextView radioButton = new TextView(GangWeiDetailActivity.this);
+                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
+                        radioButton.setLayoutParams(layoutParams);
+                        final String str = flowData.get(i);
+                        radioButton.setText(str);
+                        radioButton.setGravity(Gravity.CENTER);
+                        radioButton.setTextSize(13);
+                        radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
+                                , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
+                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                        //radioButton.setBackgroundResource(R.drawable.search_selector);
+                        radioButton.setBackgroundResource(R.drawable.button_shape03);
+                        radioButton.setFocusable(true);
+                        radioButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //流布局文字的点击
+                            }
+                        });
+                        flowLiner1.addView(radioButton);
+                    }
+                } else {
+                    flowLiner1.setVisibility(View.GONE);
                 }
-                flowLiner1.removeAllViews();
-                for (int i = 0; i < flowData.size(); i++) {
-                    final TextView radioButton = new TextView(GangWeiDetailActivity.this);
-                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
-                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
-                    radioButton.setLayoutParams(layoutParams);
-                    final String str = flowData.get(i);
-                    radioButton.setText(str);
-                    radioButton.setGravity(Gravity.CENTER);
-                    radioButton.setTextSize(13);
-                    radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
-                            , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
-                    radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
-                    //radioButton.setBackgroundResource(R.drawable.search_selector);
-                    radioButton.setBackgroundResource(R.drawable.button_shape03);
-                    radioButton.setFocusable(true);
-                    radioButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //流布局文字的点击
-                        }
-                    });
-                    flowLiner1.addView(radioButton);
-                }
+
+
                 //TODO 专业技能 flowLiner1
 
 
                 //TODO 福利待遇 flowLiner2
                 String workfare = resultBean.getWorkfare();
-                List<String> flowData2 = new ArrayList<>();
-                String[] workfareL = workfare.split(",");
-                for (int i = 0; i < workfareL.length; i++) {
-                    flowData2.add(workfareL[i]);
+
+                if (!TextUtils.isEmpty(workfare)) {
+                    List<String> flowData2 = new ArrayList<>();
+                    String[] workfareL = workfare.split(",");
+                    for (int i = 0; i < workfareL.length; i++) {
+                        flowData2.add(workfareL[i]);
+                    }
+                    flowLiner2.removeAllViews();
+                    for (int i = 0; i < flowData2.size(); i++) {
+                        final TextView radioButton = new TextView(GangWeiDetailActivity.this);
+                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
+                        radioButton.setLayoutParams(layoutParams);
+                        final String str = flowData2.get(i);
+                        radioButton.setText(str);
+                        radioButton.setGravity(Gravity.CENTER);
+                        radioButton.setTextSize(13);
+                        radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
+                                , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
+                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                        //radioButton.setBackgroundResource(R.drawable.search_selector);
+                        radioButton.setBackgroundResource(R.drawable.button_shape03);
+                        radioButton.setFocusable(true);
+                        radioButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //流布局文字的点击
+                            }
+                        });
+                        flowLiner2.addView(radioButton);
+                    }
+                } else {
+                    flowLiner2.setVisibility(View.GONE);
                 }
-                flowLiner2.removeAllViews();
-                for (int i = 0; i < flowData2.size(); i++) {
-                    final TextView radioButton = new TextView(GangWeiDetailActivity.this);
-                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
-                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity.this, 10), ViewUtil.dp2px(GangWeiDetailActivity.this, 10));
-                    radioButton.setLayoutParams(layoutParams);
-                    final String str = flowData2.get(i);
-                    radioButton.setText(str);
-                    radioButton.setGravity(Gravity.CENTER);
-                    radioButton.setTextSize(13);
-                    radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6)
-                            , ViewUtil.dp2px(GangWeiDetailActivity.this, 18), ViewUtil.dp2px(GangWeiDetailActivity.this, 6));
-                    radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
-                    //radioButton.setBackgroundResource(R.drawable.search_selector);
-                    radioButton.setBackgroundResource(R.drawable.button_shape03);
-                    radioButton.setFocusable(true);
-                    radioButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //流布局文字的点击
-                        }
-                    });
-                    flowLiner2.addView(radioButton);
-                }
+
+
                 //TODO 福利待遇 flowLiner2
 
 

@@ -100,6 +100,7 @@ public class RenCaiCardsAdapter extends BaseAdapter {
                 tv7.setText(cardList.get(position).getExperienceWorkList().get(0).getPositionName());
                 tv8.setText(cardList.get(position).getExperienceWorkList().get(0).getExperience());
 
+                //TODO  此页面暂时先不做处理
                 String skills = cardList.get(position).getExperienceWorkList().get(0).getSkills();
                 String[] split = skills.split(",");
                 List<String> flowData = new ArrayList<>();

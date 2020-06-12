@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,37 +75,42 @@ public class ZaiZhaoGangAdapter extends RecyclerView.Adapter<ZaiZhaoGangAdapter.
 
 
         String workfare = mData.get(i).getWorkfare();
-        String[] split = workfare.split(",");
-        List<String> flowData = new ArrayList<>();
-        for (int j = 0; j < split.length; j++) {
-            flowData.add(split[j]);
+        if (!TextUtils.isEmpty(workfare)) {
+            String[] split = workfare.split(",");
+            List<String> flowData = new ArrayList<>();
+            for (int j = 0; j < split.length; j++) {
+                flowData.add(split[j]);
+            }
+
+            viewHolder.flowLiner.removeAllViews();
+            for (int k = 0; k < flowData.size(); k++) {
+                final TextView radioButton = new TextView(mContext);
+                FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT,
+                        FlowLiner.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10),
+                        ViewUtil.dp2px(mContext, 10));
+                radioButton.setLayoutParams(layoutParams);
+                final String str = flowData.get(k);
+                radioButton.setText(str);
+                radioButton.setGravity(Gravity.CENTER);
+                radioButton.setTextSize(13);
+                radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
+                radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                //radioButton.setBackgroundResource(R.drawable.search_selector);
+                radioButton.setBackgroundResource(R.drawable.button_shape03);
+                radioButton.setFocusable(true);
+                radioButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                viewHolder.flowLiner.addView(radioButton);
+            }
+        } else {
+            viewHolder.flowLiner.setVisibility(View.GONE);
         }
 
-        viewHolder.flowLiner.removeAllViews();
-        for (int k = 0; k < flowData.size(); k++) {
-            final TextView radioButton = new TextView(mContext);
-            FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT,
-                    FlowLiner.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(0, 0, ViewUtil.dp2px(mContext, 10),
-                    ViewUtil.dp2px(mContext, 10));
-            radioButton.setLayoutParams(layoutParams);
-            final String str = flowData.get(k);
-            radioButton.setText(str);
-            radioButton.setGravity(Gravity.CENTER);
-            radioButton.setTextSize(13);
-            radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
-            radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
-            //radioButton.setBackgroundResource(R.drawable.search_selector);
-            radioButton.setBackgroundResource(R.drawable.button_shape03);
-            radioButton.setFocusable(true);
-            radioButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-            viewHolder.flowLiner.addView(radioButton);
-        }
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
