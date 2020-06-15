@@ -1,5 +1,7 @@
 package com.lx.zhaopin.rong;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.http.BaseCallback;
@@ -24,6 +27,10 @@ import com.lx.zhaopin.utils.SPTool;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -60,6 +67,38 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
 
         getTitleName(titleName, userId);
+
+
+        RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
+            @Override
+            public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
+                //ToastFactory.getToast(ConversationActivity.this, userInfo.getUserId()).show();
+                Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
+                intent.putExtra("rid", userInfo.getUserId());
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onUserPortraitLongClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onMessageClick(Context context, View view, Message message) {
+                return false;
+            }
+
+            @Override
+            public boolean onMessageLinkClick(Context context, String s, Message message) {
+                return false;
+            }
+
+            @Override
+            public boolean onMessageLongClick(Context context, View view, Message message) {
+                return false;
+            }
+        });
 
     }
 

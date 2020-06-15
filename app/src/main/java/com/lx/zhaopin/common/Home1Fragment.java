@@ -269,9 +269,17 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                 recyclerViewKa.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        nowPageIndex++;
-                        getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
-                        recyclerViewKa.getAdapter().notifyDataSetChanged();
+
+                        if (nowPageIndex < totalPage) {
+                            nowPageIndex++;
+                            Log.e(TAG, "onLoadMore: http 加载下一页了" );
+                            getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
+                            recyclerViewKa.getAdapter().notifyDataSetChanged();
+                        } else {
+                            Log.e(TAG, "onLoadMore: http  相等不可刷新");
+                        }
+
+
                     }
                 }, 1000L);
             }
@@ -337,7 +345,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             }
             tv2.setText(allList.get(position).getMinSalary() + "K - " + allList.get(position).getMaxSalary() + "K");
             tv3.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName());
-            tv4.setText(allList.get(position).getExperienceYear().getName() + "年");
+            tv4.setText(allList.get(position).getExperienceYear().getName() );
             tv5.setText(allList.get(position).getEducation().getName());
             tv6.setText(allList.get(position).getDuty());
             tv7.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName() + allList.get(position).getLocation());
@@ -561,13 +569,14 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         params.put("lat", lat);
         params.put("cityId", cityId);
         params.put("pageNo", pageNo);
-        params.put("pageSize", "200");
+        params.put("pageSize", pageSize);
+        //params.put("pageSize", "200");
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.zhiWeiPageList, params, new SpotsCallBack<ShouYeQiuZhiZheBean>(getActivity()) {
             @Override
             public void onSuccess(Response response, ShouYeQiuZhiZheBean resultBean) {
-                Log.e(TAG, "onSuccess: http 收到消息更新卡片");
                 if (resultBean.getDataList() != null) {
                     totalPage = resultBean.getTotalPage();
+                    Log.e(TAG, "onSuccess: http 收到消息更新卡片" + totalPage);
                     if (resultBean.getDataList().size() == 0) {
                         //没有数据
                     } else {

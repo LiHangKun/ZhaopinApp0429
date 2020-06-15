@@ -12,12 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
 import com.lx.zhaopin.activity.MyShouCangRenActivity;
@@ -48,29 +42,24 @@ import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.FastBlurUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
-import com.lx.zhaopin.utils.ViewUtil;
-import com.lx.zhaopin.view.FlowLiner;
 import com.lx.zhaopin.view.dragcard.DragCardsView;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.yuqirong.cardswipelayout.CardConfig;
-import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
-import me.yuqirong.cardswipelayout.CardLayoutManager;
-import me.yuqirong.cardswipelayout.OnSwipeListener;
 import okhttp3.Request;
 import okhttp3.Response;
 
 //HR看到的首页
-public class HRHome1Fragment extends BaseFragment implements View.OnClickListener {
+public class HRHome1BaseFragment extends BaseFragment implements View.OnClickListener {
 
     public ViewPager viewPager;
     private TextView tv1;
@@ -96,11 +85,6 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     private int totalPage = 1;
     private static final String TAG = "HRHome1Fragment";
     private String cityId = "";
-    private RecyclerView recyclerViewKa;
-
-
-    private List<RenCaiListBean.DataListBean> allList;
-    private MyAdapter myAdapter;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -143,7 +127,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = View.inflate(container.getContext(), R.layout.hrhome1basefragment_layout, null);
+        View view = View.inflate(container.getContext(), R.layout.hrhome1fragment_layout, null);
         viewPager = view.findViewById(R.id.viewPager);
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
@@ -151,9 +135,6 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         llSearchView.setOnClickListener(this);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
-
-        recyclerViewKa = view.findViewById(R.id.recyclerViewKa);
-
 
         ImageView selectView = view.findViewById(R.id.selectView);
         ImageView fl_list = view.findViewById(R.id.fl_list);
@@ -189,260 +170,10 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         list1 = new ArrayList<>();
         mDragCardsView = view.findViewById(R.id.dragCardsView);
 
-
-        //RenCaiListBean
-        allList = new ArrayList<>();
-        recyclerViewKa.setItemAnimator(new DefaultItemAnimator());
-        myAdapter = new MyAdapter();
-        recyclerViewKa.setAdapter(myAdapter);
-
-
-        CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(recyclerViewKa.getAdapter(), allList);
-        cardCallback.setOnSwipedListener(new OnSwipeListener<RenCaiListBean.DataListBean>() {
-
-            @Override
-            public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
-
-                MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
-                viewHolder.itemView.setAlpha(1 - Math.abs(ratio) * 0.2f);
-                if (direction == CardConfig.SWIPING_LEFT) {
-                    //myHolder.dislikeImageView.setAlpha(Math.abs(ratio));
-                } else if (direction == CardConfig.SWIPING_RIGHT) {
-                    //myHolder.likeImageView.setAlpha(Math.abs(ratio));
-                } else {
-                    //myHolder.dislikeImageView.setAlpha(0f);
-                    //myHolder.likeImageView.setAlpha(0f);
-                }
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, RenCaiListBean.DataListBean o, int direction) {
-                MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
-                viewHolder.itemView.setAlpha(1f);
-                //myHolder.dislikeImageView.setAlpha(0f);
-                //myHolder.likeImageView.setAlpha(0f);
-
-                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    if (direction == CardConfig.SWIPED_LEFT) {
-                        //不喜欢
-                        buXiHuan(o.getId());
-                    } else {
-                        //喜欢
-                        xiHuan(o.getId());
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onSwipedClear() {
-                recyclerViewKa.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if (nowPageIndex < totalPage) {
-                            nowPageIndex++;
-                            Log.e(TAG, "onLoadMore: http 加载下一页了");
-                            getDataList("1", "", String.valueOf(nowPageIndex), AppSP.pageCount);
-                            recyclerViewKa.getAdapter().notifyDataSetChanged();
-                        } else {
-                            Log.e(TAG, "onLoadMore: http  相等不可刷新");
-                        }
-
-
-                    }
-                }, 1000L);
-            }
-
-        });
-        final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
-        final CardLayoutManager cardLayoutManager = new CardLayoutManager(recyclerViewKa, touchHelper);
-        recyclerViewKa.setLayoutManager(cardLayoutManager);
-        touchHelper.attachToRecyclerView(recyclerViewKa);
-
-
         getDataList("1", "", String.valueOf(nowPageIndex), AppSP.pageCount);
 
 
         return view;
-
-    }
-
-
-    private class MyAdapter extends RecyclerView.Adapter {
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_card_rencai22, parent, false);
-            return new MyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-            RoundedImageView roundedImageView = ((MyViewHolder) holder).roundedImageView;
-            TextView tv1 = ((MyViewHolder) holder).tv1;
-            TextView tv2 = ((MyViewHolder) holder).tv2;
-            TextView tv3 = ((MyViewHolder) holder).tv3;
-            TextView tv4 = ((MyViewHolder) holder).tv4;
-            TextView tv5 = ((MyViewHolder) holder).tv5;
-            TextView tv6 = ((MyViewHolder) holder).tv6;
-            TextView tv7 = ((MyViewHolder) holder).tv7;
-            TextView tv8 = ((MyViewHolder) holder).tv8;
-            TextView tv9 = ((MyViewHolder) holder).tv9;
-            LinearLayout onClickView = ((MyViewHolder) holder).onClickView;
-
-            FlowLiner flowLiner1 = ((MyViewHolder) holder).flowLiner1;
-            FlowLiner flowLiner2 = ((MyViewHolder) holder).flowLiner2;
-
-            if (allList.get(position).getExperienceWorkList() != null) {
-                if (allList.get(position).getExperienceWorkList().size() != 0) {
-                    tv6.setText(allList.get(position).getExperienceWorkList().get(0).getCompanyName());
-                    tv7.setText(allList.get(position).getExperienceWorkList().get(0).getPositionName());
-                    tv8.setText(allList.get(position).getExperienceWorkList().get(0).getExperience());
-                    String skills = allList.get(position).getExperienceWorkList().get(0).getSkills();
-
-
-                    if (!TextUtils.isEmpty(skills)) {
-                        String[] split = skills.split(",");
-                        List<String> flowData = new ArrayList<>();
-                        for (int i = 0; i < split.length; i++) {
-                            flowData.add(split[i]);
-                        }
-
-                        flowLiner1.removeAllViews();
-                        for (int i = 0; i < flowData.size(); i++) {
-                            final TextView radioButton = new TextView(getActivity());
-                            FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
-                            layoutParams.setMargins(0, 0, ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 10));
-                            radioButton.setLayoutParams(layoutParams);
-                            final String str = flowData.get(i);
-                            radioButton.setText(str);
-                            radioButton.setGravity(Gravity.CENTER);
-                            radioButton.setTextSize(13);
-                            radioButton.setPadding(ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 6), ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 6));
-                            radioButton.setTextColor(getActivity().getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
-                            //radioButton.setBackgroundResource(R.drawable.search_selector);
-                            radioButton.setBackgroundResource(R.drawable.button_shape03);
-                            radioButton.setFocusable(true);
-                            radioButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
-                            flowLiner1.addView(radioButton);
-                        }
-                    } else {
-                        flowLiner1.setVisibility(View.GONE);
-                        tv6.setText("");
-                        tv7.setText("");
-                        tv8.setText("");
-                    }
-                }
-            }
-
-            if (allList.get(position).getResumeSkillList() != null) {
-                if (allList.get(position).getResumeSkillList().size() != 0) {
-                    List<String> flowData2 = new ArrayList<>();
-                    for (int i = 0; i < allList.get(position).getResumeSkillList().size(); i++) {
-                        flowData2.add(allList.get(position).getResumeSkillList().get(i).getName());
-                    }
-                    flowLiner2.removeAllViews();
-                    for (int i = 0; i < flowData2.size(); i++) {
-                        final TextView radioButton = new TextView(getActivity());
-                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
-                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 10));
-                        radioButton.setLayoutParams(layoutParams);
-                        final String str = flowData2.get(i);
-                        radioButton.setText(str);
-                        radioButton.setGravity(Gravity.CENTER);
-                        radioButton.setTextSize(13);
-                        radioButton.setPadding(ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 6), ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 6));
-                        radioButton.setTextColor(getActivity().getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
-                        //radioButton.setBackgroundResource(R.drawable.search_selector);
-                        radioButton.setBackgroundResource(R.drawable.button_shape03);
-                        radioButton.setFocusable(true);
-                        radioButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                            }
-                        });
-                        flowLiner2.addView(radioButton);
-                    }
-                }
-            } else {
-                flowLiner2.setVisibility(View.GONE);
-            }
-
-
-            Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
-                    .error(R.mipmap.imageerror)).load(allList.get(position).getAvatar()).into(roundedImageView);
-
-            tv1.setText(allList.get(position).getName());
-
-
-            tv2.setText(allList.get(position).getEducation().getName());
-            tv3.setText(allList.get(position).getAge() + "岁");
-            tv4.setText(allList.get(position).getWorkYears() + "年");
-            tv5.setText(allList.get(position).getLatestCity().getName());
-
-            tv9.setText(allList.get(position).getExperienceEducation().getSchool());
-
-
-            onClickView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    /*if (itemCliCkListener != null) {
-                        itemCliCkListener.onItemClickListener(position, allList.get(position).getId());
-                    }*/
-
-                    Intent intent = new Intent(getActivity(), RenCaiDetailActivity.class);
-                    intent.putExtra("rid", allList.get(position).getId());
-                    startActivity(intent);
-
-
-                }
-            });
-
-
-        }
-
-        @Override
-        public int getItemCount() {
-            Log.i(TAG, "getItemCount: 集合的个数" + allList.size());
-            return allList == null ? 0 : allList.size();
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
-
-            RoundedImageView roundedImageView;
-            LinearLayout onClickView;
-            FlowLiner flowLiner1, flowLiner2;
-            TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tv9;
-
-            MyViewHolder(View itemView) {
-                super(itemView);
-                roundedImageView = itemView.findViewById(R.id.roundedImageView);
-
-                tv1 = itemView.findViewById(R.id.tv1);
-                tv2 = itemView.findViewById(R.id.tv2);
-                tv3 = itemView.findViewById(R.id.tv3);
-                tv4 = itemView.findViewById(R.id.tv4);
-                tv5 = itemView.findViewById(R.id.tv5);
-                tv6 = itemView.findViewById(R.id.tv6);
-                tv7 = itemView.findViewById(R.id.tv7);
-                tv8 = itemView.findViewById(R.id.tv8);
-                tv9 = itemView.findViewById(R.id.tv9);
-                flowLiner1 = itemView.findViewById(R.id.flowLiner1);
-                flowLiner2 = itemView.findViewById(R.id.flowLiner2);
-
-
-                onClickView = itemView.findViewById(R.id.onClickView);
-            }
-
-        }
-
 
     }
 
@@ -543,7 +274,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         params.put("dataType", dataType);
         params.put("name", name);
         params.put("pageNo", pageNo);
-        params.put("pageSize", pageSize);
+        params.put("pageSize", "200");
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.HRSouRenCai, params, new SpotsCallBack<RenCaiListBean>(getActivity()) {
             @Override
             public void onSuccess(Response response, RenCaiListBean resultBean) {
@@ -553,8 +284,28 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                         //没有数据
                     } else {
                         //有数据
-                        allList.addAll(resultBean.getDataList());
-                        myAdapter.notifyDataSetChanged();
+                        list.addAll(resultBean.getDataList());
+                        list1.addAll(resultBean.getDataList());
+                        total = list.size();
+                        initData();
+                        final String head = list.get(currentPositon).getAvatar();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (!TextUtils.isEmpty(head) && head.startsWith("http")) {
+                                        Bitmap bmp = Picasso.with(getContext()).load(head).get();
+                                        Message message = new Message();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putParcelable("bitmap", bmp);
+                                        message.setData(bundle);
+                                        mHandler.sendMessage(message);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                     }
                 }
             }

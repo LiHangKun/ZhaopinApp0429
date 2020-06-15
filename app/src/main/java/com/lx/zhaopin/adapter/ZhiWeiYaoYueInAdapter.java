@@ -61,7 +61,7 @@ public class ZhiWeiYaoYueInAdapter extends RecyclerView.Adapter<ZhiWeiYaoYueInAd
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(po).getLocation());
-        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() + "年");
+        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() );
         viewHolder.tv5.setText(mData.get(po).getEducation().getName());
 
         String workfare = mData.get(po).getWorkfare();

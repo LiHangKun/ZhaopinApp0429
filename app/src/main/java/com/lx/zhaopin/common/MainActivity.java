@@ -34,8 +34,8 @@ import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.APKVersionCodeUtils;
 import com.lx.zhaopin.utils.ActivityManager;
+import com.lx.zhaopin.utils.DataCleanManager;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.NoScrollViewPager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -135,8 +135,18 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
 
         setUserType(duanUid);
+        clearAllCachecatch();
 
 
+    }
+
+    private void clearAllCachecatch() {
+        DataCleanManager.clearAllCache(this);
+        try {
+            Log.i(TAG, "initViews: 剩余缓存" + DataCleanManager.getTotalCacheSize(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setUserType(String eventUid) {

@@ -203,7 +203,7 @@ public class TestTanTanActivity extends BaseActivity {
             }
             tv2.setText(allList.get(position).getMinSalary() + "K - " + allList.get(position).getMaxSalary() + "K");
             tv3.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName());
-            tv4.setText(allList.get(position).getExperienceYear().getName() + "年");
+            tv4.setText(allList.get(position).getExperienceYear().getName() );
             tv5.setText(allList.get(position).getEducation().getName());
             tv6.setText(allList.get(position).getDuty());
             tv7.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName() + allList.get(position).getLocation());

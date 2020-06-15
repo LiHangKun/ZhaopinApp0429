@@ -66,7 +66,7 @@ public class ZaiZhaoGangAdapter extends RecyclerView.Adapter<ZaiZhaoGangAdapter.
         viewHolder.tv1.setText(mData.get(i).getName());
         viewHolder.tv2.setText(mData.get(i).getMinSalary() + "-" + mData.get(i).getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(i).getCity().getName() + mData.get(i).getDistrict().getName());
-        viewHolder.tv4.setText(mData.get(i).getExperienceYear().getName() + "年");
+        viewHolder.tv4.setText(mData.get(i).getExperienceYear().getName() );
         viewHolder.tv5.setText(mData.get(i).getEducation().getName());
 
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))

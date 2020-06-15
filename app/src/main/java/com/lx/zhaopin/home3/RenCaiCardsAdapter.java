@@ -84,7 +84,7 @@ public class RenCaiCardsAdapter extends BaseAdapter {
         tv1.setText(cardList.get(position).getName());
         tv2.setText(cardList.get(position).getEducation().getName());
         tv3.setText(cardList.get(position).getAge() + "岁");
-        tv4.setText(cardList.get(position).getWorkYears() + "年");
+        tv4.setText(cardList.get(position).getWorkYears() );
 
 
         try {

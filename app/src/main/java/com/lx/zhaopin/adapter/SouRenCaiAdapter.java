@@ -57,7 +57,7 @@ public class SouRenCaiAdapter extends RecyclerView.Adapter<SouRenCaiAdapter.View
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(po).getEducation().getName());
         viewHolder.tv4.setText(mData.get(po).getAge() + "岁");
-        viewHolder.tv5.setText(mData.get(po).getWorkYears() + "年");
+        viewHolder.tv5.setText(mData.get(po).getWorkYears() );
         viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
 
         List<String> flowData = new ArrayList<>();

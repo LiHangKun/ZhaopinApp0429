@@ -98,7 +98,7 @@ public class CardsAdapter extends BaseAdapter {
         }
         tv2.setText(cardList.get(position).getMinSalary() + "K - " + cardList.get(position).getMaxSalary() + "K");
         tv3.setText(cardList.get(position).getCity().getName() + cardList.get(position).getDistrict().getName());
-        tv4.setText(cardList.get(position).getExperienceYear().getName() + "年");
+        tv4.setText(cardList.get(position).getExperienceYear().getName() );
         tv5.setText(cardList.get(position).getEducation().getName());
         tv6.setText(cardList.get(position).getDuty());
         tv7.setText(cardList.get(position).getCity().getName() + cardList.get(position).getDistrict().getName() + cardList.get(position).getLocation());

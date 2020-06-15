@@ -65,7 +65,7 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K-" + mData.get(po).getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(po).getCity().getName() + mData.get(po).getDistrict().getName());
-        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() + "年");
+        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() );
         viewHolder.tv5.setText(mData.get(po).getEducation().getName());
         viewHolder.tv6.setText(mData.get(po).getCompany().getName());
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
