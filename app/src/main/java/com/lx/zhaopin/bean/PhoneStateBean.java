@@ -29,6 +29,16 @@ public class PhoneStateBean extends CommonBean {
     private String lat;
     private String lng;
 
+    public String getChatRecordId() {
+        return chatRecordId;
+    }
+
+    public void setChatRecordId(String chatRecordId) {
+        this.chatRecordId = chatRecordId;
+    }
+
+    private String chatRecordId;
+
     public String getLogo() {
         return logo;
     }

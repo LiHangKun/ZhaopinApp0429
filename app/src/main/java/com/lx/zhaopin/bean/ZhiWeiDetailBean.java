@@ -63,6 +63,16 @@ public class ZhiWeiDetailBean extends CommonBean implements Serializable {
     private int minSalary;
     private String name;
     private String positionType;
+    private String chat;
+
+    public String getChat() {
+        return chat;
+    }
+
+    public void setChat(String chat) {
+        this.chat = chat;
+    }
+
     private String skills;
     private String workfare;
 

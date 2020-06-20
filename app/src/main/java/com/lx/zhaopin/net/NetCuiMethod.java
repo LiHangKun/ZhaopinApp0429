@@ -117,6 +117,17 @@ public class NetCuiMethod {
     public static final String HRMessageList2 = "member/recruiter/chat/system/page";//系统消息列表
     public static final String HRMessageDetail = "member/recruiter/chat/feedback/detail";//HR 看到的消息详情
     public static final String HR_ShenQingChat = "member/recruiter/chat/apply";//申请沟通
+
+
+
+
+    public static final String dianIcon = "member/queryHR";//查询用户是否具有hr权限及公司id
+    public static final String quGouTong = "member/chat/first";//申请沟通
+
+
+
+
+
     /*------------TODO-----HRHRHRHRHRHRHRHR-----------------*/
 
 }

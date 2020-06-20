@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.QiYeInfoActivity;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
+import com.lx.zhaopin.bean.DianIconBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.http.BaseCallback;
@@ -73,9 +75,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             @Override
             public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
                 //ToastFactory.getToast(ConversationActivity.this, userInfo.getUserId()).show();
-                Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
+                /*Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
                 intent.putExtra("rid", userInfo.getUserId());
-                startActivity(intent);
+                startActivity(intent);*/
+
+                dianIcon(userInfo.getUserId());
+
                 return true;
             }
 
@@ -100,6 +105,44 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+    }
+
+    //dianIcon
+    private void dianIcon(final String userId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("userId", userId);
+        OkHttpHelper.getInstance().post(ConversationActivity.this, NetClass.BASE_URL + NetCuiMethod.dianIcon, params, new BaseCallback<DianIconBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, DianIconBean resultBean) {
+                //是否具备hr权限，1是，0否
+                if (resultBean.getHr().equals("1")) {
+                    Intent intent = new Intent(ConversationActivity.this, QiYeInfoActivity.class);
+                    intent.putExtra("qiYeID", resultBean.getCid());
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
+                    intent.putExtra("rid", userId);
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
     private void getTitleName(final TextView titleName, String userId) {

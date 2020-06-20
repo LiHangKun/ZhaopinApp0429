@@ -148,6 +148,9 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     private String delivered;
     private String jianliID;
     private String shareTitle;
+    private String positionType;
+    private String deliverResume;
+    private String chat;
 
 
     private void getLastIndexForLimit(TextView tv, int maxLine, String content) {
@@ -238,7 +241,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 }
 
 
-                String positionType = resultBean.getPositionType();
+                positionType = resultBean.getPositionType();
                 //职位类型  TODO  这个职位类型 是不是 用来判断 上面的文字显示和  下面的布局的显示隐藏
 
                   /* 底部按钮部分
@@ -247,7 +250,11 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                    申请职位 dibuView3
                    预约面试 dibuView4
                    */
-                String deliverResume = resultBean.getDeliverResume(); //是否已沟通 1 是 0 否
+                //是否已沟通 1 是 0 否
+                deliverResume = resultBean.getDeliverResume();
+
+                //是否可直接聊天1是 0否
+                chat = resultBean.getChat();
 
                 switch (positionType) {
                     //职位类型1.需沟通，2.无需沟通，3.直接面试
@@ -470,7 +477,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 //立即沟通
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     //ToastFactory.getToast(mContext, "立即沟通长的").show();
-                    if (delivered.equals("0")) {
+                    /*if (delivered.equals("0")) {
 
                         View view3 = getLayoutInflater().inflate(R.layout.dialog_goutong3, null);
                         final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view3, R.style.DialogTheme2);
@@ -493,7 +500,16 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                         });
                     } else {
                         goLiaoTianMethod();
+                    }*/
+
+                    //是否可直接聊天1是 0否
+                    if (chat.equals("1")) {
+                        gouTongMe();
+                        goLiaoTianMethod();
+                    }else {
+                        gouTongMe();
                     }
+
 
 
                 } else {
@@ -594,6 +610,38 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
         }
+    }
+
+    private void gouTongMe() {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.quGouTong, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                ToastFactory.getToast(mContext, "已提交沟通申请").show();
+                String chatRecordId = resultBean.getChatRecordId();
+                //沟通记录id
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
     }
 
     private void touPid(String pid3) {
