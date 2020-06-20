@@ -29,6 +29,7 @@ import com.lx.zhaopin.bean.MianShiDetailBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -58,6 +59,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
+import okhttp3.Request;
 import okhttp3.Response;
 
 //求职者--面试详情
@@ -88,6 +90,10 @@ public class MianShiDetailType2Activity extends BaseActivity {
     TextView quxiaoTV;
     @BindView(R.id.okID)
     TextView okID;
+
+    @BindView(R.id.dongTaiTv)
+    TextView dongTaiTv;
+
     @BindView(R.id.qiuZhiView)
     LinearLayout qiuZhiView;
     @BindView(R.id.quxiaoTv)
@@ -109,6 +115,8 @@ public class MianShiDetailType2Activity extends BaseActivity {
     private String lat_fan;
     private String hrid;
     private String hrName;
+    private String interviewStatus;
+    private String feedback;
 
     /**
      * 初始化定位
@@ -265,12 +273,13 @@ public class MianShiDetailType2Activity extends BaseActivity {
 
                 lat_fan = resultBean.getLat();
                 lng_fan = resultBean.getLng();
-
+                // feedback  是否已反馈1是0否
+                feedback = resultBean.getFeedback();
                 id = resultBean.getId();
                 phone = resultBean.getMobile();
-                String interviewStatus = resultBean.getInterviewStatus();
+                interviewStatus = resultBean.getInterviewStatus();
                 tv3.setVisibility(View.GONE);
-                //1 待接受  2 已拒绝 3 待面试 4 已超时 5 已到达 6 已取消 7 已录取 8 不合适
+                //interviewStatus  1 待接受  2 已拒绝 3 待面试 4 已超时 5 已到达 6 已取消 7 已录取 8 不合适  9 已面试 10 同意入职  11 拒绝入职
                 switch (interviewStatus) {
                     case "1":
                         imageState.setImageResource(R.drawable.daitongyi);
@@ -291,6 +300,8 @@ public class MianShiDetailType2Activity extends BaseActivity {
                     case "5":
                         imageState.setImageResource(R.drawable.yidaoda);
                         qiuZhiView.setVisibility(View.GONE);
+                        dongTaiTv.setVisibility(View.VISIBLE);
+                        dongTaiTv.setText("我已面试");
                         break;
                     case "6":
                         imageState.setImageResource(R.drawable.yiquxiao);
@@ -308,6 +319,22 @@ public class MianShiDetailType2Activity extends BaseActivity {
                         tv3.setVisibility(View.VISIBLE);
                         qiuZhiView.setVisibility(View.GONE);
                         break;
+                    case "9":
+                        //图标实际是 已面试
+                        imageState.setImageResource(R.drawable.yidaoda);
+                        qiuZhiView.setVisibility(View.GONE);
+                        dongTaiTv.setVisibility(View.VISIBLE);
+                        dongTaiTv.setText("我要反馈");
+                        break;
+                    case "10":
+                    case "11":
+                        //图标实际是 已面试
+                        imageState.setImageResource(R.drawable.yidaoda);
+                        qiuZhiView.setVisibility(View.GONE);
+                        dongTaiTv.setVisibility(View.GONE);
+                        break;
+
+
                 }
 
                 tv4.setText(resultBean.getInterviewDate());
@@ -396,9 +423,46 @@ public class MianShiDetailType2Activity extends BaseActivity {
         RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
     }
 
-    @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.tv6Click, R.id.quxiaoTV, R.id.okID, R.id.qiuZhiView, R.id.quxiaoTv})
+    @OnClick({R.id.llView1OnClick, R.id.llView2OnClick, R.id.tv6Click, R.id.quxiaoTV, R.id.okID, R.id.qiuZhiView, R.id.quxiaoTv, R.id.dongTaiTv})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.dongTaiTv:
+                // feedback  是否已反馈1是0否
+                //interviewStatus  1 待接受  2 已拒绝 3 待面试 4 已超时 5 已到达 6 已取消 7 已录取 8 不合适  9 已面试 10 同意入职  11 拒绝入职
+                if (interviewStatus.equals("5")) {
+                    //我已到达  woDaoDa
+                    woDaoDaMe(interviewId2);
+                } else if (interviewStatus.equals("9") && feedback.equals("0")) {
+                    //弹出反馈
+                    View view = getLayoutInflater().inflate(R.layout.dialog_feed_mianshi, null);
+                    final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view, R.style.DialogTheme2);
+                    final EditText edit1 = view.findViewById(R.id.edit1);
+                    mMyDialog.setCancelable(true);
+                    mMyDialog.show();
+
+                    view.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMyDialog.dismiss();
+                        }
+                    });
+
+                    view.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+                                ToastFactory.getToast(mContext, "反馈信息不能为空").show();
+                                return;
+                            } else {
+                                woFeedInfo(id, edit1.getText().toString().trim());
+                                mMyDialog.dismiss();
+                            }
+                        }
+                    });
+                }
+
+
+                break;
             case R.id.llView1OnClick:
                 //ToastFactory.getToast(mContext, "聊天").show();
                 goLiaoTianMethod();
@@ -461,6 +525,56 @@ public class MianShiDetailType2Activity extends BaseActivity {
                     }
                 });
         }
+    }
+
+    private void woFeedInfo(String interviewId, String content) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("interviewId", interviewId);
+        params.put("content", content);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.woFeed, params, new SpotsCallBack<PhoneStateBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                RongUtil.qiuZhiQuXiao(hrid, interviewId2);
+                EventBus.getDefault().post(new MessageEvent(10, null, null, null, null, null, null));
+                ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
+                getMianShiDetail(interviewId2);
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+    private void woDaoDaMe(String interviewId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("interviewId", interviewId);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.woDaoDa, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                getMianShiDetail(interviewId2);
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
     }
 
 

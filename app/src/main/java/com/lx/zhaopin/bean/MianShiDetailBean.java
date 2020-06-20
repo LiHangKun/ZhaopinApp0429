@@ -58,6 +58,24 @@ public class MianShiDetailBean extends CommonBean {
     private String offer;
     private PositionBean position;
     private String remarks;
+    private String feedback;
+    private String feedbackContent;
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public String getFeedbackContent() {
+        return feedbackContent;
+    }
+
+    public void setFeedbackContent(String feedbackContent) {
+        this.feedbackContent = feedbackContent;
+    }
 
     public String getCancelReason() {
         return cancelReason;

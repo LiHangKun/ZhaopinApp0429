@@ -37,13 +37,17 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_xiaoxi_detail, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_feed_detail, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         String chatStatus = mData.get(i).getChatStatus();
-        //聊天状态 chatStatus  1 已沟通 2 已投递 3 已预约 4 待面试 5 已到达 6 面试已取消 7 已反馈 8 同意入职 9 拒绝入职
+        String feedback = mData.get(i).getFeedback();  // feedback 是否已反馈1是0否
+        //聊天状态 chatStatus
+        // 1 已沟通 2 已投递 3 已预约 4 待面试 5 已到达
+        // 6 面试已取消 7 已面试 8 同意入职 9 拒绝入职  10 拒绝面试 11 已录取  12 不合适 13 已邀约
+
         switch (chatStatus) {
             case "1":
                 viewHolder.tv1.setText("已沟通");
@@ -64,7 +68,12 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
                 viewHolder.tv1.setText("面试已取消");
                 break;
             case "7":
-                viewHolder.tv1.setText("已反馈");
+                viewHolder.tv1.setText("已面试");
+                // feedback 是否已反馈1是0否
+                if (feedback.equals("0")) {
+                    viewHolder.feedTv.setVisibility(View.VISIBLE);
+                }
+
                 break;
             case "8":
                 viewHolder.tv1.setText("同意入职");
@@ -72,14 +81,28 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
             case "9":
                 viewHolder.tv1.setText("拒绝入职");
                 break;
+            case "10":
+                viewHolder.tv1.setText("拒绝面试");
+                break;
+            case "11":
+                viewHolder.tv1.setText("已录取");
+                break;
+            case "12":
+                viewHolder.tv1.setText("不合适");
+                break;
+            case "13":
+                viewHolder.tv1.setText("已邀约");
+                break;
         }
 
         viewHolder.tv2.setText(mData.get(i).getChatDate());
 
         if (!TextUtils.isEmpty(mData.get(i).getSubhead())) {
             viewHolder.tv3.setText(mData.get(i).getSubhead());
-        } else {
+        } else if (feedback.equals("0")) {
             viewHolder.tv3.setText("暂无反馈信息");
+        } else if (feedback.equals("1")) {
+            viewHolder.tv3.setText(mData.get(i).getFeedbackContent());
         }
 
 
@@ -107,6 +130,10 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
         TextView tv2;
         @BindView(R.id.tv3)
         TextView tv3;
+
+        @BindView(R.id.feedTv)
+        TextView feedTv;
+
         @BindView(R.id.llView)
         LinearLayout llView;
 

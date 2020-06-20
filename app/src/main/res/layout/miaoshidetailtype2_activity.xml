@@ -394,6 +394,20 @@
     </LinearLayout>
 
 
+    <TextView
+        android:id="@+id/dongTaiTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_38"
+        android:layout_marginRight="@dimen/dp_38"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/button_shape"
+        android:gravity="center"
+        android:text="此按钮是动态显示文字信息"
+        android:textColor="#fff"
+        android:visibility="gone" />
+
+
     <!--
     面试已取消
     -->

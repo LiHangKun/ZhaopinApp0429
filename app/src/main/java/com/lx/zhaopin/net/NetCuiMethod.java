@@ -123,6 +123,8 @@ public class NetCuiMethod {
 
     public static final String dianIcon = "member/queryHR";//查询用户是否具有hr权限及公司id
     public static final String quGouTong = "member/chat/first";//申请沟通
+    public static final String woDaoDa = "member/jobhunter/interview/complete";//已完成（点完已到达后）
+    public static final String woFeed = "member/jobhunter/interview/feedback";//求职者面试反馈
 
 
 
