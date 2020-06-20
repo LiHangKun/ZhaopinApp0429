@@ -30,7 +30,7 @@
     </style>
 
     <!--冷启动-->
-    <style name="AppWelcome" parent="AppTheme">
+    <!--<style name="AppWelcome" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@mipmap/qidong0</item>
 
@@ -39,7 +39,7 @@
 
     <style name="AppTheme.Launcher">
         <item name="android:windowFullscreen">true</item>
-        <!--<item name="android:windowDisablePreview">true</item>-->
+        &lt;!&ndash;<item name="android:windowDisablePreview">true</item>&ndash;&gt;
         <item name="android:windowBackground">@mipmap/qidongye</item>
     </style>
 
@@ -51,7 +51,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
+    -->
 
      <!--<style name="Appwelcome" parent="android:Theme.Translucent.NoTitleBar.Fullscreen" />-->
     <!--冷启动-->

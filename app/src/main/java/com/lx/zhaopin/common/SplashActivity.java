@@ -62,11 +62,11 @@ public class SplashActivity extends AppCompatActivity implements AMapLocationLis
         super.onCreate(savedInstanceState);
         initSystemBar2(this);
         //setTheme(R.style.AppWelcome);
-        //setContentView(R.layout.splash_activity);
+        setContentView(R.layout.splash_activity);
         //Utility2.setActionBar(this);
         ActivityManager.addActivity(this);
         ImageView imageView = findViewById(R.id.imageView);
-        //imageView.setImageResource(R.drawable.yindao1);
+        imageView.setImageResource(R.mipmap.qidong0);
         //initLocation();
 
         JPushInterface.setDebugMode(true);

@@ -255,13 +255,16 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <!--         android:theme="@style/SplashTheme" -->
+        <!--         android:theme="@style/SplashTheme"
+
+         android:theme="@style/AppWelcome"
+         -->
         <activity
             android:name=".common.SplashActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppWelcome"
+
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
