@@ -108,6 +108,17 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
         });
 
 
+        viewHolder.llView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (itemClickListener != null) {
+                    itemClickListener.onItemLongClick(viewHolder.llView, i, mData.get(i).getCorrelation(), mData.get(i).getMessageType(), mData.get(i).getUrl(), mData.get(i).getTitle(), mData.get(i).getId());
+                }
+                return false;//是 true 才可以  false 不可以
+            }
+        });
+
+
     }
 
     @Override
@@ -139,6 +150,7 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
 
     public interface OnItemClickListener {
         void OnItemClickListener(View view, int i, String Correlation, String messageType, String url, String title, String messID);
+        void onItemLongClick(View view, int i, String Correlation, String messageType, String url, String title, String messID);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

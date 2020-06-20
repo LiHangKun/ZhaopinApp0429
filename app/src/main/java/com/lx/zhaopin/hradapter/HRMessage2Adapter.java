@@ -97,6 +97,16 @@ public class HRMessage2Adapter extends RecyclerView.Adapter<HRMessage2Adapter.Vi
             }
         });
 
+        viewHolder.llView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemLongClick(i, mData.get(i).getId());
+                }
+                return false;//是 true 才可以  false 不可以
+            }
+        });
+
 
     }
 
@@ -129,6 +139,7 @@ public class HRMessage2Adapter extends RecyclerView.Adapter<HRMessage2Adapter.Vi
 
     public interface OnItemClickListener {
         void OnItemClickListener(int i,String id);
+        void onItemLongClick(int i, String id);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

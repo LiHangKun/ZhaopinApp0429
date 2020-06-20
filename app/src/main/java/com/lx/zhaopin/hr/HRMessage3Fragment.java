@@ -176,6 +176,30 @@ public class HRMessage3Fragment extends Fragment {
                         break;
                 }
             }
+
+            @Override
+            public void onItemLongClick(View view, final int i, String Correlation, String messageType, String url, String title, String messID) {
+                switch (view.getId()){
+                    case R.id.llView:
+                        /*StyledDialog.init(getActivity());
+                        StyledDialog.buildIosAlert("", "\r是否删除反馈信息?", new MyDialogListener() {
+                            @Override
+                            public void onFirst() {
+
+                            }
+
+                            @Override
+                            public void onSecond() {
+                                //删除收藏 --
+                                allList.remove(i);
+                                hrMessage3Adapter.notifyDataSetChanged();
+
+
+                            }
+                        }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();*/
+                        break;
+                }
+            }
         });
 
 

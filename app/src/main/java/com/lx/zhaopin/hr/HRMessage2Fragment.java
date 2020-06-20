@@ -96,6 +96,26 @@ public class HRMessage2Fragment extends Fragment {
                 intent.putExtra("messageId", id);
                 startActivity(intent);
             }
+
+            @Override
+            public void onItemLongClick(final int i, String id) {
+               /* StyledDialog.init(getActivity());
+                StyledDialog.buildIosAlert("", "\r是否删除反馈信息?", new MyDialogListener() {
+                    @Override
+                    public void onFirst() {
+
+                    }
+
+                    @Override
+                    public void onSecond() {
+                        //删除收藏 --
+                        allList.remove(i);
+                        hrMessage2Adapter.notifyDataSetChanged();
+
+
+                    }
+                }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();*/
+            }
         });
 
 
