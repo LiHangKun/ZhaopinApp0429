@@ -15,6 +15,16 @@ public class ShouYeQiuZhiZheBean extends CommonBean {
 
     private int totalCount;
     private int totalPage;
+    private String dataType;
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
+    }
+
     private List<DataListBean> dataList;
 
     public int getTotalCount() {
@@ -68,6 +78,16 @@ public class ShouYeQiuZhiZheBean extends CommonBean {
         private String location;
         private String maxSalary;
         private String minSalary;
+        private String distance;
+
+        public String getDistance() {
+            return distance;
+        }
+
+        public void setDistance(String distance) {
+            this.distance = distance;
+        }
+
         private String name;
         private String positionType;
         private String workfare;

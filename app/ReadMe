@@ -87,6 +87,7 @@ EventBus.getDefault().post(new MessageEvent(1, null, null, null, null, null, nul
 //TODO  9  聊天界面的邀约发送用户的简历 rid
 //TODO  10  取消面试,面试记录状态更新
 //TODO  11  更新首页卡片
+//TODO  12  HR的筛选 向下传递Pid
 
 
 //TODO  消息类型

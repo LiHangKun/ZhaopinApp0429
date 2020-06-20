@@ -106,6 +106,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private List<ShouYeQiuZhiZheBean.DataListBean> allList;
     private List<ShouYeQiuZhiZheBean.DataListBean> allListKa;
     private MyAdapter myAdapter;
+    private ImageView fl_list;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -213,7 +214,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         list = new ArrayList<>();
         list1 = new ArrayList<>();
         mDragCardsView = view.findViewById(R.id.dragCardsView);
-        ImageView fl_list = view.findViewById(R.id.fl_list);
+        fl_list = view.findViewById(R.id.fl_list);
 
         fl_list.setOnClickListener(this);
 
@@ -272,7 +273,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
 
                         if (nowPageIndex < totalPage) {
                             nowPageIndex++;
-                            Log.e(TAG, "onLoadMore: http 加载下一页了" );
+                            Log.e(TAG, "onLoadMore: http 加载下一页了");
                             getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
                             recyclerViewKa.getAdapter().notifyDataSetChanged();
                         } else {
@@ -345,7 +346,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             }
             tv2.setText(allList.get(position).getMinSalary() + "K - " + allList.get(position).getMaxSalary() + "K");
             tv3.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName());
-            tv4.setText(allList.get(position).getExperienceYear().getName() );
+            tv4.setText(allList.get(position).getExperienceYear().getName());
             tv5.setText(allList.get(position).getEducation().getName());
             tv6.setText(allList.get(position).getDuty());
             tv7.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName() + allList.get(position).getLocation());
@@ -697,6 +698,26 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+       /* if (isVisibleToUser) {
+            Log.e(TAG, "setUserVisibleHint:http 页面 000000000");
+            if (fl_list != null) {
+                fl_list.setImageResource(R.drawable.shoucang_hezi);
+            }
+        } else {
+            Log.e(TAG, "setUserVisibleHint:http页面 111111");
+        }*/
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (fl_list != null) {
+            fl_list.setImageResource(R.drawable.shoucang_hezi);
+        }
+    }
 
     private void xiHuan(String pid) {
         Map<String, String> params = new HashMap<>();
@@ -715,7 +736,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-
+                fl_list.setImageResource(R.drawable.shoucang_hong);
 
             }
 

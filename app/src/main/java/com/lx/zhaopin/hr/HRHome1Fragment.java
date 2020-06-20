@@ -3,6 +3,7 @@ package com.lx.zhaopin.hr;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,9 +22,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +40,7 @@ import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.base.BaseFragment;
+import com.lx.zhaopin.bean.GongSiZhiWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.RenCaiListBean;
 import com.lx.zhaopin.common.AppSP;
@@ -147,10 +154,12 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         viewPager = view.findViewById(R.id.viewPager);
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
+        ImageView shaiXuan = view.findViewById(R.id.shaiXuan);
         llSearchView = view.findViewById(R.id.llSearchView);
         llSearchView.setOnClickListener(this);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
+        shaiXuan.setOnClickListener(this);
 
         recyclerViewKa = view.findViewById(R.id.recyclerViewKa);
 
@@ -491,9 +500,91 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         });
     }
 
+
+    private PopupWindow popupWindow1;
+    private View popupView1;
+    private TranslateAnimation animation1;
+    /*在子日记的pop上 点击发布 在次弹出发布页面*/
+
+    /**
+     * 设置手机屏幕亮度变暗
+     */
+    private void lightoff() {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 0.3f;
+        getActivity().getWindow().setAttributes(lp);
+    }
+
+    /**
+     * 设置手机屏幕亮度显示正常
+     */
+    private void lighton() {
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 1f;
+        getActivity().getWindow().setAttributes(lp);
+    }
+
+    private void AllGangwei() {
+        if (popupWindow1 == null) {
+            popupView1 = View.inflate(getActivity(), R.layout.pop_layout_allgangwei_list22, null);
+            FlowLiner flowLiner = popupView1.findViewById(R.id.flowLiner);
+            popupWindow1 = new PopupWindow(popupView1, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            popupWindow1.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    lighton();
+                    popupWindow1 = null;
+                }
+            });
+
+
+            getShaiXuan(flowLiner);
+
+
+            // 设置背景图片， 必须设置，不然动画没作用
+            popupWindow1.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow1.setFocusable(true);
+            // 设置点击popupwindow外屏幕其它地方消失
+            popupWindow1.setOutsideTouchable(true);
+            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
+            animation1 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
+            animation1.setInterpolator(new AccelerateInterpolator());
+            animation1.setDuration(200);
+            popupView1.findViewById(R.id.cancle).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow1.dismiss();
+                    lighton();
+                    popupWindow1 = null;
+                }
+            });
+        }
+
+        // 在点击之后设置popupwindow的销毁
+        if (popupWindow1.isShowing()) {
+            popupWindow1.dismiss();
+            lighton();
+            popupWindow1 = null;
+        }
+
+        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+        popupWindow1.showAtLocation(getActivity().findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popupView1.startAnimation(animation1);
+
+    }
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.shaiXuan:
+                //点击到筛选
+
+                AllGangwei();
+                lightoff();
+
+                break;
             case R.id.tv1:
                 //推荐
                 viewPager.setCurrentItem(0);
@@ -532,6 +623,73 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
 
                 break;
         }
+    }
+
+    private void getShaiXuan(final FlowLiner flowLiner) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("type", "2");
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.gongSiAllZhiWei, params, new BaseCallback<GongSiZhiWeiBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GongSiZhiWeiBean resultBean) {
+                List<String> flowData = new ArrayList<>();
+                final List<String> flowIDData = new ArrayList<>();
+                List<GongSiZhiWeiBean.DataListBean> dataList = resultBean.getDataList();
+
+                for (int i = 0; i < dataList.size(); i++) {
+                    flowData.add(dataList.get(i).getName());
+                    flowIDData.add(dataList.get(i).getId());
+                }
+
+                flowLiner.removeAllViews();
+                for (int i = 0; i < flowData.size(); i++) {
+                    final TextView radioButton = new TextView(getActivity());
+                    FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(0, 0, ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 10));
+                    radioButton.setLayoutParams(layoutParams);
+                    final String str = flowData.get(i);
+                    radioButton.setText(str);
+                    radioButton.setGravity(Gravity.CENTER);
+                    radioButton.setTextSize(13);
+                    radioButton.setPadding(ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 6), ViewUtil.dp2px(getActivity(), 10), ViewUtil.dp2px(getActivity(), 6));
+                    radioButton.setTextColor(getActivity().getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                    //radioButton.setBackgroundResource(R.drawable.search_selector);
+                    radioButton.setBackgroundResource(R.drawable.button_shape03);
+                    radioButton.setFocusable(true);
+                    final int finalI = i;
+                    radioButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String idName = flowIDData.get(finalI);
+                            Log.i(TAG, "onClick: 名称和ID " + idName);
+                            EventBus.getDefault().post(new MessageEvent(12, idName, null, null, null, null, null));
+                            popupWindow1.dismiss();
+
+                        }
+                    });
+                    flowLiner.addView(radioButton);
+                }
+
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
     }
 
 

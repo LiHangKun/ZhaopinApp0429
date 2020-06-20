@@ -239,6 +239,17 @@
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tv7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="100米"
+                    android:textColor="#3D3D3D"
+                    android:textSize="@dimen/sp_12"/>
+
 
             </LinearLayout>
 

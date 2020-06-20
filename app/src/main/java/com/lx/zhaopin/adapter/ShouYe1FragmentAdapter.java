@@ -20,6 +20,8 @@ import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,14 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
     private List<ShouYeQiuZhiZheBean.DataListBean> mData;
     private Context mContext;
     private OnItemClickListener itemClickListener;
+    private String dataType;
 
     public ShouYe1FragmentAdapter() {
+    }
+
+    public String getDataType(String type) {
+        dataType = type;
+        return type;
     }
 
     public ShouYe1FragmentAdapter(Context context, List<ShouYeQiuZhiZheBean.DataListBean> allList) {
@@ -65,11 +73,34 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K-" + mData.get(po).getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(po).getCity().getName() + mData.get(po).getDistrict().getName());
-        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() );
+        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName());
         viewHolder.tv5.setText(mData.get(po).getEducation().getName());
         viewHolder.tv6.setText(mData.get(po).getCompany().getName());
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
                 .error(R.mipmap.imageerror)).load(mData.get(po).getCompany().getLogo()).into(viewHolder.roundedImageView);
+
+
+        // 1.卡片式推荐，2.列表式推荐，3.最新，4.最近
+        switch (dataType) {
+            case "1":
+            case "2":
+            case "3":
+                viewHolder.tv7.setVisibility(View.GONE);
+                break;
+            case "4":
+                viewHolder.tv7.setVisibility(View.VISIBLE);
+                int i = Integer.parseInt(mData.get(po).getDistance());
+                if (i < 1000) {
+                    viewHolder.tv7.setText("<1km");
+                } else {
+                    BigDecimal num01 = new BigDecimal(mData.get(po).getDistance());//距离 单位 米
+                    BigDecimal num02 = new BigDecimal("1000");//计算距离  num3.setScale(2, RoundingMode.UP).toString()
+                    // 1.345----->1.3
+                    viewHolder.tv7.setText(num01.divide(num02).setScale(1, RoundingMode.UP).toString() + "km");
+                }
+                break;
+        }
+
 
         String workfare = mData.get(po).getWorkfare();
 
@@ -148,6 +179,10 @@ public class ShouYe1FragmentAdapter extends RecyclerView.Adapter<ShouYe1Fragment
         RoundedImageView roundedImageView;
         @BindView(R.id.tv6)
         TextView tv6;
+
+        @BindView(R.id.tv7)
+        TextView tv7;
+
         @BindView(R.id.llView)
         LinearLayout llView;
 

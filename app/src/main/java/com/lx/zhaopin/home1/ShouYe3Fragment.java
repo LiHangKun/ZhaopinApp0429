@@ -179,6 +179,7 @@ public class ShouYe3Fragment extends Fragment {
                         allList.addAll(resultBean.getDataList());
                         shouYe1FragmentAdapter.notifyDataSetChanged();
                     }
+                    shouYe1FragmentAdapter.getDataType(resultBean.getDataType());
                 }
             }
 

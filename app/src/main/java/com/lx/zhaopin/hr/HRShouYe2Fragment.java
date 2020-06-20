@@ -18,6 +18,7 @@ import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.adapter.SouRenCaiAdapter;
 import com.lx.zhaopin.bean.RenCaiListBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -28,6 +29,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -47,6 +51,7 @@ public class HRShouYe2Fragment extends Fragment {
 
     private int nowPageIndex = 1;
     private int totalPage = 1;
+    private String pid = "";
 
     private static final String TAG = "HRShouYe2Fragment";
     private List<RenCaiListBean.DataListBean> allList;
@@ -54,16 +59,40 @@ public class HRShouYe2Fragment extends Fragment {
     private SouRenCaiAdapter souRenCaiAdapter;
 
 
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 12:
+                pid = event.getKeyWord1();
+                getDataList("3", "", String.valueOf(nowPageIndex), AppSP.pageCount, pid);
+                Log.e(TAG, "getEventmessage: http  收到消息更新pid" + pid);
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
+
 
         view = View.inflate(container.getContext(), R.layout.shouye1fragment_layout, null);
         smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
         recyclerView = view.findViewById(R.id.recyclerView);
         noDataLinView = view.findViewById(R.id.noDataLinView);
 
-        getDataList("3", "", String.valueOf(nowPageIndex), AppSP.pageCount);
+        getDataList("3", "", String.valueOf(nowPageIndex), AppSP.pageCount, pid);
 
         allList = new ArrayList<>();
         souRenCaiAdapter = new SouRenCaiAdapter(getActivity(), allList);
@@ -77,7 +106,7 @@ public class HRShouYe2Fragment extends Fragment {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 allList.clear();
                 nowPageIndex = 1;
-                getDataList("3", "", String.valueOf(nowPageIndex), AppSP.pageCount);
+                getDataList("3", "", String.valueOf(nowPageIndex), AppSP.pageCount, pid);
                 Log.i(TAG, "onRefresh: 执行下拉刷新方法");
             }
         });
@@ -89,7 +118,7 @@ public class HRShouYe2Fragment extends Fragment {
             public void onLoadMore(RefreshLayout refreshlayout) {
                 if (nowPageIndex < totalPage) {
                     nowPageIndex++;
-                    getDataList("3", "", String.valueOf(nowPageIndex), AppSP.pageCount);
+                    getDataList("3", "", String.valueOf(nowPageIndex), AppSP.pageCount, pid);
                     Log.i(TAG, "onLoadMore: 执行上拉加载");
                     smartRefreshLayout.finishLoadMore();
                 } else {
@@ -120,13 +149,14 @@ public class HRShouYe2Fragment extends Fragment {
 
 
     //职位分页列表求职者
-    private void getDataList(String dataType, String name, String pageNo, String pageSize) {
+    private void getDataList(String dataType, String name, String pageNo, String pageSize, String pid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("dataType", dataType);
         params.put("name", name);
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
+        params.put("pid", pid);
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.HRSouRenCai, params, new SpotsCallBack<RenCaiListBean>(getActivity()) {
             @Override
             public void onSuccess(Response response, RenCaiListBean resultBean) {
