@@ -255,13 +255,15 @@ public class SplashActivity extends AppCompatActivity implements AMapLocationLis
                         sleep(500);//使程序休眠五秒
                         if (!isLogin) {
                             intent = new Intent(SplashActivity.this, MainActivity.class);//启动MainActivity
-                            SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                            //SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                            SPTool.addSessionMap(AppSP.USER_TYPE, SPTool.getSessionValue(AppSP.USER_TYPE));
                             startActivity(intent);
                             finish();//关闭当前活动
                         } else {
                             //intent = new Intent(SplashActivity.this, LoginActivity.class);//启动LoginActivity
                             intent = new Intent(SplashActivity.this, MainActivity.class);//启动LoginActivity
-                            SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                            //SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                            SPTool.addSessionMap(AppSP.USER_TYPE, SPTool.getSessionValue(AppSP.USER_TYPE));
                             startActivity(intent);
                             finish();//关闭当前活动
                         }

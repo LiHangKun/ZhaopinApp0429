@@ -19,17 +19,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapter.ViewHolder> {
+public class HRXiaoXiDetailAdapter extends RecyclerView.Adapter<HRXiaoXiDetailAdapter.ViewHolder> {
 
 
     private List<MessageDetailBean.DataListBean> mData;
     private Context mContext;
     private OnFeedClickListener feedClickListener;
 
-    public XiaoXiDetailAdapter() {
+    public HRXiaoXiDetailAdapter() {
     }
 
-    public XiaoXiDetailAdapter(Context context, List<MessageDetailBean.DataListBean> list) {
+    public HRXiaoXiDetailAdapter(Context context, List<MessageDetailBean.DataListBean> list) {
         mContext = context;
         mData = list;
     }
@@ -71,9 +71,9 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
             case "7":
                 viewHolder.tv1.setText("已面试");
                 // feedback 是否已反馈1是0否
-                if (feedback.equals("0")) {
+                /*if (feedback.equals("0")) {
                     viewHolder.feedTv.setVisibility(View.VISIBLE);
-                }
+                }*/
 
                 break;
             case "8":

@@ -31,6 +31,15 @@ public class MessageDetailBean extends CommonBean {
         private String subhead;
         private String feedback;
         private String feedbackContent;
+        private String correlation;
+
+        public String getCorrelation() {
+            return correlation;
+        }
+
+        public void setCorrelation(String correlation) {
+            this.correlation = correlation;
+        }
 
         public String getFeedback() {
             return feedback;

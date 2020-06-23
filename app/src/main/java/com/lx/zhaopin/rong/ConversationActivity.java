@@ -12,13 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.QiYeInfoActivity;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
+import com.lx.zhaopin.bean.AllRongInfoBean;
 import com.lx.zhaopin.bean.DianIconBean;
-import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
@@ -41,6 +42,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private String param;
     private static final String TAG = "ConversationActivity";
     private String userId;
+    private LinearLayout hrView;
+    private TextView tv1;
+    private TextView tv2;
+    private TextView titleName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +59,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(this);
         initPhotoError();
-        TextView titleName = findViewById(R.id.titleName);
+        titleName = findViewById(R.id.titleName);
+
+        hrView = findViewById(R.id.hrView);
+        tv1 = findViewById(R.id.tv1);
+        tv2 = findViewById(R.id.tv2);
 
 
         Uri uri = getIntent().getData();
@@ -146,7 +155,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getTitleName(final TextView titleName, String userId) {
-        Map<String, String> params = new HashMap<>();
+        /*Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("userId", userId);
         OkHttpHelper.getInstance().post(ConversationActivity.this, NetClass.BASE_URL + NetCuiMethod.getRongUserInfo, params, new BaseCallback<PhoneStateBean>() {
@@ -170,7 +179,55 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             public void onError(Response response, int code, Exception e) {
 
             }
+        });*/
+
+
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("userIds", userId);
+        OkHttpHelper.getInstance().post(ConversationActivity.this, NetClass.BASE_URL + NetCuiMethod.rongAllInfo, params, new BaseCallback<AllRongInfoBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, AllRongInfoBean resultBean) {
+                //titleName.setText(resultBean.getName());
+                //hr  0 否  1 是
+                if (resultBean.getDataList() != null) {
+                    if (resultBean.getDataList().size() != 0) {
+                        String hr = resultBean.getDataList().get(0).getHr();
+                        switch (hr) {
+                            case "0":
+                                hrView.setVisibility(View.GONE);
+                                titleName.setVisibility(View.VISIBLE);
+                                titleName.setText(resultBean.getDataList().get(0).getName());
+                                break;
+                            case "1":
+                                titleName.setVisibility(View.GONE);
+                                hrView.setVisibility(View.VISIBLE);
+                                tv1.setText(resultBean.getDataList().get(0).getName());
+                                tv2.setText(resultBean.getDataList().get(0).getCompanyName() + "--" + resultBean.getDataList().get(0).getPositionName());
+                                break;
+                        }
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
         });
+
 
     }
 

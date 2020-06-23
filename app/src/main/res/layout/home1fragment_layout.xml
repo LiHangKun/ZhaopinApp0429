@@ -267,21 +267,30 @@
         android:id="@+id/allTuCeng"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
+
+        <!--
+        android:scaleType="centerCrop"
+        android:scaleType="center"
+        android:scaleType="fitXY"
+        android:scaleType="matrix"
+        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
+        android:scaleType="fitStart"
+        -->
 
         <ImageView
             android:id="@+id/tuCeng1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@mipmap/tuceng1" />
 
         <ImageView
             android:id="@+id/tuCeng2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@mipmap/tuceng2" />
 
 

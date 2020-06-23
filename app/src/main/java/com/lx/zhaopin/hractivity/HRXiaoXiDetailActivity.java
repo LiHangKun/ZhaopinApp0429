@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.adapter.XiaoXiDetailAdapter;
+import com.lx.zhaopin.adapter.HRXiaoXiDetailAdapter;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.MessageDetailBean;
 import com.lx.zhaopin.common.AppSP;
@@ -48,9 +48,9 @@ public class HRXiaoXiDetailActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, MessageDetailBean resultBean) {
 
-                XiaoXiDetailAdapter xiaoXiDetailAdapter = new XiaoXiDetailAdapter(mContext, resultBean.getDataList());
+                HRXiaoXiDetailAdapter hrXiaoXiDetailAdapter = new HRXiaoXiDetailAdapter(mContext, resultBean.getDataList());
                 recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-                recyclerView.setAdapter(xiaoXiDetailAdapter);
+                recyclerView.setAdapter(hrXiaoXiDetailAdapter);
 
             }
 
