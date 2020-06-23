@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +65,14 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
         }
 
         viewHolder.tv1.setText(mData.get(po).getName());
-        viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
+
+        if (!TextUtils.isEmpty(mData.get(po).getMinSalary())) {
+            viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
+        } else {
+            viewHolder.tv2.setVisibility(View.GONE);
+        }
+
+
         viewHolder.tv3.setText(mData.get(po).getEducation().getName());
         viewHolder.tv4.setText(mData.get(po).getAge() + "岁");
         viewHolder.tv5.setText(mData.get(po).getWorkYears() + "年");
