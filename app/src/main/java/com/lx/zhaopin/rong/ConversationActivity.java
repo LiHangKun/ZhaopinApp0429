@@ -213,7 +213,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                                 titleName.setVisibility(View.GONE);
                                 hrView.setVisibility(View.VISIBLE);
                                 tv1.setText(resultBean.getDataList().get(0).getName());
-                                tv2.setText(resultBean.getDataList().get(0).getCompanyName() + "--" + resultBean.getDataList().get(0).getPositionName());
+                                tv2.setText(resultBean.getDataList().get(0).getPositionName() + "-" + resultBean.getDataList().get(0).getCompanyName());
                                 break;
                         }
                     }
