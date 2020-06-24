@@ -108,6 +108,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
 
     private List<RenCaiListBean.DataListBean> allList;
     private MyAdapter myAdapter;
+    private ImageView dituImage;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -154,6 +155,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         viewPager = view.findViewById(R.id.viewPager);
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
+        dituImage = view.findViewById(R.id.dituImage);
         ImageView shaiXuan = view.findViewById(R.id.shaiXuan);
         llSearchView = view.findViewById(R.id.llSearchView);
         llSearchView.setOnClickListener(this);
@@ -257,6 +259,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                             recyclerViewKa.getAdapter().notifyDataSetChanged();
                         } else {
                             Log.e(TAG, "onLoadMore: http  相等不可刷新");
+                            dituImage.setVisibility(View.GONE);
                         }
 
 
@@ -679,7 +682,6 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                     });
                     flowLiner.addView(radioButton);
                 }
-
 
 
             }

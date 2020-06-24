@@ -291,7 +291,7 @@ public class Message3Fragment extends Fragment implements View.OnClickListener {
             }
 
             if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                getUnMessageNumber();
+                //getUnMessageNumber();
             }
         }
     }

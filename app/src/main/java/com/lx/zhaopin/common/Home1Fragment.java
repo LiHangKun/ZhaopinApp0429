@@ -107,6 +107,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private List<ShouYeQiuZhiZheBean.DataListBean> allListKa;
     private MyAdapter myAdapter;
     private ImageView fl_list;
+    private ImageView dituImage;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -162,6 +163,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         tv3 = view.findViewById(R.id.tv3);
         viewType1 = view.findViewById(R.id.ViewType1);
         viewType2 = view.findViewById(R.id.ViewType2);
+        dituImage = view.findViewById(R.id.dituImage);
 
         tuCeng1 = view.findViewById(R.id.tuCeng1);
         tuCeng2 = view.findViewById(R.id.tuCeng2);
@@ -278,11 +280,12 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                             recyclerViewKa.getAdapter().notifyDataSetChanged();
                         } else {
                             Log.e(TAG, "onLoadMore: http  相等不可刷新");
+                            dituImage.setVisibility(View.GONE);
                         }
 
 
                     }
-                }, 1000L);
+                }, 60L);
             }
 
         });
