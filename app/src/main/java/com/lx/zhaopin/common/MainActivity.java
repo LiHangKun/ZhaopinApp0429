@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.allenliu.versionchecklib.AppConstant;
+import com.allenliu.versionchecklib.callback.APKDownloadListener;
 import com.allenliu.versionchecklib.v2.AllenVersionChecker;
 import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
 import com.allenliu.versionchecklib.v2.builder.UIData;
@@ -42,6 +44,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -504,8 +507,14 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             AppSP.isToHome = false;
         }
 
-        versionUpdateMe();
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        versionUpdateMe();
     }
 
     private void versionUpdateMe() {
@@ -515,12 +524,12 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             @Override
             public void onSuccess(Response response, VersionBean resultBean) {
 
-                String result = resultBean.getResult();
+                /*String result = resultBean.getResult();
                 String resultNote = resultBean.getResultNote();
 
 
                 if (result.equals("0")) {
-                    String number = resultBean.getNumber();
+                    String number = resultBean.getNum();
                     String version = resultBean.getVersion();
                     String type = resultBean.getType();
                     String url = resultBean.getAndroidUrl();
@@ -547,6 +556,44 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                 } else {
                     showToast(resultNote);
                     return;
+                }*/
+
+                String url = resultBean.getAndroidFile();
+                String updateNo = resultBean.getNum();
+                String versionNo = resultBean.getVersion();
+                AppConstant.apkLength = String.valueOf(50 * 1024 * 1024);
+                int numberServer = Integer.parseInt(updateNo);
+                int verCode = APKVersionCodeUtils.getVersionCode(mContext);
+                if (numberServer > verCode) {
+                    Log.i(TAG, "xuanZe: 执行1111111111");
+                    AllenVersionChecker
+                            .getInstance()
+                            .downloadOnly(UIData.create().setDownloadUrl(url).setTitle("发现新版本").setContent("新版本升级")).setNotificationBuilder(
+                            NotificationBuilder.create()
+                                    .setRingtone(true)
+                                    .setIcon(R.mipmap.logo)
+                                    .setTicker("版本更新")
+                                    .setContentTitle("版本更新")
+                    ).setApkDownloadListener(new APKDownloadListener() {
+                        @Override
+                        public void onDownloading(int progress) {
+                            Log.e("download", "------>" + progress);
+                        }
+
+                        @Override
+                        public void onDownloadSuccess(File file) {
+
+                        }
+
+                        @Override
+                        public void onDownloadFail() {
+
+                        }
+                    }).setForceRedownload(true).setShowDownloadingDialog(false).executeMission(mContext);
+
+
+                } else {
+                    Log.i(TAG, "xuanZe: 执行22222222");
                 }
 
 

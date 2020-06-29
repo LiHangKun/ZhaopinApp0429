@@ -73,12 +73,13 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
         }
 
         String opened = mData.get(po).getPosition().getOpened();
+        //1.未停招，0.已停招
         switch (opened) {
             case "1":
-                viewHolder.imageView2.setVisibility(View.VISIBLE);
-                break;
-            case "2":
                 viewHolder.imageView2.setVisibility(View.GONE);
+                break;
+            case "0":
+                viewHolder.imageView2.setVisibility(View.VISIBLE);
                 break;
         }
 

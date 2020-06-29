@@ -6,33 +6,24 @@ public class VersionBean extends CommonBean {
 
 
     /**
-     * content :
-     * number :
-     * type : 0
-     * url :
-     * version :
+     * androidFile : http://www.qiuzhiqiang.com/userfiles/1/attachment//version/version/2020/6/ugoxcnsjat.apk
+     * androidUrl :
+     * createDate : 2020-06-29
+     * iosFile : http://www.qiuzhiqiang.com
+     * iosUrl :
+     * num : 2
+     * remarks : 求职墙,全球首发
+     * version : 1.0.1
      */
 
-    private String content;
-    private String number;
-    private String type;
-    private String url;
-    private String version;
-    private String num;
     private String androidFile;
     private String androidUrl;
+    private String createDate;
     private String iosFile;
     private String iosUrl;
+    private String num;
     private String remarks;
-    private String createDate;
-
-    public String getNum() {
-        return num;
-    }
-
-    public void setNum(String num) {
-        this.num = num;
-    }
+    private String version;
 
     public String getAndroidFile() {
         return androidFile;
@@ -48,6 +39,14 @@ public class VersionBean extends CommonBean {
 
     public void setAndroidUrl(String androidUrl) {
         this.androidUrl = androidUrl;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     public String getIosFile() {
@@ -66,52 +65,20 @@ public class VersionBean extends CommonBean {
         this.iosUrl = iosUrl;
     }
 
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
+
     public String getRemarks() {
         return remarks;
     }
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getVersion() {

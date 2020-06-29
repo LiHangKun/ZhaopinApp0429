@@ -3,14 +3,17 @@ package com.lx.zhaopin.net;
 public class NetClass {
 
 
+    //http://www.qiuzhiqiang.com/
     public static final boolean isDeg = true;
     public static final String BASE_URL;
-    public static final String Base_FileCui = "http://39.96.78.51/api/service/member/file/upload";//单张图片
+    //public static final String Base_FileCui = "http://39.96.78.51/api/service/member/file/upload";//单张图片
+    public static final String Base_FileCui = "http://www.qiuzhiqiang.com/api/service/member/file/upload";//单张图片
 
 
     static {
         if (isDeg) {
-            BASE_URL = "http://39.96.78.51/api/service/";//测试环境地址
+            //BASE_URL = "http://39.96.78.51/api/service/";//测试环境地址
+            BASE_URL = "http://www.qiuzhiqiang.com/api/service/";//测试环境地址
         } else {
             BASE_URL = "正式生产环境地址/";//正式生产环境地址
         }
@@ -34,9 +37,14 @@ public class NetClass {
     //http://39.96.78.51/share/#/pages/index/cv?rid=
 
 
-    public static final String Share_Gang = "http://39.96.78.51/share/#/?pid=";
+    /*public static final String Share_Gang = "http://39.96.78.51/share/#/?pid=";
     public static final String Share_Ren = "http://39.96.78.51/share/#/pages/index/cv?rid=";
     public static final String Share_AppLogo = "http://39.96.78.51/zhaopinlogo.png";
+    public static final String title = "欢迎使用";*/
+
+    public static final String Share_Gang = "http://www.qiuzhiqiang.com/share/#/?pid=";
+    public static final String Share_Ren = "http://www.qiuzhiqiang.com/share/#/pages/index/cv?rid=";
+    public static final String Share_AppLogo = "http://www.qiuzhiqiang.com/zhaopinlogo.png";
     public static final String title = "欢迎使用";
 
 

@@ -149,6 +149,7 @@ dependencies {
     //定义的二级联动
     implementation project(':pickerview')
     implementation project(':wheelview')
+    implementation project(':versionlibrary')
     //定义的二级联动
 
     //XTabLayout
@@ -192,7 +193,7 @@ dependencies {
     //时间选择器
     //implementation 'com.contrarywind:Android-PickerView:4.1.9'
     //版本更新
-    implementation 'com.allenliu.versionchecklib:library:2.1.9'
+    //implementation 'com.allenliu.versionchecklib:library:2.1.9'
     //扫一扫
     implementation 'com.github.yuzhiqiang1993:zxing:2.2.8'
     //图片选择

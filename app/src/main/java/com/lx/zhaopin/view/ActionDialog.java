@@ -174,8 +174,8 @@ public class ActionDialog extends Dialog {
         };
         style.setSpan(clickableSpan, 13, 19, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         style.setSpan(clickableSpan1, 20, 26, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(context.getResources().getColor(R.color.mainColor));
-        ForegroundColorSpan foregroundColorSpan1 = new ForegroundColorSpan(context.getResources().getColor(R.color.mainColor));
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(context.getResources().getColor(R.color.mainColor888));
+        ForegroundColorSpan foregroundColorSpan1 = new ForegroundColorSpan(context.getResources().getColor(R.color.mainColor888));
 
 
         style.setSpan(foregroundColorSpan1, 13, 19, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
