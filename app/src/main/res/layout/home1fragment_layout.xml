@@ -38,7 +38,7 @@
                     android:layout_marginLeft="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:maxLength="8"
-                    android:text="乌鲁木齐市"
+                    android:text=""
                     android:textColor="#fff"
                     android:textSize="@dimen/sp_14"
                     android:textStyle="normal" />

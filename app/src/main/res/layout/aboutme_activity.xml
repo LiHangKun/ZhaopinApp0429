@@ -135,7 +135,7 @@
                         android:gravity="center"
                         android:maxLength="20"
                         android:singleLine="true"
-                        android:text="111"
+                        android:text=""
                         android:textColor="#4989FF"
                         android:textIsSelectable="true"
                         android:textSize="@dimen/sp_14"

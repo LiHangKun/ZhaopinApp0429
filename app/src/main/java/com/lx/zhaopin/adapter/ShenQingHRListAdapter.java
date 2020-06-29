@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.bean.HRShouCangRenBean;
+import com.lx.zhaopin.bean.HRShenQingBean;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -26,43 +26,31 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdapter.ViewHolder> {
+//新申请 HR 的列表
+public class ShenQingHRListAdapter extends RecyclerView.Adapter<ShenQingHRListAdapter.ViewHolder> {
 
 
-    private List<HRShouCangRenBean.DataListBean> mData;
+    private List<HRShenQingBean.DataListBean> mData;
     private Context mContext;
-    private OnItemClickListener itemClickListener;
+    private OnItemClickListener onItemClickListener;
 
-    public MyShouCangRenAdapter() {
+    public ShenQingHRListAdapter() {
     }
 
-    public MyShouCangRenAdapter(Context context, List<HRShouCangRenBean.DataListBean> allList) {
+    public ShenQingHRListAdapter(Context context, List<HRShenQingBean.DataListBean> allList) {
         mContext = context;
         mData = allList;
     }
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_shoucangren_layout, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_goutong_ren_layout, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int po) {
-        Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
-                .load(mData.get(po).getAvatar()).into(viewHolder.roundedImageView);
 
-
-        String openResume = mData.get(po).getOpenResume();
-        switch (openResume) {
-            case "1":
-                viewHolder.imageView1.setVisibility(View.INVISIBLE);
-                break;
-            case "0":
-                viewHolder.imageView1.setVisibility(View.VISIBLE);
-                break;
-        }
 
         viewHolder.tv1.setText(mData.get(po).getName());
 
@@ -76,13 +64,31 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
         viewHolder.tv3.setText(mData.get(po).getEducation().getName());
         viewHolder.tv4.setText(mData.get(po).getAge() + "岁");
         viewHolder.tv5.setText(mData.get(po).getWorkYears() + "年");
-        viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
+        Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
+                .load(mData.get(po).getAvatar()).into(viewHolder.roundedImageView);
+
+        if (mData.get(po).getLatestCity() != null) {
+            viewHolder.tv6.setText(mData.get(po).getLatestCity().getName());
+        } else {
+            viewHolder.tv6.setVisibility(View.INVISIBLE);
+        }
+
+
+        String openResume = mData.get(po).getOpenResume();
+        //是否开放简历  1 是 0 否
+        switch (openResume) {
+            case "1":
+                viewHolder.imageView1.setVisibility(View.GONE);
+                break;
+            default:
+                viewHolder.imageView1.setVisibility(View.VISIBLE);
+        }
+
+        List<HRShenQingBean.DataListBean.ResumeSkillListBean> resumeSkillList = mData.get(po).getResumeSkillList();
         List<String> flowData = new ArrayList<>();
-        List<HRShouCangRenBean.DataListBean.ResumeSkillListBean> resumeSkillList = mData.get(po).getResumeSkillList();
         for (int i = 0; i < resumeSkillList.size(); i++) {
             flowData.add(resumeSkillList.get(i).getName());
         }
-
 
         viewHolder.flowLiner.removeAllViews();
         for (int i = 0; i < flowData.size(); i++) {
@@ -109,20 +115,46 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
         }
 
 
-        viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(), mData.get(po).getOpenResume());
-                }
-            }
-        });
+        String requestStatus = mData.get(po).getRequestStatus();
+        //沟通请求状态，1.待处理，2.已同意，3.已拒绝
+        switch (requestStatus) {
+            case "1":
+                viewHolder.tv7.setVisibility(View.VISIBLE);
+                viewHolder.tv8.setVisibility(View.VISIBLE);
+                break;
+            case "2":
+            case "3":
+                viewHolder.tv7.setVisibility(View.GONE);
+                viewHolder.tv8.setVisibility(View.GONE);
+                break;
+        }
+
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(), mData.get(po).getOpenResume());
+                if (onItemClickListener != null) {
+                    onItemClickListener.OnItemClickListener(viewHolder.llView, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId());
+                }
+            }
+        });
+
+        //拒绝
+        viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.OnItemClickListener(viewHolder.tv7, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId());
+                }
+            }
+        });
+
+        //同意
+        viewHolder.tv8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.OnItemClickListener(viewHolder.tv8, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId());
                 }
             }
         });
@@ -160,21 +192,23 @@ public class MyShouCangRenAdapter extends RecyclerView.Adapter<MyShouCangRenAdap
         RecyclerView recyclerView;
         @BindView(R.id.tv7)
         TextView tv7;
+        @BindView(R.id.tv8)
+        TextView tv8;
         @BindView(R.id.llView)
         LinearLayout llView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, String id, String openResume);
+        void OnItemClickListener(View view, int po, String requestId, String requestStatus, String open, String id);
     }
 
-    public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {
-        itemClickListener = OnItemClickListener;
+    public void SetOnItemClickListener(OnItemClickListener OnItemClickListener) {
+        onItemClickListener = OnItemClickListener;
     }
+
 }

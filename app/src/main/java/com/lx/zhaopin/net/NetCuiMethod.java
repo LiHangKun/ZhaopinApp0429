@@ -117,6 +117,8 @@ public class NetCuiMethod {
     public static final String HRMessageList2 = "member/recruiter/chat/system/page";//系统消息列表
     public static final String HRMessageDetail = "member/recruiter/chat/feedback/detail";//HR 看到的消息详情
     public static final String HR_ShenQingChat = "member/recruiter/chat/apply";//申请沟通
+    public static final String HR_ShenQingChatList = "member/recruiter/chat/apply/page";//求职者沟通申请列表
+    public static final String HR_ShenQingCaoView = "member/recruiter/chat/apply/deal";//处理求职者沟通申请
 
 
 

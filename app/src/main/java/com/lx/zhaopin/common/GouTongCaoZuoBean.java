@@ -4,6 +4,15 @@ public class GouTongCaoZuoBean {
 
     public String chatApplyStatus;
     public String unread;
+    public String requestStatus;
+
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
+    }
 
     public String getUnread() {
         return unread;
