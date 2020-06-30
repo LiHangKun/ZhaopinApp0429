@@ -182,19 +182,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/dituImage"
-                android:layout_width="match_parent"
-                android:src="@drawable/shouye_bg"
-                android:layout_height="match_parent"/>
+          <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+              <ImageView
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/dp_150"
+                  android:background="@color/mainColor888"/>
+
+              <ImageView
+                  android:id="@+id/dituImage"
+                  android:layout_marginTop="@dimen/sp_15"
+                  android:layout_width="match_parent"
+                  android:src="@drawable/shouye_bg"
+                  android:layout_height="match_parent"/>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_150"
-                android:background="@color/mainColor888">
 
-            </LinearLayout>
+
+          </FrameLayout>
+
 
             <FrameLayout
                 android:layout_width="match_parent"
