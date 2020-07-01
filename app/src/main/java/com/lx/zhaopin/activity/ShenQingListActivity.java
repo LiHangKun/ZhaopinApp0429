@@ -84,7 +84,7 @@ public class ShenQingListActivity extends BaseActivity {
             public void OnItemClickListener(View view, int i, String open, final String id, String qiYeID) {
                 switch (view.getId()) {
                     case R.id.AllllView:
-                        if (open.equals("1")) {
+                        if (open.equals("0")) {
                             ToastFactory.getToast(mContext, "职位已关闭").show();
                             return;
                         } else {

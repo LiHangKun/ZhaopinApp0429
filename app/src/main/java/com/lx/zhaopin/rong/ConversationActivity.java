@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.QiYeInfoActivity;
-import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.bean.AllRongInfoBean;
 import com.lx.zhaopin.bean.DianIconBean;
 import com.lx.zhaopin.common.AppSP;
@@ -140,9 +139,9 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("qiYeID", resultBean.getCid());
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
+                   /* Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
                     intent.putExtra("rid", userId);
-                    startActivity(intent);
+                    startActivity(intent);*/
                 }
 
             }
