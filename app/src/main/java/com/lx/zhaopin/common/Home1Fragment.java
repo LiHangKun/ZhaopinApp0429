@@ -325,6 +325,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             TextView tv10 = ((MyViewHolder) holder).tv10;
             TextView tv11 = ((MyViewHolder) holder).tv11;
             TextView tv12 = ((MyViewHolder) holder).tv12;
+            TextView tv1Cui = ((MyViewHolder) holder).tv1Cui;
             RecyclerView recyclerViewGongSi = ((MyViewHolder) holder).recyclerViewGongSi;
             FrameLayout onClickView = ((MyViewHolder) holder).onClickView;
 
@@ -332,17 +333,24 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
                     .error(R.mipmap.imageerror)).load(allList.get(position).getCompany().getLogo()).into(avatarImageView);
 
-            tv1.setText(allList.get(position).getName());
 
             String positionType = allList.get(position).getPositionType();
             switch (positionType) {
                 case "1":
                 case "2":
                     imageState.setVisibility(View.INVISIBLE);
-                    tv1.setTextColor(getActivity().getResources().getColor(R.color.txt_lv7));
+                    tv1Cui.setBackground(null);
+                    tv1.setVisibility(View.GONE);
+                    tv1Cui.setVisibility(View.VISIBLE);
+                    tv1Cui.setText(allList.get(position).getName());
+                    tv1Cui.setTextColor(getActivity().getResources().getColor(R.color.txt_lv7));
                     break;
                 case "3":
                     imageState.setVisibility(View.VISIBLE);
+                    tv1Cui.setVisibility(View.GONE);
+                    tv1.setVisibility(View.VISIBLE);
+                    tv1.setText(allList.get(position).getName());
+                    tv1.setBackground(getResources().getDrawable(R.drawable.biaoqian));
                     tv1.setTextColor(getActivity().getResources().getColor(R.color.white));
                     break;
 
@@ -410,7 +418,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             ImageView imageState;
             FrameLayout onClickView;
             RecyclerView recyclerViewGongSi;
-            TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tv9, tv10, tv11, tv12;
+            TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tv9, tv10, tv11, tv12, tv1Cui;
 
             MyViewHolder(View itemView) {
                 super(itemView);
@@ -430,6 +438,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                 tv10 = itemView.findViewById(R.id.tv10);
                 tv11 = itemView.findViewById(R.id.tv11);
                 tv12 = itemView.findViewById(R.id.tv12);
+                tv1Cui = itemView.findViewById(R.id.tv1Cui);
                 recyclerViewGongSi = itemView.findViewById(R.id.recyclerView);
                 onClickView = itemView.findViewById(R.id.onClickView);
             }
