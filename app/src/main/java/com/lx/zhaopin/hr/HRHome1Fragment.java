@@ -13,9 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,13 +30,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.lin.cardlib.CardLayoutManager;
+import com.lin.cardlib.CardSetting;
+import com.lin.cardlib.CardTouchHelperCallback;
+import com.lin.cardlib.OnSwipeCardListener;
+import com.lin.cardlib.utils.ReItemTouchHelper;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
 import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
+import com.lx.zhaopin.adapter.HRCardAdapter;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.bean.GongSiZhiWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
@@ -58,7 +60,6 @@ import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
 import com.lx.zhaopin.view.dragcard.DragCardsView;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -69,10 +70,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.yuqirong.cardswipelayout.CardConfig;
-import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
-import me.yuqirong.cardswipelayout.CardLayoutManager;
-import me.yuqirong.cardswipelayout.OnSwipeListener;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -105,10 +102,13 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     private String cityId = "";
     private RecyclerView recyclerViewKa;
 
+    ReItemTouchHelper mReItemTouchHelper;
 
-    private List<RenCaiListBean.DataListBean> allList;
-    private MyAdapter myAdapter;
+    private List<RenCaiListBean.DataListBean> NewAllList;
+    //private MyAdapter myAdapter;
     private ImageView dituImage;
+    private HRCardAdapter hrCardAdapter;
+    private ImageView fl_list;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -163,11 +163,9 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         tv2.setOnClickListener(this);
         shaiXuan.setOnClickListener(this);
 
-        recyclerViewKa = view.findViewById(R.id.recyclerViewKa);
-
 
         ImageView selectView = view.findViewById(R.id.selectView);
-        ImageView fl_list = view.findViewById(R.id.fl_list);
+        fl_list = view.findViewById(R.id.fl_list);
         selectView.setOnClickListener(this);
         fl_list.setOnClickListener(this);
 
@@ -202,7 +200,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
 
 
         //RenCaiListBean
-        allList = new ArrayList<>();
+        /*allList = new ArrayList<>();
         recyclerViewKa.setItemAnimator(new DefaultItemAnimator());
         myAdapter = new MyAdapter();
         recyclerViewKa.setAdapter(myAdapter);
@@ -271,7 +269,85 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
         final CardLayoutManager cardLayoutManager = new CardLayoutManager(recyclerViewKa, touchHelper);
         recyclerViewKa.setLayoutManager(cardLayoutManager);
-        touchHelper.attachToRecyclerView(recyclerViewKa);
+        touchHelper.attachToRecyclerView(recyclerViewKa);*/
+
+
+        recyclerViewKa = view.findViewById(R.id.recyclerViewKa);
+        NewAllList = new ArrayList<>();
+        CardSetting setting = new CardSetting();
+        setting.setSwipeListener(new OnSwipeCardListener<RenCaiListBean.DataListBean>() {
+            @Override
+            public void onSwiping(RecyclerView.ViewHolder viewHolder, float dx, float dy, int direction) {
+                switch (direction) {
+                    case ReItemTouchHelper.DOWN:
+                        Log.e("aaa", "swiping direction=down");
+                        break;
+                    case ReItemTouchHelper.UP:
+                        Log.e("aaa", "swiping direction=up");
+                        break;
+                    case ReItemTouchHelper.LEFT:
+                        Log.e("aaa", "swiping direction=left");
+                        break;
+                    case ReItemTouchHelper.RIGHT:
+                        Log.e("aaa", "swiping direction=right");
+                        break;
+                }
+            }
+
+            @Override
+            public void onSwipedOut(RecyclerView.ViewHolder viewHolder, RenCaiListBean.DataListBean o, int direction) {
+                switch (direction) {
+                    case ReItemTouchHelper.DOWN:
+                        Log.i(TAG, "onSwipedOut: 向下");
+                        //不喜欢
+                        buXiHuan(o.getId());
+                        break;
+                    case ReItemTouchHelper.UP:
+                        Log.i(TAG, "onSwipedOut:上 ");
+                        //喜欢
+                        xiHuan(o.getId());
+                        break;
+                    case ReItemTouchHelper.LEFT:
+                        Log.i(TAG, "onSwipedOut: 左--------------");
+                        //不喜欢
+                        buXiHuan(o.getId());
+                        break;
+                    case ReItemTouchHelper.RIGHT:
+                        Log.i(TAG, "onSwipedOut: 右++++++++++++++++++");
+                        //喜欢
+                        xiHuan(o.getId());
+                        break;
+                }
+            }
+
+            @Override
+            public void onSwipedClear() {
+                //Toast.makeText(getActivity(), "cards are consumed", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "onSwipedClear: 开始加载下一页");
+                recyclerViewKa.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (nowPageIndex < totalPage) {
+                            nowPageIndex++;
+                            Log.e(TAG, "onLoadMore: http 加载下一页了");
+                            getDataList("1", "", String.valueOf(nowPageIndex), AppSP.pageCount);
+                            recyclerViewKa.getAdapter().notifyDataSetChanged();
+                        } else {
+                            Log.e(TAG, "onLoadMore: http  相等不可刷新");
+                            dituImage.setVisibility(View.GONE);
+                        }
+                    }
+                }, 100);
+
+
+            }
+        });
+        CardTouchHelperCallback helperCallback = new CardTouchHelperCallback(recyclerViewKa, NewAllList, setting);
+        mReItemTouchHelper = new ReItemTouchHelper(helperCallback);
+        CardLayoutManager layoutManager = new CardLayoutManager(mReItemTouchHelper, setting);
+        recyclerViewKa.setLayoutManager(layoutManager);
+        hrCardAdapter = new HRCardAdapter(getActivity(), NewAllList);
+        recyclerViewKa.setAdapter(hrCardAdapter);
 
 
         getDataList("1", "", String.valueOf(nowPageIndex), AppSP.pageCount);
@@ -282,7 +358,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     }
 
 
-    private class MyAdapter extends RecyclerView.Adapter {
+    /*private class MyAdapter extends RecyclerView.Adapter {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_card_rencai22, parent, false);
@@ -405,9 +481,9 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
             onClickView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    /*if (itemCliCkListener != null) {
+                    *//*if (itemCliCkListener != null) {
                         itemCliCkListener.onItemClickListener(position, allList.get(position).getId());
-                    }*/
+                    }*//*
 
                     Intent intent = new Intent(getActivity(), RenCaiDetailActivity.class);
                     intent.putExtra("rid", allList.get(position).getId());
@@ -456,7 +532,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         }
 
 
-    }
+    }*/
 
 
     //通过监听viewpager滑动改变Checked的属性
@@ -713,8 +789,9 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                         //没有数据
                     } else {
                         //有数据
-                        allList.addAll(resultBean.getDataList());
-                        myAdapter.notifyDataSetChanged();
+                        NewAllList.clear();
+                        NewAllList.addAll(resultBean.getDataList());
+                        hrCardAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -830,6 +907,15 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (fl_list != null) {
+            fl_list.setImageResource(R.drawable.shoucang_hezi);
+        }
+    }
+
+
     private void xiHuan(String pid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
@@ -847,7 +933,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-
+                fl_list.setImageResource(R.drawable.shoucang_hong);
 
             }
 

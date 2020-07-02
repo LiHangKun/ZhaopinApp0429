@@ -149,8 +149,12 @@ dependencies {
     //定义的二级联动
     implementation project(':pickerview')
     implementation project(':wheelview')
-    implementation project(':versionlibrary')
     //定义的二级联动
+
+    //版本更新
+    implementation project(':versionlibrary')
+    //探探效果
+    implementation project(':cardlib')
 
     //XTabLayout
     compile 'com.androidkun:XTabLayout:1.1.3'
