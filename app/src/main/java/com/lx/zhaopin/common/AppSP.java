@@ -33,6 +33,7 @@ public class AppSP {
     public static final String UID_DUAN = "UID_DUAN";//用户UID,短的
     public static final String USER_NAME = "U_NAME";//用户名称
     public static final String USER_ICON = "U_ICON";//用户头像
+    public static final String USER_POSITIO_NNAME = "USER_POSITIO_NNAME";//用户职位
     public static final String USER_RongToken = "USER_RongToken";//融云Token
     public static final String USER_HR_RongToken = "USER_HR_RongToken";//HR融云Token
     public static final String USER_PHONE = "user_phone";//用户电话号码

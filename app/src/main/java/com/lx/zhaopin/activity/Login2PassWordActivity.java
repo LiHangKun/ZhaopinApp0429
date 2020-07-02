@@ -181,6 +181,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
                 SPTool.addSessionMap(AppSP.USER_NAME, name);
                 SPTool.addSessionMap(AppSP.UID_DUAN, duanUid);
                 SPTool.addSessionMap(AppSP.USER_ICON, avatar);
+                SPTool.addSessionMap(AppSP.USER_POSITIO_NNAME, resultBean.getPositionName());
                 SPTool.addSessionMap(AppSP.USER_PHONE, userPhone);
                 SPTool.addSessionMap(AppSP.USER_RongToken, RongToken);
                 String HR_RongToken = resultBean.getrRongToken();

@@ -508,7 +508,6 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         }
 
 
-
     }
 
     @Override

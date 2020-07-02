@@ -22,6 +22,15 @@ public class LoginBean extends CommonBean {
     private String id;
     private String mobile;
     private String rRongToken;
+    private String positionName;
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
 
     public String getrRongToken() {
         return rRongToken;
