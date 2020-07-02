@@ -327,6 +327,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             TextView tv12 = ((MyViewHolder) holder).tv12;
             TextView tv1Cui = ((MyViewHolder) holder).tv1Cui;
             RecyclerView recyclerViewGongSi = ((MyViewHolder) holder).recyclerViewGongSi;
+            LinearLayout llViewALL = ((MyViewHolder) holder).llViewALL;
             FrameLayout onClickView = ((MyViewHolder) holder).onClickView;
 
 
@@ -388,13 +389,31 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             });
 
 
+           /* LLCuiView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    *//*if (itemCliCkListener != null) {
+                        itemCliCkListener.onItemClickListener(position, allList.get(position).getId());
+                    }*//*
+
+                    Log.i(TAG, "onClick: 点击到我了11111111111");
+                    Intent intent = new Intent(getActivity(), GangWeiDetailActivity.class);
+                    intent.putExtra("pid", allList.get(position).getId());
+                    startActivity(intent);
+
+
+                }
+            });*/
+
+
+            //onClickView
             onClickView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     /*if (itemCliCkListener != null) {
                         itemCliCkListener.onItemClickListener(position, allList.get(position).getId());
                     }*/
-
+                    Log.i(TAG, "onClick: 点击到我了2222222");
                     Intent intent = new Intent(getActivity(), GangWeiDetailActivity.class);
                     intent.putExtra("pid", allList.get(position).getId());
                     startActivity(intent);
@@ -418,6 +437,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
             ImageView imageState;
             FrameLayout onClickView;
             RecyclerView recyclerViewGongSi;
+            LinearLayout llViewALL;
             TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tv9, tv10, tv11, tv12, tv1Cui;
 
             MyViewHolder(View itemView) {
@@ -441,6 +461,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                 tv1Cui = itemView.findViewById(R.id.tv1Cui);
                 recyclerViewGongSi = itemView.findViewById(R.id.recyclerView);
                 onClickView = itemView.findViewById(R.id.onClickView);
+                llViewALL = itemView.findViewById(R.id.llViewALL);
             }
 
         }
