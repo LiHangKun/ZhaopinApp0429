@@ -102,7 +102,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             userId = uri.getQueryParameter("targetId");
 
             SPTool.addSessionMap("rid", userId);
-            Log.i(TAG, "initView: " + param + "-----" + userId);
+            Log.e(TAG, "initView: http---" + param + "-----" + userId);
         }
 
         getTitleName(titleName, userId);
@@ -179,7 +179,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         if (!where_userType.equals("1")) {
             updatePositionMe(SP_pid);
         } else {
-            llViewGangWei.setVisibility(View.GONE);
+            updatePositionMe(SP_pid);
+            //llViewGangWei.setVisibility(View.GONE);
         }
 
 
@@ -187,10 +188,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     private void updatePositionMe(String pid) {
         Map<String, String> params = new HashMap<>();
-        params.put("mid", SPTool.getSessionValue(AppSP.UID));
-        params.put("userId", userId);
+        params.put("userId", SPTool.getSessionValue(AppSP.UID));
+        params.put("mid", userId);
         //params.put("userId", SP_hrid);
-        //params.put("pid", pid);
+        params.put("pid", "");
         OkHttpHelper.getInstance().post(this, NetClass.BASE_URL + NetCuiMethod.updatePosition, params, new BaseCallback<GnagWeiBean>() {
             @Override
             public void onFailure(Request request, Exception e) {

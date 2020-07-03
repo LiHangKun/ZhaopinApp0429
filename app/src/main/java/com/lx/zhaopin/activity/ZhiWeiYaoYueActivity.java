@@ -488,7 +488,8 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
-                bindUserAndPid(SPTool.getSessionValue(AppSP.UID), hrid, pid);
+                //bindUserAndPid(rid, hrid, pid);
+                bindUserAndPid(SPTool.getSessionValue(AppSP.UID), rid, pid);
                 RongUtil.faYaoYue(rid, name, icon, SPTool.getSessionValue(AppSP.UID_DUAN), resultBean.getInterviewId());
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
@@ -611,10 +612,10 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                 recyclerView.setAdapter(zhiWeiYaoYueInAdapter);
                 zhiWeiYaoYueInAdapter.setOnItemClickListener(new ZhiWeiYaoYueInAdapter.OnItemClickListener() {
                     @Override
-                    public void OnItemClickListener(String id, String name, String hrIDitem) {
+                    public void OnItemClickListener(String id, String name, String aa) {
                         tv1.setText(name);
                         yaoYueGangWeiId = id;
-                        hrid = hrIDitem;
+                        hrid = aa;
                         popupWindow1.dismiss();
                     }
                 });
