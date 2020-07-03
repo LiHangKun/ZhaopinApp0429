@@ -11,7 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--固定的顶部高度城市和搜索栏-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="85dp"
@@ -113,9 +112,8 @@
 
 
         </LinearLayout>
-        <!--固定的顶部高度城市和搜索栏-->
 
-        <!--这部分是文字和列表的布局类型1界面部分-->
+
         <LinearLayout
             android:id="@+id/ViewType1"
             android:layout_width="match_parent"
@@ -177,43 +175,32 @@
                 android:layout_marginBottom="@dimen/dp_50" />
 
         </LinearLayout>
-        <!--这部分是文字和列表的布局类型1界面部分-->
 
 
-        <!--这部分是卡片部分-->
         <FrameLayout
             android:id="@+id/ViewType2"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+          <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+              <ImageView
+                  android:layout_width="match_parent"
+                  android:layout_height="@dimen/dp_150"
+                  android:background="@color/mainColor888"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="5">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1.2"
-                        android:background="@color/mainColor888" />
-
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/dituImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_50"
-                    android:src="@drawable/shouye_bg" />
+              <ImageView
+                  android:id="@+id/dituImage"
+                  android:layout_marginTop="@dimen/sp_15"
+                  android:layout_width="match_parent"
+                  android:src="@drawable/shouye_bg"
+                  android:layout_height="match_parent"/>
 
 
-            </FrameLayout>
+
+
+          </FrameLayout>
 
 
             <FrameLayout
@@ -232,7 +219,6 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewKa"
-                    android:layout_marginTop="@dimen/dp_30"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -257,84 +243,39 @@
 
 
             <!--
+
+
                 android:background="@mipmap/yj_top_bg"
             -->
 
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/biankuang18">
 
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/fl_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="5">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_0"
-                        android:layout_weight="0.6">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="right">
-
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical">
-
-                                <LinearLayout
-                                    android:layout_width="@dimen/dp_50"
-                                    android:layout_height="@dimen/dp_50"
-                                    android:layout_marginRight="@dimen/dp_10"
-                                    android:background="@drawable/biankuang18"
-                                    android:gravity="center_vertical">
-
-
-                                    <ImageView
-                                        android:id="@+id/fl_list"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="@dimen/dp_30"
-                                        android:layout_gravity="center"
-                                        android:src="@drawable/shoucang_hezi" />
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_gravity="center"
+                    android:src="@drawable/shoucang_hezi" />
 
             </LinearLayout>
 
 
         </FrameLayout>
-        <!--这部分是卡片部分-->
+
 
     </LinearLayout>
 
-
-    <!--这部分是引导图-->
     <LinearLayout
         android:id="@+id/allTuCeng"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <!--
         android:scaleType="centerCrop"

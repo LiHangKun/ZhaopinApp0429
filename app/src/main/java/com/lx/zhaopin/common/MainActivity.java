@@ -572,7 +572,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                                     .setRingtone(true)
                                     .setIcon(R.mipmap.logo)
                                     .setTicker("版本更新")
-                                    .setContentTitle("版本更新")
+                                    .setContentTitle(resultBean.getRemarks())
                     ).setApkDownloadListener(new APKDownloadListener() {
                         @Override
                         public void onDownloading(int progress) {

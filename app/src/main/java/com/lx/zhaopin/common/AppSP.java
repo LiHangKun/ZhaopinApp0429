@@ -41,6 +41,7 @@ public class AppSP {
     public static final String xieyi = "xieyi";//启动的协议
     public static final String chatWhere = "chatWhere";//  1是 HR 角色的跳转进入
     public static final String pid = "pid";//  岗位ID
+    public static final String hrid = "hrid";//  hrid
 
 
     public static final int PMS_LOCATION = 1003;// 权限编号，自定义----定位  打电话

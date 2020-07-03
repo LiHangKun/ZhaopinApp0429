@@ -102,7 +102,7 @@ public class ZhiWeiYaoYueInAdapter extends RecyclerView.Adapter<ZhiWeiYaoYueInAd
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemClickListener.OnItemClickListener(mData.get(po).getId(), mData.get(po).getName());
+                itemClickListener.OnItemClickListener(mData.get(po).getId(), mData.get(po).getName(),mData.get(po).getHrID());
             }
         });
 
@@ -149,7 +149,7 @@ public class ZhiWeiYaoYueInAdapter extends RecyclerView.Adapter<ZhiWeiYaoYueInAd
 
 
     public interface OnItemClickListener {
-        void OnItemClickListener(String id, String name);
+        void OnItemClickListener(String id, String name,String hrID);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

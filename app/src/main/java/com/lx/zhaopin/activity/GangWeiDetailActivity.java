@@ -35,6 +35,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.YuYueTimeListAdapter;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.GnagWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.YuYueMianListBean;
 import com.lx.zhaopin.bean.ZhiWeiDetailBean;
@@ -572,8 +573,25 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
 
                     //申请职位 长的
-                    //goLiaoTianMethod();
-                    touPid(pid);
+                    View view0 = getLayoutInflater().inflate(R.layout.dialog_goutong0, null);
+                    final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view0, R.style.DialogTheme2);
+                    mMyDialog.setCancelable(true);
+                    mMyDialog.show();
+
+                    view0.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMyDialog.dismiss();
+                        }
+                    });
+
+                    view0.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            touPid(pid);
+                            mMyDialog.dismiss();
+                        }
+                    });
 
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
@@ -704,10 +722,43 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
 
         SPTool.addSessionMap(AppSP.pid, pid);
+        SPTool.addSessionMap(AppSP.hrid, hrid);
         //发送自定义消息 岗位详情
         //RongUtil.addBenDiMessage(hrid, pid);
 
+        bindUserAndPid(SPTool.getSessionValue(AppSP.UID), hrid, pid);
 
+
+    }
+
+    private void bindUserAndPid(String mid, String userId, String pid) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", mid);
+        params.put("userId", userId);
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(this, NetClass.BASE_URL + NetCuiMethod.updatePosition, params, new BaseCallback<GnagWeiBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GnagWeiBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
 

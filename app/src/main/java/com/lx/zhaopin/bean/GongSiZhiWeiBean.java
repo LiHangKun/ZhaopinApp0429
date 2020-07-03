@@ -38,6 +38,16 @@ public class GongSiZhiWeiBean extends CommonBean {
         private String id;
         private String location;
         private String maxSalary;
+        private String hrID;
+
+        public String getHrID() {
+            return hrID;
+        }
+
+        public void setHrID(String hrID) {
+            this.hrID = hrID;
+        }
+
         private String minSalary;
         private String workfare;
 

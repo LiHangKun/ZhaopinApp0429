@@ -473,7 +473,7 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                 recyclerView.setAdapter(zhiWeiYaoYueInAdapter);
                 zhiWeiYaoYueInAdapter.setOnItemClickListener(new ZhiWeiYaoYueInAdapter.OnItemClickListener() {
                     @Override
-                    public void OnItemClickListener(String id, String name) {
+                    public void OnItemClickListener(String id, String name, String hrID) {
                         //tv1.setText(name);
                         yaoYueGangWeiId = id;
 

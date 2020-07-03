@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.GangWeiDetailActivity;
 import com.lx.zhaopin.activity.QiYeInfoActivity;
+import com.lx.zhaopin.activity.RenCaiDetailActivity;
+import com.lx.zhaopin.activity.YuLanJianLiActivity;
 import com.lx.zhaopin.bean.AllRongInfoBean;
 import com.lx.zhaopin.bean.DianIconBean;
 import com.lx.zhaopin.bean.GnagWeiBean;
@@ -61,6 +63,9 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout llViewGangWei;
 
     private String SP_pid = "";
+    private String SP_hrid;
+    private String fanSP_pid;
+    private String where_userType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,8 +89,10 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         llViewGangWei = findViewById(R.id.llViewGangWei);
 
         SP_pid = SPTool.getSessionValue(AppSP.pid);
+        SP_hrid = SPTool.getSessionValue(AppSP.hrid);
 
-
+        //where_userType  0 是从求职者来的   1 是从HR来的
+        where_userType = SPTool.getSessionValue(AppSP.USER_TYPE);
 
         llViewGangWei.setOnClickListener(this);
         Uri uri = getIntent().getData();
@@ -132,7 +139,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 intent.putExtra("rid", userInfo.getUserId());
                 startActivity(intent);*/
 
-                dianIcon(userInfo.getUserId());
+
+                if (!userInfo.getUserId().equals(SPTool.getSessionValue(AppSP.UID))) {
+                    dianIcon(userInfo.getUserId());
+                }
+
 
                 return true;
             }
@@ -159,12 +170,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         });
 
 
-        if (TextUtils.isEmpty(SP_pid)){
+        if (TextUtils.isEmpty(SP_pid)) {
             llViewGangWei.setVisibility(View.GONE);
-        }else {
+        } else {
             updatePositionMe(SP_pid);
         }
-
 
 
     }
@@ -173,7 +183,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("userId", userId);
-        params.put("pid", pid);
+        //params.put("userId", SP_hrid);
+        //params.put("pid", pid);
         OkHttpHelper.getInstance().post(this, NetClass.BASE_URL + NetCuiMethod.updatePosition, params, new BaseCallback<GnagWeiBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
@@ -189,13 +200,14 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             public void onSuccess(Response response, GnagWeiBean resultBean) {
                 //"updated":"1" ,//是否已更新最新岗位，1.是 0否
                 String updated = resultBean.getUpdated();
-                SP_pid = resultBean.getPid();
+                fanSP_pid = resultBean.getPid();
                 switch (updated) {
                     case "1":
                         gangWeiInfo(resultBean.getPid());
                         break;
                     case "0":
-                        gangWeiInfo(SP_pid);
+                        //gangWeiInfo(SP_pid);
+                        gangWeiInfo(resultBean.getPid());
                         break;
                 }
 
@@ -209,7 +221,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         });
     }
 
-    private void gangWeiInfo(String pid) {
+    //获取岗位信息
+    private void gangWeiInfo(final String pid) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pid", pid);
@@ -226,6 +239,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
+                Log.e(TAG, "onSuccess: 获取的职位详情 http---" + resultBean.getName() + "----" + pid);
                 tv1Gang.setText(resultBean.getName());
                 tv2Gang.setText(resultBean.getMinSalary() + "-" + resultBean.getMaxSalary() + "K");
 
@@ -256,16 +270,36 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onSuccess(Response response, DianIconBean resultBean) {
-                //是否具备hr权限，1是，0否
-                if (resultBean.getHr().equals("1")) {
-                    Intent intent = new Intent(ConversationActivity.this, QiYeInfoActivity.class);
-                    intent.putExtra("qiYeID", resultBean.getCid());
-                    startActivity(intent);
-                } else {
-                   /* Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
-                    intent.putExtra("rid", userId);
-                    startActivity(intent);*/
+                //where_userType  0 是从求职者来的   1 是从HR来的
+                Log.e(TAG, "onSuccess: 点击头像  http------" + where_userType + "---" + resultBean.getHr() + "---" + resultBean.getCid());
+                switch (where_userType) {
+                    case "0":
+                        if (resultBean.getHr().equals("1")) {
+                            Intent intent = new Intent(ConversationActivity.this, QiYeInfoActivity.class);
+                            intent.putExtra("qiYeID", resultBean.getCid());
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(ConversationActivity.this, YuLanJianLiActivity.class);
+                            //intent.putExtra("rid", userId);
+                            startActivity(intent);
+                        }
+                        break;
+                    case "1":
+
+                        Log.i(TAG, "onSuccess: 点头像" + userId.substring(2,userId.length()));
+                        if (!userId.substring(2,userId.length()).equals(SPTool.getSessionValue(AppSP.UID))){
+                            Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
+                            intent.putExtra("rid", userId);
+                            startActivity(intent);
+                        }
+
+
+                        break;
                 }
+
+
+                //是否具备hr权限，1是，0否
+
 
             }
 
@@ -371,7 +405,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             case R.id.llViewGangWei:
                 //跳转到岗位详情
                 Intent intent = new Intent(this, GangWeiDetailActivity.class);
-                intent.putExtra("pid", SP_pid);
+                intent.putExtra("pid", fanSP_pid);
                 startActivity(intent);
                 break;
         }

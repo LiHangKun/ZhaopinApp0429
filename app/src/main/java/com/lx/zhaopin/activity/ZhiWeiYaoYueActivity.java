@@ -36,6 +36,7 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.ZhiWeiYaoYueInAdapter;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.GetGouTongZhiWeiBean;
+import com.lx.zhaopin.bean.GnagWeiBean;
 import com.lx.zhaopin.bean.GongSiZhiWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
@@ -88,6 +89,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
     private String icon;
     private String name;
     private String gongSiID;
+    private String hrid;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -475,7 +477,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
 
 
     //yaoQingMianShi
-    private void fabuYaoYueMe(final String rid, String pid, String mobile, String interviewDate) {
+    private void fabuYaoYueMe(final String rid, final String pid, String mobile, String interviewDate) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("rid", rid);
@@ -486,6 +488,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
+                bindUserAndPid(SPTool.getSessionValue(AppSP.UID), hrid, pid);
                 RongUtil.faYaoYue(rid, name, icon, SPTool.getSessionValue(AppSP.UID_DUAN), resultBean.getInterviewId());
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
@@ -504,6 +507,38 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
         });
 
     }
+
+
+    private void bindUserAndPid(String mid, String userId, String pid) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", mid);
+        params.put("userId", userId);
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(this, NetClass.BASE_URL + NetCuiMethod.updatePosition, params, new BaseCallback<GnagWeiBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GnagWeiBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
 
     private void AllGangwei() {
         if (popupWindow1 == null) {
@@ -576,9 +611,10 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
                 recyclerView.setAdapter(zhiWeiYaoYueInAdapter);
                 zhiWeiYaoYueInAdapter.setOnItemClickListener(new ZhiWeiYaoYueInAdapter.OnItemClickListener() {
                     @Override
-                    public void OnItemClickListener(String id, String name) {
+                    public void OnItemClickListener(String id, String name, String hrIDitem) {
                         tv1.setText(name);
                         yaoYueGangWeiId = id;
+                        hrid = hrIDitem;
                         popupWindow1.dismiss();
                     }
                 });
