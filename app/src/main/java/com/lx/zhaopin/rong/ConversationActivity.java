@@ -9,7 +9,6 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -170,10 +169,17 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         });
 
 
-        if (TextUtils.isEmpty(SP_pid)) {
+       /* if (TextUtils.isEmpty(SP_pid)) {
             llViewGangWei.setVisibility(View.GONE);
         } else {
             updatePositionMe(SP_pid);
+        }*/
+
+        //where_userType  0 是从求职者来的   1 是从HR来的
+        if (!where_userType.equals("1")) {
+            updatePositionMe(SP_pid);
+        } else {
+            llViewGangWei.setVisibility(View.GONE);
         }
 
 
@@ -286,8 +292,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                         break;
                     case "1":
 
-                        Log.i(TAG, "onSuccess: 点头像" + userId.substring(2,userId.length()));
-                        if (!userId.substring(2,userId.length()).equals(SPTool.getSessionValue(AppSP.UID))){
+                        Log.i(TAG, "onSuccess: 点头像" + userId.substring(2, userId.length()));
+                        if (!userId.substring(2, userId.length()).equals(SPTool.getSessionValue(AppSP.UID))) {
                             Intent intent = new Intent(ConversationActivity.this, RenCaiDetailActivity.class);
                             intent.putExtra("rid", userId);
                             startActivity(intent);
