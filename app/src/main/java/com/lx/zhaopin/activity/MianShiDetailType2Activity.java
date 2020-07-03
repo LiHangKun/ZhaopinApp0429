@@ -117,6 +117,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
     private String hrName;
     private String interviewStatus;
     private String feedback;
+    private String pid;
 
     /**
      * 初始化定位
@@ -270,12 +271,12 @@ public class MianShiDetailType2Activity extends BaseActivity {
                 hrName = resultBean.getHRName();
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
                         .error(R.mipmap.imageerror)).load(resultBean.getCompany().getLogo()).into(roundedImageView);
-
+                pid = resultBean.getPosition().getId();
                 lat_fan = resultBean.getLat();
                 lng_fan = resultBean.getLng();
                 // feedback  是否已反馈1是0否
                 feedback = resultBean.getFeedback();
-                id = resultBean.getId();
+                MianShiDetailType2Activity.this.id = resultBean.getId();
                 phone = resultBean.getMobile();
                 interviewStatus = resultBean.getInterviewStatus();
                 tv3.setVisibility(View.GONE);
@@ -322,9 +323,15 @@ public class MianShiDetailType2Activity extends BaseActivity {
                     case "9":
                         //图标实际是 已面试
                         imageState.setImageResource(R.drawable.yidaoda);
-                        qiuZhiView.setVisibility(View.GONE);
-                        dongTaiTv.setVisibility(View.VISIBLE);
-                        dongTaiTv.setText("我要反馈");
+                        // feedback  是否已反馈1是0否
+                        if (feedback.equals("1")){
+                            dongTaiTv.setVisibility(View.GONE);
+                            qiuZhiView.setVisibility(View.GONE);
+                        }else {
+                            qiuZhiView.setVisibility(View.GONE);
+                            dongTaiTv.setVisibility(View.VISIBLE);
+                            dongTaiTv.setText("我要反馈");
+                        }
                         break;
                     case "10":
                     case "11":
@@ -420,6 +427,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
         RongIM.getInstance().setMessageAttachedUserInfo(true);
         //对方的ID 姓名
         //RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
+        SPTool.addSessionMap(AppSP.pid, pid);
         RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
     }
 

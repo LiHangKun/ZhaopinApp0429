@@ -24,6 +24,7 @@ import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.ToastFactory;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -113,7 +114,7 @@ public class PingBiGangActivity extends BaseActivity {
     private PingBiGangAdapter.OnItemClickListener getOnItemClickListener() {
         return new PingBiGangAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(View view, final String id) {
+            public void OnItemClickListener(View view, final String id, String open) {
                 switch (view.getId()) {
                     case R.id.tv7:
                         //取消屏蔽岗位
@@ -133,9 +134,16 @@ public class PingBiGangActivity extends BaseActivity {
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
                         break;
                     case R.id.llView:
-                        Intent intent = new Intent(mContext, GangWeiDetailActivity.class);
-                        intent.putExtra("pid", id);
-                        startActivity(intent);
+                        //0.已停招，1.未停招
+                        if (open.equals("0")) {
+                            ToastFactory.getToast(mContext, "该职位已停职").show();
+                            return;
+                        } else {
+                            Intent intent = new Intent(mContext, GangWeiDetailActivity.class);
+                            intent.putExtra("pid", id);
+                            startActivity(intent);
+                        }
+
                         break;
                 }
 

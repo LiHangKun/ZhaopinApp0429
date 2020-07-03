@@ -90,7 +90,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(),mData.get(po).getOpened());
                 }
             }
         });
@@ -100,7 +100,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(),mData.get(po).getOpened());
                 }
             }
         });
@@ -184,7 +184,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
 
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, String id);
+        void OnItemClickListener(View view, String id,String open);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

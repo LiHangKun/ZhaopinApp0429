@@ -84,7 +84,7 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId());
+                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(),mData.get(po).getOpened());
                 }
             }
         });
@@ -93,7 +93,7 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId());
+                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(),mData.get(po).getOpened());
                 }
             }
         });
@@ -176,7 +176,7 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, String id);
+        void OnItemClickListener(View view, String id,String open);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

@@ -9,6 +9,7 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -84,6 +85,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
         SP_pid = SPTool.getSessionValue(AppSP.pid);
 
+
+
         llViewGangWei.setOnClickListener(this);
         Uri uri = getIntent().getData();
         if (uri != null) {
@@ -156,7 +159,13 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         });
 
 
-        updatePositionMe(SP_pid);
+        if (TextUtils.isEmpty(SP_pid)){
+            llViewGangWei.setVisibility(View.GONE);
+        }else {
+            updatePositionMe(SP_pid);
+        }
+
+
 
     }
 
