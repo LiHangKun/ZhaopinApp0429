@@ -24,6 +24,8 @@ import com.lx.zhaopin.rongmessage.Custome4Message;
 import com.lx.zhaopin.rongmessage.Custome4MessageItemProvider;
 import com.lx.zhaopin.rongmessage.Custome5Message;
 import com.lx.zhaopin.rongmessage.Custome5MessageItemProvider;
+import com.lx.zhaopin.rongmessage.Custome6Message;
+import com.lx.zhaopin.rongmessage.Custome6MessageItemProvider;
 import com.lx.zhaopin.utils.AppUtils;
 import com.lx.zhaopin.utils.RxToast;
 import com.lx.zhaopin.utils.SPTool;
@@ -146,6 +148,9 @@ public class MyApplication extends Application {
         RongIM.registerMessageTemplate(new Custome05MessageItemProvider());
         //---------TODO 自定义消息4的类型结束--------------
 
+
+        RongIM.registerMessageType(Custome6Message.class);//插入本地消息
+        RongIM.registerMessageTemplate(new Custome6MessageItemProvider());
 
 
         setInputProvider();

@@ -60,6 +60,7 @@ public class RongUtil {
         });
     }
 
+
     /**
      * 消息免打扰开启或关闭
      */
@@ -216,6 +217,38 @@ public class RongUtil {
             public void onSuccess(Integer integer) {
             }
         });
+    }
+
+
+    //插入本地消息
+    public static void addBenDiMessage(String targetId, String pis) {
+        RongMessageInBean rongMessageInBean = new RongMessageInBean();
+        rongMessageInBean.setId(pis);
+        Custome6Message custome6Message = new Custome6Message();
+        custome6Message.content = new Gson().toJson(rongMessageInBean);
+        /*RongIM.getInstance().insertOutgoingMessage(Conversation.ConversationType.PRIVATE, targetId, custome6Message,new RongIMClient.ResultCallback<Message>(){
+
+            @Override
+            public void onSuccess(Message message) {
+
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });*/
+
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome6Message, "本地消息", "", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+            }
+        });
+
     }
 
 

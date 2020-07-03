@@ -16,9 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
+import com.lx.zhaopin.activity.GangWeiDetailActivity;
 import com.lx.zhaopin.activity.QiYeInfoActivity;
 import com.lx.zhaopin.bean.AllRongInfoBean;
 import com.lx.zhaopin.bean.DianIconBean;
+import com.lx.zhaopin.bean.GnagWeiBean;
+import com.lx.zhaopin.bean.ZhiWeiDetailBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
@@ -46,6 +49,18 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     private TextView tv2;
     private TextView titleName;
 
+    Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+    //String targetId = "接收方 ID";
+
+    Message.SentStatus sentStatus = Message.SentStatus.SENT;
+    String content = "这是一条插入数据";
+    long sentTime = System.currentTimeMillis();
+    private TextView tv1Gang;
+    private TextView tv2Gang;
+    private LinearLayout llViewGangWei;
+
+    private String SP_pid = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +78,13 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         hrView = findViewById(R.id.hrView);
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
+        tv1Gang = findViewById(R.id.tv1Gang);
+        tv2Gang = findViewById(R.id.tv2Gang);
+        llViewGangWei = findViewById(R.id.llViewGangWei);
 
+        SP_pid = SPTool.getSessionValue(AppSP.pid);
 
+        llViewGangWei.setOnClickListener(this);
         Uri uri = getIntent().getData();
         if (uri != null) {
             param = uri.getQueryParameter("title");
@@ -77,6 +97,28 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
 
         getTitleName(titleName, userId);
+
+
+        /*RongIM.getInstance().insertOutgoingMessage(conversationType, userId, sentStatus, content, sentTime, new RongIMClient.ResultCallback<Message>() {
+
+         *//**
+         * 成功回调
+         * @param message 插入的消息
+         *//*
+            @Override
+            public void onSuccess(Message message) {
+
+            }
+
+            *//**
+         * 失败回调
+         * @param errorCode 错误码
+         *//*
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });*/
 
 
         RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
@@ -113,6 +155,78 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+
+        updatePositionMe(SP_pid);
+
+    }
+
+    private void updatePositionMe(String pid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("userId", userId);
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(this, NetClass.BASE_URL + NetCuiMethod.updatePosition, params, new BaseCallback<GnagWeiBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GnagWeiBean resultBean) {
+                //"updated":"1" ,//是否已更新最新岗位，1.是 0否
+                String updated = resultBean.getUpdated();
+                SP_pid = resultBean.getPid();
+                switch (updated) {
+                    case "1":
+                        gangWeiInfo(resultBean.getPid());
+                        break;
+                    case "0":
+                        gangWeiInfo(SP_pid);
+                        break;
+                }
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+    private void gangWeiInfo(String pid) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(ConversationActivity.this, NetClass.BASE_URL + NetCuiMethod.zhiWeiDetail, params, new BaseCallback<ZhiWeiDetailBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
+                tv1Gang.setText(resultBean.getName());
+                tv2Gang.setText(resultBean.getMinSalary() + "-" + resultBean.getMaxSalary() + "K");
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 
     //dianIcon
@@ -244,6 +358,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         switch (view.getId()) {
             case R.id.back:
                 finish();
+                break;
+            case R.id.llViewGangWei:
+                //跳转到岗位详情
+                Intent intent = new Intent(this, GangWeiDetailActivity.class);
+                intent.putExtra("pid", SP_pid);
+                startActivity(intent);
                 break;
         }
     }

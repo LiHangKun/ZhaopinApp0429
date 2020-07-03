@@ -206,6 +206,9 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
     private void init() {
         pid = getIntent().getStringExtra("pid");
+
+        SPTool.addSessionMap(AppSP.pid, pid);
+
         /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }*/
@@ -506,10 +509,9 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                     if (chat.equals("1")) {
                         gouTongMe();
                         goLiaoTianMethod();
-                    }else {
+                    } else {
                         gouTongMe();
                     }
-
 
 
                 } else {
@@ -701,6 +703,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         //RongIM.getInstance().startPrivateChat(mContext, hrid, "张三");
         RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.PRIVATE, hrid, hrName);
 
+        //发送自定义消息 岗位详情
+        //RongUtil.addBenDiMessage(hrid, pid);
 
     }
 

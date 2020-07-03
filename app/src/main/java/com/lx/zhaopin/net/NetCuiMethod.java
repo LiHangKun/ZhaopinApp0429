@@ -128,6 +128,7 @@ public class NetCuiMethod {
     public static final String woDaoDa = "member/jobhunter/interview/complete";//已完成（点完已到达后）
     public static final String woFeed = "member/jobhunter/interview/feedback";//求职者面试反馈
     public static final String rongAllInfo = "member/jobhunter/HRInfo";//获取HR入职岗位和公司名称
+    public static final String updatePosition = "member/updatePosition";//更新最新岗位
 
 
 
