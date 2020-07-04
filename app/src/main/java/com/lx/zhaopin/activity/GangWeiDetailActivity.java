@@ -152,6 +152,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     private String positionType;
     private String deliverResume;
     private String chat;
+    private String jutiStrAdd;
 
 
     private void getLastIndexForLimit(TextView tv, int maxLine, String content) {
@@ -229,6 +230,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
                 shareTitle = resultBean.getCompany().getName() + "" + resultBean.getName();
 
+                jutiStrAdd = resultBean.getCompany().getLocation();
                 delivered = resultBean.getDelivered();
                 hrid = resultBean.getHRID();
                 hrName = resultBean.getHRName();
@@ -475,7 +477,12 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.daoHang:
-                gotoGaode(lat, lng);
+                //gotoGaode(lat, lng);
+
+                fabuMethod3();
+                lightoff();
+
+
                 break;
             case R.id.dibuView1:
                 //立即沟通
@@ -507,6 +514,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                     }*/
 
                     //是否可直接聊天1是 0否
+                    bindUserAndPid(SPTool.getSessionValue(AppSP.UID), hrid, pid);
                     if (chat.equals("1")) {
                         gouTongMe();
                         goLiaoTianMethod();
@@ -917,6 +925,7 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
+                bindUserAndPid(SPTool.getSessionValue(AppSP.UID), hrid, pid);
                 EventBus.getDefault().post(new MessageEvent(2, null, null, null, null, null, null));
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 runOnUiThread(new Runnable() {
@@ -991,6 +1000,168 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
             startActivity(intent);
         }
 
+    }
+
+
+    private PopupWindow popupWindow3;
+    private View popupView3;
+    private TranslateAnimation animation3;
+
+
+    //TODO---------------------------------------------------------------
+    private void fabuMethod3() {
+        if (popupWindow3 == null) {
+            popupView3 = View.inflate(this, R.layout.pop_layout_dao_layout, null);
+            TextView tv1Click = popupView3.findViewById(R.id.tv1);
+            TextView tv2Click = popupView3.findViewById(R.id.tv2);
+            TextView tv3Click = popupView3.findViewById(R.id.tv3);
+
+            // 参数2,3：指明popupwindow的宽度和高度
+            popupWindow3 = new PopupWindow(popupView3, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            popupWindow3.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    lighton();
+                }
+            });
+
+            //一周
+            tv1Click.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tv4.setText("高德地图");
+                    gaoDe(mContext, lat, lng, jutiStrAdd);
+                    popupWindow3.dismiss();
+                    lighton();
+                }
+            });
+            //半个月
+            tv2Click.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tv4.setText("百度地图");
+                    goToBaiduActivity(mContext, jutiStrAdd, lat, lng);
+                    popupWindow3.dismiss();
+                    lighton();
+                }
+            });
+            //一个月
+            tv3Click.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tv4.setText("腾讯地图");
+                    gotoTengxun(mContext, jutiStrAdd, lat, lng);
+                    popupWindow3.dismiss();
+                    lighton();
+                }
+            });
+
+
+            // 设置背景图片， 必须设置，不然动画没作用
+            popupWindow3.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow3.setFocusable(true);
+
+            // 设置点击popupwindow外屏幕其它地方消失
+            popupWindow3.setOutsideTouchable(true);
+
+            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
+            animation3 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
+
+            animation3.setInterpolator(new AccelerateInterpolator());
+            animation3.setDuration(200);
+
+            popupView3.findViewById(R.id.tvCancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow3.dismiss();
+                    lighton();
+                }
+            });
+            popupView3.findViewById(R.id.cancelImage).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow3.dismiss();
+                    lighton();
+                }
+            });
+        }
+
+        // 在点击之后设置popupwindow的销毁
+        if (popupWindow3.isShowing()) {
+            popupWindow3.dismiss();
+            lighton();
+        }
+
+        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+        popupWindow3.showAtLocation(findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popupView3.startAnimation(animation3);
+
+    }
+
+
+    //腾讯地图
+    private static void gotoTengxun(Context context, String address, String latStr, String lonStr) {
+        if (isAvilible(context, "com.tencent.map")) {
+            double lat=0 ,lon=0;
+            if (!TextUtils.isEmpty(latStr)){
+                lat=Double.parseDouble(latStr);
+            }
+            if (!TextUtils.isEmpty(lonStr)){
+                lon=Double.parseDouble(lonStr);
+            }
+            // 启动路径规划页面
+            Intent naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse("qqmap://map/routeplan?type=drive&from=&fromcoord=&to="+ address + "&tocoord=" + lat + "," + lon + "&policy=0&referer=appName"));
+            context.startActivity(naviIntent);
+        }else {
+            ToastFactory.getToast(context,"您尚未安装腾讯地图").show();
+            Uri uri = Uri.parse("market://details?id=com.tencent.map");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            context.startActivity(intent);
+        }
+    }
+
+    //百度地图
+    private static void goToBaiduActivity(Context context, String address, String latStr, String lonStr) {
+        if (isAvilible(context, "com.baidu.BaiduMap")) {
+            double lat = 0, lon = 0;
+            if (!TextUtils.isEmpty(latStr)) {
+                lat = Double.parseDouble(latStr);
+            }
+            if (!TextUtils.isEmpty(lonStr)) {
+                lon = Double.parseDouble(lonStr);
+            }
+
+            //启动路径规划页面
+            String url = "baidumap://map/direction?origin=我的位置&destination=" + address + "&mode=driving&src=yourCompanyName|yourAppName#Intent;scheme=bdapp;package=com.baidu.BaiduMap;end";
+            Intent naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse(url));
+            context.startActivity(naviIntent);
+        } else {
+            ToastFactory.getToast(context, "您尚未安装百度地图").show();
+            Uri uri = Uri.parse("market://details?id=com.baidu.BaiduMap");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            context.startActivity(intent);
+        }
+    }
+
+
+    //高德地图
+    private static void gaoDe(Context mContext, String lat, String lng, String adr) {
+        if (isAvilible(mContext, "com.autonavi.minimap")) {
+            try {
+                String url = "amapuri://route/plan/?sid=BGVIS1&slat=&slon=&sname=&did=&dlat=" + lat + "&dlon=" + lng + "&dname=" + adr + "&dev=0&t=0";
+                Intent intent = new Intent("android.intent.action.VIEW", android.net.Uri.parse(url));
+                mContext.startActivity(intent);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(mContext, "您尚未安装高德地图", Toast.LENGTH_LONG).show();
+            Uri uri = Uri.parse("market://details?id=com.autonavi.minimap");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            mContext.startActivity(intent);
+        }
     }
 
 
