@@ -177,10 +177,12 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
         //where_userType  0 是从求职者来的   1 是从HR来的
         if (!where_userType.equals("1")) {
+            //求职者进入
             updatePositionMe(SP_pid);
         } else {
-            updatePositionMe(SP_pid);
-            //llViewGangWei.setVisibility(View.GONE);
+            //updatePositionMe(SP_pid);
+            //HR 进入不显示
+            llViewGangWei.setVisibility(View.GONE);
         }
 
 

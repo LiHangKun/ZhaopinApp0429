@@ -18,6 +18,7 @@ import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.ShenQingListBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.GouTongCaoZuoBean;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.common.ShuaXinBean;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
@@ -59,6 +60,12 @@ public class ShenQingListActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.shenqinglist_activity);
         init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void init() {
@@ -202,7 +209,7 @@ public class ShenQingListActivity extends BaseActivity {
                 GouTongCaoZuoBean gouTongCaoZuoBean = new GouTongCaoZuoBean();
                 gouTongCaoZuoBean.setChatApplyStatus(status);
                 EventBus.getDefault().post(new ShuaXinBean(gouTongCaoZuoBean));
-
+                EventBus.getDefault().post(new MessageEvent(13, null, null, null, null, null, null));
                 getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
 
             }

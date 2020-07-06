@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,10 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +65,10 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(container.getContext(), R.layout.home2fragment_layout, null);
+
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
 
         viewPager = view.findViewById(R.id.viewPager);
 
@@ -118,6 +127,20 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
                 startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
                 getActivity().finish();
             }
+        }
+    }
+
+
+    private static final String TAG = "Home2Fragment";
+
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 13:
+                getUnMessageNumber();
+                Log.i(TAG, "getEventmessage: 更新未读消息的数量");
+                break;
         }
     }
 

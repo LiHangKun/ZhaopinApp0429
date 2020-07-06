@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.ShenQingListActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
@@ -26,6 +28,10 @@ import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.rong.ConversationListAdapterEx;
 import com.lx.zhaopin.rong.MyPagerAdapter;
 import com.lx.zhaopin.utils.SPTool;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,11 +52,28 @@ public class Message1Fragment extends Fragment implements View.OnClickListener {
     private TextView tv2;
     private TextView tv3;
 
+    private static final String TAG = "Message1Fragment";
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
+    public void getEventmessage(MessageEvent event) {
+        int messageType = event.getMessageType();
+        switch (messageType) {
+            case 13:
+                getUnMessageNumber();
+                Log.e(TAG, "getEventmessage: http 更新未读消息的数量");
+                break;
+        }
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(container.getContext(), R.layout.message1fragment_layout, null);
+
+        if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
+            EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
+        }
+
 
         llView = view.findViewById(R.id.llView);
         llView.setOnClickListener(this);

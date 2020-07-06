@@ -489,7 +489,7 @@ public class ZhiWeiYaoYueActivity extends BaseActivity implements View.OnClickLi
             public void onSuccess(Response response, PhoneStateBean resultBean) {
 
                 //bindUserAndPid(rid, hrid, pid);
-                bindUserAndPid(SPTool.getSessionValue(AppSP.UID), rid, pid);
+                bindUserAndPid("hr"+SPTool.getSessionValue(AppSP.UID), rid, pid);
                 RongUtil.faYaoYue(rid, name, icon, SPTool.getSessionValue(AppSP.UID_DUAN), resultBean.getInterviewId());
                 ToastFactory.getToast(mContext, resultBean.getResultNote()).show();
                 new Handler().postDelayed(new Runnable() {
