@@ -134,7 +134,7 @@ public class ShenQingHRListAdapter extends RecyclerView.Adapter<ShenQingHRListAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.llView, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.llView, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId(), mData.get(po).getName(), mData.get(po).getAvatar());
                 }
             }
         });
@@ -144,7 +144,7 @@ public class ShenQingHRListAdapter extends RecyclerView.Adapter<ShenQingHRListAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.tv7, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.tv7, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId(), mData.get(po).getName(), mData.get(po).getAvatar());
                 }
             }
         });
@@ -154,7 +154,7 @@ public class ShenQingHRListAdapter extends RecyclerView.Adapter<ShenQingHRListAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.tv8, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.tv8, po, mData.get(po).getRequestId(), mData.get(po).getRequestStatus(), mData.get(po).getOpenResume(), mData.get(po).getId(), mData.get(po).getName(), mData.get(po).getAvatar());
                 }
             }
         });
@@ -204,7 +204,7 @@ public class ShenQingHRListAdapter extends RecyclerView.Adapter<ShenQingHRListAd
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, int po, String requestId, String requestStatus, String open, String id);
+        void OnItemClickListener(View view, int po, String requestId, String requestStatus, String open, String id, String name, String icon);
     }
 
     public void SetOnItemClickListener(OnItemClickListener OnItemClickListener) {

@@ -17,8 +17,12 @@ public class ToastFactory {
 
         } else {
 
-            ToastFactory.context = context.getApplicationContext();
-            toast = Toast.makeText(context.getApplicationContext(), text, Toast.LENGTH_SHORT);
+            try {
+                ToastFactory.context = context.getApplicationContext();
+                toast = Toast.makeText(context.getApplicationContext(), text, Toast.LENGTH_SHORT);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         toast.setGravity(Gravity.CENTER, 0, 0);
         return toast;

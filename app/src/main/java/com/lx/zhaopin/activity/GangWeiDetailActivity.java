@@ -516,10 +516,10 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
                     //是否可直接聊天1是 0否
                     bindUserAndPid(SPTool.getSessionValue(AppSP.UID), hrid, pid);
                     if (chat.equals("1")) {
-                        gouTongMe();
+                        gouTongMe(chat);
                         goLiaoTianMethod();
                     } else {
-                        gouTongMe();
+                        gouTongMe(chat);
                     }
 
 
@@ -640,7 +640,8 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    private void gouTongMe() {
+    //chat  是 0  弹出提示
+    private void gouTongMe(final String chat) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("pid", pid);
@@ -657,7 +658,12 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                ToastFactory.getToast(mContext, "已提交沟通申请").show();
+
+                if (chat.equals("0")) {
+                    ToastFactory.getToast(mContext, "已提交沟通申请").show();
+                }
+
+
                 String chatRecordId = resultBean.getChatRecordId();
                 //沟通记录id
 
@@ -1103,18 +1109,18 @@ public class GangWeiDetailActivity extends BaseActivity implements View.OnClickL
     //腾讯地图
     private static void gotoTengxun(Context context, String address, String latStr, String lonStr) {
         if (isAvilible(context, "com.tencent.map")) {
-            double lat=0 ,lon=0;
-            if (!TextUtils.isEmpty(latStr)){
-                lat=Double.parseDouble(latStr);
+            double lat = 0, lon = 0;
+            if (!TextUtils.isEmpty(latStr)) {
+                lat = Double.parseDouble(latStr);
             }
-            if (!TextUtils.isEmpty(lonStr)){
-                lon=Double.parseDouble(lonStr);
+            if (!TextUtils.isEmpty(lonStr)) {
+                lon = Double.parseDouble(lonStr);
             }
             // 启动路径规划页面
-            Intent naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse("qqmap://map/routeplan?type=drive&from=&fromcoord=&to="+ address + "&tocoord=" + lat + "," + lon + "&policy=0&referer=appName"));
+            Intent naviIntent = new Intent("android.intent.action.VIEW", android.net.Uri.parse("qqmap://map/routeplan?type=drive&from=&fromcoord=&to=" + address + "&tocoord=" + lat + "," + lon + "&policy=0&referer=appName"));
             context.startActivity(naviIntent);
-        }else {
-            ToastFactory.getToast(context,"您尚未安装腾讯地图").show();
+        } else {
+            ToastFactory.getToast(context, "您尚未安装腾讯地图").show();
             Uri uri = Uri.parse("market://details?id=com.tencent.map");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             context.startActivity(intent);

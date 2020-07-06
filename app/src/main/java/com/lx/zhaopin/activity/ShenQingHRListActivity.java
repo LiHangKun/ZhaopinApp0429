@@ -18,6 +18,7 @@ import com.lx.zhaopin.bean.HRShenQingBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.GouTongCaoZuoBean;
+import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.common.ShuaXinBean;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
@@ -82,7 +83,7 @@ public class ShenQingHRListActivity extends BaseActivity {
         recyclerView.setAdapter(shenQingHRListAdapter);
         shenQingHRListAdapter.SetOnItemClickListener(new ShenQingHRListAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(View view, int i, final String requestId, String requestStatus, String open, String rid) {
+            public void OnItemClickListener(View view, int i, final String requestId, String requestStatus, String open, final String rid, final String name, final String icon) {
                 switch (view.getId()) {
                     case R.id.llView:
                         if (!open.equals("1")) {
@@ -106,7 +107,7 @@ public class ShenQingHRListActivity extends BaseActivity {
 
                             @Override
                             public void onSecond() {
-                                chuliGouTongShenQingMe(requestId, "3");
+                                chuliGouTongShenQingMe(requestId, "3", rid, name, icon);
 
                             }
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
@@ -123,7 +124,7 @@ public class ShenQingHRListActivity extends BaseActivity {
 
                             @Override
                             public void onSecond() {
-                                chuliGouTongShenQingMe(requestId, "2");
+                                chuliGouTongShenQingMe(requestId, "2", rid, name, icon);
 
                             }
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
@@ -178,7 +179,9 @@ public class ShenQingHRListActivity extends BaseActivity {
         shenQingHRListAdapter.notifyDataSetChanged();
     }
 
-    private void chuliGouTongShenQingMe(String applyId, final String status) {
+    //HR 操作同意给求职者发送自定义消息
+    //同意 2
+    private void chuliGouTongShenQingMe(String applyId, final String status, final String rid, final String name, final String icon) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("applyId", applyId);
@@ -199,8 +202,14 @@ public class ShenQingHRListActivity extends BaseActivity {
                 GouTongCaoZuoBean gouTongCaoZuoBean = new GouTongCaoZuoBean();
                 gouTongCaoZuoBean.setRequestStatus(status);
                 EventBus.getDefault().post(new ShuaXinBean(gouTongCaoZuoBean));
-
+                EventBus.getDefault().post(new MessageEvent(13, null, null, null, null, null, null));
                 getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+
+                if (status.equals("2")) {
+                    //HR 同意了
+                    //RongUtil.addBenDiMessage(rid, name, icon);
+                }
+
 
             }
 

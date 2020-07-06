@@ -220,24 +220,13 @@ public class RongUtil {
     }
 
 
-    //插入本地消息
-    public static void addBenDiMessage(String targetId, String pis) {
+    //向对方列表插入消息
+    public static void addBenDiMessage(String targetId, String name, String icon) {
         RongMessageInBean rongMessageInBean = new RongMessageInBean();
-        rongMessageInBean.setId(pis);
+        rongMessageInBean.setName(name);
+        rongMessageInBean.setIcon(icon);
         Custome6Message custome6Message = new Custome6Message();
         custome6Message.content = new Gson().toJson(rongMessageInBean);
-        /*RongIM.getInstance().insertOutgoingMessage(Conversation.ConversationType.PRIVATE, targetId, custome6Message,new RongIMClient.ResultCallback<Message>(){
-
-            @Override
-            public void onSuccess(Message message) {
-
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        });*/
 
         RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, targetId, custome6Message, "本地消息", "", new RongIMClient.SendMessageCallback() {
             @Override

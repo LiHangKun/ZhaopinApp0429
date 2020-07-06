@@ -223,7 +223,7 @@
                     android:layout_marginLeft="@dimen/dp_5"
                     android:layout_marginRight="@dimen/dp_5"
                     android:layout_weight="1"
-                    android:paddingRight="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_0"
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="工作经验3333333333333333333333333333333333333"
@@ -240,8 +240,8 @@
                 android:layout_marginTop="@dimen/dp_2"
                 android:ellipsize="end"
                 android:maxLines="4"
-                android:paddingRight="@dimen/dp_10"
-                android:text="是上海络科技有限是1111上海络科技有限公司旗下素材在线交易网站于2016年7月上线运营是上海络科技有限公司旗下素材在线交易网站于2016年7月上线运营公司旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频、psd源文件等主要服务是提供图片等旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频、psd源文件等。" />
+                android:paddingRight="@dimen/dp_0"
+                android:text="是上33333333333333333333333333333333333333333333333333海络科技有限是1111上海络科技有限公司旗下素材在线交易网站于2016年7月上线运营是上海络科技有限公司旗下素材在线交易网站于2016年7月上线运营公司旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频、psd源文件等主要服务是提供图片等旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频、psd源文件等。" />
 
 
             <com.lx.zhaopin.view.FlowLiner
@@ -284,7 +284,7 @@
                     android:id="@+id/tv9"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
-                    android:layout_marginRight="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_0"
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:text="北京大学"
