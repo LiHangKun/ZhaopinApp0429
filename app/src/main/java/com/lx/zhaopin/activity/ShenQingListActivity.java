@@ -88,7 +88,7 @@ public class ShenQingListActivity extends BaseActivity {
         recyclerView.setAdapter(shenQingListAdapter);
         shenQingListAdapter.SetOnItemClickListener(new ShenQingListAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClickListener(View view, int i, String open, final String id, String qiYeID) {
+            public void OnItemClickListener(View view, int i, String open, final String id, String qiYeID, final String hrid, final String name, final String icon) {
                 switch (view.getId()) {
                     case R.id.AllllView:
                         if (open.equals("0")) {
@@ -114,7 +114,7 @@ public class ShenQingListActivity extends BaseActivity {
 
                             @Override
                             public void onSecond() {
-                                chuliGouTongShenQingMe(id, "3");
+                                chuliGouTongShenQingMe(id, "3",hrid,name,icon);
 
                             }
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
@@ -133,7 +133,7 @@ public class ShenQingListActivity extends BaseActivity {
 
                             @Override
                             public void onSecond() {
-                                chuliGouTongShenQingMe(id, "2");
+                                chuliGouTongShenQingMe(id, "2",hrid,name,icon);
 
                             }
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
@@ -188,7 +188,8 @@ public class ShenQingListActivity extends BaseActivity {
         shenQingListAdapter.notifyDataSetChanged();
     }
 
-    private void chuliGouTongShenQingMe(String applyId, final String status) {
+    //同意 2
+    private void chuliGouTongShenQingMe(String applyId, final String status, final String hrid, final String name, final String icon) {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("applyId", applyId);
@@ -211,6 +212,12 @@ public class ShenQingListActivity extends BaseActivity {
                 EventBus.getDefault().post(new ShuaXinBean(gouTongCaoZuoBean));
                 EventBus.getDefault().post(new MessageEvent(13, null, null, null, null, null, null));
                 getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+
+                if (status.equals("2")){
+                    //求职者同意沟通,向对方发送消息
+                    //RongUtil.addBenDiMessage(hrid, name, icon);
+                }
+
 
             }
 

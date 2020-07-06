@@ -669,6 +669,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                     Log.e(TAG, "onSuccess: http 收到消息更新卡片" + totalPage);
                     if (resultBean.getDataList().size() == 0) {
                         //没有数据
+                        dituImage.setVisibility(View.GONE);
                     } else {
                         //有数据
                         NewAllList.clear();

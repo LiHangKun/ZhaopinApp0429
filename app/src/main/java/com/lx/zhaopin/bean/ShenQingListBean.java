@@ -72,6 +72,34 @@ public class ShenQingListBean extends CommonBean {
 
         private String applyDate;
         private String chatApplyStatus;
+        private String hrID;
+        private String hrName;
+        private String hrAvatar;
+
+        public String getHrID() {
+            return hrID;
+        }
+
+        public void setHrID(String hrID) {
+            this.hrID = hrID;
+        }
+
+        public String getHrName() {
+            return hrName;
+        }
+
+        public void setHrName(String hrName) {
+            this.hrName = hrName;
+        }
+
+        public String getHrAvatar() {
+            return hrAvatar;
+        }
+
+        public void setHrAvatar(String hrAvatar) {
+            this.hrAvatar = hrAvatar;
+        }
+
         private CompanyBean company;
         private String id;
         private PositionBean position;

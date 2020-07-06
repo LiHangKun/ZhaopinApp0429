@@ -220,7 +220,7 @@ public class RongUtil {
     }
 
 
-    //向对方列表插入消息
+    //向对方列表插入消息  HR同意沟通
     public static void addBenDiMessage(String targetId, String name, String icon) {
         RongMessageInBean rongMessageInBean = new RongMessageInBean();
         rongMessageInBean.setName(name);

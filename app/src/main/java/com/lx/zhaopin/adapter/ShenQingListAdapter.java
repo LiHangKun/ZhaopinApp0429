@@ -87,7 +87,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
         viewHolder.tv1.setText(mData.get(po).getPosition().getName());
         viewHolder.tv2.setText(mData.get(po).getPosition().getMinSalary() + "K - " + mData.get(po).getPosition().getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(po).getPosition().getCity().getName() + mData.get(po).getPosition().getDistrict().getName());
-        viewHolder.tv4.setText(mData.get(po).getPosition().getExperienceYear().getName() );
+        viewHolder.tv4.setText(mData.get(po).getPosition().getExperienceYear().getName());
         viewHolder.tv5.setText(mData.get(po).getPosition().getEducation().getName());
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                 .load(mData.get(po).getCompany().getLogo()).into(viewHolder.roundedImageView);
@@ -134,7 +134,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.AllllView, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.AllllView, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(),mData.get(po).getHrID(),mData.get(po).getHrName(),mData.get(po).getHrAvatar());
                 }
             }
         });
@@ -143,7 +143,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.caoZuoViewTv1, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.caoZuoViewTv1, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(),mData.get(po).getHrID(),mData.get(po).getHrName(),mData.get(po).getHrAvatar());
                 }
             }
         });
@@ -152,7 +152,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.caoZuoViewTv2, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId());
+                    onItemClickListener.OnItemClickListener(viewHolder.caoZuoViewTv2, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(),mData.get(po).getHrID(),mData.get(po).getHrName(),mData.get(po).getHrAvatar());
                 }
             }
         });
@@ -213,7 +213,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, int po, String open, String id, String qiYeID);
+        void OnItemClickListener(View view, int po, String open, String id, String qiYeID, String hrid, String name, String icon);
     }
 
     public void SetOnItemClickListener(OnItemClickListener OnItemClickListener) {

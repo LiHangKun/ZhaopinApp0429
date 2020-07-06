@@ -787,6 +787,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                     totalPage = resultBean.getTotalPage();
                     if (resultBean.getDataList().size() == 0) {
                         //没有数据
+                        dituImage.setVisibility(View.GONE);
                     } else {
                         //有数据
                         NewAllList.clear();
