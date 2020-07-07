@@ -200,46 +200,47 @@
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:paddingRight="@dimen/dp_10"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:orientation="horizontal">
+                android:layout_height="@dimen/dp_30"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/dp_10">
 
                 <TextView
                     android:id="@+id/tv6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_40"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_30"
                     android:layout_marginRight="@dimen/dp_5"
                     android:gravity="center_vertical"
                     android:maxLength="10"
+                    android:paddingRight="@dimen/dp_20"
                     android:singleLine="true"
                     android:text="工作经验工作经验工作经验工作经验工作经验工作经验工作经验工作经验"
                     android:textColor="#333"
                     android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:id="@+id/tv7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_marginLeft="@dimen/dp_5"
-                    android:layout_weight="1"
-                    android:paddingRight="@dimen/dp_0"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    android:text="工作经验3333333333333333333333333333333333333"
-                    android:textColor="#333"
-                    android:textSize="@dimen/sp_14" />
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tv7"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_0"
+                android:layout_marginRight="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/dp_20"
+                android:singleLine="true"
+                android:text="工作经验3333333333333333333333333333333333333"
+                android:textColor="#333"
+                android:textSize="@dimen/sp_14" />
+
 
             <TextView
-                android:layout_marginRight="@dimen/dp_10"
                 android:id="@+id/tv8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginRight="@dimen/dp_10"
                 android:ellipsize="end"
                 android:maxLines="4"
                 android:paddingRight="@dimen/dp_20"

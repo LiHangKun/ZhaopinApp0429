@@ -25,6 +25,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.rongmessage.RongUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -114,7 +115,7 @@ public class ShenQingListActivity extends BaseActivity {
 
                             @Override
                             public void onSecond() {
-                                chuliGouTongShenQingMe(id, "3",hrid,name,icon);
+                                chuliGouTongShenQingMe(id, "3", hrid, name, icon);
 
                             }
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
@@ -133,7 +134,7 @@ public class ShenQingListActivity extends BaseActivity {
 
                             @Override
                             public void onSecond() {
-                                chuliGouTongShenQingMe(id, "2",hrid,name,icon);
+                                chuliGouTongShenQingMe(id, "2", "hr" + hrid, name, icon);
 
                             }
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
@@ -213,9 +214,9 @@ public class ShenQingListActivity extends BaseActivity {
                 EventBus.getDefault().post(new MessageEvent(13, null, null, null, null, null, null));
                 getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
 
-                if (status.equals("2")){
+                if (status.equals("2")) {
                     //求职者同意沟通,向对方发送消息
-                    //RongUtil.addBenDiMessage(hrid, name, icon);
+                    RongUtil.addBenDiMessage(hrid, name, icon);
                 }
 
 

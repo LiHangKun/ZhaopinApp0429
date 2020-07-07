@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 public class HRCardAdapter extends RecyclerView.Adapter<HRCardAdapter.CardHolder> {
 
 
-
     private List<RenCaiListBean.DataListBean> allList;
     private RequestOptions mRequestOptions;
     private final Context mContext;

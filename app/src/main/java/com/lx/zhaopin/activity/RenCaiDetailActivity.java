@@ -29,6 +29,7 @@ import com.lx.zhaopin.adapter.RenCaiDetail2Adapter;
 import com.lx.zhaopin.adapter.RenCaiDetail3Adapter;
 import com.lx.zhaopin.adapter.ZhiWeiYaoYueInAdapter;
 import com.lx.zhaopin.base.BaseActivity;
+import com.lx.zhaopin.bean.GnagWeiBean;
 import com.lx.zhaopin.bean.GongSiZhiWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.RenCaiDetailBean;
@@ -477,6 +478,8 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
                         //tv1.setText(name);
                         yaoYueGangWeiId = id;
 
+                        //HR 的绑定职位
+                        bindUserAndPid("hr" + SPTool.getSessionValue(AppSP.UID), rid, yaoYueGangWeiId);
                         HRShenQingChat(rid, yaoYueGangWeiId);
 
 
@@ -494,6 +497,38 @@ public class RenCaiDetailActivity extends BaseActivity implements View.OnClickLi
 
 
     }
+
+
+    private void bindUserAndPid(String mid, String userId, String pid) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", mid);
+        params.put("userId", userId);
+        params.put("pid", pid);
+        OkHttpHelper.getInstance().post(this, NetClass.BASE_URL + NetCuiMethod.updatePosition, params, new BaseCallback<GnagWeiBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, GnagWeiBean resultBean) {
+
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
 
     private void HRShenQingChat(String rid, String pid) {
         Map<String, String> params = new HashMap<>();

@@ -25,6 +25,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.rongmessage.RongUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -207,7 +208,7 @@ public class ShenQingHRListActivity extends BaseActivity {
 
                 if (status.equals("2")) {
                     //HR 同意了
-                    //RongUtil.addBenDiMessage(rid, name, icon);
+                    RongUtil.addBenDiMessage(rid, name, icon);
                 }
 
 
