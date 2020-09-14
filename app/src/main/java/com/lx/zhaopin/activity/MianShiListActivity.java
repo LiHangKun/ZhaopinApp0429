@@ -6,11 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.adapter.MianShiListAdapter;
+import com.lx.zhaopin.adapter.MianShiRecordAdapter;
 import com.lx.zhaopin.base.BaseActivity;
-import com.lx.zhaopin.bean.MianShiListBean;
+import com.lx.zhaopin.bean.MianShiRecordBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.http.OkHttpHelper;
@@ -28,18 +29,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Response;
 
 public class MianShiListActivity extends BaseActivity {
 
+    @BindView(R.id.title_tv)
+    TextView titleTv;
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
-    private List<MianShiListBean.DataListBean> allList;
-    private MianShiListAdapter mianShiListAdapter;
+    private List<MianShiRecordBean.DataListBean> allList;
+    private MianShiRecordAdapter mianShiListAdapter;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.mianshilist_activity);
+        ButterKnife.bind(this);
         init();
     }
 
@@ -58,6 +65,8 @@ public class MianShiListActivity extends BaseActivity {
 
     private void init() {
         topTitle.setText("面试记录");
+        titleTv.setText("面试记录");
+        baseTop.setVisibility(View.GONE);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
@@ -67,7 +76,7 @@ public class MianShiListActivity extends BaseActivity {
         getDataList("");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         allList = new ArrayList<>();
-        mianShiListAdapter = new MianShiListAdapter(mContext, allList);
+        mianShiListAdapter = new MianShiRecordAdapter(mContext, allList);
         recyclerView.setAdapter(mianShiListAdapter);
 
 
@@ -77,9 +86,9 @@ public class MianShiListActivity extends BaseActivity {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("interviewStatus", interviewStatus);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.mianshiList, params, new SpotsCallBack<MianShiListBean>(mContext) {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.mianshiList, params, new SpotsCallBack<MianShiRecordBean>(mContext) {
             @Override
-            public void onSuccess(Response response, MianShiListBean resultBean) {
+            public void onSuccess(Response response, MianShiRecordBean resultBean) {
                 if (resultBean.getDataList() != null) {
                     if (resultBean.getDataList().size() == 0) {
                         recyclerView.setVisibility(View.GONE);
@@ -109,5 +118,22 @@ public class MianShiListActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+
+        }
     }
 }

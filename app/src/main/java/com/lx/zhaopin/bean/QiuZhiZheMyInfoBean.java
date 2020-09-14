@@ -31,6 +31,15 @@ public class QiuZhiZheMyInfoBean extends CommonBean {
     private String sex;
     private String workDate;
     private String servicePhone;
+    private String num;
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
+    }
 
     public String getServicePhone() {
         return servicePhone;

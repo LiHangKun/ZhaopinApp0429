@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyDialogListener;
@@ -38,11 +39,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class PingBiGangActivity extends BaseActivity {
 
+    @BindView(R.id.title_tv)
+    TextView titleTv;
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
@@ -56,12 +62,13 @@ public class PingBiGangActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.pingbigang_activity);
+        ButterKnife.bind(this);
         init();
     }
 
     private void init() {
-        topTitle.setText("屏蔽岗位");
-
+        titleTv.setText("屏蔽岗位");
+        baseTop.setVisibility(View.GONE);
         smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
@@ -224,5 +231,21 @@ public class PingBiGangActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+        }
     }
 }

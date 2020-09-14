@@ -18,14 +18,15 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.ShenQingListActivity;
+import com.lx.zhaopin.adapter.ConversationListAdapter;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.fragment.ConversationListFragment;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
-import com.lx.zhaopin.rong.ConversationListAdapterEx;
 import com.lx.zhaopin.rong.MyPagerAdapter;
 import com.lx.zhaopin.utils.SPTool;
 
@@ -38,7 +39,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.rong.imkit.RongContext;
-import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -51,6 +51,7 @@ public class Message1Fragment extends Fragment implements View.OnClickListener {
     private LinearLayout llView;
     private TextView tv2;
     private TextView tv3;
+    private String rid;
 
     private static final String TAG = "Message1Fragment";
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
@@ -133,7 +134,7 @@ public class Message1Fragment extends Fragment implements View.OnClickListener {
     private Fragment initConversationList() {
         if (mConversationListFragment == null) {
             ConversationListFragment listFragment = new ConversationListFragment();
-            listFragment.setAdapter(new ConversationListAdapterEx(RongContext.getInstance()));
+            listFragment.setAdapter(new ConversationListAdapter(RongContext.getInstance()));
             Uri uri;
             uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                     .appendPath("/conversationlist")
@@ -177,11 +178,11 @@ public class Message1Fragment extends Fragment implements View.OnClickListener {
 
                 if (resultBean.getChatApplyCount().equals("0")) {
                     tv3.setVisibility(View.INVISIBLE);
-                    llView.setVisibility(View.VISIBLE);
+                    llView.setVisibility(View.GONE);
                 } else {
                     tv3.setText(resultBean.getChatApplyCount());
                     tv2.setText(resultBean.getChatApplyText());
-                    llView.setVisibility(View.VISIBLE);
+                    llView.setVisibility(View.GONE);
                 }
 
 

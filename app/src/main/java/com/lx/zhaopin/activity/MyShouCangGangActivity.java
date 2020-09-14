@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyDialogListener;
@@ -15,6 +17,7 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.MyShouCangGangAdapter;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.bean.SavePersonBean;
 import com.lx.zhaopin.bean.ShouCangZhiWeiBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
@@ -37,31 +40,67 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class MyShouCangGangActivity extends BaseActivity {
 
+    @BindView(R.id.zhiwei_tv)
+    TextView zhiweiTv;
+    @BindView(R.id.zhiwei_line)
+    View zhiweiLine;
+    @BindView(R.id.zhiwei_layout)
+    LinearLayout zhiweiLayout;
+    @BindView(R.id.niuren_tv)
+    TextView niurenTv;
+    @BindView(R.id.niuren_line)
+    View niurenLine;
+    @BindView(R.id.niuren_layout)
+    LinearLayout niurenLayout;
+    @BindView(R.id.niuren_recyclerView)
+    RecyclerView niurenRecyclerView;
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
     private int nowPageIndex = 1;
     private int totalPage = 1;
+    private int personPage=1;
+    private int personTotal=1;
+    private int personOrZhiwei=0;
     private static final String TAG = "MyShouCangGangActivity";
     private List<ShouCangZhiWeiBean.DataListBean> allList;
+    private List<ShouCangZhiWeiBean.DataListBean> personAllList;
     private MyShouCangGangAdapter myShouCangGangAdapter;
+    private RelativeLayout leftLayout;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.myshoucanggang_activity);
+        ButterKnife.bind(this);
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void init() {
+        baseTop.setVisibility(View.GONE);
         topTitle.setText("我的收藏");
         smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
+        leftLayout = findViewById(R.id.left_layout);
+        leftLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         allList = new ArrayList<>();
@@ -113,10 +152,18 @@ public class MyShouCangGangActivity extends BaseActivity {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                allList.clear();
-                nowPageIndex = 1;
-                getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
-                Log.i(TAG, "onRefresh: 执行下拉刷新方法");
+                if(personOrZhiwei==0){
+                    allList.clear();
+                    nowPageIndex = 1;
+                    getDataList(String.valueOf(nowPageIndex), AppSP.pageCount);
+                    Log.i(TAG, "onRefresh: 执行下拉刷新方法");
+                }else if(personOrZhiwei==1){
+//                    personAllList.clear();
+                    personPage = 1;
+                    getNiurenDataList(String.valueOf(personPage), AppSP.pageCount);
+                    Log.i(TAG, "onRefresh: 执行下拉刷新方法");
+                }
+
             }
         });
 
@@ -208,6 +255,41 @@ public class MyShouCangGangActivity extends BaseActivity {
     }
 
 
+
+    private void getNiurenDataList(String pageNo, String pageSize) {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        params.put("pageNo", pageNo);
+        params.put("pageSize", pageSize);
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.shouCangNiurenList, params, new SpotsCallBack<SavePersonBean>(mContext) {
+            @Override
+            public void onSuccess(Response response, SavePersonBean resultBean) {
+                smartRefreshLayout.finishRefresh();
+//                if (resultBean.getDataList() != null) {
+//                    totalPage = resultBean.getTotalPage();
+//                    if (resultBean.getDataList().size() == 0) {
+//                        recyclerView.setVisibility(View.GONE);
+//                        noDataLinView.setVisibility(View.VISIBLE);
+//                    } else {
+//                        if (nowPageIndex == 1) {
+//                            allList.clear();
+//                        }
+//                        recyclerView.setVisibility(View.VISIBLE);
+//                        noDataLinView.setVisibility(View.GONE);
+//                        allList.addAll(resultBean.getDataList());
+//                        myShouCangGangAdapter.notifyDataSetChanged();
+//                    }
+//                }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+                smartRefreshLayout.finishRefresh();
+            }
+        });
+    }
+
+
     @Override
     protected void initEvent() {
 
@@ -216,5 +298,38 @@ public class MyShouCangGangActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.zhiwei_layout, R.id.niuren_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.zhiwei_layout:
+                zhiweiTv.setTextColor(getResources().getColor(R.color.text_color));
+                zhiweiLine.setVisibility(View.VISIBLE);
+                niurenTv.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+                niurenLine.setVisibility(View.INVISIBLE);
+                personOrZhiwei=0;
+                niurenRecyclerView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+
+                break;
+            case R.id.niuren_layout:
+                zhiweiTv.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+                zhiweiLine.setVisibility(View.INVISIBLE);
+                niurenTv.setTextColor(getResources().getColor(R.color.text_color));
+                niurenLine.setVisibility(View.VISIBLE);
+                personOrZhiwei=1;
+                recyclerView.setVisibility(View.GONE);
+                niurenRecyclerView.setVisibility(View.VISIBLE);
+
+                break;
+        }
     }
 }

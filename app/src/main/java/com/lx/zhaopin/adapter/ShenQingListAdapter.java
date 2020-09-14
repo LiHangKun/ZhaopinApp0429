@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapter.ViewHolder> {
 
 
+
     private List<ShenQingListBean.DataListBean> mData;
     private Context mContext;
     private OnItemClickListener onItemClickListener;
@@ -77,12 +78,41 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
         switch (opened) {
             case "1":
                 viewHolder.imageView2.setVisibility(View.GONE);
+                viewHolder.caoZuoView.setVisibility(View.VISIBLE);
+                viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.companyName.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv2.setTextColor(mContext.getResources().getColor(R.color.wode_xiaoxi_color));
+                viewHolder.tv3.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv4.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv5.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv6.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv9.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.pointView.setBackgroundColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.line1.setBackgroundColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.line2.setBackgroundColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.mengbanImageView.setVisibility(View.GONE);
                 break;
             case "0":
                 viewHolder.imageView2.setVisibility(View.VISIBLE);
+                viewHolder.caoZuoView.setVisibility(View.GONE);
+                viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.companyName.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv2.setTextColor(mContext.getResources().getColor(R.color.wode_save_color));
+                viewHolder.tv3.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv4.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv5.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv6.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv9.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.pointView.setBackgroundColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.line1.setBackgroundColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.line2.setBackgroundColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.mengbanImageView.setVisibility(View.VISIBLE);
                 break;
         }
 
+        if(null!=mData.get(po).getCompany() && !TextUtils.isEmpty(mData.get(po).getCompany().getName())){
+            viewHolder.companyName.setText(mData.get(po).getCompany().getName());
+        }
 
         viewHolder.tv1.setText(mData.get(po).getPosition().getName());
         viewHolder.tv2.setText(mData.get(po).getPosition().getMinSalary() + "K - " + mData.get(po).getPosition().getMaxSalary() + "K");
@@ -134,7 +164,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.AllllView, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(),mData.get(po).getHrID(),mData.get(po).getHrName(),mData.get(po).getHrAvatar());
+                    onItemClickListener.OnItemClickListener(viewHolder.AllllView, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(), mData.get(po).getHrID(), mData.get(po).getHrName(), mData.get(po).getHrAvatar());
                 }
             }
         });
@@ -143,7 +173,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.caoZuoViewTv1, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(),mData.get(po).getHrID(),mData.get(po).getHrName(),mData.get(po).getHrAvatar());
+                    onItemClickListener.OnItemClickListener(viewHolder.caoZuoViewTv1, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(), mData.get(po).getHrID(), mData.get(po).getHrName(), mData.get(po).getHrAvatar());
                 }
             }
         });
@@ -152,7 +182,7 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.caoZuoViewTv2, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(),mData.get(po).getHrID(),mData.get(po).getHrName(),mData.get(po).getHrAvatar());
+                    onItemClickListener.OnItemClickListener(viewHolder.caoZuoViewTv2, po, mData.get(po).getPosition().getOpened(), mData.get(po).getId(), mData.get(po).getCompany().getId(), mData.get(po).getHrID(), mData.get(po).getHrName(), mData.get(po).getHrAvatar());
                 }
             }
         });
@@ -205,6 +235,20 @@ public class ShenQingListAdapter extends RecyclerView.Adapter<ShenQingListAdapte
         RoundedImageView roundedImageView;
         @BindView(R.id.tv6)
         TextView tv6;
+
+        @BindView(R.id.company_name)
+        TextView companyName;
+        @BindView(R.id.mengbanImageView)
+        RoundedImageView mengbanImageView;
+        @BindView(R.id.point_view)
+        View pointView;
+        @BindView(R.id.tv9)
+        TextView tv9;
+
+        @BindView(R.id.line1)
+        View line1;
+        @BindView(R.id.line2)
+        View line2;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

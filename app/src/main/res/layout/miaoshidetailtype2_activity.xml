@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/fee_color"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <include layout="@layout/title_layout"/>
 
 
     <!--
@@ -21,64 +27,73 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_100"
-                android:layout_margin="@dimen/dp_10">
-
-
-                <LinearLayout
+                android:layout_marginTop="@dimen/dp_25"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                >
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="@dimen/dp_60">
+
+                      <RelativeLayout
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_toRightOf="@+id/roundedImageView"
+                          android:layout_marginLeft="@dimen/dp_20"
+                          >
+                          <LinearLayout
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              >
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:gravity="center_vertical"
+                                  android:text="与"
+                                  android:textColor="@color/text_color"
+                                  android:textSize="@dimen/sp_18"
+                                  />
+
+                              <TextView
+                                  android:id="@+id/tv1"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:ellipsize="end"
+                                  android:gravity="center_vertical"
+                                  android:maxLength="10"
+                                  android:text=""
+                                  android:maxLines="1"
+                                  android:textColor="@color/text_color"
+                                  android:textSize="@dimen/sp_18"
+                                  />
+
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:gravity="center_vertical"
+                                  android:text="的面试"
+                                  android:maxLines="1"
+                                  android:ellipsize="end"
+                                  android:textColor="@color/text_color"
+                                  android:textSize="@dimen/sp_18"
+                                  />
+                          </LinearLayout>
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_50"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="与"
-                            android:textColor="#3B3B3B"
-                            android:textSize="@dimen/sp_20"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tv1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:ellipsize="end"
-                            android:gravity="center_vertical"
-                            android:maxLength="10"
-                            android:text=""
-                            android:textColor="#3B3B3B"
-                            android:textSize="@dimen/sp_20"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="的面试"
-                            android:textColor="#3B3B3B"
-                            android:textSize="@dimen/sp_20"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_40"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="@dimen/dp_15"
-                            android:layout_height="@dimen/dp_15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/mianshi_shijian2" />
 
@@ -86,50 +101,39 @@
                             android:id="@+id/tv2"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/dp_15"
+                            android:layout_marginLeft="@dimen/dp_14"
                             android:gravity="center_vertical"
-                            android:text=""
-                            android:textColor="#666"
-                            android:textSize="@dimen/sp_13" />
-
-
-                        <ImageView
-                            android:id="@+id/imageState"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/dp_15" />
-
+                            android:text=""
+                            android:textColor="#939393"
+                            android:textSize="@dimen/sp_12" />
 
                     </LinearLayout>
-
-
-                </LinearLayout>
-
+                      </RelativeLayout>
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/roundedImageView"
-                    android:layout_width="@dimen/dp_80"
-                    android:layout_height="@dimen/dp_80"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center_vertical"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
                     android:scaleType="centerCrop"
                     android:src="@drawable/splashbj"
                     app:riv_border_width="0dip"
-                    app:riv_corner_radius_bottom_left="@dimen/dp_5"
-                    app:riv_corner_radius_bottom_right="@dimen/dp_5"
-                    app:riv_corner_radius_top_left="@dimen/dp_5"
-                    app:riv_corner_radius_top_right="@dimen/dp_5"
+                    app:riv_corner_radius_bottom_left="@dimen/dp_8"
+                    app:riv_corner_radius_bottom_right="@dimen/dp_8"
+                    app:riv_corner_radius_top_left="@dimen/dp_8"
+                    app:riv_corner_radius_top_right="@dimen/dp_8"
                     app:riv_mutate_background="true"
                     app:riv_oval="false" />
-
-
-            </LinearLayout>
+                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/imageState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/dp_30"
+                   />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv3"
@@ -147,12 +151,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_12"
+                android:visibility="gone"
                 android:background="#F7F9FA" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_100"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -214,14 +220,15 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginRight="@dimen/dp_10"
+                android:visibility="gone"
                 android:background="#e7e7e7" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
                 android:orientation="horizontal">
 
 
@@ -236,9 +243,10 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
                     android:text="面试时间:"
-                    android:textColor="#666"
-                    android:textSize="@dimen/sp_13" />
+                    android:textColor="#939393"
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:id="@+id/tv4"
@@ -246,9 +254,10 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
                     android:text=""
-                    android:textColor="#666"
-                    android:textSize="@dimen/sp_13" />
+                    android:textColor="#939393"
+                    android:textSize="@dimen/sp_12" />
 
 
             </LinearLayout>
@@ -256,8 +265,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
                 android:orientation="horizontal">
 
 
@@ -273,8 +282,9 @@
                     android:layout_marginLeft="@dimen/dp_15"
                     android:gravity="center_vertical"
                     android:text="面试岗位:"
-                    android:textColor="#666"
-                    android:textSize="@dimen/sp_13" />
+                    android:textColor="#939393"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:id="@+id/tv5"
@@ -282,10 +292,11 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
                     android:singleLine="true"
                     android:text=""
-                    android:textColor="#666"
-                    android:textSize="@dimen/sp_13" />
+                    android:textColor="#939393"
+                    android:textSize="@dimen/sp_12" />
 
 
             </LinearLayout>
@@ -293,8 +304,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/dp_10"
                 android:paddingBottom="@dimen/dp_10">
@@ -312,8 +323,9 @@
                     android:layout_marginLeft="@dimen/dp_15"
                     android:gravity="center_vertical"
                     android:text="面试地点："
-                    android:textColor="#666"
-                    android:textSize="@dimen/sp_13" />
+                    android:textColor="#939393"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/sp_12" />
 
 
             </LinearLayout>
@@ -321,8 +333,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
                 android:layout_marginBottom="@dimen/dp_30"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/dp_10"
@@ -341,8 +353,9 @@
                     android:layout_marginLeft="@dimen/dp_15"
                     android:gravity="center_vertical"
                     android:text=""
-                    android:textColor="#666"
-                    android:textSize="@dimen/sp_13" />
+                    android:textColor="#939393"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/sp_12" />
 
 
             </LinearLayout>
@@ -365,17 +378,6 @@
         android:orientation="horizontal"
         android:weightSum="3.1">
 
-
-        <TextView
-            android:id="@+id/quxiaoTV"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp_45"
-            android:layout_weight="1"
-            android:background="@drawable/edittext_shape"
-            android:gravity="center"
-            android:text="取消面试"
-            android:textColor="#1678FF" />
-
         <View
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
@@ -390,6 +392,7 @@
             android:background="@drawable/button_shape"
             android:gravity="center"
             android:text="我已到达"
+            android:visibility="gone"
             android:textColor="#fff" />
 
 
@@ -427,5 +430,20 @@
         android:textColor="#1678FF"
         android:visibility="gone" />
 
+    </LinearLayout>
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/quxiaoTV"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@drawable/code_bg"
+        android:layout_marginRight="@dimen/dp_38"
+        android:layout_marginLeft="@dimen/dp_38"
+        android:layout_marginBottom="@dimen/dp_34"
+        android:gravity="center"
+        android:text="取消面试"
+        android:textSize="@dimen/sp_17"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white" />
+</RelativeLayout>

@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -47,6 +49,10 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
     private ImageView imageDui;
     private boolean duiHaoBoolean = true;
     private String registrationID;
+    private TextView phoneTv;
+    private TextView codeTv;
+    private ImageView closeImg;
+    private RelativeLayout closeLayout;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -64,6 +70,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
         topTitle.setText("短信验证码登录");
         topTitle.setVisibility(View.INVISIBLE);
         viewBase.setVisibility(View.INVISIBLE);
+        baseTop.setVisibility(View.GONE);
 
         /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
@@ -74,15 +81,29 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
         registrationID = JPushInterface.getRegistrationID(this);
         SPTool.addSessionMap(AppSP.JupshID, registrationID);
         Log.i(TAG, "onCreate:极光信息 " + registrationID);
-
-
-        baseback.setImageResource(R.drawable.guanbi_hei);
-
+//        baseback.setImageResource(R.drawable.login_close_img);
+        baseback.setVisibility(View.GONE);
+        backImg.setVisibility(View.VISIBLE);
+        closeImg=findViewById(R.id.close_login_img);
+        closeLayout=findViewById(R.id.back_layout);
+        closeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(Login1PhoneCodeActivity.this, MainActivity.class);//启动MainActivity
+                //SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                SPTool.addSessionMap(AppSP.USER_TYPE, SPTool.getSessionValue(AppSP.USER_TYPE));
+                startActivity(intent);
+                finish();//关闭当前活动
+            }
+        });
         edit1 = findViewById(R.id.edit1);
         edit2 = findViewById(R.id.edit2);
         imageDui = findViewById(R.id.imageDui);
         imageDui.setOnClickListener(this);
         faCode = findViewById(R.id.faCode);
+        phoneTv=findViewById(R.id.phone_tv);
+        codeTv=findViewById(R.id.code_tv);
+
         TextView tv1 = findViewById(R.id.tv1);
         TextView tv2 = findViewById(R.id.tv2);
         TextView tv3 = findViewById(R.id.tv3);
@@ -96,6 +117,23 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
         tv4.setOnClickListener(this);
         tv0.setOnClickListener(this);
 
+        edit1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                edit1.setHint("");
+                phoneTv.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
+        edit2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                edit2.setHint("");
+                codeTv.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
 
     }
 

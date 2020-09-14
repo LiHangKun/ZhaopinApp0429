@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.MianShiListAdapter;
@@ -28,10 +29,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Response;
 
 public class YiLuQuActivity extends BaseActivity {
 
+    @BindView(R.id.title_tv)
+    TextView titleTv;
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
     private static final String TAG = "YiLuQuActivity";
@@ -41,6 +47,7 @@ public class YiLuQuActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.yiluqu_activity);
+        ButterKnife.bind(this);
         init();
     }
 
@@ -64,7 +71,9 @@ public class YiLuQuActivity extends BaseActivity {
     }
 
     private void init() {
+        baseTop.setVisibility(View.GONE);
         topTitle.setText("已录取");
+        titleTv.setText("已录取");
 
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
@@ -86,7 +95,7 @@ public class YiLuQuActivity extends BaseActivity {
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("interviewStatus", interviewStatus);
-        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.mianshiList, params, new SpotsCallBack<MianShiListBean>(mContext) {
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.luquList, params, new SpotsCallBack<MianShiListBean>(mContext) {
             @Override
             public void onSuccess(Response response, MianShiListBean resultBean) {
                 if (resultBean.getDataList() != null) {
@@ -118,5 +127,23 @@ public class YiLuQuActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout, R.id.title_tv})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+            case R.id.title_tv:
+                break;
+        }
     }
 }

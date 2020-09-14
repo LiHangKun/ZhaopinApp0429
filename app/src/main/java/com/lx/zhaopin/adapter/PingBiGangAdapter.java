@@ -18,7 +18,7 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.PingBiGangWeiBean;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.lx.zhaopin.view.ShoucangCircleImageview;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.ViewHolder> {
+
 
 
     private List<PingBiGangWeiBean.DataListBean> mData;
@@ -65,26 +66,49 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
         switch (opened) {
             case "0":
                 viewHolder.imageView2.setVisibility(View.VISIBLE);
+                viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv2.setTextColor(mContext.getResources().getColor(R.color.wode_save_color));
+                viewHolder.tv3.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv4.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv5.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv6.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv8.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv9.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.pointTv.setBackgroundColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.mengbanImageView.setVisibility(View.VISIBLE);
                 break;
             case "1":
                 viewHolder.imageView2.setVisibility(View.GONE);
+                viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv2.setTextColor(mContext.getResources().getColor(R.color.wode_xiaoxi_color));
+                viewHolder.tv3.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv4.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv5.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv6.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv8.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv9.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.pointTv.setBackgroundColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.mengbanImageView.setVisibility(View.GONE);
                 break;
         }
 
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(po).getCity().getName());
-        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() );
+        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName());
         viewHolder.tv5.setText(mData.get(po).getEducation().getName());
+        viewHolder.tv8.setText(mData.get(po).getCompany().getName());
+        viewHolder.tv6.setText(mData.get(po).getRecruiter().getName());
+        viewHolder.tv9.setText(mData.get(po).getRecruiter().getPositionName());
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
-                .error(R.mipmap.imageerror)).load(mData.get(po).getCompany().getLogo()).into(viewHolder.roundedImageView);
-        viewHolder.tv5.setText(mData.get(po).getCompany().getName());
+                .error(R.mipmap.imageerror)).load(mData.get(po).getRecruiter().getAvatar()).into(viewHolder.roundedImageView);
+
 
         viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(),mData.get(po).getOpened());
+                    itemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(), mData.get(po).getOpened());
                 }
             }
         });
@@ -93,7 +117,7 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(),mData.get(po).getOpened());
+                    itemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(), mData.get(po).getOpened());
                 }
             }
         });
@@ -118,9 +142,14 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
                 final String str = flowData.get(i);
                 radioButton.setText(str);
                 radioButton.setGravity(Gravity.CENTER);
-                radioButton.setTextSize(13);
+                radioButton.setTextSize(12);
                 radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
-                radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                if(opened.equals("0")){
+                    radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.zhiwei_location_text));
+                }else if(opened.equals("1")){
+                    radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.text_color));
+                }
+
                 //radioButton.setBackgroundResource(R.drawable.search_selector);
                 radioButton.setBackgroundResource(R.drawable.button_shape03);
                 radioButton.setFocusable(true);
@@ -163,11 +192,19 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
         @BindView(R.id.llView)
         LinearLayout llView;
         @BindView(R.id.roundedImageView)
-        RoundedImageView roundedImageView;
+        ShoucangCircleImageview roundedImageView;
         @BindView(R.id.tv6)
         TextView tv6;
         @BindView(R.id.tv7)
         TextView tv7;
+        @BindView(R.id.tv8)
+        TextView tv8;
+        @BindView(R.id.tv9)
+        TextView tv9;
+        @BindView(R.id.mengbanImageView)
+        ShoucangCircleImageview mengbanImageView;
+        @BindView(R.id.point_tv)
+        View pointTv;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -176,7 +213,7 @@ public class PingBiGangAdapter extends RecyclerView.Adapter<PingBiGangAdapter.Vi
     }
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, String id,String open);
+        void OnItemClickListener(View view, String id, String open);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

@@ -2,11 +2,14 @@ package com.lx.zhaopin.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
@@ -15,6 +18,7 @@ import com.lx.zhaopin.bean.LoginBean;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MainActivity;
 import com.lx.zhaopin.common.MessageEvent;
+import com.lx.zhaopin.common.NoticeDetailActivity;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
@@ -41,6 +45,11 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
     private static final String TAG = "Login2PassWordActivity";
     private String registrationID;
     private Intent intent;
+    private RelativeLayout closeLayout;
+    private TextView phoneTv;
+    private TextView codeTv;
+    private ImageView hideImg;
+    private int hide=0;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -64,6 +73,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
 
         topTitle.setVisibility(View.INVISIBLE);
         viewBase.setVisibility(View.INVISIBLE);
+        baseTop.setVisibility(View.GONE);
 
         baseback.setImageResource(R.drawable.guanbi_hei);
 
@@ -84,6 +94,37 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
         TextView tv4 = findViewById(R.id.tv4);
         TextView tv0 = findViewById(R.id.tv0);
         TextView tv00 = findViewById(R.id.tv00);
+        phoneTv=findViewById(R.id.phone_tv);
+        codeTv=findViewById(R.id.code_tv);
+        hideImg=findViewById(R.id.hide_img);
+
+        hideImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(hide==0){
+                    hide=1;
+                    hideImg.setImageResource(R.drawable.mima_show);
+                    edit2.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }else if(hide==1){
+                    hide=0;
+                    hideImg.setImageResource(R.drawable.mima_invisible);
+                    edit2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
+
+        closeLayout=findViewById(R.id.back_layout);
+        closeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+//                intent = new Intent(Login2PassWordActivity.this, MainActivity.class);//启动MainActivity
+//                //SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+//                SPTool.addSessionMap(AppSP.USER_TYPE, SPTool.getSessionValue(AppSP.USER_TYPE));
+//                startActivity(intent);
+//                finish();//关闭当前活动
+            }
+        });
 
         faCode.setOnClickListener(this);
         tv1.setOnClickListener(this);
@@ -92,6 +133,25 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
         tv4.setOnClickListener(this);
         tv0.setOnClickListener(this);
         tv00.setOnClickListener(this);
+
+
+        edit1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                edit1.setHint("");
+                phoneTv.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
+        edit2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                edit2.setHint("");
+                codeTv.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
 
 
     }
@@ -149,11 +209,17 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.tv3:
                 //用户协议
-                ToastFactory.getToast(mContext, "用户协议").show();
+                intent = new Intent(mContext, NoticeDetailActivity.class);
+                intent.putExtra("title", "用户协议");
+                intent.putExtra("titleUrl", NetClass.Web_XieYi1);
+                startActivity(intent);
                 break;
             case R.id.tv4:
                 //隐私政策
-                ToastFactory.getToast(mContext, "隐私政策").show();
+                intent = new Intent(mContext, NoticeDetailActivity.class);
+                intent.putExtra("title", "隐私政策");
+                intent.putExtra("titleUrl", NetClass.Web_XieYi2);
+                startActivity(intent);
                 break;
         }
     }

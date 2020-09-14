@@ -15,7 +15,9 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
-        android:background="@color/lineGrey" />
+        android:background="@color/lineGrey"
+        android:visibility="gone"
+        />
 
     <FrameLayout
         android:id="@+id/container"

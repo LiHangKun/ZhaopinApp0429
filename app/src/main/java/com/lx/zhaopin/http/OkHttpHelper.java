@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.lx.zhaopin.utils.ToastFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -443,7 +442,7 @@ public class OkHttpHelper {
             @Override
             public void run() {
                 callback.onError(response, response.code(), e);
-                ToastFactory.getToast(context, "网络请求失败").show();
+//                ToastFactory.getToast(context, "网络请求失败").show();
 
             }
         });
@@ -454,7 +453,7 @@ public class OkHttpHelper {
             @Override
             public void run() {
                 callback.onFailure(request, e);
-                ToastFactory.getToast(context, "网络请求失败").show();
+//                ToastFactory.getToast(context, "网络请求失败").show();
             }
         });
     }

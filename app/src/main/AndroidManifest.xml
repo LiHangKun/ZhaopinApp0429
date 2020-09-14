@@ -309,6 +309,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /> <!-- 教育经历 -->
         <activity
+            android:name=".activity.QuxiaoMianshiActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /> <!-- 取消面试 -->
+        <activity
             android:name=".activity.MyGongZuoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop"
@@ -704,12 +710,14 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /> <!-- HR不合适 -->
-        <activity
-            android:name=".hractivity.HRXiaoXiDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="812"/>
+
     </application>
 
 </manifest>

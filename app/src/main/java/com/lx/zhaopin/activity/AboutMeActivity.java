@@ -4,6 +4,7 @@ import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,6 +50,10 @@ public class AboutMeActivity extends BaseActivity {
     TextView tv5;
     @BindView(R.id.relView5)
     RelativeLayout relView5;
+    @BindView(R.id.title_tv)
+    TextView titleTv;
+    @BindView(R.id.title_layout)
+    RelativeLayout titleLayout;
     private String phone;
 
     @Override
@@ -59,8 +64,9 @@ public class AboutMeActivity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("关于我们");
-
+        titleTv.setText("关于我们");
+        titleLayout.setBackgroundColor(getResources().getColor(R.color.white));
+        baseTop.setVisibility(View.GONE);
         aboutMe();
 
     }
@@ -81,7 +87,7 @@ public class AboutMeActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, AboutMeBean resultBean) {
                 tv1.setText(resultBean.getCompany());
-                tv2.setText(resultBean.getPhone() + " >");
+                tv2.setText(resultBean.getPhone());
                 tv3.setText(resultBean.getEmail());
                 tv4.setText(resultBean.getWebsite());
                 tv5.setText(resultBean.getAddress());
@@ -129,6 +135,22 @@ public class AboutMeActivity extends BaseActivity {
             } else {
                 pmsLocationSuccess();
             }
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
         }
     }
 }

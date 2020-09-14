@@ -35,6 +35,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected View baseTop;
     public Context mContext;
     protected View viewBase;
+    public ImageView backImg;
+    public LinearLayout topLayout;
     @Override
     public Resources getResources() {
         // 字体大小不跟随系统
@@ -61,6 +63,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         rightText = (TextView) baseTop.findViewById(R.id.rightText);
         rightIcon = (ImageView) baseTop.findViewById(R.id.rightIcon);
         baseback = (ImageView) baseTop.findViewById(R.id.back);
+        backImg=(ImageView) baseTop.findViewById(R.id.back_img);
+        topLayout=(LinearLayout)findViewById(R.id.commonTop);
         baseback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

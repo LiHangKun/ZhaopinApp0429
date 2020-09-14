@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
@@ -24,6 +25,7 @@ import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.home2.Message1Fragment;
 import com.lx.zhaopin.home2.Message2Fragment;
 import com.lx.zhaopin.home2.Message3Fragment;
+import com.lx.zhaopin.home2.NewShenqingFragment;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
@@ -38,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -45,6 +49,14 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
 
 
     public ViewPager viewPager;
+    TextView alreadyReadTv;
+    View goutongView;
+    View fankuiView;
+    View xitongView;
+    TextView xiyongCountTv;
+    RelativeLayout msgLayout;
+    Unbinder unbinder;
+    View newLine;
     private ArrayList<Fragment> fragments;
     private ImageView image1;
     private ImageView image2;
@@ -65,7 +77,6 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = View.inflate(container.getContext(), R.layout.home2fragment_layout, null);
-
         if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
@@ -79,6 +90,15 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
         image1 = view.findViewById(R.id.image1);
         image2 = view.findViewById(R.id.image2);
         image3 = view.findViewById(R.id.image3);
+        newLine=view.findViewById(R.id.new_line);
+
+
+        alreadyReadTv = view.findViewById(R.id.already_read_tv);
+        goutongView = view.findViewById(R.id.goutong_view);
+        fankuiView = view.findViewById(R.id.fankui_view);
+        xitongView = view.findViewById(R.id.xitong_view);
+        xiyongCountTv = view.findViewById(R.id.xiyong_count_tv);
+        msgLayout = view.findViewById(R.id.msg_layout);
 
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
@@ -91,17 +111,20 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
         llView1.setOnClickListener(this);
         llView2.setOnClickListener(this);
         llView3.setOnClickListener(this);
+        alreadyReadTv.setOnClickListener(this);
+        msgLayout.setOnClickListener(this);
         setListeners();
 
         fragments = new ArrayList<>();
         fragments.add(new Message1Fragment());
         fragments.add(new Message2Fragment());
         fragments.add(new Message3Fragment());
+        fragments.add(new NewShenqingFragment());
 
 
-        tv1.setTextColor(getResources().getColor(R.color.appColor));
-        tv2.setTextColor(getResources().getColor(R.color.txt_lv4));
-        tv3.setTextColor(getResources().getColor(R.color.txt_lv4));
+        tv1.setTextColor(getResources().getColor(R.color.text_color));
+        tv2.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+        tv3.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
 
         image1.setImageResource(R.drawable.hom2s);
         image2.setImageResource(R.drawable.xiaoxi_fankui1);
@@ -113,9 +136,11 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
         viewPager.setOffscreenPageLimit(fragments.size());
 
 
+        unbinder = ButterKnife.bind(this, view);
         return view;
 
     }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -163,10 +188,11 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onSuccess(Response response, PhoneStateBean resultBean) {
-                /*messageNumberTv1.setText(resultBean.getChatApplyCount());
-                messageNumberTv2.setText(resultBean.getJobFeedbackCount());
-                messageNumberTv3.setText(resultBean.getSystemMessageCount());*/
-
+                if (resultBean.getChatApplyCount().equals("0")) {
+                    xiyongCountTv.setVisibility(View.GONE);
+                } else {
+                    xiyongCountTv.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -174,6 +200,12 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
 
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
 
@@ -199,9 +231,13 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        tv1.setTextColor(getResources().getColor(R.color.appColor));
-                        tv2.setTextColor(getResources().getColor(R.color.txt_lv4));
-                        tv3.setTextColor(getResources().getColor(R.color.txt_lv4));
+                        tv1.setTextColor(getResources().getColor(R.color.text_color));
+                        tv2.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+                        tv3.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+                        goutongView.setVisibility(View.VISIBLE);
+                        fankuiView.setVisibility(View.GONE);
+                        xitongView.setVisibility(View.GONE);
+                        newLine.setVisibility(View.INVISIBLE);
 
                         image1.setImageResource(R.drawable.hom2s);
                         image2.setImageResource(R.drawable.xiaoxi_fankui1);
@@ -209,19 +245,29 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
 
                         break;
                     case 1:
-                        tv2.setTextColor(getResources().getColor(R.color.appColor));
-                        tv1.setTextColor(getResources().getColor(R.color.txt_lv4));
-                        tv3.setTextColor(getResources().getColor(R.color.txt_lv4));
+                        tv2.setTextColor(getResources().getColor(R.color.text_color));
+                        tv1.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+                        tv3.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
 
                         image1.setImageResource(R.drawable.hom2n);
                         image2.setImageResource(R.drawable.xiaoxi_fankui2);
                         image3.setImageResource(R.drawable.xiaoxi_xitxiaoxi1);
+                        newLine.setVisibility(View.INVISIBLE);
+
+                        goutongView.setVisibility(View.GONE);
+                        fankuiView.setVisibility(View.VISIBLE);
+                        xitongView.setVisibility(View.GONE);
 
                         break;
                     case 2:
-                        tv3.setTextColor(getResources().getColor(R.color.appColor));
-                        tv1.setTextColor(getResources().getColor(R.color.txt_lv4));
-                        tv2.setTextColor(getResources().getColor(R.color.txt_lv4));
+                        tv3.setTextColor(getResources().getColor(R.color.text_color));
+                        tv1.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+                        tv2.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+
+                        goutongView.setVisibility(View.GONE);
+                        fankuiView.setVisibility(View.GONE);
+                        xitongView.setVisibility(View.VISIBLE);
+                        newLine.setVisibility(View.INVISIBLE);
 
                         image1.setImageResource(R.drawable.hom2n);
                         image2.setImageResource(R.drawable.xiaoxi_fankui1);
@@ -229,6 +275,23 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
 
                         break;
 
+                    case 3:
+                        tv3.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+                        tv1.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+                        tv2.setTextColor(getResources().getColor(R.color.zhiwei_location_text));
+
+                        goutongView.setVisibility(View.GONE);
+                        fankuiView.setVisibility(View.GONE);
+                        xitongView.setVisibility(View.GONE);
+                        newLine.setVisibility(View.VISIBLE);
+
+
+
+                        image1.setImageResource(R.drawable.hom2n);
+                        image2.setImageResource(R.drawable.xiaoxi_fankui1);
+                        image3.setImageResource(R.drawable.xiaoxi_xitxiaoxi2);
+
+                        break;
 
                     default:
                 }
@@ -259,6 +322,12 @@ public class Home2Fragment extends BaseFragment implements View.OnClickListener 
             case R.id.llView3:
                 //系统消息
                 viewPager.setCurrentItem(2);
+                break;
+            case R.id.already_read_tv:
+                break;
+            case R.id.msg_layout:
+                //系统消息
+                viewPager.setCurrentItem(3);
                 break;
         }
     }

@@ -2,17 +2,23 @@ package com.lx.zhaopin.common;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,11 +46,10 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.StringUtil;
-import com.lx.zhaopin.utils.TellUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.CirclePercentView;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.lx.zhaopin.view.XUpdatePop;
+import com.lx.zhaopin.view.XmCircleImageview;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -85,7 +90,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private String phone = "";
     private SmartRefreshLayout smartRefreshLayout;
     private static final String TAG = "Home3Fragment";
-    private RoundedImageView roundedImageView;
+    private XmCircleImageview roundedImageView;
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
@@ -93,6 +98,14 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private String recruiter = "0";
     private TextView userPhone;
     private String eventUid = "";
+    private TextView versionTv;
+    private ImageView setImg;
+    private ImageView erweimaImg;
+    private TextView saveTv;
+    private TextView waitMianshi;
+    private TextView luqu;
+    private TextView mianshiList;
+    private TextView pointTv;
 
 
     @Subscribe(threadMode = ThreadMode.POSTING, sticky = false)
@@ -136,7 +149,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
 
-
+        String versionName=getAppVersionName(getActivity());
         tvJinDu = view.findViewById(R.id.tvJinDu);
         circlePercentView = view.findViewById(R.id.circlePercentView);
         roundedImageView = view.findViewById(R.id.roundedImageView);
@@ -148,6 +161,12 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         llView4 = view.findViewById(R.id.llView4);
         jueSe = view.findViewById(R.id.jueSe);
 
+        saveTv = view.findViewById(R.id.save_count);
+        waitMianshi = view.findViewById(R.id.mianshi_tv);
+        luqu = view.findViewById(R.id.luqu_tv);
+        mianshiList = view.findViewById(R.id.record_tv);
+        pointTv = view.findViewById(R.id.mianshi_count_tv);
+
 
         relView0 = view.findViewById(R.id.relView0);
         relView1 = view.findViewById(R.id.relView1);
@@ -157,6 +176,10 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         relView5 = view.findViewById(R.id.relView5);
         relView6 = view.findViewById(R.id.relView6);
         relView7 = view.findViewById(R.id.relView7);
+        versionTv=view.findViewById(R.id.version_tv);
+        setImg=view.findViewById(R.id.set_img);
+        versionTv.setText("V"+versionName);
+        erweimaImg=view.findViewById(R.id.erweima_img);
 
 
         userPhone = view.findViewById(R.id.userPhone);
@@ -178,6 +201,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         relView5.setOnClickListener(this);
         relView6.setOnClickListener(this);
         relView7.setOnClickListener(this);
+        setImg.setOnClickListener(this);
 
         smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
         smartRefreshLayout.setEnableLoadMore(false);
@@ -204,6 +228,44 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
 
     }
 
+
+
+    public static String getAppVersionName(Context context) {
+        String appVersionName = "";
+        try {
+            PackageInfo packageInfo = context.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            appVersionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("", e.getMessage());
+        }
+        return appVersionName;
+    }
+
+
+
+    /**
+     * 获取当前app version code
+     */
+    public static long getAppVersionCode(Context context) {
+        long appVersionCode = 0;
+        try {
+            PackageInfo packageInfo = context.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                appVersionCode = packageInfo.getLongVersionCode();
+            } else {
+                appVersionCode = packageInfo.versionCode;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("", e.getMessage());
+        }
+        return appVersionCode;
+    }
+
+
     //求职者个人信息
     private void getQiuZhiMyInfo() {
         Map<String, String> params = new HashMap<>();
@@ -224,7 +286,13 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
                 smartRefreshLayout.finishRefresh();
-                userPhone.setText(StringUtil.replacePhoneCui(resultBean.getMobile()));
+                if(!TextUtils.isEmpty(resultBean.getNum())){
+                    userPhone.setVisibility(View.VISIBLE);
+                    userPhone.setText("砖头号："+resultBean.getNum());
+                }else {
+                    userPhone.setVisibility(View.GONE);
+                }
+
                 Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                         .load(resultBean.getAvatar()).into(roundedImageView);
                 tv1.setText(resultBean.getName());
@@ -259,6 +327,11 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                     tv3.setVisibility(View.INVISIBLE);
                 }
 
+//                saveTv = view.findViewById(R.id.save_count);
+//                waitMianshi = view.findViewById(R.id.mianshi_tv);
+//                luqu = view.findViewById(R.id.luqu_tv);
+//                mianshiList = view.findViewById(R.id.record_tv);
+//                pointTv = view.findViewById(R.id.mianshi_count_tv);
 
                 phone = resultBean.getServicePhone();
 
@@ -430,7 +503,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                     return;
                 }
                 break;
-            case R.id.relView7:
+            case R.id.set_img:
                 //我的设置
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     intent = new Intent(getActivity(), SettingActivity.class);
@@ -444,10 +517,23 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         }
     }
 
+    private XUpdatePop pop;
     @PermissionGrant(AppSP.PMS_LOCATION)
     public void pmsLocationSuccess() {
         //权限授权成功
-        TellUtil.tell(getActivity(), phone);
+//        TellUtil.tell(getActivity(), phone);
+        pop=new XUpdatePop(getActivity(), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                startActivity(intent);
+                pop.dismiss();
+            }
+        }, phone);
+        pop.show();
     }
 
     /*拨打电话*/

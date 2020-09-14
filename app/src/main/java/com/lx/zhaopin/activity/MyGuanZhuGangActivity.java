@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyDialogListener;
@@ -35,11 +36,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class MyGuanZhuGangActivity extends BaseActivity {
 
+    @BindView(R.id.title_tv)
+    TextView titleTv;
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayout noDataLinView;
@@ -52,11 +58,13 @@ public class MyGuanZhuGangActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.myguanzhu_activity);
+        ButterKnife.bind(this);
         init();
     }
 
     private void init() {
-        topTitle.setText("我的关注");
+        titleTv.setText("我的关注");
+        baseTop.setVisibility(View.GONE);
         smartRefreshLayout = findViewById(R.id.smartRefreshLayout);
         recyclerView = findViewById(R.id.recyclerView);
         noDataLinView = findViewById(R.id.noDataLinView);
@@ -111,7 +119,7 @@ public class MyGuanZhuGangActivity extends BaseActivity {
             @Override
             public void OnItemClick(View view, final String cid) {
 
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.tv2:
                         //取消关注公司
                         StyledDialog.init(mContext);
@@ -130,12 +138,11 @@ public class MyGuanZhuGangActivity extends BaseActivity {
                         }).setBtnColor(R.color.mainColor2, R.color.mainColor1, 0).setBtnText("取消", "确定").show();
                         break;
                     case R.id.llView:
-                        Intent  intent = new Intent(mContext, QiYeInfoActivity.class);
+                        Intent intent = new Intent(mContext, QiYeInfoActivity.class);
                         intent.putExtra("qiYeID", cid);
                         startActivity(intent);
                         break;
                 }
-
 
 
             }
@@ -214,5 +221,21 @@ public class MyGuanZhuGangActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+        }
     }
 }

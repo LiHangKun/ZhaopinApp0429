@@ -52,9 +52,14 @@ public class NetCuiMethod {
     public static final String xiuGaizhuCiZhiWei = "member/jobhunter/expectation/change";//修改主次职位
     public static final String delzhuCiZhiWei = "member/jobhunter/expectation/delete";//删除主次职位
     public static final String shouCangZhiWeiList = "member/postion/collect/page";//收藏职位列表
+    public static final String shouCangNiurenList = "/member/jobhunter/collect/page";//收藏牛人列表
+
+
+
     public static final String pingBiGangList = "member/postion/improper/page";//不合适职位列表
     public static final String guanzhuGongSi = "member/company/collect/page";//关注公司列表
     public static final String mianshiList = "member/jobhunter/interview/list";//面试记录
+    public static final String luquList = "/member/jobhunter/interviewyi/list";//已录取
     public static final String mianshiDetail_qiuZhi1 = "member/jobhunter/interview/detail";//面试详情,求职者看到的界面
     public static final String yiLuQuList = "member/jobhunter/offer/list";//录取记录
     public static final String offerDetail = "member/jobhunter/offer/detail";//offer详情

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,15 +19,18 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.ShouCangZhiWeiBean;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.FlowLiner;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.lx.zhaopin.view.ShoucangCircleImageview;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAdapter.ViewHolder> {
+
+
 
     //private List<String> flowData = new ArrayList<>();
     private List<ShouCangZhiWeiBean.DataListBean> mData;
@@ -68,29 +72,55 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
         switch (opened) {
             case "0":
                 viewHolder.imageView2.setVisibility(View.VISIBLE);
+                viewHolder.menban.setVisibility(View.VISIBLE);
+                viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv2.setTextColor(mContext.getResources().getColor(R.color.wode_save_color));
+                viewHolder.tv3.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv4.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv5.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv6.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv9.setBackgroundColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.tv10.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.companyName.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.lineOne.setBackgroundColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+                viewHolder.lineTwo.setBackgroundColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
                 break;
             case "1":
                 viewHolder.imageView2.setVisibility(View.GONE);
+                viewHolder.menban.setVisibility(View.GONE);
+                viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv2.setTextColor(mContext.getResources().getColor(R.color.wode_xiaoxi_color));
+                viewHolder.tv3.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv4.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv5.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv6.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.companyName.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.lineOne.setBackgroundColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.lineTwo.setBackgroundColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv9.setBackgroundColor(mContext.getResources().getColor(R.color.text_color));
+                viewHolder.tv10.setTextColor(mContext.getResources().getColor(R.color.text_color));
                 break;
         }
 
         viewHolder.tv1.setText(mData.get(po).getName());
         viewHolder.tv2.setText(mData.get(po).getMinSalary() + "K - " + mData.get(po).getMaxSalary() + "K");
         viewHolder.tv3.setText(mData.get(po).getCity().getName() + mData.get(po).getDistrict().getName());
-        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName() );
+        viewHolder.tv4.setText(mData.get(po).getExperienceYear().getName());
         viewHolder.tv5.setText(mData.get(po).getEducation().getName());
 
 
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
-                .error(R.mipmap.imageerror)).load(mData.get(po).getCompany().getLogo()).into(viewHolder.roundedImageView);
-        viewHolder.tv6.setText(mData.get(po).getCompany().getName());
+                .error(R.mipmap.imageerror)).load(mData.get(po).getRecruiter().getAvatar()).into(viewHolder.roundedImageView);
+        viewHolder.companyName.setText(mData.get(po).getCompany().getName());
+        viewHolder.tv6.setText(mData.get(po).getRecruiter().getName());
+        viewHolder.tv10.setText(mData.get(po).getRecruiter().getPositionName());
 
 
         viewHolder.tv7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(),mData.get(po).getOpened());
+                    onItemClickListener.OnItemClickListener(viewHolder.tv7, mData.get(po).getId(), mData.get(po).getOpened());
                 }
             }
         });
@@ -100,7 +130,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(),mData.get(po).getOpened());
+                    onItemClickListener.OnItemClickListener(viewHolder.llView, mData.get(po).getId(), mData.get(po).getOpened());
                 }
             }
         });
@@ -123,9 +153,14 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
                 final String str = flowData.get(i);
                 radioButton.setText(str);
                 radioButton.setGravity(Gravity.CENTER);
-                radioButton.setTextSize(13);
+                radioButton.setTextSize(12);
                 radioButton.setPadding(ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6), ViewUtil.dp2px(mContext, 10), ViewUtil.dp2px(mContext, 6));
-                radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                if (opened.equals("0")) {
+                    radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.zhiwei_location_text));
+                } else if (opened.equals("1")) {
+                    radioButton.setTextColor(mContext.getResources().getColorStateList(R.color.text_color));
+                }
+
                 //radioButton.setBackgroundResource(R.drawable.search_selector);
                 radioButton.setBackgroundResource(R.drawable.button_shape03);
                 radioButton.setFocusable(true);
@@ -148,6 +183,10 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
         return mData == null ? 0 : mData.size();
     }
 
+    @OnClick(R.id.tv9)
+    public void onViewClicked() {
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv1)
         TextView tv1;
@@ -168,13 +207,25 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
         @BindView(R.id.recyclerView)
         RecyclerView recyclerView;
         @BindView(R.id.llView)
-        LinearLayout llView;
+        RelativeLayout llView;
         @BindView(R.id.roundedImageView)
-        RoundedImageView roundedImageView;
+        ShoucangCircleImageview roundedImageView;
         @BindView(R.id.tv6)
         TextView tv6;
         @BindView(R.id.tv7)
         TextView tv7;
+        @BindView(R.id.menban)
+        ShoucangCircleImageview menban;
+        @BindView(R.id.company_name)
+        TextView companyName;
+        @BindView(R.id.line_one)
+        View lineOne;
+        @BindView(R.id.line_two)
+        View lineTwo;
+        @BindView(R.id.tv9)
+        TextView tv9;
+        @BindView(R.id.tv10)
+        TextView tv10;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -184,7 +235,7 @@ public class MyShouCangGangAdapter extends RecyclerView.Adapter<MyShouCangGangAd
 
 
     public interface OnItemClickListener {
-        void OnItemClickListener(View view, String id,String open);
+        void OnItemClickListener(View view, String id, String open);
     }
 
     public void setOnItemClickListener(OnItemClickListener OnItemClickListener) {

@@ -523,40 +523,6 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             @Override
             public void onSuccess(Response response, VersionBean resultBean) {
 
-                /*String result = resultBean.getResult();
-                String resultNote = resultBean.getResultNote();
-
-
-                if (result.equals("0")) {
-                    String number = resultBean.getNum();
-                    String version = resultBean.getVersion();
-                    String type = resultBean.getType();
-                    String url = resultBean.getAndroidUrl();
-                    String content = resultBean.getContent();
-                    int numberServer = Integer.parseInt(number);
-                    int verCode = APKVersionCodeUtils.getVersionCode(mContext);
-                    if (numberServer > verCode) {
-                        Log.i(TAG, "xuanZe: 执行1111111111");
-                        AllenVersionChecker
-                                .getInstance()
-                                .downloadOnly(
-                                        UIData.create().setDownloadUrl(url).setTitle("发现新版本").setContent("是否立即更新")
-                                ).setNotificationBuilder(
-                                NotificationBuilder.create()
-                                        .setRingtone(true)
-                                        .setIcon(R.mipmap.logo)
-                                        .setTicker("版本更新")
-                                        .setContentTitle("版本更新")
-                                        .setContentText("正在下载....")
-                        ).setShowDownloadingDialog(false).executeMission(mContext);
-                    } else {
-                        //ToastFactory.getToast(mContext, "没有发现新版本").show();
-                    }
-                } else {
-                    showToast(resultNote);
-                    return;
-                }*/
-
                 String url = resultBean.getAndroidFile();
                 String updateNo = resultBean.getNum();
                 String versionNo = resultBean.getVersion();

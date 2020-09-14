@@ -2,7 +2,9 @@ package com.lx.zhaopin.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,10 +23,15 @@ import com.lx.zhaopin.utils.ToastFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Response;
 
 public class FeedActivity extends BaseActivity implements View.OnClickListener {
 
+    @BindView(R.id.title_tv)
+    TextView titleTv;
     private TextView okID;
     private EditText edit2;
     private EditText edit1;
@@ -32,18 +39,40 @@ public class FeedActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.feed_activity);
+        ButterKnife.bind(this);
         init();
     }
 
     private void init() {
-        topTitle.setText("意见反馈");
-
+        titleTv.setText("意见反馈");
+        baseTop.setVisibility(View.GONE);
+//        topLayout.setBackgroundColor(getResources().getColor(R.color.fee_color));
         edit1 = findViewById(R.id.edit1);
         edit2 = findViewById(R.id.edit2);
         okID = findViewById(R.id.okID);
-
-
         okID.setOnClickListener(this);
+
+        edit1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                 String content=edit1.getText().toString().trim();
+                 if(!TextUtils.isEmpty(content)){
+                     okID.setBackgroundResource(R.drawable.code_bg);
+                 }else {
+                     okID.setBackgroundResource(R.drawable.code_noselect_bg);
+                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
 
     }
@@ -102,5 +131,22 @@ public class FeedActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+
+        }
     }
 }

@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.hr.HRSystemBean;
+import com.lx.zhaopin.view.XmCircleImageview;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HRMessage3Adapter extends RecyclerView.Adapter<HRMessage3Adapter.ViewHolder> {
 
@@ -123,7 +123,7 @@ public class HRMessage3Adapter extends RecyclerView.Adapter<HRMessage3Adapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.roundedImageView)
-        CircleImageView roundedImageView;
+        XmCircleImageview roundedImageView;
         @BindView(R.id.tv1)
         TextView tv1;
         @BindView(R.id.tv2)

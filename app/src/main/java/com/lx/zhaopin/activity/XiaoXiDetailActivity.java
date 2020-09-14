@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.adapter.XiaoXiDetailAdapter;
@@ -24,21 +25,28 @@ import com.lx.zhaopin.view.MyDialog;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Response;
 
 public class XiaoXiDetailActivity extends BaseActivity {
 
+    @BindView(R.id.title_tv)
+    TextView titleTv;
     private RecyclerView recyclerView;
     private String messageId;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.xiaoxidetail_activity);
+        ButterKnife.bind(this);
         init();
     }
 
     private void init() {
-        topTitle.setText("消息");
+        titleTv.setText("消息");
+        baseTop.setVisibility(View.GONE);
         messageId = getIntent().getStringExtra("messageId");
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -128,5 +136,21 @@ public class XiaoXiDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+        }
     }
 }

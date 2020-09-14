@@ -1,6 +1,7 @@
 package com.lx.zhaopin.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,13 +14,17 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.MessageDetailBean;
+import com.lx.zhaopin.view.TimeUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapter.ViewHolder> {
+
 
 
     private List<MessageDetailBean.DataListBean> mData;
@@ -48,7 +53,8 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
         //聊天状态 chatStatus
         // 1 已沟通 2 已投递 3 已预约 4 待面试 5 已到达
         // 6 面试已取消 7 已面试 8 同意入职 9 拒绝入职  10 拒绝面试 11 已录取  12 不合适 13 已邀约
-
+        viewHolder.tv3.setVisibility(View.VISIBLE);
+        viewHolder.offerLayout.setVisibility(View.GONE);
         switch (chatStatus) {
             case "1":
                 viewHolder.tv1.setText("已沟通");
@@ -72,7 +78,7 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
                 viewHolder.tv1.setText("已面试");
                 // feedback 是否已反馈1是0否
                 if (feedback.equals("0")) {
-                    viewHolder.feedTv.setVisibility(View.VISIBLE);
+                    viewHolder.feedTv.setVisibility(View.GONE);
                 }
 
                 break;
@@ -87,6 +93,8 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
                 break;
             case "11":
                 viewHolder.tv1.setText("已录取");
+                viewHolder.tv3.setVisibility(View.GONE);
+                viewHolder.offerLayout.setVisibility(View.VISIBLE);
                 break;
             case "12":
                 viewHolder.tv1.setText("不合适");
@@ -96,7 +104,21 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
                 break;
         }
 
-        viewHolder.tv2.setText(mData.get(i).getChatDate());
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date = formatter.parse(mData.get(i).getLastChatDate());
+            long time = date.getTime();
+            String year = TimeUtils.getYearTime_(time);
+            String yue = TimeUtils.getMonthTime_(time);
+            String day = TimeUtils.getDayTime_(time);
+            String minite = TimeUtils.getHourTime(time);
+            viewHolder.tv2.setText(year + "年" + yue + "月" + day + "日 " + minite);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        viewHolder.tv6.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        viewHolder.tv6.getPaint().setAntiAlias(true);//抗锯齿
 
         if (!TextUtils.isEmpty(mData.get(i).getSubhead())) {
             viewHolder.tv3.setText(mData.get(i).getSubhead());
@@ -109,20 +131,32 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
 
         //imageState
         if (i == 0) {
-            viewHolder.imageState.setImageResource(R.drawable.yuanquan);
+            viewHolder.imageState.setBackgroundResource(R.drawable.code_bg);
+            viewHolder.msgLine.setBackgroundResource(R.drawable.code_bg);
+            viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.main_blue));
+            viewHolder.tv3.setTextColor(mContext.getResources().getColor(R.color.main_blue));
         } else {
-            viewHolder.imageState.setImageResource(R.drawable.yuanquan3);
+            viewHolder.imageState.setImageResource(R.drawable.xiaoxi_before_bg);
+            viewHolder.msgLine.setBackgroundResource(R.drawable.xiaoxi_before_bg);
+            viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
+            viewHolder.tv3.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
         }
 
         viewHolder.feedTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (feedClickListener != null){
+                if (feedClickListener != null) {
                     feedClickListener.feedClick(mData.get(i).getCorrelation());
                 }
             }
         });
 
+//        viewHolder.offerLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
     }
 
@@ -147,20 +181,29 @@ public class XiaoXiDetailAdapter extends RecyclerView.Adapter<XiaoXiDetailAdapte
         @BindView(R.id.llView)
         LinearLayout llView;
 
+        @BindView(R.id.msg_line)
+        View msgLine;
+
+        @BindView(R.id.tv5)
+        TextView tv5;
+        @BindView(R.id.tv6)
+        TextView tv6;
+        @BindView(R.id.offer_layout)
+        LinearLayout offerLayout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public interface OnFeedClickListener{
+    public interface OnFeedClickListener {
         void feedClick(String id);
     }
 
-    public void setOnFeedClickListener(OnFeedClickListener onFeedClickListener){
+    public void setOnFeedClickListener(OnFeedClickListener onFeedClickListener) {
         feedClickListener = onFeedClickListener;
     }
-
 
 
 }

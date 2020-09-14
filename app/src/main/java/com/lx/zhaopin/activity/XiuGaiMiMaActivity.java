@@ -43,7 +43,7 @@ public class XiuGaiMiMaActivity extends BaseActivity implements View.OnClickList
 
     private void init() {
         topTitle.setText("修改密码");
-
+        baseback.setImageResource(R.drawable.login_close_img);
         phone = SPTool.getSessionValue(AppSP.USER_PHONE);
         tv1 = findViewById(R.id.tv1);
         faCode = findViewById(R.id.faCode);

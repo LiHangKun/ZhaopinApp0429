@@ -1,17 +1,20 @@
 package com.lx.zhaopin.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.bean.PhoneStateBean;
+import com.lx.zhaopin.common.NoticeDetailActivity;
 import com.lx.zhaopin.http.BaseCallback;
 import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
@@ -44,8 +47,11 @@ public class ResetPwActivity extends BaseActivity {
     TextView faCode;
     @BindView(R.id.okID)
     TextView okID;
+    private boolean duiHaoBoolean = true;
 
     String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
+    @BindView(R.id.imageDui)
+    ImageView imageDui;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class ResetPwActivity extends BaseActivity {
 
     private void init() {
         topTitle.setText("找回密码");
+        baseTop.setVisibility(View.GONE);
     }
 
     @Override
@@ -68,9 +75,34 @@ public class ResetPwActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.faCode, R.id.okID})
+    @OnClick({R.id.faCode, R.id.okID, R.id.imageDui,R.id.tv3,R.id.tv4,R.id.back_layout})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.back_layout:
+                onBackPressed();
+                break;
+            case R.id.imageDui:
+                duiHaoBoolean = !duiHaoBoolean;
+                if (duiHaoBoolean) {
+                    imageDui.setImageResource(R.drawable.zhifu_yixuan);
+                } else {
+                    imageDui.setImageResource(R.drawable.zhifu_weixuan);
+                }
+                break;
+            case R.id.tv3:
+                //用户协议
+                Intent intent = new Intent(mContext, NoticeDetailActivity.class);
+                intent.putExtra("title", "用户协议");
+                intent.putExtra("titleUrl", NetClass.Web_XieYi1);
+                startActivity(intent);
+                break;
+            case R.id.tv4:
+                //隐私政策
+                Intent yinsi = new Intent(mContext, NoticeDetailActivity.class);
+                yinsi.putExtra("title", "隐私政策");
+                yinsi.putExtra("titleUrl", NetClass.Web_XieYi2);
+                startActivity(yinsi);
+                break;
             case R.id.faCode:
                 if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
                     ToastFactory.getToast(mContext, "手机号不能为空").show();
@@ -99,6 +131,9 @@ public class ResetPwActivity extends BaseActivity {
                 } else if (!edit3.getText().toString().trim().matches(regex)) {
                     ToastFactory.getToast(mContext, "密码必须8--16位包含数字加字母,请重试").show();
                     //edit2.setText("");
+                    return;
+                }else if (!duiHaoBoolean) {
+                    ToastFactory.getToast(mContext, "请先同意协议").show();
                     return;
                 } else {
                     zhaoHuiMethod(edit1.getText().toString().trim(), edit2.getText().toString().trim(), MD5Util.encrypt(edit3.getText().toString().trim()));
@@ -192,4 +227,10 @@ public class ResetPwActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

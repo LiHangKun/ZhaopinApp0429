@@ -35,9 +35,9 @@ import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.rongmessage.RongUtil;
+import com.lx.zhaopin.utils.BussEvent;
 import com.lx.zhaopin.utils.GaoDeUtils;
 import com.lx.zhaopin.utils.SPTool;
-import com.lx.zhaopin.utils.TellUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.view.MyDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -45,6 +45,7 @@ import com.zhy.m.permission.MPermissions;
 import com.zhy.m.permission.PermissionGrant;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
@@ -98,6 +99,8 @@ public class MianShiDetailType2Activity extends BaseActivity {
     LinearLayout qiuZhiView;
     @BindView(R.id.quxiaoTv)
     TextView quxiaoTv;
+    @BindView(R.id.title_tv)
+    TextView titleTv;
     private String lng;
     private String lat;
     private String id;
@@ -155,6 +158,9 @@ public class MianShiDetailType2Activity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
         stopLocation();
     }
 
@@ -245,7 +251,8 @@ public class MianShiDetailType2Activity extends BaseActivity {
     }
 
     private void init() {
-        topTitle.setText("面试详情");
+        titleTv.setText("面试详情");
+        baseTop.setVisibility(View.GONE);
         /*if (!EventBus.getDefault().isRegistered(this)) {//判断是否已经注册了（避免崩溃）
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }*/
@@ -254,6 +261,14 @@ public class MianShiDetailType2Activity extends BaseActivity {
         getMianShiDetail(interviewId2);
 
 
+    }
+
+
+    @Subscribe
+    public void onEventMainThread(BussEvent event) {
+        if (event.getState() == BussEvent.REFRESH_MIANSHIDETAIL) {
+            getMianShiDetail(interviewId2);
+        }
     }
 
 
@@ -266,7 +281,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
             @Override
             public void onSuccess(Response response, MianShiDetailBean resultBean) {
                 tv1.setText(resultBean.getCompany().getName());
-                tv2.setText(resultBean.getInterviewDate() + " 面试");
+                tv2.setText(resultBean.getInterviewDate() + "面试");
                 hrid = resultBean.getHRID();
                 hrName = resultBean.getHRName();
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
@@ -285,23 +300,28 @@ public class MianShiDetailType2Activity extends BaseActivity {
                     case "1":
                         imageState.setImageResource(R.drawable.daitongyi);
                         qiuZhiView.setVisibility(View.GONE);
+                        quxiaoTV.setVisibility(View.VISIBLE);
                         break;
                     case "2":
                         imageState.setImageResource(R.drawable.yijujue);
                         qiuZhiView.setVisibility(View.GONE);
+                        quxiaoTV.setVisibility(View.GONE);
                         break;
                     case "3":
                         imageState.setImageResource(R.drawable.daimianshi);
                         qiuZhiView.setVisibility(View.VISIBLE);
+                        quxiaoTV.setVisibility(View.VISIBLE);
                         break;
                     case "4":
                         imageState.setImageResource(R.drawable.yichaoshi);
                         qiuZhiView.setVisibility(View.GONE);
+                        quxiaoTV.setVisibility(View.GONE);
                         break;
                     case "5":
                         imageState.setImageResource(R.drawable.yidaoda);
                         qiuZhiView.setVisibility(View.GONE);
                         dongTaiTv.setVisibility(View.VISIBLE);
+                        quxiaoTV.setVisibility(View.VISIBLE);
                         dongTaiTv.setText("我已面试");
                         break;
                     case "6":
@@ -309,29 +329,33 @@ public class MianShiDetailType2Activity extends BaseActivity {
                         tv3.setText("取消原因:" + resultBean.getCancelReason());
                         tv3.setVisibility(View.VISIBLE);
                         qiuZhiView.setVisibility(View.GONE);
+                        quxiaoTV.setVisibility(View.GONE);
                         break;
                     case "7":
                         imageState.setImageResource(R.drawable.yitongyi);
                         qiuZhiView.setVisibility(View.GONE);
+                        quxiaoTV.setVisibility(View.GONE);
                         break;
                     case "8":
                         imageState.setImageResource(R.drawable.buheshi);
                         tv3.setText("不合适原因:" + resultBean.getDenyReason());
                         tv3.setVisibility(View.VISIBLE);
                         qiuZhiView.setVisibility(View.GONE);
+                        quxiaoTV.setVisibility(View.GONE);
                         break;
                     case "9":
                         //图标实际是 已面试
                         imageState.setImageResource(R.drawable.yidaoda);
                         // feedback  是否已反馈1是0否
-                        if (feedback.equals("1")){
+                        if (feedback.equals("1")) {
                             dongTaiTv.setVisibility(View.GONE);
                             qiuZhiView.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             qiuZhiView.setVisibility(View.GONE);
                             dongTaiTv.setVisibility(View.VISIBLE);
                             dongTaiTv.setText("我要反馈");
                         }
+                        quxiaoTV.setVisibility(View.GONE);
                         break;
                     case "10":
                     case "11":
@@ -339,6 +363,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
                         imageState.setImageResource(R.drawable.yidaoda);
                         qiuZhiView.setVisibility(View.GONE);
                         dongTaiTv.setVisibility(View.GONE);
+                        quxiaoTV.setVisibility(View.GONE);
                         break;
 
 
@@ -401,7 +426,7 @@ public class MianShiDetailType2Activity extends BaseActivity {
     @PermissionGrant(AppSP.PMS_CALL_PHONE)
     public void pmsLocationSuccess() {
         //权限授权成功
-        TellUtil.tell(mContext, phone);
+//        TellUtil.tell(mContext, phone);
     }
 
     /*拨打电话*/
@@ -507,31 +532,37 @@ public class MianShiDetailType2Activity extends BaseActivity {
                 break;
             case R.id.quxiaoTV:
                 //取消面试的弹框
-                View view = getLayoutInflater().inflate(R.layout.dialog_quxiao_mianshi, null);
-                final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view, R.style.DialogTheme2);
-                final EditText edit1 = view.findViewById(R.id.edit1);
-                mMyDialog.setCancelable(true);
-                mMyDialog.show();
-
-                view.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mMyDialog.dismiss();
-                    }
-                });
-
-                view.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
-                            ToastFactory.getToast(mContext, "取消原因不能为空").show();
-                            return;
-                        } else {
-                            quXiaoMianShiMe(id, edit1.getText().toString().trim());
-                            mMyDialog.dismiss();
-                        }
-                    }
-                });
+                Intent mianshiCancle=new Intent(this,QuxiaoMianshiActivity.class);
+                RongUtil.qiuZhiQuXiao(hrid, interviewId2);
+                mianshiCancle.putExtra("quxiaoID",id);
+                mianshiCancle.putExtra("hridContent",hrid);
+                mianshiCancle.putExtra("interviewId2Content",interviewId2);
+                startActivity(mianshiCancle);
+//                View view = getLayoutInflater().inflate(R.layout.dialog_quxiao_mianshi, null);
+//                final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view, R.style.DialogTheme2);
+//                final EditText edit1 = view.findViewById(R.id.edit1);
+//                mMyDialog.setCancelable(true);
+//                mMyDialog.show();
+//
+//                view.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        mMyDialog.dismiss();
+//                    }
+//                });
+//
+//                view.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
+//                            ToastFactory.getToast(mContext, "取消原因不能为空").show();
+//                            return;
+//                        } else {
+//                            quXiaoMianShiMe(id, edit1.getText().toString().trim());
+//                            mMyDialog.dismiss();
+//                        }
+//                    }
+//                });
         }
     }
 
@@ -675,4 +706,20 @@ public class MianShiDetailType2Activity extends BaseActivity {
         return packageNames.contains(packageName);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+        }
+    }
 }

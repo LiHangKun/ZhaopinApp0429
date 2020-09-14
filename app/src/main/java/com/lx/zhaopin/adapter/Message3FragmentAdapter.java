@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.SystemMessageListBean;
+import com.lx.zhaopin.view.XmCircleImageview;
 
 import java.util.List;
 
@@ -54,31 +55,31 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
         switch (messageType) {
             case "1":
                 viewHolder.tv1.setText(mData.get(i).getTitle());
-                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
+//                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
                 break;
             case "2":
                 viewHolder.tv1.setText(mData.get(i).getTitle());
-                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
+//                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
                 break;
             case "3":
                 viewHolder.tv1.setText(mData.get(i).getTitle());
-                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
+//                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
                 break;
             case "4":
                 viewHolder.tv1.setText(mData.get(i).getTitle());
-                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
+//                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
                 break;
             case "5":
                 viewHolder.tv1.setText(mData.get(i).getTitle());
-                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
+//                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_xinshenq);
                 break;
             case "6":
                 viewHolder.tv1.setText(mData.get(i).getTitle());
-                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
+//                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
                 break;
             case "7":
                 viewHolder.tv1.setText(mData.get(i).getTitle());
-                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
+//                viewHolder.roundedImageView.setImageResource(R.drawable.xiaoxi_zhushou);
                 break;
         }
 
@@ -87,11 +88,13 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
             Log.i(TAG, "onBindViewHolder: 是否已读" + unread + "<<<<<<-------");
             //1 是 0 否
             switch (unread) {
-                case "1":
-                    viewHolder.unTV.setVisibility(View.VISIBLE);
-                    break;
                 case "0":
+                    viewHolder.unTV.setVisibility(View.VISIBLE);
+                    viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.text_color));
+                    break;
+                case "1":
                     viewHolder.unTV.setVisibility(View.GONE);
+                    viewHolder.tv1.setTextColor(mContext.getResources().getColor(R.color.zhiwei_location_text));
                     break;
             }
         } catch (Exception e) {
@@ -128,7 +131,7 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.roundedImageView)
-        CircleImageView roundedImageView;
+        XmCircleImageview roundedImageView;
         @BindView(R.id.tv1)
         TextView tv1;
         @BindView(R.id.tv2)

@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white">
+    <include layout="@layout/title_layout"/>
 
 
     <ScrollView
@@ -14,6 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="-120dp"
+            android:background="@drawable/about_us"
             android:orientation="vertical">
 
 
@@ -22,6 +26,7 @@
                 android:layout_height="@dimen/dp_100"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dp_80"
+                android:visibility="gone"
                 android:src="@drawable/luqu_logo" />
 
 
@@ -30,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_100"
+                android:layout_marginTop="@dimen/dp_500"
                 android:layout_marginRight="@dimen/dp_10">
 
                 <LinearLayout
@@ -45,8 +50,8 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:gravity="center"
                         android:text="公司名称"
-                        android:textColor="#333"
-                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -56,6 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dp_80"
                     android:orientation="horizontal">
 
                     <TextView
@@ -65,12 +71,10 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
-                        android:maxLength="20"
-                        android:singleLine="true"
                         android:text=""
-                        android:textColor="#333"
+                        android:textColor="@color/text_color"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -88,11 +92,6 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="@dimen/dp_3"
-                android:background="#e7e7e7" />
 
             <RelativeLayout
                 android:id="@+id/relView2"
@@ -113,8 +112,8 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:gravity="center"
                         android:text="客服热线"
-                        android:textColor="#333"
-                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -124,6 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dp_80"
                     android:orientation="horizontal">
 
                     <TextView
@@ -136,9 +136,9 @@
                         android:maxLength="20"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="#4989FF"
+                        android:textColor="@color/text_color"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -156,11 +156,6 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="@dimen/dp_3"
-                android:background="#e7e7e7" />
 
             <RelativeLayout
                 android:id="@+id/relView3"
@@ -181,8 +176,8 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:gravity="center"
                         android:text="企业邮箱"
-                        android:textColor="#333"
-                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -192,6 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dp_80"
                     android:orientation="horizontal">
 
                     <TextView
@@ -204,9 +200,9 @@
                         android:maxLength="20"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="#333"
+                        android:textColor="@color/text_color"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -224,11 +220,6 @@
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="@dimen/dp_3"
-                android:background="#e7e7e7" />
 
             <RelativeLayout
                 android:id="@+id/relView4"
@@ -249,8 +240,8 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:gravity="center"
                         android:text="公司网址"
-                        android:textColor="#333"
-                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -260,6 +251,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dp_80"
                     android:orientation="horizontal">
 
                     <TextView
@@ -269,12 +261,10 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
-                        android:maxLength="20"
-                        android:singleLine="true"
                         android:text=""
-                        android:textColor="#333"
+                        android:textColor="@color/text_color"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -291,12 +281,6 @@
 
 
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="@dimen/dp_3"
-                android:background="#e7e7e7" />
 
             <RelativeLayout
                 android:id="@+id/relView5"
@@ -317,8 +301,8 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:gravity="center"
                         android:text="公司地址"
-                        android:textColor="#333"
-                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -328,6 +312,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dp_80"
                     android:orientation="horizontal">
 
                     <TextView
@@ -337,12 +322,10 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
-                        android:maxLength="20"
-                        android:singleLine="true"
                         android:text=""
-                        android:textColor="#333"
+                        android:textColor="@color/text_color"
                         android:textIsSelectable="true"
-                        android:textSize="@dimen/sp_14"
+                        android:textSize="@dimen/sp_16"
                         android:textStyle="normal" />
 
 
@@ -356,15 +339,7 @@
                         android:visibility="invisible" />
 
                 </LinearLayout>
-
-
             </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="@dimen/dp_3"
-                android:background="#e7e7e7" />
 
 
         </LinearLayout>

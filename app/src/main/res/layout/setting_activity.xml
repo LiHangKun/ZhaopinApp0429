@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/fee_color"
     android:orientation="vertical">
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="#F7F9FA" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       >
+       <include layout="@layout/title_layout"/>
 
     <RelativeLayout
         android:id="@+id/relView1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_55"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10">
 
@@ -30,8 +32,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:gravity="center"
                 android:text="修改密码"
-                android:textColor="#333"
-                android:textSize="@dimen/sp_14"
+                android:textColor="#151413"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />
 
 
@@ -47,16 +49,10 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/dp_3"
-        android:background="#dddddd" />
-
     <RelativeLayout
         android:id="@+id/relView2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_55"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10">
 
@@ -72,8 +68,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:gravity="center"
                 android:text="常见问题"
-                android:textColor="#333"
-                android:textSize="@dimen/sp_14"
+                android:textColor="#151413"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />
 
 
@@ -89,23 +85,13 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/dp_3"
-        android:background="#dddddd" />
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="#F7F9FA" />
 
 
     <RelativeLayout
         android:id="@+id/relView3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_55"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10">
 
@@ -121,8 +107,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:gravity="center"
                 android:text="意见反馈"
-                android:textColor="#333"
-                android:textSize="@dimen/sp_14"
+                android:textColor="#151413"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />
 
 
@@ -138,16 +124,11 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/dp_3"
-        android:background="#dddddd" />
 
     <RelativeLayout
         android:id="@+id/relView4"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_55"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10">
 
@@ -163,8 +144,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:gravity="center"
                 android:text="清除缓存"
-                android:textColor="#333"
-                android:textSize="@dimen/sp_14"
+                android:textColor="#151413"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />
 
 
@@ -183,9 +164,9 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_5"
                 android:gravity="center"
-                android:text="0.00"
-                android:textColor="#333"
-                android:textSize="@dimen/sp_14"
+                android:text="0.00KB"
+                android:textColor="#1678FF"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />
 
             <ImageView
@@ -202,17 +183,12 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/dp_3"
-        android:background="#dddddd" />
 
 
     <RelativeLayout
         android:id="@+id/relView5"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_55"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10">
 
@@ -228,8 +204,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:gravity="center"
                 android:text="关于我们"
-                android:textColor="#333"
-                android:textSize="@dimen/sp_14"
+                android:textColor="#151413"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />
 
 
@@ -245,17 +221,12 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/dp_3"
-        android:background="#dddddd" />
 
 
     <RelativeLayout
         android:id="@+id/relViewCui1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_55"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10">
 
@@ -271,8 +242,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:gravity="center"
                 android:text="用户协议"
-                android:textColor="#333"
-                android:textSize="@dimen/sp_14"
+                android:textColor="#151413"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />
 
 
@@ -288,17 +259,11 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/dp_3"
-        android:background="#dddddd" />
-
 
     <RelativeLayout
         android:id="@+id/relViewCui2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="@dimen/dp_55"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10">
 
@@ -314,8 +279,8 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:gravity="center"
                 android:text="隐私政策"
-                android:textColor="#333"
-                android:textSize="@dimen/sp_14"
+                android:textColor="#151413"
+                android:textSize="@dimen/sp_16"
                 android:textStyle="normal" />
 
 
@@ -330,11 +295,6 @@
 
 
     </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="@dimen/dp_3"
-        android:background="#dddddd" />
 
 
     <RelativeLayout
@@ -342,6 +302,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
         android:layout_marginLeft="@dimen/dp_10"
+        android:visibility="gone"
         android:layout_marginRight="@dimen/dp_10">
 
         <LinearLayout
@@ -373,26 +334,16 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="#F7F9FA" />
-
-
-
+   </LinearLayout>
 
     <TextView
         android:id="@+id/okID"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
-        android:layout_marginLeft="@dimen/dp_38"
-        android:layout_marginTop="@dimen/dp_100"
-        android:layout_marginRight="@dimen/dp_38"
-        android:background="@drawable/button_shape"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="116dp"
         android:gravity="center"
         android:text="退出登录"
-        android:textColor="#fff"
+        android:textColor="#939393"
         android:textSize="@dimen/sp_16" />
-
-
-</LinearLayout>
+</RelativeLayout>

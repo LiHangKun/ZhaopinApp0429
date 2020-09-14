@@ -1,6 +1,7 @@
 package com.lx.zhaopin.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,13 +27,18 @@ import com.lx.zhaopin.utils.SPTool;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
-    private RelativeLayout relView1, relView2, relView3, relView4, relView5, relViewCui1, relViewCui2,relViewCui3;
+    @BindView(R.id.title_tv)
+    TextView titleTv;
+    private RelativeLayout relView1, relView2, relView3, relView4, relView5, relViewCui1, relViewCui2, relViewCui3;
     private TextView okID;
     private TextView text1;
     private static final String TAG = "SettingActivity";
@@ -41,11 +47,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.setting_activity);
+        ButterKnife.bind(this);
         init();
     }
 
     private void init() {
-        topTitle.setText("设置");
+        titleTv.setText("我的设置");
+        baseTop.setVisibility(View.GONE);
 
         relView1 = findViewById(R.id.relView1);
         relView2 = findViewById(R.id.relView2);
@@ -56,6 +64,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         relViewCui2 = findViewById(R.id.relViewCui2);
         relViewCui3 = findViewById(R.id.relViewCui3);
         okID = findViewById(R.id.okID);
+        okID.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        okID.getPaint().setAntiAlias(true);//抗锯齿
 
         text1 = findViewById(R.id.text1);
 
@@ -75,9 +85,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
 
 
     }
@@ -200,5 +207,21 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             }
         });
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+        }
     }
 }

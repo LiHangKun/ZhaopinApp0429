@@ -3,10 +3,12 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -44,27 +46,48 @@ public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.View
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
-                .load(mData.get(i).getLogo()).into(viewHolder.roundedImageView);
+                .load(mData.get(i).getCompanyLogo()).into(viewHolder.roundedImageView);
 
-        viewHolder.tv1.setText(mData.get(i).getName());
-        viewHolder.tv3.setText(mData.get(i).getFinancing().getName());
-        viewHolder.tv4.setText(mData.get(i).getStaffNum() + "人");
-        viewHolder.tv5.setText(mData.get(i).getIndustry().getName());
+        if (!TextUtils.isEmpty(mData.get(i).getCompanyName())) {
+            viewHolder.tv1.setText(mData.get(i).getCompanyName());
+        }
+        if (TextUtils.isEmpty(mData.get(i).getFinancingName())) {
+            viewHolder.tv3.setText(mData.get(i).getFinancingName());
+        }
+
+        if (!TextUtils.isEmpty(mData.get(i).getCompanyNum())) {
+            viewHolder.tv4.setText(mData.get(i).getCompanyNum());
+        }
+
+        if (!TextUtils.isEmpty(mData.get(i).getIndustryName())) {
+            viewHolder.tv5.setText(mData.get(i).getIndustryName());
+        }
+
+        if (!TextUtils.isEmpty(mData.get(i).getCompanyIntro())) {
+            viewHolder.jieshaoTv.setText(mData.get(i).getCompanyIntro());
+        }
+
+        if (!TextUtils.isEmpty(mData.get(i).getPositionName())) {
+            viewHolder.zhiweiTv.setText(mData.get(i).getPositionName());
+        }
+
+        viewHolder.zhiweiCount.setText("等"+mData.get(i).getPositionNum()+"个职位");
+
 
         viewHolder.tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClick(viewHolder.tv2,mData.get(i).getId());
+                    itemClickListener.OnItemClick(viewHolder.tv2, mData.get(i).getCompanyId());
                 }
             }
         });
 
-        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.enterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (itemClickListener != null) {
-                    itemClickListener.OnItemClick(viewHolder.llView,mData.get(i).getId());
+                    itemClickListener.OnItemClick(viewHolder.llView, mData.get(i).getCompanyId());
                 }
             }
         });
@@ -93,6 +116,15 @@ public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.View
         @BindView(R.id.llView)
         LinearLayout llView;
 
+        @BindView(R.id.jieshao_tv)
+        TextView jieshaoTv;
+        @BindView(R.id.zhiwei_tv)
+        TextView zhiweiTv;
+        @BindView(R.id.zhiwei_count)
+        TextView zhiweiCount;
+        @BindView(R.id.enter_layout)
+        RelativeLayout enterLayout;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -100,7 +132,7 @@ public class MyGuanZhuAdapter extends RecyclerView.Adapter<MyGuanZhuAdapter.View
     }
 
     public interface OnItemClickListener {
-        void OnItemClick(View view ,String id);
+        void OnItemClick(View view, String id);
     }
 
     public void SetOnItemClickListener(OnItemClickListener OnItemClickListener) {

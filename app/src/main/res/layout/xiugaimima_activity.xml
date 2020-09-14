@@ -9,50 +9,51 @@
     <TextView
         android:id="@+id/tv1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_50"
-        android:layout_marginRight="@dimen/dp_10"
+        android:layout_height="@dimen/dp_35"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_150"
+        android:layout_marginRight="@dimen/dp_20"
         android:background="@null"
         android:gravity="center_vertical"
         android:inputType="phone"
         android:maxLength="11"
         android:text=""
-        android:textColor="#333"
-        android:textSize="@dimen/sp_14" />
+        android:textColor="#151413"
+        android:textSize="@dimen/sp_17" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginRight="@dimen/dp_10"
-        android:background="#e7e7e7" />
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="#F1F1F1" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edit1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="请输入验证码"
+            android:hint="验证码:"
             android:inputType="number"
             android:maxLength="6"
-            android:textColor="#333"
-            android:textSize="@dimen/sp_14" />
+            android:textColor="#151413"
+            android:textColorHint="#949494"
+            android:textSize="@dimen/sp_17" />
 
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="right"
             android:orientation="horizontal">
@@ -65,17 +66,19 @@
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginRight="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_5"
+                android:visibility="gone"
                 android:background="#e7e7e7" />
 
             <TextView
                 android:id="@+id/faCode"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="33dp"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_20"
+                android:background="@drawable/code_bg"
                 android:gravity="center"
                 android:text="获取验证码"
-                android:textColor="#347BFF"
+                android:textColor="#fff"
                 android:textSize="@dimen/sp_14" />
 
 
@@ -86,45 +89,45 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginRight="@dimen/dp_10"
-        android:background="#e7e7e7" />
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_136"
+        android:background="#F1F1F1" />
 
     <EditText
         android:id="@+id/edit2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_0"
-        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginRight="@dimen/dp_20"
         android:background="@null"
-        android:hint="请输入密码"
+        android:hint="登录密码:"
         android:inputType="textPassword"
         android:maxLength="16"
         android:text=""
-        android:textColor="#333"
-        android:textSize="@dimen/sp_14" />
+        android:textColor="#151413"
+        android:textColorHint="#949494"
+        android:textSize="@dimen/sp_17" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginRight="@dimen/dp_10"
-        android:background="#e7e7e7" />
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:background="#F1F1F1" />
 
     <TextView
         android:id="@+id/okID"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_45"
-        android:layout_marginLeft="@dimen/dp_38"
+        android:layout_marginLeft="@dimen/dp_34"
         android:layout_marginTop="@dimen/dp_100"
-        android:layout_marginRight="@dimen/dp_38"
+        android:layout_marginRight="@dimen/dp_34"
         android:background="@drawable/button_shape"
         android:gravity="center"
         android:text="确定"
+        android:textSize="17sp"
         android:textColor="#fff" />
 
 

@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lx.zhaopin.R;
-import com.lx.zhaopin.bean.MianShiListBean;
+import com.lx.zhaopin.bean.DaimianshiBean;
+import com.lx.zhaopin.bean.WeimianshiDetailBean;
 
 import java.util.List;
 
@@ -21,12 +22,12 @@ import butterknife.ButterKnife;
 public class DaiMianShiListAdapter extends RecyclerView.Adapter<DaiMianShiListAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<MianShiListBean.DataListBean> mData;
+    private List<WeimianshiDetailBean.DataListBean> mData;
 
     public DaiMianShiListAdapter() {
     }
 
-    public DaiMianShiListAdapter(Context context, List<MianShiListBean.DataListBean> allList) {
+    public DaiMianShiListAdapter(Context context, List<WeimianshiDetailBean.DataListBean> allList) {
         mContext = context;
         mData = allList;
     }
@@ -41,7 +42,7 @@ public class DaiMianShiListAdapter extends RecyclerView.Adapter<DaiMianShiListAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.tv1.setText(mData.get(i).getDate());
-        List<MianShiListBean.DataListBean.InterviewsBean> interviews = mData.get(i).getInterviews();
+        List<WeimianshiDetailBean.DataListBean.InterviewsBean> interviews = mData.get(i).getInterviews();
         DaiMianShi_In_ListAdapter daiMianShi_in_listAdapter = new DaiMianShi_In_ListAdapter(mContext, interviews);
         viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         viewHolder.recyclerView.setAdapter(daiMianShi_in_listAdapter);

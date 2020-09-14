@@ -1,6 +1,7 @@
 package com.lx.zhaopin.activity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -51,7 +52,9 @@ public class RegActivity extends BaseActivity {
     TextView tv4;
     @BindView(R.id.okID)
     TextView okID;
-    private boolean duiHaoBoolean = false;
+    @BindView(R.id.denglu_tv)
+    TextView dengluTv;
+    private boolean duiHaoBoolean = true;
     private static final String TAG = "RegActivity";
     private Intent intent;
     String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$";
@@ -60,6 +63,9 @@ public class RegActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.reg_activity);
         ButterKnife.bind(this);
+        baseTop.setVisibility(View.GONE);
+        dengluTv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+        dengluTv.getPaint().setAntiAlias(true);//抗锯齿
         init();
     }
 
@@ -78,9 +84,16 @@ public class RegActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.faCode, R.id.imageDui, R.id.okID, R.id.tv3, R.id.tv4})
+    @OnClick({R.id.faCode, R.id.imageDui, R.id.okID, R.id.tv3, R.id.tv4, R.id.back_layout,R.id.denglu_tv})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.denglu_tv:
+                //密码登录
+                startActivity(new Intent(mContext, Login2PassWordActivity.class));
+                break;
+            case R.id.back_layout:
+                onBackPressed();
+                break;
             case R.id.faCode:
                 if (TextUtils.isEmpty(edit1.getText().toString().trim())) {
                     ToastFactory.getToast(mContext, "手机号不能为空").show();
@@ -222,5 +235,12 @@ public class RegActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

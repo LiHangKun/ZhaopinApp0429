@@ -94,5 +94,16 @@
     <color name="renZheng2">#FE7A38</color>
     <color name="renZheng3">#ff0000</color>
     <color name="renZheng4">#0f0</color>
-
+    <color name="search_bg">#80ffffff</color>
+    <color name="zhiwei_location_text">#939393</color>
+    <color name="open_bg">#B3ffffff</color>
+    <color name="wode_xiaoxi_color">#F6646F</color>
+    <color name="wode_save_color">#B3F6646F</color>
+    <color name="fee_color">#FAFAFA</color>
+    <color name="text_color">#151413</color>
+    <color name="main_blue">#1678FF</color>
+    <color name="main_grey">#F1F1F1</color>
+    <color name="tanchuang_bg">#F2F2F2</color>
+    <color name="cancle_text">#007AFF</color>
+    <color name="pop_line">#3C3C43</color>
 </resources>

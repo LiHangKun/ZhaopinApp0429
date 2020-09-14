@@ -31,6 +31,7 @@ import com.lin.cardlib.utils.ReItemTouchHelper;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.Login1PhoneCodeActivity;
 import com.lx.zhaopin.activity.MyShouCangGangActivity;
+import com.lx.zhaopin.activity.PingBiGangActivity;
 import com.lx.zhaopin.activity.SearchActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.adapter.CardAdapter;
@@ -103,6 +104,12 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private ImageView fl_list;
     private ImageView dituImage;
     private CardAdapter cardAdapter;
+    private LinearLayout openLayout;
+    private ImageView closeImg;
+    private ImageView pingbiImg;
+    private ImageView openSHouCangImg;
+    private LinearLayout shouCangLayout;
+    private ImageView openImg;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -164,6 +171,45 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         tuCeng2 = view.findViewById(R.id.tuCeng2);
         allTuCeng = view.findViewById(R.id.allTuCeng);
 
+        openLayout=view.findViewById(R.id.open_layout);
+        closeImg=view.findViewById(R.id.close_img);
+        pingbiImg=view.findViewById(R.id.pingbi_img);
+        openSHouCangImg=view.findViewById(R.id.open_list);
+        shouCangLayout=view.findViewById(R.id.yincang_layout);
+        openImg=view.findViewById(R.id.open_img);
+
+
+
+        openImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shouCangLayout.setVisibility(View.GONE);
+                openLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        closeImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shouCangLayout.setVisibility(View.VISIBLE);
+                openLayout.setVisibility(View.GONE);
+            }
+        });
+
+        pingbiImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //已屏蔽记录
+                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+                    Intent intent = new Intent(getActivity(), PingBiGangActivity.class);
+                    startActivity(intent);
+                } else {
+                    ToastFactory.getToast(getActivity(), "请先登录").show();
+                    startActivity(new Intent(getActivity(), Login1PhoneCodeActivity.class));
+                    return;
+                }
+            }
+        });
 
         boolean tuCeng = SPTool.getSessionValue(AppSP.tuCeng, false);
 
@@ -214,79 +260,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         fl_list = view.findViewById(R.id.fl_list);
 
         fl_list.setOnClickListener(this);
-
-
-        //allListKa = new ArrayList<>();
-        //recyclerViewKa.setItemAnimator(new DefaultItemAnimator());
-        //myAdapter = new MyAdapter();
-        //recyclerViewKa.setAdapter(myAdapter);
-
-        //kaPositon
-
-        /*CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(recyclerViewKa.getAdapter(), allList);
-        cardCallback.setOnSwipedListener(new OnSwipeListener<ShouYeQiuZhiZheBean.DataListBean>() {
-
-            @Override
-            public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
-
-                MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
-                viewHolder.itemView.setAlpha(1 - Math.abs(ratio) * 0.2f);
-                if (direction == CardConfig.SWIPING_LEFT) {
-                    //myHolder.dislikeImageView.setAlpha(Math.abs(ratio));
-                } else if (direction == CardConfig.SWIPING_RIGHT) {
-                    //myHolder.likeImageView.setAlpha(Math.abs(ratio));
-                } else {
-                    //myHolder.dislikeImageView.setAlpha(0f);
-                    //myHolder.likeImageView.setAlpha(0f);
-                }
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, ShouYeQiuZhiZheBean.DataListBean o, int direction) {
-                MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
-                viewHolder.itemView.setAlpha(1f);
-                //myHolder.dislikeImageView.setAlpha(0f);
-                //myHolder.likeImageView.setAlpha(0f);
-
-                if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
-                    if (direction == CardConfig.SWIPED_LEFT) {
-                        //不喜欢
-                        buXiHuan(o.getId());
-                    } else {
-                        //喜欢
-                        xiHuan(o.getId());
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onSwipedClear() {
-                recyclerViewKa.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        if (nowPageIndex < totalPage) {
-                            nowPageIndex++;
-                            Log.e(TAG, "onLoadMore: http 加载下一页了");
-                            getDataList("1", "", SPTool.getSessionValue(AppSP.sStringJ), SPTool.getSessionValue(AppSP.sStringW), cityId, String.valueOf(nowPageIndex), AppSP.pageCount);
-                            recyclerViewKa.getAdapter().notifyDataSetChanged();
-                        } else {
-                            Log.e(TAG, "onLoadMore: http  相等不可刷新");
-                            dituImage.setVisibility(View.GONE);
-                        }
-
-
-                    }
-                }, 60L);
-            }
-
-        });
-        final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
-        final CardLayoutManager cardLayoutManager = new CardLayoutManager(recyclerViewKa, touchHelper);
-        recyclerViewKa.setLayoutManager(cardLayoutManager);
-        touchHelper.attachToRecyclerView(recyclerViewKa);*/
 
 
         //getDataList
@@ -374,156 +347,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
 
     }
 
-
-    /*private class MyAdapter extends RecyclerView.Adapter {
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-            return new MyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-            RoundedImageView avatarImageView = ((MyViewHolder) holder).roundedImageView;
-            ImageView imageState = ((MyViewHolder) holder).imageState;
-            TextView tv1 = ((MyViewHolder) holder).tv1;
-            TextView tv2 = ((MyViewHolder) holder).tv2;
-            TextView tv3 = ((MyViewHolder) holder).tv3;
-            TextView tv4 = ((MyViewHolder) holder).tv4;
-            TextView tv5 = ((MyViewHolder) holder).tv5;
-            TextView tv6 = ((MyViewHolder) holder).tv6;
-            TextView tv7 = ((MyViewHolder) holder).tv7;
-            TextView tv8 = ((MyViewHolder) holder).tv8;
-            TextView tv9 = ((MyViewHolder) holder).tv9;
-            TextView tv10 = ((MyViewHolder) holder).tv10;
-            TextView tv11 = ((MyViewHolder) holder).tv11;
-            TextView tv12 = ((MyViewHolder) holder).tv12;
-            TextView tv1Cui = ((MyViewHolder) holder).tv1Cui;
-            RecyclerView recyclerViewGongSi = ((MyViewHolder) holder).recyclerViewGongSi;
-            LinearLayout llViewALL = ((MyViewHolder) holder).llViewALL;
-            FrameLayout onClickView = ((MyViewHolder) holder).onClickView;
-
-
-            Glide.with(getActivity()).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
-                    .error(R.mipmap.imageerror)).load(allList.get(position).getCompany().getLogo()).into(avatarImageView);
-
-
-            String positionType = allList.get(position).getPositionType();
-            switch (positionType) {
-                case "1":
-                case "2":
-                    imageState.setVisibility(View.INVISIBLE);
-                    tv1Cui.setBackground(null);
-                    tv1.setVisibility(View.GONE);
-                    tv1Cui.setVisibility(View.VISIBLE);
-                    tv1Cui.setText(allList.get(position).getName());
-                    tv1Cui.setTextColor(getActivity().getResources().getColor(R.color.txt_lv7));
-                    break;
-                case "3":
-                    imageState.setVisibility(View.VISIBLE);
-                    tv1Cui.setVisibility(View.GONE);
-                    tv1.setVisibility(View.VISIBLE);
-                    tv1.setText(allList.get(position).getName());
-                    tv1.setBackground(getResources().getDrawable(R.drawable.biaoqian));
-                    tv1.setTextColor(getActivity().getResources().getColor(R.color.white));
-                    break;
-
-            }
-            tv2.setText(allList.get(position).getMinSalary() + "K - " + allList.get(position).getMaxSalary() + "K");
-            tv3.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName());
-            tv4.setText(allList.get(position).getExperienceYear().getName());
-            tv5.setText(allList.get(position).getEducation().getName());
-            tv6.setText(allList.get(position).getDuty());
-            tv7.setText(allList.get(position).getCity().getName() + allList.get(position).getDistrict().getName() + allList.get(position).getLocation());
-            tv8.setText(allList.get(position).getCompany().getName());
-            tv9.setText(allList.get(position).getCompany().getFinancingName());
-            tv10.setText(allList.get(position).getCompany().getIndustry2Name());
-            tv11.setText(allList.get(position).getCompany().getStaffNum());
-            tv12.setText(allList.get(position).getCompany().getService());
-
-            //列表的展示形式
-            List<String> gongSiImageList = new ArrayList<>();
-            String images = allList.get(position).getCompany().getImages();
-            String[] split = images.split("\\|");
-            for (int i = 0; i < split.length; i++) {
-                gongSiImageList.add(split[i]);
-            }
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);//
-            recyclerViewGongSi.setLayoutManager(linearLayoutManager);
-            PingJiaImageAdapter pingJiaImageAdapter = new PingJiaImageAdapter(getActivity(), gongSiImageList);
-            recyclerViewGongSi.setAdapter(pingJiaImageAdapter);
-            pingJiaImageAdapter.setOnItemClickListener(new PingJiaImageAdapter.OnItemClickListener() {
-                @Override
-                public void OnItemClickListener(int position) {
-                    //showImage(new ImageView(getActivity()), position);
-                }
-            });
-
-
-            //onClickView
-            onClickView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    *//*if (itemCliCkListener != null) {
-                        itemCliCkListener.onItemClickListener(position, allList.get(position).getId());
-                    }*//*
-                    Log.i(TAG, "onClick: 点击到我了2222222");
-                    Intent intent = new Intent(getActivity(), GangWeiDetailActivity.class);
-                    intent.putExtra("pid", allList.get(position).getId());
-                    startActivity(intent);
-
-
-                }
-            });
-
-
-        }
-
-        @Override
-        public int getItemCount() {
-            Log.i(TAG, "getItemCount: 集合的个数" + allList.size());
-            return allList == null ? 0 : allList.size();
-        }
-
-        class MyViewHolder extends RecyclerView.ViewHolder {
-
-            RoundedImageView roundedImageView;
-            ImageView imageState;
-            FrameLayout onClickView;
-            RecyclerView recyclerViewGongSi;
-            LinearLayout llViewALL;
-            TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tv9, tv10, tv11, tv12, tv1Cui;
-
-            MyViewHolder(View itemView) {
-                super(itemView);
-                roundedImageView = itemView.findViewById(R.id.roundedImageView);
-                imageState = itemView.findViewById(R.id.imageState);
-                tv1 = itemView.findViewById(R.id.tv1);
-                tv2 = itemView.findViewById(R.id.tv2);
-
-                tv3 = itemView.findViewById(R.id.tv3);
-                tv4 = itemView.findViewById(R.id.tv4);
-                tv5 = itemView.findViewById(R.id.tv5);
-                tv6 = itemView.findViewById(R.id.tv6);
-                tv7 = itemView.findViewById(R.id.tv7);
-
-                tv8 = itemView.findViewById(R.id.tv8);
-                tv9 = itemView.findViewById(R.id.tv9);
-                tv10 = itemView.findViewById(R.id.tv10);
-                tv11 = itemView.findViewById(R.id.tv11);
-                tv12 = itemView.findViewById(R.id.tv12);
-                tv1Cui = itemView.findViewById(R.id.tv1Cui);
-                recyclerViewGongSi = itemView.findViewById(R.id.recyclerView);
-                onClickView = itemView.findViewById(R.id.onClickView);
-                llViewALL = itemView.findViewById(R.id.llViewALL);
-            }
-
-        }
-
-
-    }*/
 
 
     //通过监听viewpager滑动改变Checked的属性

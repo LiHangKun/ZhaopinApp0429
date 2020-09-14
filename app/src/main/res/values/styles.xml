@@ -148,4 +148,14 @@
     </style>
     <!--自定义输入框-->
 
+
+    <style name="shareDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@drawable/tanchuang_bg</item>
+    </style>
+
+
 </resources>

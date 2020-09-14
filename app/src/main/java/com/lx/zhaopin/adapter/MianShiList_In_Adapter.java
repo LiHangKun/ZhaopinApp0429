@@ -17,6 +17,7 @@ import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.MianShiDetailType2Activity;
 import com.lx.zhaopin.activity.QiuZhiFeedActivity;
 import com.lx.zhaopin.bean.MianShiListBean;
+import com.lx.zhaopin.view.ShoucangCircleImageview;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MianShiList_In_Adapter extends RecyclerView.Adapter<MianShiList_In_Adapter.ViewHolder> {
+
 
 
     private List<MianShiListBean.DataListBean.InterviewsBean> mData;
@@ -49,9 +51,18 @@ public class MianShiList_In_Adapter extends RecyclerView.Adapter<MianShiList_In_
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
-                .error(R.mipmap.imageerror)).load(mData.get(i).getCompany().getLogo()).into(viewHolder.roundedImageView);
-
-        viewHolder.tv1.setText(mData.get(i).getCompany().getName());
+                .error(R.mipmap.imageerror)).load(mData.get(i).getRecruiter().getAvatar()).into(viewHolder.headImg);
+        viewHolder.tv1.setText(mData.get(i).getPosition().getName());
+        viewHolder.companyName.setText(mData.get(i).getCompany().getName());
+        viewHolder.addressTv.setText(mData.get(i).getLocation());
+//        if(null!=mData.get(i).getExperienceYear()){
+//            if(!TextUtils.isEmpty(mData.get(i).getPosition().getExperienceYear().getName())){
+//                viewHolder.yearTv.setText(mData.get(i).getPosition().getExperienceYear().getName());
+//            }
+//        }
+        viewHolder.priceTv.setText(mData.get(i).getPosition().getMinSalary() + "k-" + mData.get(i).getPosition().getMaxSalary() + "k");
+        viewHolder.nameTv.setText(mData.get(i).getRecruiter().getName());
+        viewHolder.zhiweiName.setText(mData.get(i).getRecruiter().getPositionName());
         viewHolder.tv3.setText(mData.get(i).getInterviewDate().substring(11, mData.get(i).getInterviewDate().length()));
         viewHolder.tv2.setText("面试：" + mData.get(i).getPosition().getName() + " " + mData.get(i).getPosition().getMinSalary() + "-" + mData.get(i).getPosition().getMaxSalary() + "K");
 
@@ -85,7 +96,7 @@ public class MianShiList_In_Adapter extends RecyclerView.Adapter<MianShiList_In_
         }
 
 
-        viewHolder.llView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.offerTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //跳转到求职者的面试记录
@@ -131,6 +142,25 @@ public class MianShiList_In_Adapter extends RecyclerView.Adapter<MianShiList_In_
         TextView tv3;
         @BindView(R.id.llView)
         LinearLayout llView;
+
+        @BindView(R.id.price_tv)
+        TextView priceTv;
+        @BindView(R.id.company_name)
+        TextView companyName;
+        @BindView(R.id.address_tv)
+        TextView addressTv;
+        @BindView(R.id.year_tv)
+        TextView yearTv;
+        @BindView(R.id.work_tv)
+        TextView workTv;
+        @BindView(R.id.head_img)
+        ShoucangCircleImageview headImg;
+        @BindView(R.id.name_tv)
+        TextView nameTv;
+        @BindView(R.id.zhiwei_name)
+        TextView zhiweiName;
+        @BindView(R.id.offer_tv)
+        TextView offerTv;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

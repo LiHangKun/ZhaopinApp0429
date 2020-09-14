@@ -1,14 +1,18 @@
 package com.lx.zhaopin.common;
 
+import android.Manifest;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
@@ -19,9 +23,17 @@ import com.zhy.m.permission.PermissionGrant;
 
 import org.greenrobot.eventbus.EventBus;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 public class NoticeDetailActivity extends BaseActivity {
 
+    @BindView(R.id.title_tv)
+    TextView titleTv;
+    @BindView(R.id.title_layout)
+    RelativeLayout titleLayout;
     private WebView webView;
     private String phone;
 
@@ -34,6 +46,7 @@ public class NoticeDetailActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContainer(R.layout.noticedetail_activity);
+        ButterKnife.bind(this);
         init();
     }
 
@@ -41,13 +54,15 @@ public class NoticeDetailActivity extends BaseActivity {
     private void init() {
         String title = getIntent().getStringExtra("title");
         String titleUrl = getIntent().getStringExtra("titleUrl");
+        baseTop.setVisibility(View.GONE);
 
 
         MyWebView webView1 = findViewById(R.id.webView);
         webView = webView1.getWebView();
 
 
-        topTitle.setText(title);
+        titleTv.setText(title);
+        titleLayout.setBackgroundColor(getResources().getColor(R.color.white));
         webView.loadUrl(titleUrl);
 
         WebSettings settings = webView1.getWebView().getSettings();
@@ -107,7 +122,7 @@ public class NoticeDetailActivity extends BaseActivity {
         if (null != phone) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 MPermissions.requestPermissions(this, AppSP.PMS_LOCATION,
-                        android.Manifest.permission.CALL_PHONE
+                        Manifest.permission.CALL_PHONE
                 );
             } else {
                 pmsLocationSuccess();
@@ -133,5 +148,21 @@ public class NoticeDetailActivity extends BaseActivity {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.left_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.left_layout:
+                onBackPressed();
+                break;
+        }
     }
 }
