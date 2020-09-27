@@ -301,6 +301,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 SPTool.addSessionMap(AppSP.USER_NAME, resultBean.getName());
                 SPTool.addSessionMap(AppSP.USER_ICON, resultBean.getAvatar());
                 SPTool.addSessionMap(AppSP.UID, SPTool.getSessionValue(AppSP.UID));
+                SPTool.addSessionMap(AppSP.sex, resultBean.getSex());
 
                 //是否具有hr权限
                /* switch (recruiter) {

@@ -93,7 +93,7 @@
                             android:layout_marginLeft="@dimen/dp_5"
                             android:gravity="center"
                             android:text="  请输入关键词搜索"
-                            android:textColor="@color/white"
+                            android:textColor="@color/search_bg"
                             android:textSize="@dimen/sp_14" />
 
 
@@ -106,7 +106,7 @@
                 <ImageView
                     android:id="@+id/selectView"
                     android:layout_width="wrap_content"
-                    android:layout_height="15dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_5"

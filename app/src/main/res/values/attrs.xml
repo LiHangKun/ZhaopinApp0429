@@ -65,33 +65,33 @@
 
 
     <!--自定义密码输入框 明文-->
-   <!-- <declare-styleable name="PayPsdInputViewMing">
+    <!-- <declare-styleable name="PayPsdInputViewMing">
 
-        <attr name="maxCount1" format="integer" />
-        <attr name="circleColor1" format="color" />
-        <attr name="bottomLineColor1" format="color" />
-        <attr name="radius1" format="dimension" />
-        <attr name="divideLineWidth1" format="dimension" />
-        <attr name="divideLineColor1" format="color" />
-        <attr name="rectAngle1" format="dimension" />
-        <attr name="focusedColor1" format="color" />
-        <attr name="psdType1" format="enum">
-            <enum name="weChat" value="0" />
-            <enum name="bottomLine" value="1" />
-        </attr>
-    </declare-styleable>-->
+         <attr name="maxCount1" format="integer" />
+         <attr name="circleColor1" format="color" />
+         <attr name="bottomLineColor1" format="color" />
+         <attr name="radius1" format="dimension" />
+         <attr name="divideLineWidth1" format="dimension" />
+         <attr name="divideLineColor1" format="color" />
+         <attr name="rectAngle1" format="dimension" />
+         <attr name="focusedColor1" format="color" />
+         <attr name="psdType1" format="enum">
+             <enum name="weChat" value="0" />
+             <enum name="bottomLine" value="1" />
+         </attr>
+     </declare-styleable>-->
 
 
     <!--自定义星星
     https://www.jianshu.com/p/c2a13f6fdeea
     -->
     <declare-styleable name="ShadowContainer">
-        <attr name="containerShadowColor" format="color"/>
-        <attr name="containerShadowRadius" format="dimension"/>
-        <attr name="containerDeltaLength" format="dimension"/>
-        <attr name="containerCornerRadius" format="dimension"/>
-        <attr name="deltaX" format="dimension"/>
-        <attr name="deltaY" format="dimension"/>
+        <attr name="containerShadowColor" format="color" />
+        <attr name="containerShadowRadius" format="dimension" />
+        <attr name="containerDeltaLength" format="dimension" />
+        <attr name="containerCornerRadius" format="dimension" />
+        <attr name="deltaX" format="dimension" />
+        <attr name="deltaY" format="dimension" />
     </declare-styleable>
 
 
@@ -131,8 +131,8 @@
 
     <!--头像堆积-->
     <declare-styleable name="PileLayout">
-        <attr name="PileLayout_vertivalSpace" format="dimension"/>
-        <attr name="PileLayout_pileWidth" format="dimension"/>
+        <attr name="PileLayout_vertivalSpace" format="dimension" />
+        <attr name="PileLayout_pileWidth" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="WebViewWithProgress1">
@@ -146,9 +146,9 @@
 
     <!--圆形进度条2-->
     <declare-styleable name="MyMarkerRoundProcess">
-        <attr name="roundColor2" format="color"/>
-        <attr name="roundProgressColor2" format="color"/>
-        <attr name="roundProgressColor3" format="color"/>
+        <attr name="roundColor2" format="color" />
+        <attr name="roundProgressColor2" format="color" />
+        <attr name="roundProgressColor3" format="color" />
         <attr name="textColors2" format="color" />
         <attr name="textSize2" format="dimension" />
         <!-- 圆环的宽度 -->
@@ -185,7 +185,6 @@
         <attr name="cards_width" format="dimension" />
         <attr name="cards_height" format="dimension" />
     </declare-styleable>
-
 
 
     <declare-styleable name="Banner">
@@ -247,11 +246,38 @@
 
         <!--<attr name="indicator_animator_reverse" format="reference" />-->
 
-
     </declare-styleable>
 
 
+    <declare-styleable name="TabView">
+        <attr name="icon" format="reference" />
+        <attr name="hasMessage" format="boolean" />
+        <attr name="tabName" format="string" />
+    </declare-styleable>
 
+    <declare-styleable name="CustomTextView">
+        <attr name="bcNormalSolidColor" format="color" />
+        <attr name="bcSelectedSolidColor" format="color" />
+        <attr name="background_corner_radius" format="dimension" />
+        <attr name="textNormalTextColor" format="color" />
+        <attr name="textSelectedTextColor" format="color" />
+        <attr name="bcNormalStrokeColor" format="color" />
+        <attr name="bcNormalStrokeWidth" format="dimension" />
+    </declare-styleable>
 
+    <declare-styleable name="CustomRelativeLayout">
+        <attr name="bcSolidColor" format="color" />
+        <attr name="bc_corner_radius" format="dimension" />
+        <attr name="bcStrokeColor" format="color" />
+        <attr name="bcStrokeWidth" format="dimension" />
+        <attr name="bcStrokeGapWidth" format="dimension" />
+    </declare-styleable>
 
+    <declare-styleable name="CustomLinearLayout">
+        <attr name="linearBcSolidColor" format="color" />
+        <attr name="linearBc_corner_radius" format="dimension" />
+        <attr name="linearBcStrokeColor" format="color" />
+        <attr name="linearBcStrokeWidth" format="dimension" />
+        <attr name="linearBcStrokeGapWidth" format="dimension" />
+    </declare-styleable>
 </resources>

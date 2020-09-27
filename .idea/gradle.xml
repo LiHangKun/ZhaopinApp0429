@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
@@ -20,6 +18,8 @@
             <option value="$PROJECT_DIR$/cardlib" />
             <option value="$PROJECT_DIR$/dialog" />
             <option value="$PROJECT_DIR$/flowlayout-lib" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/okhttp" />
             <option value="$PROJECT_DIR$/permission-annotation" />
             <option value="$PROJECT_DIR$/permissiongen" />
             <option value="$PROJECT_DIR$/pickerview" />

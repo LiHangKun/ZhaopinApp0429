@@ -1,5 +1,6 @@
 package com.lx.zhaopin.common;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -33,6 +34,13 @@ public class FragmentDreamAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return fragments.size();
     }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return null;
+    }
+
 
 
 }

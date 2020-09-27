@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -27,7 +28,7 @@ import com.lx.zhaopin.utils.StatusBarUtil;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private Dialog dialog;
-    protected TextView topTitle, rightText;
+    protected TextView topTitle, rightText,  rightNextParentText;
     protected ImageView rightIcon;
     private FrameLayout container;
     private LinearLayout root;
@@ -53,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_base);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mContext = this;
         root = findViewById(R.id.root);
 
@@ -61,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         viewBase = findViewById(R.id.view);
         topTitle = (TextView) baseTop.findViewById(R.id.title);
         rightText = (TextView) baseTop.findViewById(R.id.rightText);
+        rightNextParentText = (TextView) baseTop.findViewById(R.id.right_tv);
         rightIcon = (ImageView) baseTop.findViewById(R.id.rightIcon);
         baseback = (ImageView) baseTop.findViewById(R.id.back);
         backImg=(ImageView) baseTop.findViewById(R.id.back_img);

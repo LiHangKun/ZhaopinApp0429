@@ -1,10 +1,14 @@
 package com.lx.zhaopin.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +33,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.other.WheelDialog;
 import com.lx.zhaopin.utils.SPTool;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,15 +66,12 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
     TextView tv3;
     @BindView(R.id.llView3)
     LinearLayout llView3;
-    @BindView(R.id.tv4)
-    TextView tv4;
-    @BindView(R.id.llView4)
-    LinearLayout llView4;
-
-    @BindView(R.id.addZhiWei)
-    RelativeLayout addZhiWei;
+    @BindView(R.id.add_qiuzhi_view)
+    RelativeLayout addQiuzhiView;
     private List<QiuZhiyiXiangBean.ResumeExpectationListBean> allList;
     private QiuZhiYiXiangAdapter qiuZhiYiXiangAdapter;
+    private WheelDialog workStateDialog;
+    private WheelDialog workArrivalDialog;
 
 
     @Override
@@ -88,6 +90,10 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
 
     private void init() {
         topTitle.setText("求职意向");
+        rightNextParentText.setVisibility(View.VISIBLE);
+        rightNextParentText.setTextSize(14);
+        rightNextParentText.setTextColor(Color.parseColor("#151413"));
+        setRightTextNum(0);
         getDataList();
 
         allList = new ArrayList<>();
@@ -108,6 +114,13 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
         }
 
 
+    }
+
+    private void setRightTextNum(int num) {
+        String str = num + "/3";
+        SpannableString spannableString = new SpannableString(str);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#1678FF")), 0, 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        rightNextParentText.setText(spannableString);
     }
 
     private static final String TAG = "QiuZhiYiXiangActivity";
@@ -132,9 +145,12 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
 
                 if (resultBean.getResumeExpectationList() != null) {
                     if (resultBean.getResumeExpectationList().size() != 0) {
+                        setRightTextNum(resultBean.getResumeExpectationList().size());
                         allList.clear();
                         allList.addAll(resultBean.getResumeExpectationList());
                         qiuZhiYiXiangAdapter.notifyDataSetChanged();
+                    } else {
+                        setRightTextNum(0);
                     }
                 }
 
@@ -154,16 +170,16 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
                 //工作状态 1.离职-随时到岗，2.在职-月内到岗 3.在职-考虑机会 4.在职-暂不考虑
                 switch (jobStatus) {
                     case "1":
-                        tv3.setText("离职-随时到岗");
+                        tv2.setText("离职-随时到岗");
                         break;
                     case "2":
-                        tv3.setText("在职-月内到岗");
+                        tv2.setText("在职-月内到岗");
                         break;
                     case "3":
-                        tv3.setText("在职-考虑机会");
+                        tv2.setText("在职-考虑机会");
                         break;
                     case "4":
-                        tv3.setText("在职-暂不考虑");
+                        tv2.setText("在职-暂不考虑");
                         break;
                 }
 
@@ -172,13 +188,13 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
                 //到岗时间 1.一周 2.半个月 3.一个月
                 switch (arrivalTime) {
                     case "1":
-                        tv4.setText("一周");
+                        tv3.setText("一周");
                         break;
                     case "2":
-                        tv4.setText("半个月");
+                        tv3.setText("半个月");
                         break;
                     case "3":
-                        tv4.setText("一个月");
+                        tv3.setText("一个月");
                         break;
                 }
 
@@ -222,7 +238,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
     }
 
     // 8342740fa1fe419dac350c34b6031adf
-    @OnClick({R.id.llView1, R.id.llView2, R.id.llView3, R.id.llView4, R.id.addZhiWei})
+    @OnClick({R.id.llView1, R.id.llView2, R.id.llView3, R.id.add_qiuzhi_view})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llView1:
@@ -230,19 +246,16 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
                 fabuMethod1();
                 lightoff();
                 break;
-            case R.id.llView3:
+            case R.id.llView2:
                 //我的状态
                 fabuMethod2();
-                lightoff();
                 break;
-            case R.id.llView4:
+            case R.id.llView3:
                 //到岗时间
                 fabuMethod3();
-                lightoff();
                 break;
-            case R.id.addZhiWei:
-                //添加主次职位
-                Intent intent = new Intent(mContext, QiuZhiQiWangActivity.class);
+            case R.id.add_qiuzhi_view:
+                Intent intent = new Intent(this, QiuZhiYiXiangAddActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -312,13 +325,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
                     lighton();
                 }
             });
-            popupView1.findViewById(R.id.cancelImage).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow1.dismiss();
-                    lighton();
-                }
-            });
+
         }
 
         // 在点击之后设置popupwindow的销毁
@@ -343,104 +350,117 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
 
     //TODO---------------------------------------------------------------
     private void fabuMethod2() {
-        if (popupWindow2 == null) {
-            popupView2 = View.inflate(this, R.layout.pop_layout_ben2_layout, null);
-            TextView tv1Click = popupView2.findViewById(R.id.tv1);
-            TextView tv2Click = popupView2.findViewById(R.id.tv2);
-            TextView tv3Click = popupView2.findViewById(R.id.tv3);
-            TextView tv4Click = popupView2.findViewById(R.id.tv4);
+//        if (popupWindow2 == null) {
+//            popupView2 = View.inflate(this, R.layout.pop_layout_ben2_layout, null);
+//            TextView tv1Click = popupView2.findViewById(R.id.tv1);
+//            TextView tv2Click = popupView2.findViewById(R.id.tv2);
+//            TextView tv3Click = popupView2.findViewById(R.id.tv3);
+//            TextView tv4Click = popupView2.findViewById(R.id.tv4);
+//
+//            // 参数2,3：指明popupwindow的宽度和高度
+//            popupWindow2 = new PopupWindow(popupView2, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//            popupWindow2.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                @Override
+//                public void onDismiss() {
+//                    lighton();
+//                }
+//            });
+//
+//            //离职-随时到岗
+//            tv1Click.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    tv3.setText("离职-随时到岗");
+//                    editYiXiangMe("2", "1");
+//                    popupWindow2.dismiss();
+//                    lighton();
+//                }
+//            });
+//            //在职-月内到岗
+//            tv2Click.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    tv3.setText("在职-月内到岗");
+//                    editYiXiangMe("2", "2");
+//                    popupWindow2.dismiss();
+//                    lighton();
+//                }
+//            });
+//            //在职-考虑机会
+//            tv3Click.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    tv3.setText("在职-考虑机会");
+//                    editYiXiangMe("2", "3");
+//                    popupWindow2.dismiss();
+//                    lighton();
+//                }
+//            });
+//            //在职-暂不考虑
+//            tv4Click.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    tv3.setText("在职-暂不考虑");
+//                    editYiXiangMe("2", "4");
+//                    popupWindow2.dismiss();
+//                    lighton();
+//                }
+//            });
+//
+//
+//            // 设置背景图片， 必须设置，不然动画没作用
+//            popupWindow2.setBackgroundDrawable(new BitmapDrawable());
+//            popupWindow2.setFocusable(true);
+//
+//            // 设置点击popupwindow外屏幕其它地方消失
+//            popupWindow2.setOutsideTouchable(true);
+//
+//            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
+//            animation2 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
+//
+//            animation2.setInterpolator(new AccelerateInterpolator());
+//            animation2.setDuration(200);
+//
+//            popupView2.findViewById(R.id.tvCancel).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    popupWindow2.dismiss();
+//                    lighton();
+//                }
+//            });
+//            popupView2.findViewById(R.id.cancelImage).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    popupWindow2.dismiss();
+//                    lighton();
+//                }
+//            });
+//        }
+//
+//        // 在点击之后设置popupwindow的销毁
+//        if (popupWindow2.isShowing()) {
+//            popupWindow2.dismiss();
+//            lighton();
+//        }
+//
+//        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+//        popupWindow2.showAtLocation(findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+//        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+//        popupView2.startAnimation(animation2);
 
-            // 参数2,3：指明popupwindow的宽度和高度
-            popupWindow2 = new PopupWindow(popupView2, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            popupWindow2.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        if (workStateDialog == null) {
+            workStateDialog = new WheelDialog(this);
+            workStateDialog.setItems(new String[]{"离职—随时到岗", "在职—月内到岗", "在职—考虑机会", "在职—暂不考虑"});
+            workStateDialog.setTitle("工作状态");
+            workStateDialog.setDialogListener(new WheelDialog.DialogListener() {
                 @Override
-                public void onDismiss() {
-                    lighton();
-                }
-            });
-
-            //离职-随时到岗
-            tv1Click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tv3.setText("离职-随时到岗");
-                    editYiXiangMe("2", "1");
-                    popupWindow2.dismiss();
-                    lighton();
-                }
-            });
-            //在职-月内到岗
-            tv2Click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tv3.setText("在职-月内到岗");
-                    editYiXiangMe("2", "2");
-                    popupWindow2.dismiss();
-                    lighton();
-                }
-            });
-            //在职-考虑机会
-            tv3Click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tv3.setText("在职-考虑机会");
-                    editYiXiangMe("2", "3");
-                    popupWindow2.dismiss();
-                    lighton();
-                }
-            });
-            //在职-暂不考虑
-            tv4Click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tv3.setText("在职-暂不考虑");
-                    editYiXiangMe("2", "4");
-                    popupWindow2.dismiss();
-                    lighton();
-                }
-            });
-
-
-            // 设置背景图片， 必须设置，不然动画没作用
-            popupWindow2.setBackgroundDrawable(new BitmapDrawable());
-            popupWindow2.setFocusable(true);
-
-            // 设置点击popupwindow外屏幕其它地方消失
-            popupWindow2.setOutsideTouchable(true);
-
-            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
-            animation2 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
-
-            animation2.setInterpolator(new AccelerateInterpolator());
-            animation2.setDuration(200);
-
-            popupView2.findViewById(R.id.tvCancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow2.dismiss();
-                    lighton();
-                }
-            });
-            popupView2.findViewById(R.id.cancelImage).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow2.dismiss();
-                    lighton();
+                public void confirm(String s, int num) {
+                    tv2.setText(s);
+                    editYiXiangMe("2", String.valueOf(num + 1));
                 }
             });
         }
-
-        // 在点击之后设置popupwindow的销毁
-        if (popupWindow2.isShowing()) {
-            popupWindow2.dismiss();
-            lighton();
-        }
-
-        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-        popupWindow2.showAtLocation(findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-        popupView2.startAnimation(animation2);
-
+        workStateDialog.show();
     }
 
 
@@ -452,92 +472,106 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
 
     //TODO---------------------------------------------------------------
     private void fabuMethod3() {
-        if (popupWindow3 == null) {
-            popupView3 = View.inflate(this, R.layout.pop_layout_ben3_layout, null);
-            TextView tv1Click = popupView3.findViewById(R.id.tv1);
-            TextView tv2Click = popupView3.findViewById(R.id.tv2);
-            TextView tv3Click = popupView3.findViewById(R.id.tv3);
+//        if (popupWindow3 == null) {
+//            popupView3 = View.inflate(this, R.layout.pop_layout_ben3_layout, null);
+//            TextView tv1Click = popupView3.findViewById(R.id.tv1);
+//            TextView tv2Click = popupView3.findViewById(R.id.tv2);
+//            TextView tv3Click = popupView3.findViewById(R.id.tv3);
+//
+//            // 参数2,3：指明popupwindow的宽度和高度
+//            popupWindow3 = new PopupWindow(popupView3, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+//            popupWindow3.setOnDismissListener(new PopupWindow.OnDismissListener() {
+//                @Override
+//                public void onDismiss() {
+//                    lighton();
+//                }
+//            });
+//
+//            //一周
+//            tv1Click.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    tv4.setText("一周");
+//                    editYiXiangMe("3", "1");
+//                    popupWindow3.dismiss();
+//                    lighton();
+//                }
+//            });
+//            //半个月
+//            tv2Click.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    tv4.setText("半个月");
+//                    editYiXiangMe("3", "2");
+//                    popupWindow3.dismiss();
+//                    lighton();
+//                }
+//            });
+//            //一个月
+//            tv3Click.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    tv4.setText("一个月");
+//                    editYiXiangMe("3", "3");
+//                    popupWindow3.dismiss();
+//                    lighton();
+//                }
+//            });
+//
+//
+//            // 设置背景图片， 必须设置，不然动画没作用
+//            popupWindow3.setBackgroundDrawable(new BitmapDrawable());
+//            popupWindow3.setFocusable(true);
+//
+//            // 设置点击popupwindow外屏幕其它地方消失
+//            popupWindow3.setOutsideTouchable(true);
+//
+//            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
+//            animation3 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
+//
+//            animation3.setInterpolator(new AccelerateInterpolator());
+//            animation3.setDuration(200);
+//
+//            popupView3.findViewById(R.id.tvCancel).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    popupWindow3.dismiss();
+//                    lighton();
+//                }
+//            });
+//            popupView3.findViewById(R.id.cancelImage).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    popupWindow3.dismiss();
+//                    lighton();
+//                }
+//            });
+//        }
+//
+//        // 在点击之后设置popupwindow的销毁
+//        if (popupWindow3.isShowing()) {
+//            popupWindow3.dismiss();
+//            lighton();
+//        }
+//
+//        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
+//        popupWindow3.showAtLocation(findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+//        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+//        popupView3.startAnimation(animation3);
 
-            // 参数2,3：指明popupwindow的宽度和高度
-            popupWindow3 = new PopupWindow(popupView3, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            popupWindow3.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        if (workArrivalDialog == null) {
+            workArrivalDialog = new WheelDialog(this);
+            workArrivalDialog.setItems(new String[]{"一周", "半个月", "一个月"});
+            workArrivalDialog.setTitle("到岗时间");
+            workArrivalDialog.setDialogListener(new WheelDialog.DialogListener() {
                 @Override
-                public void onDismiss() {
-                    lighton();
-                }
-            });
-
-            //一周
-            tv1Click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tv4.setText("一周");
-                    editYiXiangMe("3", "1");
-                    popupWindow3.dismiss();
-                    lighton();
-                }
-            });
-            //半个月
-            tv2Click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tv4.setText("半个月");
-                    editYiXiangMe("3", "2");
-                    popupWindow3.dismiss();
-                    lighton();
-                }
-            });
-            //一个月
-            tv3Click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    tv4.setText("一个月");
-                    editYiXiangMe("3", "3");
-                    popupWindow3.dismiss();
-                    lighton();
-                }
-            });
-
-
-            // 设置背景图片， 必须设置，不然动画没作用
-            popupWindow3.setBackgroundDrawable(new BitmapDrawable());
-            popupWindow3.setFocusable(true);
-
-            // 设置点击popupwindow外屏幕其它地方消失
-            popupWindow3.setOutsideTouchable(true);
-
-            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
-            animation3 = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
-
-            animation3.setInterpolator(new AccelerateInterpolator());
-            animation3.setDuration(200);
-
-            popupView3.findViewById(R.id.tvCancel).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow3.dismiss();
-                    lighton();
-                }
-            });
-            popupView3.findViewById(R.id.cancelImage).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popupWindow3.dismiss();
-                    lighton();
+                public void confirm(String s, int num) {
+                    tv3.setText(s);
+                    editYiXiangMe("3", String.valueOf(num + 1));
                 }
             });
         }
-
-        // 在点击之后设置popupwindow的销毁
-        if (popupWindow3.isShowing()) {
-            popupWindow3.dismiss();
-            lighton();
-        }
-
-        // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-        popupWindow3.showAtLocation(findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        //popupWindow1.showAtLocation(findViewById(R.id.setting), Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
-        popupView3.startAnimation(animation3);
+        workArrivalDialog.show();
 
     }
     //-------------------------------------------------------

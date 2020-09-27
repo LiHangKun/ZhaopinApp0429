@@ -25,6 +25,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.other.NormalTextWatcher;
 import com.lx.zhaopin.utils.MyCountDownTimer;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.StringUtil;
@@ -53,6 +54,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
     private TextView codeTv;
     private ImageView closeImg;
     private RelativeLayout closeLayout;
+    private boolean phoneReady, codeReady;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -104,7 +106,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
         phoneTv=findViewById(R.id.phone_tv);
         codeTv=findViewById(R.id.code_tv);
 
-        TextView tv1 = findViewById(R.id.tv1);
+        final TextView tv1 = findViewById(R.id.tv1);
         TextView tv2 = findViewById(R.id.tv2);
         TextView tv3 = findViewById(R.id.tv3);
         TextView tv4 = findViewById(R.id.tv4);
@@ -132,6 +134,26 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                 edit2.setHint("");
                 codeTv.setVisibility(View.VISIBLE);
                 return false;
+            }
+        });
+
+        edit1.addTextChangedListener(new NormalTextWatcher(edit1, 11) {
+            @Override
+            protected void showBtnEnable(boolean enable) {
+                phoneReady = enable;
+                if (phoneReady && codeReady){
+                    tv1.setEnabled(true);
+                }
+            }
+        });
+
+        edit2.addTextChangedListener(new NormalTextWatcher(edit2, 6) {
+            @Override
+            protected void showBtnEnable(boolean enable) {
+                codeReady = enable;
+                if (phoneReady && codeReady){
+                    tv1.setEnabled(true);
+                }
             }
         });
 

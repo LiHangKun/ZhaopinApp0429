@@ -1,6 +1,7 @@
 package com.lx.zhaopin.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.base.BaseActivity;
 import com.lx.zhaopin.common.AppSP;
+import com.lx.zhaopin.utils.DisplayUtil;
 import com.lx.zhaopin.utils.SharedPreferencesUtil;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
 import com.lx.zhaopin.view.ClearEditText;
+import com.lx.zhaopin.view.CustomTextView;
 import com.lx.zhaopin.view.FlowLiner;
 
 import java.util.ArrayList;
@@ -75,7 +78,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         flowLiner1.removeAllViews();
 
         for (int i = 0; i < flowData.size(); i++) {
-            final TextView radioButton = new TextView(SearchActivity.this);
+            CustomTextView radioButton = new CustomTextView(SearchActivity.this);
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, 0, ViewUtil.dp2px(SearchActivity.this, 10), ViewUtil.dp2px(SearchActivity.this, 10));
             radioButton.setLayoutParams(layoutParams);
@@ -84,9 +87,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(13);
             radioButton.setPadding(ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6), ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6));
-            radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d_2));
+            radioButton.setTextColor(Color.rgb(21, 20, 19));
             //radioButton.setBackgroundResource(R.drawable.search_selector);
-            radioButton.setBackgroundResource(R.drawable.button_shape04);
+            radioButton.setSolidColor(Color.rgb(239, 246, 255));
+            radioButton.setRadius(DisplayUtil.dip2px(this, 15));
             radioButton.setFocusable(true);
             radioButton.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_15">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:src="@mipmap/fanhui" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dp_5"
+                android:src="@mipmap/icon_work_detail_uncollect" />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:src="@mipmap/icon_work_detail_share" />
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_5"
+                android:src="@mipmap/icon_work_detail_jubao" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:scrollbars="none">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:id="@+id/work_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#151413"
+                android:textSize="26sp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="高级游戏UI设计师" />
+
+            <TextView
+                android:id="@+id/work_detail_salary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#F6646F"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@id/work_detail_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/work_detail_name"
+                tools:text="1-2k" />
+
+            <TextView
+                android:id="@+id/work_detail_pos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:drawableStart="@mipmap/icon_work_detail_pos"
+                android:drawablePadding="3dp"
+                android:textColor="#939393"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_name"
+                tools:text="滨海新区" />
+
+            <TextView
+                android:id="@+id/work_detail_jingli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@mipmap/icon_work_detail_jingli"
+                android:drawablePadding="3dp"
+                android:textColor="#939393"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/work_detail_pos"
+                tools:text="滨海新区" />
+
+            <TextView
+                android:id="@+id/work_detail_xueli"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@mipmap/icon_work_detail_xueli"
+                android:drawablePadding="3dp"
+                android:textColor="#939393"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/work_detail_pos"
+                tools:text="滨海新区" />
+
+            <TextView
+                android:id="@+id/work_detail_warn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:textColor="#F6646F"
+                android:textSize="10sp"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_pos"
+                tools:text="注：该岗位无需申请，可直接沟通" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="34dp"
+                android:background="#F1F1F1"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_warn"
+                app:layout_goneMarginTop="34dp" />
+
+            <TextView
+                android:id="@+id/work_detail_duty_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="岗位职责"
+                android:textColor="#151413"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/line1" />
+
+            <TextView
+                android:id="@+id/work_detail_duty_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="#151413"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_duty_title"
+                tools:text="岗位职责" />
+
+            <TextView
+                android:id="@+id/work_detail_inquire_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="职位要求"
+                android:textColor="#151413"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_duty_info" />
+
+            <TextView
+                android:id="@+id/work_detail_inquire_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="#151413"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_inquire_title"
+                tools:text="岗位职责" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#F1F1F1"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_inquire_info" />
+
+            <TextView
+                android:id="@+id/work_detail_skill_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="技能要求"
+                android:textColor="#151413"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/line2" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/work_detail_skill_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_skill_title">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#F1F1F1"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_skill_list" />
+
+            <TextView
+                android:id="@+id/work_detail_welfare_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="福利待遇"
+                android:textColor="#151413"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/line3" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/work_detail_welfare_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_welfare_title">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:id="@+id/line4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#F1F1F1"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_welfare_list" />
+
+            <TextView
+                android:id="@+id/work_detail_company_info_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="公司信息"
+                android:textColor="#151413"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/line4" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/roundedImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/splashbj"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_company_info_title"
+                app:riv_border_width="0dip"
+                app:riv_corner_radius_bottom_left="@dimen/dp_5"
+                app:riv_corner_radius_bottom_right="@dimen/dp_5"
+                app:riv_corner_radius_top_left="@dimen/dp_5"
+                app:riv_corner_radius_top_right="@dimen/dp_5"
+                app:riv_mutate_background="true"
+                app:riv_oval="false" />
+
+            <TextView
+                android:id="@+id/work_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="#151413"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/roundedImageView"
+                app:layout_constraintTop_toTopOf="@id/roundedImageView"
+                tools:text="七盏灯（天津）教育科技" />
+
+            <TextView
+                android:id="@+id/work_company_info_short"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#939393"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/roundedImageView"
+                app:layout_constraintStart_toStartOf="@id/work_company_name"
+                app:layout_constraintTop_toBottomOf="@id/work_company_name"
+                tools:text="D轮及以上｜培训机构｜1000—9999人" />
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/jiantouyou"
+                app:layout_constraintBottom_toBottomOf="@id/roundedImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/roundedImageView" />
+
+            <android.support.constraint.Group
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="roundedImageView,work_company_info_short,work_company_name,arrow" />
+
+
+            <View
+                android:id="@+id/line5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#F1F1F1"
+                app:layout_constraintTop_toBottomOf="@id/work_company_info_short" />
+
+            <TextView
+                android:id="@+id/work_detail_interview_pos_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="面试地点"
+                android:textColor="#151413"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/line5" />
+
+            <ImageView
+                android:id="@+id/map_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ditu_bg"
+                app:layout_constraintTop_toBottomOf="@id/work_detail_interview_pos_title" />
+
+            <com.lx.zhaopin.view.CustomTextView
+                android:id="@+id/work_detail_interview_pos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="26sp"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                app:bcNormalSolidColor="@color/white"
+                app:background_corner_radius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/map_img" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </ScrollView>
+
+
+    <!--底部按钮部分
+   立即沟通 dibuView1
+   立即沟通和申请职位 dibuView2  liJiGouTongTV   shenQingZhiwei
+   申请职位 dibuView3
+   预约面试 dibuView4
+    -->
+
+
+    <!--立即沟通-->
+
+    <TextView
+        android:id="@+id/dibuView1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/edittext_shape"
+        android:gravity="center"
+        android:text="立即沟通"
+        android:textColor="#1678FF"
+        android:visibility="gone" />
+
+
+    <!--立即沟通和职位申请-->
+    <LinearLayout
+        android:id="@+id/dibuView2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="3.1">
+
+
+        <TextView
+            android:id="@+id/liJiGouTongTV"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_45"
+            android:layout_weight="1"
+            android:background="@drawable/edittext_shape"
+            android:gravity="center"
+            android:text="立即沟通"
+            android:textColor="#1678FF" />
+
+        <View
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1" />
+
+
+        <TextView
+            android:id="@+id/shenQingZhiwei"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_45"
+            android:layout_weight="2"
+            android:background="@drawable/button_shape"
+            android:gravity="center"
+            android:text="申请职位"
+            android:textColor="#fff" />
+
+
+    </LinearLayout>
+
+
+    <!--申请职位-->
+    <TextView
+        android:id="@+id/dibuView3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/button_shape"
+        android:gravity="center"
+        android:text="申请职位"
+        android:textColor="#fff"
+        android:visibility="gone" />
+
+
+    <!--预约面试-->
+    <TextView
+        android:id="@+id/dibuView4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_18"
+        android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/button_shape"
+        android:gravity="center"
+        android:text="预约面试"
+        android:textColor="#fff"
+        android:visibility="gone" />
+
+
+</LinearLayout>

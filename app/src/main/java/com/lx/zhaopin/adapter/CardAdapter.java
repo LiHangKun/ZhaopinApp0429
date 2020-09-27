@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lin.cardlib.SwipeTouchLayout;
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.activity.GangWeiDetailActivity;
+import com.lx.zhaopin.activity.GangWeiDetailActivity1;
 import com.lx.zhaopin.bean.ShouYeQiuZhiZheBean;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -132,7 +133,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardHolder> {
         holder.relView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, GangWeiDetailActivity.class);
+                Intent intent = new Intent(mContext, GangWeiDetailActivity1.class);
                 intent.putExtra("pid", allList.get(position).getId());
                 mContext.startActivity(intent);
             }

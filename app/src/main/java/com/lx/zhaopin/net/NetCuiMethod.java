@@ -75,6 +75,7 @@ public class NetCuiMethod {
     public static final String getYuyueTimeList = "member/position/time";//预约面试时间列表
     public static final String YuYueMianShi = "member/position/appoint";//预约面试
     public static final String editYiXiang = "member/jobhunter/expectation/edit";//编辑求职意向
+    public static final String search = "member/position/category/sou";//搜索职位
 
 
 

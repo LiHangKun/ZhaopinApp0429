@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="300dp"
     android:background="@color/white"
@@ -31,10 +32,42 @@
         android:textColor="@color/main_blue"
         android:textSize="14sp" />
 
-    <com.lx.zhaopin.other.WheelListView
-        android:id="@+id/dialog_wheel"
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true">
+
+        <com.lx.zhaopin.other.WheelListView
+            android:id="@+id/wage_wheel_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            app:layout_constraintEnd_toStartOf="@id/wage_wheel_right"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.lx.zhaopin.other.WheelListView
+            android:id="@+id/wage_wheel_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/wage_wheel_left" />
+
+        <TextView
+            android:id="@+id/center_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="~"
+            android:textColor="#151413"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/wage_wheel_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/wage_wheel_left" />
+    </android.support.constraint.ConstraintLayout>
+
 
 </RelativeLayout>

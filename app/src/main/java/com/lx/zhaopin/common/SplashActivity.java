@@ -179,6 +179,7 @@ public class SplashActivity extends AppCompatActivity implements AMapLocationLis
                 SPTool.addSessionMap(AppSP.USER_NAME, resultBean.getName());
                 SPTool.addSessionMap(AppSP.USER_ICON, resultBean.getAvatar());
                 SPTool.addSessionMap(AppSP.UID, SPTool.getSessionValue(AppSP.UID));
+                SPTool.addSessionMap(AppSP.sex, resultBean.getSex());
 
 
             }

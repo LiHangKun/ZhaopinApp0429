@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_25"
         android:orientation="horizontal">
 
@@ -23,16 +24,16 @@
             android:paddingRight="12dp"
             android:src="@mipmap/fanhui" />
 
-        <LinearLayout
+        <com.lx.zhaopin.view.CustomRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/button_shape3"
-            android:gravity="center|left"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_20">
+            android:paddingLeft="@dimen/dp_20"
+            app:bc_corner_radius="10dp"
+            app:bcSolidColor="#1e767680">
 
             <ImageView
+                android:id="@+id/search_img"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -44,6 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
+                android:layout_toEndOf="@id/search_img"
                 android:background="@null"
                 android:hint="请输入关键词搜索"
                 android:imeOptions="actionSearch"
@@ -53,8 +55,8 @@
                 android:textColorHint="#666"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/sp_13" />
+        </com.lx.zhaopin.view.CustomRelativeLayout>
 
-        </LinearLayout>
 
         <TextView
             android:id="@+id/searchTv"
@@ -69,8 +71,6 @@
 
 
     </LinearLayout>
-
-
 
 
     <RelativeLayout

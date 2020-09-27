@@ -4,15 +4,14 @@ package com.lx.zhaopin.common;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.RadioButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.allenliu.versionchecklib.AppConstant;
@@ -37,8 +36,11 @@ import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.APKVersionCodeUtils;
 import com.lx.zhaopin.utils.ActivityManager;
 import com.lx.zhaopin.utils.DataCleanManager;
+import com.lx.zhaopin.utils.DisplayUtil;
 import com.lx.zhaopin.utils.SPTool;
+import com.lx.zhaopin.utils.WindowUtil;
 import com.lx.zhaopin.view.NoScrollViewPager;
+import com.lx.zhaopin.view.TabView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,6 +49,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
@@ -61,9 +64,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     public NoScrollViewPager viewPager;
     private ArrayList<Fragment> fragments;
     //private MyPagerAdapter adapter;
-    private RadioButton rB1;
-    private RadioButton rB2;
-    private RadioButton rB3;
+    private TabLayout tabLayout;
     private static final String TAG = "MainActivity";
 
 
@@ -75,6 +76,13 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     private String eventRongToken = "";
     private String duanUid;
     private String userType;
+    private ImageView tabMoveImg;
+    private TextView tabMessageNumTv;
+    private int screenWidth;
+    private int posSel;
+    private int blueBcWidth;
+    private int tabGap;
+    private List<TabView> tabViews;
 
     /**
      * 第一种解决办法 通过监听keyUp
@@ -103,6 +111,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     @Override
     protected void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
+        setViews();
         init();
     }
 
@@ -139,7 +148,11 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
         setUserType(duanUid);
         clearAllCachecatch();
-
+        screenWidth = WindowUtil.getScreenWidth(this);
+        posSel = 0;
+        tabGap = (screenWidth - DisplayUtil.dip2px(mContext, 84) * 3) / 3;
+        tabMoveImg.setTranslationX(-(tabGap + DisplayUtil.dip2px(mContext, 84)));
+        tabMessageNumTv.setTranslationX(-DisplayUtil.dip2px(mContext, 30));
 
     }
 
@@ -153,8 +166,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     }
 
     private void setUserType(String eventUid) {
-        setViews();
-        setListeners();
+
         fragments = new ArrayList<>();
 
         userType = SPTool.getSessionValue(AppSP.USER_TYPE);
@@ -196,6 +208,8 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
 
         viewPager.setOffscreenPageLimit(fragments.size());
+
+        setListeners();
     }
 
     private void setUserRongInfoMethod0(String eventRongToken) {
@@ -404,55 +418,50 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     }
 
 
-    class MyPagerAdapter extends FragmentPagerAdapter {
-
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public Fragment getItem(int arg0) {
-            return fragments.get(arg0);
-        }
-
-        public int getCount() {
-            return fragments.size();
-        }
-    }
-
     //通过监听viewpager滑动改变Checked的属性
     private void setListeners() {
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        rB1.setChecked(true);
-                        //rB1.setTextColor(getResources().getColor(R.color.mainColor888));
-                        //rB2.setTextColor(getResources().getColor(R.color.txt_orange2));
-                        //rB3.setTextColor(getResources().getColor(R.color.txt_orange2));
+        if (tabLayout.getTabCount() != 0)
+            return;
+        tabLayout.setupWithViewPager(viewPager);
+        TabView tabView1 = new TabView(this);
+        tabView1.setValues(R.mipmap.icon_tab_home, "首页", null);
+        TabView tabView2 = new TabView(this);
+        tabView2.setValues(R.mipmap.icon_tab_message, "消息", tabMessageNumTv);
+        TabView tabView3 = new TabView(this);
+        if (SPTool.getSessionValue(AppSP.sex).equals("1")) {
+            tabView3.setValues(R.mipmap.icon_tab_man, "我的", null);
+        } else if (SPTool.getSessionValue(AppSP.sex).equals("2")) {
+            tabView3.setValues(R.mipmap.icon_tab_woman, "我的", null);
+        } else {
+            tabView3.setValues(R.mipmap.icon_tab_person, "我的", null);
+        }
 
-                        break;
-                    case 1:
-                        rB2.setChecked(true);
-                        //rB2.setTextColor(getResources().getColor(R.color.mainColor888));
-                        //rB1.setTextColor(getResources().getColor(R.color.txt_orange2));
-                        //rB3.setTextColor(getResources().getColor(R.color.txt_orange2));
-                        break;
-                    case 2:
-                        rB3.setChecked(true);
-                        // rB3.setTextColor(getResources().getColor(R.color.mainColor888));
-                        //rB1.setTextColor(getResources().getColor(R.color.txt_orange2));
-                        //rB2.setTextColor(getResources().getColor(R.color.txt_orange2));
-                        break;
-
-                    default:
-                }
+        tabViews = new ArrayList<>();
+        tabViews.add(tabView1);
+        tabViews.add(tabView2);
+        tabViews.add(tabView3);
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            tabLayout.getTabAt(i).setCustomView(tabViews.get(i));
+        }
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                tabMoveImg.animate().translationXBy((pos - posSel) * (tabGap + DisplayUtil.dip2px(mContext, 84))).setDuration(200).start();
+                Log.e("main", "dis = " + (pos - posSel) * (tabGap + DisplayUtil.dip2px(mContext, 84)));
+                posSel = pos;
+                tabViews.get(pos).setSelected(true);
+                Log.e("main", "position=" + tab.getPosition());
             }
 
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tabViews.get(tab.getPosition()).setSelected(false);
+                Log.e("main", "un position=" + tab.getPosition());
             }
 
-            public void onPageScrollStateChanged(int arg0) {
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
@@ -461,11 +470,9 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
     private void setViews() {
         viewPager = findViewById(R.id.viewPager);
-        rB1 = findViewById(R.id.RadioButton1);
-        rB2 = findViewById(R.id.RadioButton2);
-        rB3 = findViewById(R.id.RadioButton3);
-
-
+        tabLayout = findViewById(R.id.lr_tab);
+        tabMoveImg = findViewById(R.id.tab_move_img);
+        tabMessageNumTv = findViewById(R.id.tab_message_num);
     }
 
     //监听RadioButton的点击
