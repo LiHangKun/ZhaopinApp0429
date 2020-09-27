@@ -1,0 +1,4 @@
+package com.lx.zhaopin.other;
+
+public class ZhiWeiAdapter {
+}
