@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.utils.DisplayUtil;
+import com.lx.zhaopin.utils.ToastFactory;
 
 import cn.addapp.pickers.common.LineConfig;
 
@@ -78,13 +79,10 @@ public class WageWheelDialog extends BaseDialog {
             @Override
             public void onItemSelected(int i, String s) {
                 selAnswerLeftIndex = i;
-                if (selAnswerRightIndex - selAnswerLeftIndex < -1) {
-                    wageWheelRight.setSelectedIndex(selAnswerLeftIndex - 1);
-                }
+                selAnswerLeft = s;
             }
         });
         wageWheelLeft.setSelectedIndex(3);
-
         wageWheelRight.setSelectedTextColor(Color.rgb(21, 20, 19));
         wageWheelRight.setTextSize(16);
         wageWheelRight.setLineConfig(config);
@@ -94,9 +92,7 @@ public class WageWheelDialog extends BaseDialog {
             @Override
             public void onItemSelected(int i, String s) {
                 selAnswerRightIndex = i;
-                if (selAnswerRightIndex - selAnswerLeftIndex < -1) {
-                    wageWheelLeft.setSelectedIndex(selAnswerRightIndex + 1);
-                }
+                selAnswerRight = s;
             }
         });
 
@@ -109,16 +105,25 @@ public class WageWheelDialog extends BaseDialog {
                 dismiss();
                 break;
             case R.id.dialog_confirm_tv:
-                dismiss();
-                if (listener != null) {
-//                    listener.confirm(selAnswer, selNum);
+                if (selAnswerRightIndex - selAnswerLeftIndex < -1) {
+                    ToastFactory.getToast(mContext, "请重新选择薪资范围").show();
+                } else {
+                    dismiss();
+                    if (listener != null) {
+                        if (selAnswerLeft.equals("面议")) {
+                            listener.confirm("面议");
+                        } else {
+                            listener.confirm(selAnswerLeft + "-" + selAnswerRight);
+                        }
+                    }
                 }
+
                 break;
         }
     }
 
     public interface DialogListener {
-        void confirm(String s, int index);
+        void confirm(String result);
     }
 
 }

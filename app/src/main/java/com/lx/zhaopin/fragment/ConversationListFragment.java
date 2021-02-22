@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,6 +138,7 @@ public class ConversationListFragment extends UriFragment implements OnItemClick
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("userId", userId);
+        Log.e("setuserinfo", "mid ="+SPTool.getSessionValue(AppSP.UID)+",userId="+userId);
         OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.getRongUserInfo, params, new BaseCallback<PhoneStateBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
@@ -215,10 +217,10 @@ public class ConversationListFragment extends UriFragment implements OnItemClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(layout.rc_fr_conversationlist, container, false);
         View emptyView = this.findViewById(view, id.rc_conversation_list_empty_layout);
-        TextView emptyText = (TextView)this.findViewById(view, id.rc_empty_tv);
-        if (this.getActivity() != null) {
-            emptyText.setText(this.getActivity().getResources().getString(string.rc_conversation_list_empty_prompt));
-        }
+        //TextView emptyText = (TextView)this.findViewById(view, id.rc_empty_tv);
+//        if (this.getActivity() != null) {
+//            emptyText.setText(this.getActivity().getResources().getString(string.rc_conversation_list_empty_prompt));
+//        }
 
         this.mList = (ListView)this.findViewById(view, id.rc_list);
         this.mRefreshLayout = (RongSwipeRefreshLayout)this.findViewById(view, id.rc_refresh);

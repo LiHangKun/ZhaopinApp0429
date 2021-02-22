@@ -118,7 +118,7 @@ public class NetCuiMethod {
     public static final String yaoQingMianShi = "member/recruiter/interview/invite";//发布邀约,邀请面试
     public static final String shenQingJiLu = "member/jobhunter/chat/apply/page";//申请记录
     public static final String chuliGouTongShenQing = "member/jobhunter/chat/apply/deal";//处理沟通申请
-    public static final String HRSouRenCai = "member/resume/page";//求职者简历分页数据
+    public static final String HRSouRenCai = "member/resume/page1";//求职者简历分页数据
     public static final String HRMessageList1 = "member/recruiter/chat/feedback/page";//招聘反馈消息列表
     public static final String HRMessageList2 = "member/recruiter/chat/system/page";//系统消息列表
     public static final String HRMessageDetail = "member/recruiter/chat/feedback/detail";//HR 看到的消息详情

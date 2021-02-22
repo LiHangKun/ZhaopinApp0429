@@ -58,11 +58,11 @@
     <application
         android:name=".common.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/zhaopinlogo"
+        android:icon="@mipmap/zhaopinlogo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@drawable/zhaopinlogo"
+        android:roundIcon="@mipmap/zhaopinlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -254,7 +254,8 @@
             android:name=".common.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"/>
         <!--         android:theme="@style/SplashTheme"
 
          android:theme="@style/AppWelcome"
@@ -278,6 +279,13 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" /> <!-- 引导页 -->
+        <activity
+            android:name=".common.GuideNewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /> <!-- 引导页 -->
+
         <activity
             android:name=".activity.MyUserInfoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -738,6 +746,27 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.QiuZhiYiXiangChangeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activity.SelectCityActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+
+        <!--<activity-->
+            <!--android:name=".common.FirstActivity"-->
+            <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustPan" />-->
 
         <meta-data
             android:name="design_width_in_dp"

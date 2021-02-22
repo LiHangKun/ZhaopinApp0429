@@ -267,6 +267,7 @@ public class Login1PhoneCodeActivity extends BaseActivity implements View.OnClic
                 SPTool.addSessionMap(AppSP.USER_PHONE, userPhone);
                 SPTool.addSessionMap(AppSP.USER_RongToken, RongToken);
                 SPTool.addSessionMap(AppSP.USER_TYPE, "0");
+                SPTool.addSessionMap(AppSP.USER_HR_PERMISSION, TextUtils.equals("1", resultBean.getHr()));
 
 
                 //1 进入界面 SelectHangYeActivity

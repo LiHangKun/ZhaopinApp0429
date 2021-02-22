@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lx.zhaopin.view.CustomRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:bcStrokeColor="@color/main_blue"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    app:bcStrokeWidth="1dp"
+    app:bc_corner_radius="16dp">
+
+    <TextView
+        android:id="@+id/sel_hangye_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="#1678FF"/>
+
+    <ImageView
+        android:id="@+id/del_hangye_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@id/sel_hangye_tv"
+        android:src="@mipmap/icon_del" />
+
+</com.lx.zhaopin.view.CustomRelativeLayout>

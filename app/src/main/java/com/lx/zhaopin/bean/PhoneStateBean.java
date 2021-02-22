@@ -28,6 +28,24 @@ public class PhoneStateBean extends CommonBean {
     private String location;
     private String lat;
     private String lng;
+    private String positionName;
+    private String companyName;
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getChatRecordId() {
         return chatRecordId;

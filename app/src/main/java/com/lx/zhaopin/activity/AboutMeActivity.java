@@ -68,7 +68,6 @@ public class AboutMeActivity extends BaseActivity {
         titleLayout.setBackgroundColor(getResources().getColor(R.color.white));
         baseTop.setVisibility(View.GONE);
         aboutMe();
-
     }
 
     private void aboutMe() {

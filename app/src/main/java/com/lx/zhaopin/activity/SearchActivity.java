@@ -78,21 +78,22 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         flowLiner1.removeAllViews();
 
         for (int i = 0; i < flowData.size(); i++) {
-            CustomTextView radioButton = new CustomTextView(SearchActivity.this);
+            CustomTextView textView = new CustomTextView.Builder()
+                    .setContext(this)
+                    .setNormalSolidColor(Color.parseColor("#EFF6FF"))
+                    .setRadius(DisplayUtil.dip2px(this, 15))
+                    .createView();
             FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(0, 0, ViewUtil.dp2px(SearchActivity.this, 10), ViewUtil.dp2px(SearchActivity.this, 10));
-            radioButton.setLayoutParams(layoutParams);
+            textView.setLayoutParams(layoutParams);
             final String str = flowData.get(i);
-            radioButton.setText(str);
-            radioButton.setGravity(Gravity.CENTER);
-            radioButton.setTextSize(13);
-            radioButton.setPadding(ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6), ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6));
-            radioButton.setTextColor(Color.rgb(21, 20, 19));
-            //radioButton.setBackgroundResource(R.drawable.search_selector);
-            radioButton.setSolidColor(Color.rgb(239, 246, 255));
-            radioButton.setRadius(DisplayUtil.dip2px(this, 15));
-            radioButton.setFocusable(true);
-            radioButton.setOnClickListener(new View.OnClickListener() {
+            textView.setText(str);
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextSize(13);
+            textView.setPadding(ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6), ViewUtil.dp2px(SearchActivity.this, 18), ViewUtil.dp2px(SearchActivity.this, 6));
+            textView.setTextColor(Color.rgb(21, 20, 19));
+            textView.setFocusable(true);
+            textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     /*TODO ACTION*/
@@ -106,7 +107,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     hideInputMethod();
                 }
             });
-            flowLiner1.addView(radioButton);
+            flowLiner1.addView(textView);
         }
 
 

@@ -1,6 +1,11 @@
 package com.lx.zhaopin.common;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,7 +19,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,12 +37,17 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
 import com.lx.zhaopin.utils.ActivityManager;
+import com.lx.zhaopin.utils.DisplayUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.view.ActionDialog;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -42,6 +55,27 @@ import okhttp3.Response;
 
 public class SplashActivity extends AppCompatActivity implements AMapLocationListener {
 
+    @BindView(R.id.image1)
+    ImageView image1;
+    @BindView(R.id.image2)
+    ImageView image2;
+    @BindView(R.id.image3)
+    ImageView image3;
+    @BindView(R.id.image4)
+    ImageView image4;
+    @BindView(R.id.image5)
+    ImageView image5;
+    @BindView(R.id.image6)
+    ImageView image6;
+    @BindView(R.id.move_img)
+    ImageView moveImg;
+    @BindView(R.id.blue_view1)
+    View blueView1;
+    @BindView(R.id.blue_view2)
+    View blueView2;
+    private int preImageW, moveX;
+    private int imageIndex;
+    private List<ImageView> images = new ArrayList<>();
 
     private static final String TAG = "SplashActivity";
     private ActionDialog actionDialog;
@@ -60,13 +94,27 @@ public class SplashActivity extends AppCompatActivity implements AMapLocationLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        setContentView(R.layout.activity_first);
+        ButterKnife.bind(this);
+        images.add(image1);
+        images.add(image2);
+        images.add(image3);
+        images.add(image4);
+        images.add(image5);
+        images.add(image6);
+        image1.post(new Runnable() {
+            @Override
+            public void run() {
+                move();
+            }
+        });
+
         initSystemBar2(this);
-        //setTheme(R.style.AppWelcome);
-        setContentView(R.layout.splash_activity);
+
         //Utility2.setActionBar(this);
         ActivityManager.addActivity(this);
-        ImageView imageView = findViewById(R.id.imageView);
-        imageView.setImageResource(R.mipmap.qidong0);
+
         //initLocation();
 
         JPushInterface.setDebugMode(true);
@@ -76,7 +124,6 @@ public class SplashActivity extends AppCompatActivity implements AMapLocationLis
         Log.i(TAG, "onCreate: 极光信息" + registrationID);
         handler = new Handler();
 
-        xieYi();
 
         if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
             getQiuZhiMyInfo();
@@ -112,6 +159,53 @@ public class SplashActivity extends AppCompatActivity implements AMapLocationLis
             mlocationClient.startLocation();
         }
 
+    }
+
+    private void move() {
+        final int moveH = DisplayUtil.dip2px(this, 15);
+        final int gap = DisplayUtil.dip2px(this, 5);
+        preImageW = image1.getWidth();
+        moveX = image1.getLeft() + preImageW / 2;
+        moveImg.setTranslationX(moveX);
+        moveImg.setTranslationY(-moveH);
+        PropertyValuesHolder propertyValuesHolder1 = PropertyValuesHolder.ofFloat("translationY", 0);
+        PropertyValuesHolder propertyValuesHolder2 = PropertyValuesHolder.ofFloat("translationY", -moveH);
+        PropertyValuesHolder propertyValuesHolder4 = PropertyValuesHolder.ofFloat("alpha", 0);
+        ObjectAnimator animatorDown = ObjectAnimator.ofPropertyValuesHolder(moveImg, propertyValuesHolder1);
+        ObjectAnimator animatorUp = ObjectAnimator.ofPropertyValuesHolder(moveImg, propertyValuesHolder2, propertyValuesHolder4);
+        final AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playSequentially(animatorDown, animatorUp);
+        animatorSet.setDuration(200);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        animatorSet.start();
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                ObjectAnimator textMove = ObjectAnimator.ofFloat(images.get(imageIndex), "translationY", moveH, 0);
+                textMove.setInterpolator(new AccelerateDecelerateInterpolator());
+                textMove.setDuration(120);
+                textMove.start();
+                imageIndex++;
+                if (imageIndex < 6) {
+                    moveX += preImageW / 2 + gap;
+                    preImageW = images.get(imageIndex).getWidth();
+                    moveX += preImageW / 2;
+                    moveImg.setTranslationX(moveX);
+                    animatorSet.start();
+                } else {
+                    blueView1.animate().translationXBy(-blueView1.getWidth()).setDuration(1000).start();
+                    blueView2.animate().translationXBy(blueView1.getWidth()).setDuration(1000).start();
+                    blueView2.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            xieYi();
+                        }
+                    }, 1000);
+                }
+            }
+        });
+        moveImg.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -280,7 +374,7 @@ public class SplashActivity extends AppCompatActivity implements AMapLocationLis
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    intent = new Intent(SplashActivity.this, GuideActivity.class);//启动MainActivity
+                    intent = new Intent(SplashActivity.this, GuideNewActivity.class);//启动MainActivity
                     startActivity(intent);
                     finish();//关闭当前活动
                 }

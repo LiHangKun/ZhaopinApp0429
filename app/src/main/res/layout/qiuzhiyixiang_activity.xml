@@ -18,6 +18,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:visibility="gone" />
+
             <com.lx.zhaopin.view.CustomRelativeLayout
                 android:id="@+id/add_qiuzhi_view"
                 android:layout_width="match_parent"
@@ -38,6 +48,7 @@
                     android:src="@mipmap/icon_qiuzhi_add" />
 
                 <TextView
+                    android:id="@+id/add_qiuzhi_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -49,11 +60,6 @@
 
             </com.lx.zhaopin.view.CustomRelativeLayout>
 
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <!-- <include layout="@layout/item_yixiang_layout"></include>-->
 

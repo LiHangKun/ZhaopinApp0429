@@ -23,6 +23,15 @@ public class LoginBean extends CommonBean {
     private String mobile;
     private String rRongToken;
     private String positionName;
+    private String hr;
+
+    public String getHr() {
+        return hr;
+    }
+
+    public void setHr(String hr) {
+        this.hr = hr;
+    }
 
     public String getPositionName() {
         return positionName;

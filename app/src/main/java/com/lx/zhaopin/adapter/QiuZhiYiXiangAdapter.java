@@ -3,6 +3,7 @@ package com.lx.zhaopin.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ public class QiuZhiYiXiangAdapter extends RecyclerView.Adapter<QiuZhiYiXiangAdap
     private Context mContext;
     private List<QiuZhiyiXiangBean.ResumeExpectationListBean> mData;
     private OnItemClickener itemClickener;
+    private String pos_format = "[%s]";
 
     public QiuZhiYiXiangAdapter() {
     }
@@ -37,14 +39,29 @@ public class QiuZhiYiXiangAdapter extends RecyclerView.Adapter<QiuZhiYiXiangAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_yixiang_layout, viewGroup, false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_yixiang_layout1, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         viewHolder.tv1.setText(mData.get(i).getPositionCategory3().getName());
-        viewHolder.tv2.setText(mData.get(i).getCity().getName());
-        viewHolder.tv3.setText(mData.get(i).getMinSalary() + "K - " + mData.get(i).getMaxSalary() + "K");
+        viewHolder.tv2.setText(String.format(pos_format, mData.get(i).getCity().getName()));
+        if (mData.get(i).getMinSalary() == 0){
+            viewHolder.tv3.setText("面议");
+        }else {
+            viewHolder.tv3.setText(mData.get(i).getMinSalary() + "K - " + mData.get(i).getMaxSalary() + "K");
+        }
+        if (mData.get(i).getResumeExpectationIndustryList().size() != 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 0; j < mData.get(i).getResumeExpectationIndustryList().size(); j++) {
+                stringBuilder.append(mData.get(i).getResumeExpectationIndustryList().get(j).getName());
+                if (j != mData.get(i).getResumeExpectationIndustryList().size() - 1)
+                    stringBuilder.append(" ");
+            }
+            viewHolder.tv4.setText(stringBuilder.toString());
+        }else {
+            viewHolder.tv4.setText("不限");
+        }
 
         viewHolder.llView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +75,7 @@ public class QiuZhiYiXiangAdapter extends RecyclerView.Adapter<QiuZhiYiXiangAdap
     }
 
     private static final String TAG = "QiuZhiYiXiangAdapter";
+
     @Override
     public int getItemCount() {
         Log.i(TAG, "getItemCount: " + mData.size());
@@ -71,6 +89,8 @@ public class QiuZhiYiXiangAdapter extends RecyclerView.Adapter<QiuZhiYiXiangAdap
         TextView tv2;
         @BindView(R.id.tv3)
         TextView tv3;
+        @BindView(R.id.tv4)
+        TextView tv4;
         @BindView(R.id.llView)
         LinearLayout llView;
 

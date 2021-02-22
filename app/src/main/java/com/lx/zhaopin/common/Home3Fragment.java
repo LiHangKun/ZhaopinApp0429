@@ -84,7 +84,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private RelativeLayout relView3;
     private RelativeLayout relView4;
     private RelativeLayout relView5;
-    private RelativeLayout relView6;
+    //    private RelativeLayout relView6;
     private RelativeLayout relView7;
     private Intent intent;
     private String phone = "";
@@ -94,7 +94,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
-    private TextView jueSe;
+    //    private TextView jueSe;
     private String recruiter = "0";
     private TextView userPhone;
     private String eventUid = "";
@@ -102,9 +102,9 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     private ImageView setImg;
     private ImageView erweimaImg;
     private TextView saveTv;
-    private TextView waitMianshi;
-    private TextView luqu;
-    private TextView mianshiList;
+    private TextView waitMianshiTv;
+    private TextView luquTv;
+    private TextView mianshiTv;
     private TextView pointTv;
 
 
@@ -149,7 +149,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             EventBus.getDefault().register(this); //向EventBus注册该对象，使之成为订阅者
         }
 
-        String versionName=getAppVersionName(getActivity());
+        String versionName = getAppVersionName(getActivity());
         tvJinDu = view.findViewById(R.id.tvJinDu);
         circlePercentView = view.findViewById(R.id.circlePercentView);
         roundedImageView = view.findViewById(R.id.roundedImageView);
@@ -159,12 +159,12 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         llView2 = view.findViewById(R.id.llView2);
         llView3 = view.findViewById(R.id.llView3);
         llView4 = view.findViewById(R.id.llView4);
-        jueSe = view.findViewById(R.id.jueSe);
+//        jueSe = view.findViewById(R.id.jueSe);
 
         saveTv = view.findViewById(R.id.save_count);
-        waitMianshi = view.findViewById(R.id.mianshi_tv);
-        luqu = view.findViewById(R.id.luqu_tv);
-        mianshiList = view.findViewById(R.id.record_tv);
+        waitMianshiTv = view.findViewById(R.id.mianshi_tv);
+        luquTv = view.findViewById(R.id.luqu_tv);
+        mianshiTv = view.findViewById(R.id.record_tv);
         pointTv = view.findViewById(R.id.mianshi_count_tv);
 
 
@@ -174,12 +174,12 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         relView3 = view.findViewById(R.id.relView3);
         relView4 = view.findViewById(R.id.relView4);
         relView5 = view.findViewById(R.id.relView5);
-        relView6 = view.findViewById(R.id.relView6);
+//        relView6 = view.findViewById(R.id.relView6);
         relView7 = view.findViewById(R.id.relView7);
-        versionTv=view.findViewById(R.id.version_tv);
-        setImg=view.findViewById(R.id.set_img);
-        versionTv.setText("V"+versionName);
-        erweimaImg=view.findViewById(R.id.erweima_img);
+        versionTv = view.findViewById(R.id.version_tv);
+        setImg = view.findViewById(R.id.set_img);
+        versionTv.setText("V" + versionName);
+        erweimaImg = view.findViewById(R.id.erweima_img);
 
 
         userPhone = view.findViewById(R.id.userPhone);
@@ -199,7 +199,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         relView3.setOnClickListener(this);
         relView4.setOnClickListener(this);
         relView5.setOnClickListener(this);
-        relView6.setOnClickListener(this);
+//        relView6.setOnClickListener(this);
         relView7.setOnClickListener(this);
         setImg.setOnClickListener(this);
 
@@ -229,7 +229,6 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     }
 
 
-
     public static String getAppVersionName(Context context) {
         String appVersionName = "";
         try {
@@ -242,7 +241,6 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
         }
         return appVersionName;
     }
-
 
 
     /**
@@ -286,10 +284,10 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onSuccess(Response response, QiuZhiZheMyInfoBean resultBean) {
                 smartRefreshLayout.finishRefresh();
-                if(!TextUtils.isEmpty(resultBean.getNum())){
+                if (!TextUtils.isEmpty(resultBean.getNum())) {
                     userPhone.setVisibility(View.VISIBLE);
-                    userPhone.setText("砖头号："+resultBean.getNum());
-                }else {
+                    userPhone.setText("砖头号：" + resultBean.getNum());
+                } else {
                     userPhone.setVisibility(View.GONE);
                 }
 
@@ -316,7 +314,7 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 }*/
 
                 tv2.setText("求职者");
-                jueSe.setText("求职者");
+//                jueSe.setText("求职者");
 
                 tvJinDu.setText(resultBean.getImprovedDegree() + "%");
                 setData1(circlePercentView, 100, Integer.parseInt(resultBean.getImprovedDegree()));
@@ -329,13 +327,16 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
                 }
 
 //                saveTv = view.findViewById(R.id.save_count);
-//                waitMianshi = view.findViewById(R.id.mianshi_tv);
-//                luqu = view.findViewById(R.id.luqu_tv);
-//                mianshiList = view.findViewById(R.id.record_tv);
+//                waitMianshiTv = view.findViewById(R.id.mianshi_tv);
+//                luquTv = view.findViewById(R.id.luqu_tv);
+//                mianshiTv = view.findViewById(R.id.record_tv);
 //                pointTv = view.findViewById(R.id.mianshi_count_tv);
 
                 phone = resultBean.getServicePhone();
-
+                saveTv.setText(resultBean.getCollectPositionCount());
+                mianshiTv.setText(resultBean.getInterviewCount());
+                luquTv.setText(resultBean.getInterviewYiCount());
+                mianshiTv.setText(resultBean.getInterviewAllCount());
 
             }
 
@@ -519,11 +520,12 @@ public class Home3Fragment extends BaseFragment implements View.OnClickListener 
     }
 
     private XUpdatePop pop;
+
     @PermissionGrant(AppSP.PMS_LOCATION)
     public void pmsLocationSuccess() {
         //权限授权成功
 //        TellUtil.tell(getActivity(), phone);
-        pop=new XUpdatePop(getActivity(), new View.OnClickListener() {
+        pop = new XUpdatePop(getActivity(), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phone));

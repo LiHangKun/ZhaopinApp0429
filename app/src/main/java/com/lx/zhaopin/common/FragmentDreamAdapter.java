@@ -19,6 +19,9 @@ public class FragmentDreamAdapter extends FragmentStatePagerAdapter {
         notifyDataSetChanged();
     }
 
+    public void setFragments(ArrayList<Fragment> fragments) {
+        this.fragments = fragments;
+    }
 
     @Override
     public int getItemPosition(Object object) {

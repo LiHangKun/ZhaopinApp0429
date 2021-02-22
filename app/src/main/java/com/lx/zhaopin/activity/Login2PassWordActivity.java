@@ -253,7 +253,7 @@ public class Login2PassWordActivity extends BaseActivity implements View.OnClick
                 String HR_RongToken = resultBean.getrRongToken();
                 SPTool.addSessionMap(AppSP.USER_HR_RongToken, HR_RongToken);
                 SPTool.addSessionMap(AppSP.USER_TYPE, "0");
-
+                SPTool.addSessionMap(AppSP.USER_HR_PERMISSION, TextUtils.equals("1", resultBean.getHr()));
 
                 //1 进入界面 SelectHangYeActivity
                 //0 进入主页

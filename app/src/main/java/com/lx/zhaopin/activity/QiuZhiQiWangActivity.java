@@ -170,7 +170,6 @@ public class QiuZhiQiWangActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onSuccess(Response response, ZhuCiZhiWuBean resultBean) {
-
                 minK = resultBean.getMinSalary();
                 maxK = resultBean.getMaxSalary();
                 editID = resultBean.getId();

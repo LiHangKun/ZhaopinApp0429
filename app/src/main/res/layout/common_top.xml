@@ -88,8 +88,8 @@
             android:gravity="center"
             android:paddingRight="12dp"
             android:text="分享"
-            android:textColor="@color/black"
-            android:textSize="13sp"
+            android:textColor="#151413"
+            android:textSize="14sp"
             android:visibility="gone" />
     </RelativeLayout>
 

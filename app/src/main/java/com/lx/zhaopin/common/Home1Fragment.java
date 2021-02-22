@@ -35,6 +35,7 @@ import com.lx.zhaopin.activity.PingBiGangActivity;
 import com.lx.zhaopin.activity.SearchActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.adapter.CardAdapter;
+import com.lx.zhaopin.adapter.CardAdapterNew;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.ShouYeQiuZhiZheBean;
@@ -91,9 +92,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     private int totalPage = 1;
     private static final String TAG = "Home1Fragment";
     private String cityId = "";
-    private ImageView tuCeng1;
-    private ImageView tuCeng2;
-    private LinearLayout allTuCeng;
     private RecyclerView recyclerViewKa;
 
     private int kaPositon = 0;
@@ -103,13 +101,14 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     //private MyAdapter myAdapter;
     private ImageView fl_list;
     private ImageView dituImage;
-    private CardAdapter cardAdapter;
+    private CardAdapterNew cardAdapter;
     private LinearLayout openLayout;
     private ImageView closeImg;
     private ImageView pingbiImg;
     private ImageView openSHouCangImg;
     private LinearLayout shouCangLayout;
     private ImageView openImg;
+    private ImageView changeRoleImg;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -166,19 +165,14 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         viewType1 = view.findViewById(R.id.ViewType1);
         viewType2 = view.findViewById(R.id.ViewType2);
         dituImage = view.findViewById(R.id.dituImage);
-
-        tuCeng1 = view.findViewById(R.id.tuCeng1);
-        tuCeng2 = view.findViewById(R.id.tuCeng2);
-        allTuCeng = view.findViewById(R.id.allTuCeng);
-
-        openLayout=view.findViewById(R.id.open_layout);
-        closeImg=view.findViewById(R.id.close_img);
-        pingbiImg=view.findViewById(R.id.pingbi_img);
-        openSHouCangImg=view.findViewById(R.id.open_list);
-        shouCangLayout=view.findViewById(R.id.yincang_layout);
-        openImg=view.findViewById(R.id.open_img);
-
-
+        openLayout = view.findViewById(R.id.open_layout);
+        closeImg = view.findViewById(R.id.close_img);
+        pingbiImg = view.findViewById(R.id.pingbi_img);
+        openSHouCangImg = view.findViewById(R.id.open_list);
+        shouCangLayout = view.findViewById(R.id.yincang_layout);
+        openImg = view.findViewById(R.id.open_img);
+        changeRoleImg = view.findViewById(R.id.change_role_img);
+        changeRoleImg.setOnClickListener(this);
 
         openImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,18 +204,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                 }
             }
         });
-
-        boolean tuCeng = SPTool.getSessionValue(AppSP.tuCeng, false);
-
-        if (tuCeng) {
-            allTuCeng.setVisibility(View.GONE);
-        } else {
-            allTuCeng.setVisibility(View.VISIBLE);
-        }
-
-        tuCeng1.setOnClickListener(this);
-        tuCeng2.setOnClickListener(this);
-
 
         ImageView selectView = view.findViewById(R.id.selectView);
         selectView.setOnClickListener(this);
@@ -260,6 +242,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         fl_list = view.findViewById(R.id.fl_list);
 
         fl_list.setOnClickListener(this);
+        openSHouCangImg.setOnClickListener(this);
 
 
         //getDataList
@@ -295,8 +278,8 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                         break;
                     case ReItemTouchHelper.UP:
                         Log.i(TAG, "onSwipedOut:上 ");
-                        //喜欢
-                        xiHuan(o.getId());
+                        //切换
+                        buXiHuan(o.getId());
                         break;
                     case ReItemTouchHelper.LEFT:
                         Log.i(TAG, "onSwipedOut: 左--------------");
@@ -337,7 +320,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         mReItemTouchHelper = new ReItemTouchHelper(helperCallback);
         CardLayoutManager layoutManager = new CardLayoutManager(mReItemTouchHelper, setting);
         recyclerViewKa.setLayoutManager(layoutManager);
-        cardAdapter = new CardAdapter(getActivity(), NewAllList);
+        cardAdapter = new CardAdapterNew(getActivity(), NewAllList);
         recyclerViewKa.setAdapter(cardAdapter);
 
 
@@ -346,7 +329,6 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
         return view;
 
     }
-
 
 
     //通过监听viewpager滑动改变Checked的属性
@@ -448,6 +430,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                 kaPian = !kaPian;
                 break;
             case R.id.fl_list:
+            case R.id.open_list:
                 //我的收藏岗位
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     startActivity(new Intent(getActivity(), MyShouCangGangActivity.class));
@@ -457,16 +440,12 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
                     return;
                 }
                 break;
-            case R.id.tuCeng1:
-                tuCeng1.setVisibility(View.GONE);
-                tuCeng2.setVisibility(View.VISIBLE);
+            case R.id.change_role_img:
+                if (SPTool.getSessionValue(AppSP.USER_HR_PERMISSION, false)) {
+                    EventBus.getDefault().post(new MessageEvent(14, null, null, null, null, null, null));
+                }
                 break;
-            case R.id.tuCeng2:
-                tuCeng1.setVisibility(View.GONE);
-                tuCeng2.setVisibility(View.GONE);
-                allTuCeng.setVisibility(View.GONE);
-                SPTool.addSessionMap(AppSP.tuCeng, true);
-                break;
+
         }
     }
 
@@ -636,7 +615,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
 
     private void xiHuan(String pid) {
 
-        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
             Map<String, String> params = new HashMap<>();
             params.put("mid", SPTool.getSessionValue(AppSP.UID));
             params.put("pid", pid);
@@ -700,7 +679,7 @@ public class Home1Fragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void buXiHuan(String pid) {
-        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))){
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
             Map<String, String> params = new HashMap<>();
             params.put("mid", SPTool.getSessionValue(AppSP.UID));
             params.put("pid", pid);

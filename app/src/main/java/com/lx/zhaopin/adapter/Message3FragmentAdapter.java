@@ -12,8 +12,11 @@ import android.widget.TextView;
 
 import com.lx.zhaopin.R;
 import com.lx.zhaopin.bean.SystemMessageListBean;
+import com.lx.zhaopin.view.TimeUtils;
 import com.lx.zhaopin.view.XmCircleImageview;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,7 +49,17 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
 
-        viewHolder.tv2.setText(mData.get(i).getSendDate());
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Date date = formatter.parse(mData.get(i).getSendDate());
+            long time = date.getTime();
+            String yue = TimeUtils.getMonthTime_(time);
+            String day = TimeUtils.getDayTime_(time);
+            viewHolder.tv2.setText(yue + "月" + day + "日 ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         viewHolder.tv3.setText(mData.get(i).getSubhead());
 
 
@@ -153,6 +166,7 @@ public class Message3FragmentAdapter extends RecyclerView.Adapter<Message3Fragme
 
     public interface OnItemClickListener {
         void OnItemClickListener(View view, int i, String Correlation, String messageType, String url, String title, String messID);
+
         void onItemLongClick(View view, int i, String Correlation, String messageType, String url, String title, String messID);
     }
 

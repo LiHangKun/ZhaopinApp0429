@@ -32,6 +32,33 @@ public class QiuZhiZheMyInfoBean extends CommonBean {
     private String workDate;
     private String servicePhone;
     private String num;
+    private String collectPositionCount;
+    private String interviewAllCount;
+    private String interviewYiCount;
+
+    public String getCollectPositionCount() {
+        return collectPositionCount;
+    }
+
+    public void setCollectPositionCount(String collectPositionCount) {
+        this.collectPositionCount = collectPositionCount;
+    }
+
+    public String getInterviewAllCount() {
+        return interviewAllCount;
+    }
+
+    public void setInterviewAllCount(String interviewAllCount) {
+        this.interviewAllCount = interviewAllCount;
+    }
+
+    public String getInterviewYiCount() {
+        return interviewYiCount;
+    }
+
+    public void setInterviewYiCount(String interviewYiCount) {
+        this.interviewYiCount = interviewYiCount;
+    }
 
     public String getNum() {
         return num;

@@ -9,8 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
-        android:layout_marginTop="@dimen/dp_25"
-        >
+        android:layout_marginTop="@dimen/dp_25">
 
         <TextView
             android:layout_width="match_parent"
@@ -23,430 +22,420 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/already_read_tv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_50"
-            android:gravity="center"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_16"
+            android:gravity="center"
             android:text="一键已读"
             android:textColor="#151413"
             android:textSize="@dimen/sp_14"
-            android:id="@+id/already_read_tv"
-            android:textStyle="bold"
-             />
+            android:textStyle="bold" />
 
     </RelativeLayout>
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@drawable/msg_bg"
-        >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginRight="@dimen/dp_15"
-        android:paddingTop="@dimen/dp_10"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/llView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dp_10">
 
-
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/image1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/hom2s"
-                        android:visibility="gone"
-                        />
 
                     <LinearLayout
+                        android:id="@+id/llView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        android:orientation="vertical">
+
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/image1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/hom2s"
+                                android:visibility="gone" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+
+                                <TextView
+                                    android:id="@+id/messageNumberTv1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_48"
+                                    android:background="@drawable/button_shape40r"
+                                    android:paddingLeft="@dimen/dp_6"
+                                    android:paddingRight="@dimen/dp_6"
+                                    android:text="0"
+                                    android:textColor="#fff"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
 
                         <TextView
-                            android:id="@+id/messageNumberTv1"
-                            android:layout_width="match_parent"
+                            android:id="@+id/tv1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_48"
-                            android:background="@drawable/button_shape40r"
-                            android:paddingLeft="@dimen/dp_6"
-                            android:paddingRight="@dimen/dp_6"
-                            android:text="0"
-                            android:textColor="#fff"
+                            android:gravity="center"
+                            android:text="消息"
+                            android:textColor="@color/text_color"
+                            android:textSize="@dimen/sp_18"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:id="@+id/goutong_view"
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="2dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:background="@color/main_blue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:orientation="vertical">
+
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/image2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/xiaoxi_fankui1"
+                                android:visibility="gone" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+
+                                <TextView
+                                    android:id="@+id/messageNumberTv2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_48"
+                                    android:background="@drawable/button_shape40r"
+                                    android:paddingLeft="@dimen/dp_6"
+                                    android:paddingRight="@dimen/dp_6"
+                                    android:text="0"
+                                    android:textColor="#fff"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+
+                        <TextView
+                            android:id="@+id/tv2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="反馈"
+                            android:textColor="@color/zhiwei_location_text"
+                            android:textSize="@dimen/sp_18"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:id="@+id/fankui_view"
+                            android:layout_width="@dimen/dp_50"
+                            android:layout_height="2dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:background="@color/main_blue"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:orientation="vertical">
+
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/image3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/xiaoxi_xitxiaoxi1"
+                                android:visibility="gone" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+
+                                <TextView
+                                    android:id="@+id/messageNumberTv3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_48"
+                                    android:background="@drawable/button_shape40r"
+                                    android:paddingLeft="@dimen/dp_6"
+                                    android:paddingRight="@dimen/dp_6"
+                                    android:text="0"
+                                    android:textColor="#fff"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+
+                        <TextView
+                            android:id="@+id/tv3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="通知"
+                            android:textColor="@color/zhiwei_location_text"
+                            android:textSize="@dimen/sp_18"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:id="@+id/xitong_view"
+                            android:layout_width="@dimen/dp_50"
+                            android:layout_height="2dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:background="@color/main_blue"
                             android:visibility="gone" />
 
                     </LinearLayout>
 
-                </FrameLayout>
+
+                </LinearLayout>
 
 
-                <TextView
-                    android:id="@+id/tv1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="招聘沟通"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="@dimen/dp_50"
-                    android:layout_height="2dp"
-                    android:background="@color/main_blue"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_4"
-                    android:id="@+id/goutong_view"
-                    />
             </LinearLayout>
 
+
             <LinearLayout
-                android:id="@+id/llView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_15"
                 android:orientation="vertical">
 
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/image2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:src="@drawable/xiaoxi_fankui1" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-
-                        <TextView
-                            android:id="@+id/messageNumberTv2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_48"
-                            android:background="@drawable/button_shape40r"
-                            android:paddingLeft="@dimen/dp_6"
-                            android:paddingRight="@dimen/dp_6"
-                            android:text="0"
-                            android:textColor="#fff"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-
-                </FrameLayout>
-
-
-                <TextView
-                    android:id="@+id/tv2"
+                <RelativeLayout
+                    android:id="@+id/msg_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="招聘反馈"
-                    android:textColor="@color/zhiwei_location_text"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="@dimen/dp_50"
-                    android:layout_height="2dp"
-                    android:background="@color/main_blue"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_4"
-                    android:id="@+id/fankui_view"
-                    android:visibility="gone"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:orientation="vertical">
-
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="@dimen/dp_10">
 
                     <ImageView
-                        android:id="@+id/image3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:src="@drawable/xiaoxi_xitxiaoxi1" />
-
-                    <LinearLayout
+                        android:id="@+id/msg_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:src="@drawable/msg_xitong" />
 
-                        <TextView
-                            android:id="@+id/messageNumberTv3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_48"
-                            android:background="@drawable/button_shape40r"
-                            android:paddingLeft="@dimen/dp_6"
-                            android:paddingRight="@dimen/dp_6"
-                            android:text="0"
-                            android:textColor="#fff"
-                            android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/xiyong_count_tv"
+                        android:layout_width="@dimen/dp_7"
+                        android:layout_height="@dimen/dp_7"
+                        android:layout_marginLeft="@dimen/dp_3"
+                        android:layout_toRightOf="@+id/msg_img"
+                        android:background="@drawable/wode_mag" />
+                </RelativeLayout>
 
-                    </LinearLayout>
-
-                </FrameLayout>
-
-
-                <TextView
-                    android:id="@+id/tv3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="系统消息"
-                    android:textColor="@color/zhiwei_location_text"
-                    android:textSize="@dimen/sp_18"
-                    android:textStyle="bold" />
                 <View
-                    android:layout_width="@dimen/dp_50"
-                    android:layout_height="2dp"
-                    android:background="@color/main_blue"
-                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/new_line"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_2"
+                    android:layout_below="@+id/msg_img"
+                    android:layout_marginRight="@dimen/dp_5"
                     android:layout_marginTop="@dimen/dp_4"
-                    android:id="@+id/xitong_view"
-                    android:visibility="gone"
-                    />
-
+                    android:background="@color/main_blue"
+                    android:visibility="invisible" />
             </LinearLayout>
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_15"
-            >
+        </RelativeLayout>
 
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:id="@+id/msg_layout"
-            >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/msg_img"
-            android:src="@drawable/msg_xitong"
-            android:layout_marginTop="@dimen/dp_3"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_80"
+            android:background="#fff"
+            android:visibility="gone">
 
-            <TextView
-                android:layout_width="@dimen/dp_7"
-                android:layout_height="@dimen/dp_7"
-                android:background="@drawable/wode_mag"
-                android:id="@+id/xiyong_count_tv"
-                android:layout_toRightOf="@+id/msg_img"
-                android:layout_marginLeft="@dimen/dp_3"
-                />
+
+            <RadioGroup
+                android:id="@+id/Homerg02"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/dp_0"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawableTop="@drawable/home_s1"
+                        android:gravity="center"
+                        android:onClick="doClick"
+                        android:paddingTop="2dp"
+                        android:text="招聘沟通"
+                        android:textColor="@color/mainColor888"
+                        android:textSize="11sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_48"
+                            android:background="@drawable/button_shape40r"
+                            android:paddingLeft="@dimen/dp_6"
+                            android:paddingRight="@dimen/dp_6"
+                            android:text="111"
+                            android:textColor="#fff" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/dp_0"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawableTop="@drawable/home_s2"
+                        android:gravity="center"
+                        android:onClick="doClick"
+                        android:paddingTop="2dp"
+                        android:text="招聘反馈"
+                        android:textColor="#6B6B6B"
+                        android:textSize="11sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_48"
+                            android:background="@drawable/button_shape40r"
+                            android:paddingLeft="@dimen/dp_6"
+                            android:paddingRight="@dimen/dp_6"
+                            android:text="111"
+                            android:textColor="#fff" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/dp_0"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawableTop="@drawable/home_s2"
+                        android:gravity="center"
+                        android:onClick="doClick"
+                        android:paddingTop="2dp"
+                        android:text="系统消息"
+                        android:textColor="#6B6B6B"
+                        android:textSize="11sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_48"
+                            android:background="@drawable/button_shape40r"
+                            android:paddingLeft="@dimen/dp_6"
+                            android:paddingRight="@dimen/dp_6"
+                            android:text="111"
+                            android:textColor="#fff" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+
+            </RadioGroup>
+
+
         </RelativeLayout>
-            <View
-                android:layout_width="@dimen/dp_16"
-                android:layout_height="@dimen/dp_2"
-                android:layout_below="@+id/msg_img"
-                android:layout_marginTop="@dimen/dp_4"
-                android:background="@color/main_blue"
-                android:layout_marginRight="@dimen/dp_5"
-                android:id="@+id/new_line"
-                android:visibility="invisible"
-                />
-        </LinearLayout>
-    </RelativeLayout>
 
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_80"
-        android:background="#fff"
-        android:visibility="gone">
-
-
-        <RadioGroup
-            android:id="@+id/Homerg02"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
-
-            <FrameLayout
-                android:layout_width="@dimen/dp_0"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <RadioButton
-                    android:id="@+id/RadioButton1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_0"
-                    android:button="@null"
-                    android:checked="true"
-                    android:drawableTop="@drawable/home_s1"
-                    android:gravity="center"
-                    android:onClick="doClick"
-                    android:paddingTop="2dp"
-                    android:text="招聘沟通"
-                    android:textColor="@color/mainColor888"
-                    android:textSize="11sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_48"
-                        android:background="@drawable/button_shape40r"
-                        android:paddingLeft="@dimen/dp_6"
-                        android:paddingRight="@dimen/dp_6"
-                        android:text="111"
-                        android:textColor="#fff" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-
-            <FrameLayout
-                android:layout_width="@dimen/dp_0"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <RadioButton
-                    android:id="@+id/RadioButton2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_0"
-                    android:button="@null"
-                    android:checked="true"
-                    android:drawableTop="@drawable/home_s2"
-                    android:gravity="center"
-                    android:onClick="doClick"
-                    android:paddingTop="2dp"
-                    android:text="招聘反馈"
-                    android:textColor="#6B6B6B"
-                    android:textSize="11sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_48"
-                        android:background="@drawable/button_shape40r"
-                        android:paddingLeft="@dimen/dp_6"
-                        android:paddingRight="@dimen/dp_6"
-                        android:text="111"
-                        android:textColor="#fff" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="@dimen/dp_0"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <RadioButton
-                    android:id="@+id/RadioButton3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dp_0"
-                    android:button="@null"
-                    android:checked="true"
-                    android:drawableTop="@drawable/home_s2"
-                    android:gravity="center"
-                    android:onClick="doClick"
-                    android:paddingTop="2dp"
-                    android:text="系统消息"
-                    android:textColor="#6B6B6B"
-                    android:textSize="11sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_48"
-                        android:background="@drawable/button_shape40r"
-                        android:paddingLeft="@dimen/dp_6"
-                        android:paddingRight="@dimen/dp_6"
-                        android:text="111"
-                        android:textColor="#fff" />
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-
-        </RadioGroup>
-
-
-    </RelativeLayout>
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_marginBottom="@dimen/dp_50"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/dp_18"
-        android:layout_height="match_parent" />
+            android:layout_marginTop="@dimen/dp_18" />
 
     </LinearLayout>
 </LinearLayout>

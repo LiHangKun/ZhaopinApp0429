@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="到岗时间"
+            android:text="期望职位"
             android:textColor="#939393"
             android:textSize="14sp" />
 
@@ -76,8 +76,8 @@
             android:layout_height="match_parent"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="不限"
-            android:textColor="#151413"
+            android:text="选择行业"
+            android:textColor="#939393"
             android:textSize="16sp"
             android:textStyle="normal" />
     </LinearLayout>
@@ -117,8 +117,8 @@
             android:layout_height="match_parent"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="天津"
-            android:textColor="#151413"
+            android:text="选择城市"
+            android:textColor="#939393"
             android:textSize="16sp"
             android:textStyle="normal" />
     </LinearLayout>
@@ -171,17 +171,23 @@
         android:layout_marginTop="20dp"
         android:background="#F1F1F1" />
 
-    <TextView
-        android:id="@+id/okID"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
-        android:layout_marginLeft="@dimen/dp_38"
-        android:layout_marginRight="@dimen/dp_38"
-        android:layout_marginTop="@dimen/dp_100"
-        android:background="@drawable/button_shape"
-        android:gravity="center"
-        android:text="保  存"
-        android:textColor="#fff" />
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/okID"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/dp_38"
+            android:layout_marginRight="@dimen/dp_38"
+            android:background="@drawable/button_shape"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="34dp"
+            android:text="完成"
+            android:textSize="17sp"
+            android:textColor="#fff" />
+    </RelativeLayout>
 
 
 </LinearLayout>

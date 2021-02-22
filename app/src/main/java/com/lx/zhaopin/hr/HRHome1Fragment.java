@@ -41,10 +41,12 @@ import com.lx.zhaopin.activity.MyShouCangRenActivity;
 import com.lx.zhaopin.activity.RenCaiDetailActivity;
 import com.lx.zhaopin.activity.SelectCityPro1ListActivity;
 import com.lx.zhaopin.adapter.HRCardAdapter;
+import com.lx.zhaopin.adapter.HRCardAdapter1;
 import com.lx.zhaopin.base.BaseFragment;
 import com.lx.zhaopin.bean.GongSiZhiWeiBean;
 import com.lx.zhaopin.bean.PhoneStateBean;
 import com.lx.zhaopin.bean.RenCaiListBean;
+import com.lx.zhaopin.bean.RenCaiListBean1;
 import com.lx.zhaopin.common.AppSP;
 import com.lx.zhaopin.common.MessageEvent;
 import com.lx.zhaopin.home3.RenCaiCardsAdapter;
@@ -64,6 +66,7 @@ import com.lx.zhaopin.view.dragcard.DragCardsView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.kymjs.kjframe.utils.KJLoger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,8 +94,8 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     private boolean kaPian = true;
     private boolean hasNo = false;
     private DragCardsView mDragCardsView;
-    private List<RenCaiListBean.DataListBean> list;
-    private List<RenCaiListBean.DataListBean> list1;
+    private List<RenCaiListBean1.DataListBean> list;
+    private List<RenCaiListBean1.DataListBean> list1;
     private int total = 0, currentPositon = 0;
     private RenCaiCardsAdapter mCardAdapter;
 
@@ -104,11 +107,12 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
 
     ReItemTouchHelper mReItemTouchHelper;
 
-    private List<RenCaiListBean.DataListBean> NewAllList;
+    private List<RenCaiListBean1.DataListBean> NewAllList;
     //private MyAdapter myAdapter;
     private ImageView dituImage;
-    private HRCardAdapter hrCardAdapter;
+    private HRCardAdapter1 hrCardAdapter;
     private ImageView fl_list;
+    private ImageView changeRoleImg;
 
 
     class MyPagerAdapter extends FragmentPagerAdapter {
@@ -156,13 +160,12 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         tv1 = view.findViewById(R.id.tv1);
         tv2 = view.findViewById(R.id.tv2);
         dituImage = view.findViewById(R.id.dituImage);
-        ImageView shaiXuan = view.findViewById(R.id.shaiXuan);
         llSearchView = view.findViewById(R.id.llSearchView);
         llSearchView.setOnClickListener(this);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
-        shaiXuan.setOnClickListener(this);
-
+        changeRoleImg = view.findViewById(R.id.change_role_img);
+        changeRoleImg.setOnClickListener(this);
 
         ImageView selectView = view.findViewById(R.id.selectView);
         fl_list = view.findViewById(R.id.fl_list);
@@ -275,7 +278,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         recyclerViewKa = view.findViewById(R.id.recyclerViewKa);
         NewAllList = new ArrayList<>();
         CardSetting setting = new CardSetting();
-        setting.setSwipeListener(new OnSwipeCardListener<RenCaiListBean.DataListBean>() {
+        setting.setSwipeListener(new OnSwipeCardListener<RenCaiListBean1.DataListBean>() {
             @Override
             public void onSwiping(RecyclerView.ViewHolder viewHolder, float dx, float dy, int direction) {
                 switch (direction) {
@@ -295,7 +298,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
             }
 
             @Override
-            public void onSwipedOut(RecyclerView.ViewHolder viewHolder, RenCaiListBean.DataListBean o, int direction) {
+            public void onSwipedOut(RecyclerView.ViewHolder viewHolder, RenCaiListBean1.DataListBean o, int direction) {
                 switch (direction) {
                     case ReItemTouchHelper.DOWN:
                         Log.i(TAG, "onSwipedOut: 向下");
@@ -304,8 +307,8 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                         break;
                     case ReItemTouchHelper.UP:
                         Log.i(TAG, "onSwipedOut:上 ");
-                        //喜欢
-                        xiHuan(o.getId());
+                        //切换
+                        buXiHuan(o.getId());
                         break;
                     case ReItemTouchHelper.LEFT:
                         Log.i(TAG, "onSwipedOut: 左--------------");
@@ -346,7 +349,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
         mReItemTouchHelper = new ReItemTouchHelper(helperCallback);
         CardLayoutManager layoutManager = new CardLayoutManager(mReItemTouchHelper, setting);
         recyclerViewKa.setLayoutManager(layoutManager);
-        hrCardAdapter = new HRCardAdapter(getActivity(), NewAllList);
+        hrCardAdapter = new HRCardAdapter1(getActivity(), NewAllList);
         recyclerViewKa.setAdapter(hrCardAdapter);
 
 
@@ -657,13 +660,7 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.shaiXuan:
-                //点击到筛选
 
-                AllGangwei();
-                lightoff();
-
-                break;
             case R.id.tv1:
                 //推荐
                 viewPager.setCurrentItem(0);
@@ -700,6 +697,9 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
                     return;
                 }
 
+                break;
+            case R.id.change_role_img:
+                EventBus.getDefault().post(new MessageEvent(14, null, null, null, null, null, null));
                 break;
         }
     }
@@ -774,15 +774,16 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
     //-------------------------TODO 卡片----------------------------------------
     //职位分页列表求职者
     private void getDataList(String dataType, String name, String pageNo, String pageSize) {
+        Log.e(TAG, "getdata");
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("dataType", dataType);
         params.put("name", name);
         params.put("pageNo", pageNo);
         params.put("pageSize", pageSize);
-        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.HRSouRenCai, params, new SpotsCallBack<RenCaiListBean>(getActivity()) {
+        OkHttpHelper.getInstance().post(getActivity(), NetClass.BASE_URL + NetCuiMethod.HRSouRenCai, params, new SpotsCallBack<RenCaiListBean1>(getActivity()) {
             @Override
-            public void onSuccess(Response response, RenCaiListBean resultBean) {
+            public void onSuccess(Response response, RenCaiListBean1 resultBean) {
                 if (resultBean.getDataList() != null) {
                     totalPage = resultBean.getTotalPage();
                     if (resultBean.getDataList().size() == 0) {
@@ -818,71 +819,71 @@ public class HRHome1Fragment extends BaseFragment implements View.OnClickListene
 
 
     private void initData() {
-        mCardAdapter = new RenCaiCardsAdapter(getContext(), list);
-        mDragCardsView.setAdapter(mCardAdapter);
-        mDragCardsView.setOnItemClickListener(new DragCardsView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-
-                //ToastFactory.getToast(getActivity(), "处理点击事件" + list1.get(currentPositon).getId()).show();
-                //TODO  处理点击事件
-                Intent intent = new Intent(getActivity(), RenCaiDetailActivity.class);
-                intent.putExtra("rid", list1.get(currentPositon).getId());
-                startActivity(intent);
-
-            }
-        });
-        mDragCardsView.setFlingListener(new DragCardsView.onDragListener() {
-
-            @Override
-            public void removeFirstObjectInAdapter(boolean isLeft) {
-                // TODO Auto-generated method stub
-                if (isLeft) {
-                    browseyujian(currentPositon);
-                    next();
-                } else {
-                    sendLove(currentPositon);
-                    next();
-                }
-                if (list.size() > 0) {
-                    list.remove(0);
-                }
-                mCardAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onSelectLeft(double distance) {
-                // TODO Auto-generated method stub
-
-
-            }
-
-
-            @Override
-            public void onSelectRight(double distance) {
-                // TODO Auto-generated method stub
-
-            }
-
-
-            @Override
-            public void onCardReturn() {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onCardMoveDistance(double distance) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // TODO Auto-generated method stub
-//                ToastUtil.show("需要补牌了");
-
-            }
-        });
+//        mCardAdapter = new RenCaiCardsAdapter(getContext(), list);
+//        mDragCardsView.setAdapter(mCardAdapter);
+//        mDragCardsView.setOnItemClickListener(new DragCardsView.OnItemClickListener() {
+//            @Override
+//            public void onItemClicked(int itemPosition, Object dataObject) {
+//
+//                //ToastFactory.getToast(getActivity(), "处理点击事件" + list1.get(currentPositon).getId()).show();
+//                //TODO  处理点击事件
+//                Intent intent = new Intent(getActivity(), RenCaiDetailActivity.class);
+//                intent.putExtra("rid", list1.get(currentPositon).getId());
+//                startActivity(intent);
+//
+//            }
+//        });
+//        mDragCardsView.setFlingListener(new DragCardsView.onDragListener() {
+//
+//            @Override
+//            public void removeFirstObjectInAdapter(boolean isLeft) {
+//                // TODO Auto-generated method stub
+//                if (isLeft) {
+//                    browseyujian(currentPositon);
+//                    next();
+//                } else {
+//                    sendLove(currentPositon);
+//                    next();
+//                }
+//                if (list.size() > 0) {
+//                    list.remove(0);
+//                }
+//                mCardAdapter.notifyDataSetChanged();
+//
+//            }
+//
+//            @Override
+//            public void onSelectLeft(double distance) {
+//                // TODO Auto-generated method stub
+//
+//
+//            }
+//
+//
+//            @Override
+//            public void onSelectRight(double distance) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//
+//
+//            @Override
+//            public void onCardReturn() {
+//                // TODO Auto-generated method stub
+//            }
+//
+//            @Override
+//            public void onCardMoveDistance(double distance) {
+//                // TODO Auto-generated method stub
+//            }
+//
+//            @Override
+//            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+//                // TODO Auto-generated method stub
+////                ToastUtil.show("需要补牌了");
+//
+//            }
+//        });
     }
 
 

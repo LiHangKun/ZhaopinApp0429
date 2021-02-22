@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -33,7 +34,9 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.other.SpacesItemDecoration;
 import com.lx.zhaopin.other.WheelDialog;
+import com.lx.zhaopin.utils.DisplayUtil;
 import com.lx.zhaopin.utils.SPTool;
 
 import org.greenrobot.eventbus.EventBus;
@@ -68,6 +71,8 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
     LinearLayout llView3;
     @BindView(R.id.add_qiuzhi_view)
     RelativeLayout addQiuzhiView;
+    @BindView(R.id.add_qiuzhi_tv)
+    TextView addQiuzhiTv;
     private List<QiuZhiyiXiangBean.ResumeExpectationListBean> allList;
     private QiuZhiYiXiangAdapter qiuZhiYiXiangAdapter;
     private WheelDialog workStateDialog;
@@ -99,11 +104,13 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
         allList = new ArrayList<>();
         qiuZhiYiXiangAdapter = new QiuZhiYiXiangAdapter(mContext, allList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.addItemDecoration(new SpacesItemDecoration(DisplayUtil.dip2px(this, 10), false));
         recyclerView.setAdapter(qiuZhiYiXiangAdapter);
         qiuZhiYiXiangAdapter.setOnItemClickener(new QiuZhiYiXiangAdapter.OnItemClickener() {
             @Override
             public void onItemClick(String id) {
-                Intent intent = new Intent(mContext, QiuZhiQiWangActivity.class);
+//                Intent intent = new Intent(mContext, QiuZhiQiWangActivity.class);
+                Intent intent = new Intent(mContext, QiuZhiYiXiangChangeActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
             }
@@ -121,6 +128,12 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
         SpannableString spannableString = new SpannableString(str);
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#1678FF")), 0, 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         rightNextParentText.setText(spannableString);
+        if (num < 3) {
+            addQiuzhiView.setVisibility(View.VISIBLE);
+            addQiuzhiTv.setText("继续添加求职意向");
+        } else {
+            addQiuzhiView.setVisibility(View.GONE);
+        }
     }
 
     private static final String TAG = "QiuZhiYiXiangActivity";
@@ -149,6 +162,7 @@ public class QiuZhiYiXiangActivity extends BaseActivity {
                         allList.clear();
                         allList.addAll(resultBean.getResumeExpectationList());
                         qiuZhiYiXiangAdapter.notifyDataSetChanged();
+                        recyclerView.setVisibility(View.VISIBLE);
                     } else {
                         setRightTextNum(0);
                     }

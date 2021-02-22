@@ -32,7 +32,6 @@ import butterknife.ButterKnife;
 public class MianShiRecord_In_Adapter extends RecyclerView.Adapter<MianShiRecord_In_Adapter.ViewHolder> {
 
 
-
     private List<MianShiRecordBean.DataListBean.InterviewsBean> mData;
     private Context mContext;
     private Intent intent;
@@ -54,11 +53,14 @@ public class MianShiRecord_In_Adapter extends RecyclerView.Adapter<MianShiRecord
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
-        Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
-                .error(R.mipmap.imageerror)).load(mData.get(i).getPosition().getRecruiter().getAvatar()).into(viewHolder.headImg);
-
+        if (mData.get(i).getPosition().getRecruiter() != null) {
+            Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror)
+                    .error(R.mipmap.imageerror)).load(mData.get(i).getPosition().getRecruiter().getAvatar()).into(viewHolder.headImg);
+            viewHolder.nameTv.setText(mData.get(i).getPosition().getRecruiter().getName());
+            viewHolder.zhiweiName.setText(mData.get(i).getPosition().getRecruiter().getPositionName());
+        }
         try {
-            int hourTime=0;
+            int hourTime = 0;
             if (!TextUtils.isEmpty(mData.get(i).getInterviewDate())) {
                 String[] times = mData.get(i).getInterviewDate().split(" ");
             }
@@ -73,13 +75,13 @@ public class MianShiRecord_In_Adapter extends RecyclerView.Adapter<MianShiRecord
                 hourTime = Integer.valueOf(hour) - 12;
                 hour = "下午" + hourTime + "点";
             } else {
-                hourTime=Integer.valueOf(hour);
+                hourTime = Integer.valueOf(hour);
                 hour = "上午" + hour + "点";
             }
-            if(hourTime<10){
-                viewHolder.mianshiTime.setText("0"+hourTime+":"+minite);
-            }else {
-                viewHolder.mianshiTime.setText(hourTime+":"+minite);
+            if (hourTime < 10) {
+                viewHolder.mianshiTime.setText("0" + hourTime + ":" + minite);
+            } else {
+                viewHolder.mianshiTime.setText(hourTime + ":" + minite);
             }
             viewHolder.timeTv.setText(yue + "月" + day + "日 " + hour + minite + "分");
         } catch (Exception e) {
@@ -88,8 +90,7 @@ public class MianShiRecord_In_Adapter extends RecyclerView.Adapter<MianShiRecord
 
         viewHolder.mianshitimeLayout.setVisibility(View.VISIBLE);
         viewHolder.priceTv.setVisibility(View.GONE);
-        viewHolder.nameTv.setText(mData.get(i).getPosition().getRecruiter().getName());
-        viewHolder.zhiweiName.setText(mData.get(i).getPosition().getRecruiter().getPositionName());
+
         viewHolder.tv1.setText(mData.get(i).getPosition().getName());
         viewHolder.addressTv.setText(mData.get(i).getPosition().getLocation());
         viewHolder.yearTv.setText(mData.get(i).getPosition().getExperienceYear().getName());

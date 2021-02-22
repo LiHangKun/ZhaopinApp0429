@@ -76,7 +76,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout relView3;
     private RelativeLayout relView4;
     private RelativeLayout relView5;
-    private RelativeLayout relView6;
+//    private RelativeLayout relView6;
     private RelativeLayout relView7;
     private Intent intent;
     private String phone = "";
@@ -86,7 +86,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
-    private TextView tvJueSe;
+//    private TextView tvJueSe;
     private TextView userPhone;
 
 
@@ -130,7 +130,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
         relView3 = view.findViewById(R.id.relView3);
         relView4 = view.findViewById(R.id.relView4);
         relView5 = view.findViewById(R.id.relView5);
-        relView6 = view.findViewById(R.id.relView6);
+//        relView6 = view.findViewById(R.id.relView6);
         relView7 = view.findViewById(R.id.relView7);
 
 
@@ -138,7 +138,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
         tv2 = view.findViewById(R.id.tv2);
         tv3 = view.findViewById(R.id.tv3);
         userPhone = view.findViewById(R.id.userPhone);
-        tvJueSe = view.findViewById(R.id.tvJueSe);
+//        tvJueSe = view.findViewById(R.id.tvJueSe);
 
         llView0.setOnClickListener(this);
         llView1.setOnClickListener(this);
@@ -152,7 +152,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
         relView3.setOnClickListener(this);
         relView4.setOnClickListener(this);
         relView5.setOnClickListener(this);
-        relView6.setOnClickListener(this);
+//        relView6.setOnClickListener(this);
         relView7.setOnClickListener(this);
 
         smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
@@ -204,7 +204,7 @@ public class HRHome3Fragment extends BaseFragment implements View.OnClickListene
                         .load(resultBean.getAvatar()).into(roundedImageView);
                 tv1.setText(resultBean.getName());
 
-                tvJueSe.setText("招聘者");
+//                tvJueSe.setText("招聘者");
 
                 tvJinDu.setText(resultBean.getImprovedDegree() + "%");
                 setData1(circlePercentView, 100, Integer.parseInt(resultBean.getImprovedDegree()));

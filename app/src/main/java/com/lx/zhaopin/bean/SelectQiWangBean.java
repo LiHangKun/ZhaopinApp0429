@@ -1,7 +1,10 @@
 package com.lx.zhaopin.bean;
 
+import android.os.Parcelable;
+
 import com.lx.zhaopin.http.CommonBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class SelectQiWangBean extends CommonBean {
@@ -17,7 +20,7 @@ public class SelectQiWangBean extends CommonBean {
         this.dataList = dataList;
     }
 
-    public static class DataListBean {
+    public static class DataListBean implements Serializable {
         /**
          * id :
          * name : 职位名称
@@ -41,5 +44,6 @@ public class SelectQiWangBean extends CommonBean {
         public void setName(String name) {
             this.name = name;
         }
+
     }
 }

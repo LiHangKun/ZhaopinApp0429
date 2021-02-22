@@ -48,11 +48,15 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.other.SkillsAdapter;
+import com.lx.zhaopin.other.SpacesItemDecoration;
 import com.lx.zhaopin.rongmessage.RongUtil;
 import com.lx.zhaopin.utils.AppUtils;
+import com.lx.zhaopin.utils.DisplayUtil;
 import com.lx.zhaopin.utils.SPTool;
 import com.lx.zhaopin.utils.ToastFactory;
 import com.lx.zhaopin.utils.ViewUtil;
+import com.lx.zhaopin.view.CustomTextView;
 import com.lx.zhaopin.view.FlowLiner;
 import com.lx.zhaopin.view.MyDialog;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -61,6 +65,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,14 +115,10 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
     View line2;
     @BindView(R.id.work_detail_skill_title)
     TextView workDetailSkillTitle;
-    @BindView(R.id.work_detail_skill_list)
-    RecyclerView workDetailSkillList;
     @BindView(R.id.line3)
     View line3;
     @BindView(R.id.work_detail_welfare_title)
     TextView workDetailWelfareTitle;
-    @BindView(R.id.work_detail_welfare_list)
-    RecyclerView workDetailWelfareList;
     @BindView(R.id.line4)
     View line4;
     @BindView(R.id.work_detail_company_info_title)
@@ -152,6 +153,32 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
     TextView dibuView4;
     @BindView(R.id.setting)
     LinearLayout setting;
+    @BindView(R.id.welfare_group)
+    Group welfareGroup;
+    @BindView(R.id.skill_group)
+    Group skillGroup;
+    @BindView(R.id.lj_goutong_tv)
+    CustomTextView ljGoutongTv;
+    @BindView(R.id.sq_goutong_tv)
+    CustomTextView sqGoutongTv;
+    @BindView(R.id.sq_zhiwei_tv)
+    CustomTextView sqZhiweiTv;
+    @BindView(R.id.yy_mianshi_tv)
+    CustomTextView yyMianshiTv;
+    @BindView(R.id.lj_goutong_two_tv)
+    CustomTextView ljGoutongTwoTv;
+    @BindView(R.id.sq_zhiwei_two_tv)
+    CustomTextView sqZhiweiTwoTv;
+    @BindView(R.id.two_btn_ll)
+    LinearLayout twoBtnLl;
+    @BindView(R.id.flowLiner1)
+    FlowLiner flowLiner1;
+    @BindView(R.id.flowLiner2)
+    FlowLiner flowLiner2;
+    @BindView(R.id.company_group)
+    Group companyGroup;
+
+
     private Intent intent;
 
     String Cui = "";
@@ -246,7 +273,7 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
         OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.zhiWeiDetail, params, new SpotsCallBack<ZhiWeiDetailBean>(mContext) {
             @Override
             public void onSuccess(Response response, ZhiWeiDetailBean resultBean) {
-
+                Log.e(TAG, "success");
                 shareTitle = resultBean.getCompany().getName() + "" + resultBean.getName();
 
                 jutiStrAdd = resultBean.getCompany().getLocation();
@@ -258,10 +285,10 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
                 //1表示是，0表示否
                 switch (collected) {
                     case "1":
-                        image1.setImageResource(R.drawable.gangwei_shoucang2);
+                        image1.setImageResource(R.mipmap.icon_work_detail_collect);
                         break;
                     case "0":
-                        image1.setImageResource(R.drawable.gangwei_shoucang1);
+                        image1.setImageResource(R.mipmap.icon_work_detail_uncollect);
                         break;
                 }
 
@@ -280,7 +307,6 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
 
                 //是否可直接聊天1是 0否
                 chat = resultBean.getChat();
-
                 switch (positionType) {
                     //职位类型1.需沟通，2.无需沟通，3.直接面试
                     case "1":
@@ -288,21 +314,35 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
 
                         switch (deliverResume) {
                             case "1":
-                                dibuView2.setVisibility(View.VISIBLE);
+                                twoBtnLl.setVisibility(View.VISIBLE);
+                                if (TextUtils.equals(chat, "1")) {
+                                    ljGoutongTwoTv.setText("立即沟通");
+                                } else {
+                                    ljGoutongTwoTv.setText("申请沟通");
+                                }
+//                                dibuView2.setVisibility(View.VISIBLE);
                                 break;
-                            case "0":
-                                dibuView1.setVisibility(View.VISIBLE);
+                            default:
+                                if (TextUtils.equals(chat, "1")) {
+                                    ljGoutongTv.setVisibility(View.VISIBLE);
+                                } else {
+                                    sqGoutongTv.setVisibility(View.VISIBLE);
+                                }
+                                twoBtnLl.setVisibility(View.GONE);
+//                                dibuView1.setVisibility(View.VISIBLE);
                                 break;
                         }
                         break;
                     case "2":
+                        ljGoutongTv.setVisibility(View.VISIBLE);
                         workDetailWarn.setVisibility(View.VISIBLE);
-                        dibuView3.setVisibility(View.VISIBLE);
+//                        dibuView3.setVisibility(View.VISIBLE);
                         workDetailWarn.setText("该岗位无需沟通，可直接发送简历，并到指定位置面试");
                         break;
                     case "3":
+                        yyMianshiTv.setVisibility(View.VISIBLE);
                         workDetailWarn.setVisibility(View.VISIBLE);
-                        dibuView4.setVisibility(View.VISIBLE);
+//                        dibuView4.setVisibility(View.VISIBLE);
                         workDetailWarn.setText("该岗位无需沟通，可直接预约面试，并到指定位置面试");
                         break;
                 }
@@ -320,15 +360,6 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
                 Cui = resultBean.getDuty();
                 getLastIndexForLimit(workDetailDutyInfo, maxLine, resultBean.getDuty()/*+Cui*/);
 
-                //TODO 专业技能 flowLiner1
-                String skill = resultBean.getSkills();
-                String[] skills = skill.split(",");
-
-
-
-                //TODO 福利待遇 flowLiner2
-
-
                 Glide.with(mContext).applyDefaultRequestOptions(new RequestOptions().placeholder(R.mipmap.imageerror).error(R.mipmap.imageerror))
                         .load(resultBean.getCompany().getLogo()).into(roundedImageView);
                 workCompanyName.setText(resultBean.getCompany().getName());
@@ -342,22 +373,90 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
                 lat = resultBean.getCompany().getLat();
                 lng = resultBean.getCompany().getLng();
 
+
+                String skills = resultBean.getSkills();
+                Log.e(TAG, "skills=" + skills);
+                if (!TextUtils.isEmpty(skills)) {
+                    List<String> flowData = Arrays.asList(skills.split(","));
+                    flowLiner1.removeAllViews();
+                    for (int i = 0; i < flowData.size(); i++) {
+                        final TextView radioButton = new TextView(GangWeiDetailActivity1.this);
+                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity1.this, 10), ViewUtil.dp2px(GangWeiDetailActivity1.this, 10));
+                        radioButton.setLayoutParams(layoutParams);
+                        final String str = flowData.get(i);
+                        radioButton.setText(str);
+                        radioButton.setGravity(Gravity.CENTER);
+                        radioButton.setTextSize(13);
+                        radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity1.this, 18), ViewUtil.dp2px(GangWeiDetailActivity1.this, 6)
+                                , ViewUtil.dp2px(GangWeiDetailActivity1.this, 18), ViewUtil.dp2px(GangWeiDetailActivity1.this, 6));
+                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                        //radioButton.setBackgroundResource(R.drawable.search_selector);
+                        radioButton.setBackgroundResource(R.drawable.button_shape03);
+                        radioButton.setFocusable(true);
+                        radioButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //流布局文字的点击
+                            }
+                        });
+                        flowLiner1.addView(radioButton);
+                    }
+                } else {
+                    skillGroup.setVisibility(View.GONE);
+                }
+
+
+                String workfare = resultBean.getWorkfare();
+                Log.e(TAG, "workfare=" + workfare);
+                if (!TextUtils.isEmpty(workfare)) {
+                    List<String> flowData2 = Arrays.asList(workfare.split(","));
+                    flowLiner2.removeAllViews();
+                    for (int i = 0; i < flowData2.size(); i++) {
+                        final TextView radioButton = new TextView(GangWeiDetailActivity1.this);
+                        FlowLiner.LayoutParams layoutParams = new FlowLiner.LayoutParams(FlowLiner.LayoutParams.WRAP_CONTENT, FlowLiner.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(0, 0, ViewUtil.dp2px(GangWeiDetailActivity1.this, 10), ViewUtil.dp2px(GangWeiDetailActivity1.this, 10));
+                        radioButton.setLayoutParams(layoutParams);
+                        final String str = flowData2.get(i);
+                        radioButton.setText(str);
+                        radioButton.setGravity(Gravity.CENTER);
+                        radioButton.setTextSize(13);
+                        radioButton.setPadding(ViewUtil.dp2px(GangWeiDetailActivity1.this, 18), ViewUtil.dp2px(GangWeiDetailActivity1.this, 6)
+                                , ViewUtil.dp2px(GangWeiDetailActivity1.this, 18), ViewUtil.dp2px(GangWeiDetailActivity1.this, 6));
+                        radioButton.setTextColor(getResources().getColorStateList(R.color.radio_text_selector_primary_4d4d4d));
+                        //radioButton.setBackgroundResource(R.drawable.search_selector);
+                        radioButton.setBackgroundResource(R.drawable.button_shape03);
+                        radioButton.setFocusable(true);
+                        radioButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //流布局文字的点击
+                            }
+                        });
+                        flowLiner2.addView(radioButton);
+                    }
+                } else {
+                    welfareGroup.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onError(Response response, int code, Exception e) {
-
+                Log.e(TAG, "error");
             }
         });
-
-
     }
 
-    private void setListData(RecyclerView recyclerView, String[] strs){
+    private void setListData(RecyclerView recyclerView, List<String> strs) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
+        SpacesItemDecoration decoration = new SpacesItemDecoration(DisplayUtil.dip2px(this, 10), true);
+        recyclerView.addItemDecoration(decoration);
+
+        SkillsAdapter adapter = new SkillsAdapter(this, strs);
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -392,9 +491,18 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
 
     private static final String TAG = "GangWeiDetailActivity";
 
-    @OnClick({R.id.back, R.id.image1, R.id.image2, R.id.image3, R.id.dibuView1, R.id.liJiGouTongTV, R.id.shenQingZhiwei, R.id.dibuView2, R.id.dibuView3, R.id.dibuView4, R.id.work_detail_interview_pos, R.id.work_detail_duty_info})
+    @OnClick({R.id.back, R.id.image1, R.id.image2, R.id.image3, R.id.dibuView1, R.id.liJiGouTongTV, R.id.shenQingZhiwei, R.id.dibuView2, R.id.dibuView3, R.id.dibuView4, R.id.work_detail_interview_pos, R.id.work_detail_duty_info,
+            R.id.sq_goutong_tv, R.id.lj_goutong_tv, R.id.sq_zhiwei_tv, R.id.sq_zhiwei_two_tv, R.id.yy_mianshi_tv, R.id.lj_goutong_two_tv, R.id.company_group})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.company_group:
+                //公司
+                if (!TextUtils.isEmpty(qiYeID)) {
+                    intent = new Intent(mContext, QiYeInfoActivity.class);
+                    intent.putExtra("qiYeID", qiYeID);
+                    startActivity(intent);
+                }
+                break;
             case R.id.back:
                 finish();
                 break;
@@ -437,12 +545,91 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
             case R.id.work_detail_interview_pos:
                 //gotoGaode(lat, lng);
 
-                fabuMethod3();
-                lightoff();
+                if (isAvilible(mContext, "com.autonavi.minimap") ||
+                        isAvilible(mContext, "com.baidu.BaiduMap") ||
+                        isAvilible(mContext, "com.tencent.map")) {
+                    fabuMethod3();
+                    lightoff();
+                }
 
 
                 break;
+            case R.id.lj_goutong_tv:
+                if (isLogined()) {
+                    gouTongMe(chat);
+                    goLiaoTianMethod();
+                }
+                break;
+            case R.id.lj_goutong_two_tv:
+                if (isLogined()) {
+                    if (chat.equals("1")) {
+                        gouTongMe(chat);
+                        goLiaoTianMethod();
+                    } else {
+                        gouTongMe(chat);
+                    }
+                }
+                break;
+            case R.id.sq_goutong_tv:
+                if (isLogined()) {
+                    gouTongMe(chat);
+                }
+                break;
+            case R.id.sq_zhiwei_tv:
+                if (isLogined()) {
+                    //申请职位 长的
+                    View view0 = getLayoutInflater().inflate(R.layout.dialog_goutong0, null);
+                    final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view0, R.style.DialogTheme2);
+                    mMyDialog.setCancelable(true);
+                    mMyDialog.show();
+
+                    view0.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMyDialog.dismiss();
+                        }
+                    });
+
+                    view0.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            touPid(pid);
+                            mMyDialog.dismiss();
+                        }
+                    });
+                }
+                break;
+            case R.id.sq_zhiwei_two_tv:
+                if (isLogined()) {
+                    View view0 = getLayoutInflater().inflate(R.layout.dialog_goutong0, null);
+                    final MyDialog mMyDialog = new MyDialog(mContext, 0, 0, view0, R.style.DialogTheme2);
+                    mMyDialog.setCancelable(true);
+                    mMyDialog.show();
+
+                    view0.findViewById(R.id.quxiaoTV).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMyDialog.dismiss();
+                        }
+                    });
+
+                    view0.findViewById(R.id.okID).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            touPid(pid);
+                            mMyDialog.dismiss();
+                        }
+                    });
+                }
+                break;
+            case R.id.yy_mianshi_tv:
+                if (isLogined()) {
+                    fabuMethod();
+                    lightoff();
+                }
+                break;
             case R.id.dibuView1:
+
                 //立即沟通
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     //ToastFactory.getToast(mContext, "立即沟通长的").show();
@@ -491,10 +678,7 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
                 //立即沟通
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
                     //ToastFactory.getToast(mContext, "立即沟通短的").show();
-
                     goLiaoTianMethod();
-
-
                 } else {
                     ToastFactory.getToast(mContext, "请先登录").show();
                     startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
@@ -591,6 +775,16 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
         }
     }
 
+    private boolean isLogined() {
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+            return true;
+        } else {
+            ToastFactory.getToast(mContext, "请先登录").show();
+            startActivity(new Intent(mContext, Login1PhoneCodeActivity.class));
+            return false;
+        }
+    }
+
     //chat  是 0  弹出提示
     private void gouTongMe(final String chat) {
         Map<String, String> params = new HashMap<>();
@@ -612,6 +806,9 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
 
                 if (chat.equals("0")) {
                     ToastFactory.getToast(mContext, "已提交沟通申请").show();
+                    sqGoutongTv.setText("已提交");
+                    sqGoutongTv.setBackgroundResource(R.drawable.shape_disenable_goutong);
+                    sqGoutongTv.setEnabled(false);
                 }
 
 
@@ -969,9 +1166,25 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
     private void fabuMethod3() {
         if (popupWindow3 == null) {
             popupView3 = View.inflate(this, R.layout.pop_layout_dao_layout, null);
-            TextView tv1Click = popupView3.findViewById(R.id.tv1);
-            TextView tv2Click = popupView3.findViewById(R.id.tv2);
-            TextView tv3Click = popupView3.findViewById(R.id.tv3);
+            LinearLayout ll1 = popupView3.findViewById(R.id.ll1);
+            LinearLayout ll2 = popupView3.findViewById(R.id.ll2);
+            LinearLayout ll3 = popupView3.findViewById(R.id.ll3);
+            LinearLayout ll4 = popupView3.findViewById(R.id.ll4);
+            View empty1 = popupView3.findViewById(R.id.empty1);
+            View empty2 = popupView3.findViewById(R.id.empty2);
+            View empty3 = popupView3.findViewById(R.id.empty3);
+            if (!isAvilible(mContext, "com.autonavi.minimap")) {
+                ll2.setVisibility(View.GONE);
+                empty1.setVisibility(View.GONE);
+            }
+            if (!isAvilible(mContext, "com.baidu.BaiduMap")) {
+                ll3.setVisibility(View.GONE);
+                empty2.setVisibility(View.GONE);
+            }
+            if (!isAvilible(mContext, "com.tencent.map")) {
+                ll4.setVisibility(View.GONE);
+                empty3.setVisibility(View.GONE);
+            }
 
             // 参数2,3：指明popupwindow的宽度和高度
             popupWindow3 = new PopupWindow(popupView3, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -982,8 +1195,18 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
                 }
             });
 
-            //一周
-            tv1Click.setOnClickListener(new View.OnClickListener() {
+            //xitong
+            ll1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    xitong(mContext, lat, lng, jutiStrAdd);
+                    popupWindow3.dismiss();
+                    lighton();
+                }
+            });
+
+            //gaode
+            ll2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     gaoDe(mContext, lat, lng, jutiStrAdd);
@@ -991,8 +1214,8 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
                     lighton();
                 }
             });
-            //半个月
-            tv2Click.setOnClickListener(new View.OnClickListener() {
+            //baidu
+            ll3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     goToBaiduActivity(mContext, jutiStrAdd, lat, lng);
@@ -1000,8 +1223,8 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
                     lighton();
                 }
             });
-            //一个月
-            tv3Click.setOnClickListener(new View.OnClickListener() {
+            //tx
+            ll4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     gotoTengxun(mContext, jutiStrAdd, lat, lng);
@@ -1119,6 +1342,21 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
     }
 
 
+    //系统地图
+    private void xitong(Context mContext, String lat, String lng, String adr) {
+//        Uri uri = Uri.parse("http://ditu.google.cn/maps?hl=zh&mrt=loc&q=" + lat + "," + lng + adr);
+//        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+//                uri);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+//                & Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//
+//        intent.setClassName("com.google.android.apps.maps",
+//                "com.google.android.maps.MapsActivity");
+//        startActivity(intent);
+
+
+    }
+
     /* 检查手机上是否安装了指定的软件
      * @param context
      * @param packageName：应用包名
@@ -1142,4 +1380,10 @@ public class GangWeiDetailActivity1 extends BaseActivity implements View.OnClick
         return packageNames.contains(packageName);
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

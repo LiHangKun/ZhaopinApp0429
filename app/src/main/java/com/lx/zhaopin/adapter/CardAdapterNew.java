@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,10 +33,10 @@ public class CardAdapterNew extends RecyclerView.Adapter<CardAdapterNew.CardHold
     private List<ShouYeQiuZhiZheBean.DataListBean> allList;
     private RequestOptions mRequestOptions;
     private final Context mContext;
-    private String salary_format="%s—%sk";
-    private String work_info_format ="%s%s | %s | %s";
-    private String company_info_format ="%s | %s | %s";
-    private String company_pos_format ="%s%s%s";
+    private String salary_format = "%s—%sk";
+    private String work_info_format = "%s%s | %s | %s";
+    private String company_info_format = "%s | %s | %s";
+    private String company_pos_format = "%s%s%s";
 
     public CardAdapterNew(Context context, List<ShouYeQiuZhiZheBean.DataListBean> cardBeanList) {
         mContext = context;
@@ -74,6 +75,14 @@ public class CardAdapterNew extends RecyclerView.Adapter<CardAdapterNew.CardHold
 
 
         String positionType = allList.get(position).getPositionType();
+        switch (positionType) {
+            case "2":
+                holder.interviewDirectImg.setVisibility(View.VISIBLE);
+                break;
+            default:
+                holder.interviewDirectImg.setVisibility(View.GONE);
+                break;
+        }
 //        switch (positionType) {
 //            case "1":
 //            case "2":
@@ -106,7 +115,7 @@ public class CardAdapterNew extends RecyclerView.Adapter<CardAdapterNew.CardHold
         holder.workCompanyInfoShort.setText(String.format(company_info_format, allList.get(position).getCompany().getFinancingName(),
                 allList.get(position).getCompany().getIndustry2Name(),
                 allList.get(position).getCompany().getStaffNum()));
-        holder.workCompanyPos.setText(String.format(company_pos_format, allList.get(position).getCity().getName() ,
+        holder.workCompanyPos.setText(String.format(company_pos_format, allList.get(position).getCity().getName(),
                 allList.get(position).getDistrict().getName(),
                 allList.get(position).getLocation()));
         holder.workCompanyName.setText(allList.get(position).getCompany().getName());
@@ -129,10 +138,11 @@ public class CardAdapterNew extends RecyclerView.Adapter<CardAdapterNew.CardHold
             @Override
             public void OnItemClickListener(int position) {
                 //showImage(new ImageView(getActivity()), position);
+                Intent intent = new Intent(mContext, GangWeiDetailActivity1.class);
+                intent.putExtra("pid", allList.get(position).getId());
+                mContext.startActivity(intent);
             }
         });
-
-
 
         holder.workInfoNextLl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +190,8 @@ public class CardAdapterNew extends RecyclerView.Adapter<CardAdapterNew.CardHold
         View workInfoNextLl;
         @BindView(R.id.work_salary_right)
         TextView workSalaryRight;
+        @BindView(R.id.interview_direct_img)
+        ImageView interviewDirectImg;
 
         public CardHolder(View itemView) {
             super(itemView);

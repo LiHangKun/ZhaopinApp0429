@@ -2,6 +2,7 @@ package com.lx.zhaopin.common;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,7 @@ import com.lx.zhaopin.http.OkHttpHelper;
 import com.lx.zhaopin.http.SpotsCallBack;
 import com.lx.zhaopin.net.NetClass;
 import com.lx.zhaopin.net.NetCuiMethod;
+import com.lx.zhaopin.other.ShadowDrawable;
 import com.lx.zhaopin.utils.APKVersionCodeUtils;
 import com.lx.zhaopin.utils.ActivityManager;
 import com.lx.zhaopin.utils.DataCleanManager;
@@ -75,14 +78,15 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     private String eventNickName = "";
     private String eventRongToken = "";
     private String duanUid;
-    private String userType;
+    private String userType, currentUserType;
     private ImageView tabMoveImg;
     private TextView tabMessageNumTv;
     private int screenWidth;
     private int posSel;
     private int blueBcWidth;
-    private int tabGap;
-    private List<TabView> tabViews;
+    private int tabGap, tabMoveX;
+    private RelativeLayout shadowRl;
+    private List<TabView> tabViews = new ArrayList<>();
 
     /**
      * 第一种解决办法 通过监听keyUp
@@ -134,9 +138,60 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                 Log.i(TAG, "getEventmessage:用户  重新链接融云,和更新个人中心" + eventUid + "哈哈" + eventNickName + "哈哈" + eventUserHead + "哈哈" + eventRongToken + "短的" + duanUid);
                 //setUserType(eventUid);
                 setUserType(duanUid);
+                getUnMessageNumber();
                 //setUserRongInfoMethod0(eventRongToken);
                 break;
+            case 14:
+                userType = SPTool.getSessionValue(AppSP.USER_TYPE);
+                if (TextUtils.equals(userType, "0")){
+                    userType="1";
+                    SPTool.addSessionMap(AppSP.USER_TYPE, userType);
+                }else {
+                    userType="0";
+                    SPTool.addSessionMap(AppSP.USER_TYPE, userType);
+                }
+                setUserType(duanUid);
+                getUnMessageNumber();
+                break;
         }
+    }
+
+    private void getUnMessageNumber() {
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", SPTool.getSessionValue(AppSP.UID));
+        if (TextUtils.equals("0", userType)){
+            params.put("hr", "0");
+        }else {
+            params.put("hr", "1");
+        }
+        OkHttpHelper.getInstance().post(mContext, NetClass.BASE_URL + NetCuiMethod.newMessageCount, params, new BaseCallback<PhoneStateBean>() {
+            @Override
+            public void onFailure(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) {
+
+            }
+
+            @Override
+            public void onSuccess(Response response, PhoneStateBean resultBean) {
+                int totalCount = Integer.parseInt(resultBean.getChatApplyCount()) + Integer.parseInt(resultBean.getJobFeedbackCount()) + Integer.parseInt(resultBean.getSystemMessageCount());
+                Log.i(TAG, "count=" + totalCount);
+                if (totalCount == 0) {
+                    tabMessageNumTv.setVisibility(View.INVISIBLE);
+                } else {
+                    tabMessageNumTv.setVisibility(View.VISIBLE);
+                    tabMessageNumTv.setText(String.valueOf(totalCount));
+                }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+                Log.i(TAG, "error");
+            }
+        });
     }
 
     private void init() {
@@ -151,9 +206,12 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         screenWidth = WindowUtil.getScreenWidth(this);
         posSel = 0;
         tabGap = (screenWidth - DisplayUtil.dip2px(mContext, 84) * 3) / 3;
-        tabMoveImg.setTranslationX(-(tabGap + DisplayUtil.dip2px(mContext, 84)));
+        tabMoveX = -(tabGap + DisplayUtil.dip2px(mContext, 84));
+        tabMoveImg.setTranslationX(tabMoveX);
         tabMessageNumTv.setTranslationX(-DisplayUtil.dip2px(mContext, 30));
-
+        if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.UID))) {
+            getUnMessageNumber();
+        }
     }
 
     private void clearAllCachecatch() {
@@ -171,20 +229,28 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
         userType = SPTool.getSessionValue(AppSP.USER_TYPE);
         Log.i(TAG, "setUserType: 用户" + userType);
-        if (userType.equals("0")) {
-            fragments.add(new Home1Fragment());
-            fragments.add(new Home2Fragment());
-            fragments.add(new Home3Fragment());
-        } else if (userType.equals("1")) {
-            fragments.add(new HRHome1Fragment());
-            fragments.add(new HRHome2Fragment());
-            fragments.add(new HRHome3Fragment());
+        if (!TextUtils.equals(currentUserType, userType)) {
+            fragments.clear();
+            if (userType.equals("0")) {
+                fragments.add(new Home1Fragment());
+                fragments.add(new Home2Fragment());
+                fragments.add(new Home3Fragment());
+            } else if (userType.equals("1")) {
+                fragments.add(new HRHome1Fragment());
+                fragments.add(new HRHome2Fragment());
+                fragments.add(new HRHome3Fragment());
+            }
+
+            FragmentDreamAdapter fragmentDreamAdapter = new FragmentDreamAdapter(getSupportFragmentManager(), fragments);
+            viewPager.setAdapter(fragmentDreamAdapter);
+            viewPager.setOffscreenPageLimit(fragments.size());
+            tabLayout.setupWithViewPager(viewPager);
+            setListeners();
         }
 
         if (!TextUtils.isEmpty(eventUid)) {
             setUserRongInfoMethod0(eventRongToken);
         } else {
-
             if (userType.equals("0")) {
                 if (!TextUtils.isEmpty(SPTool.getSessionValue(AppSP.USER_RongToken))) {
                     setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_RongToken));
@@ -195,21 +261,10 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
                     setUserRongInfoMethod(SPTool.getSessionValue(AppSP.USER_HR_RongToken));
                 }
             }
-
-
         }
-
 
         //adapter = new MyPagerAdapter(getSupportFragmentManager());
 
-        FragmentDreamAdapter fragmentDreamAdapter = new FragmentDreamAdapter(getSupportFragmentManager(), fragments);
-
-        viewPager.setAdapter(fragmentDreamAdapter);
-
-
-        viewPager.setOffscreenPageLimit(fragments.size());
-
-        setListeners();
     }
 
     private void setUserRongInfoMethod0(String eventRongToken) {
@@ -220,6 +275,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
             @Override
             public UserInfo getUserInfo(String userId) {
+                Log.e(TAG, "userId   =" + userId);
                 MainActivity.this.getUserInfo(userId);
                 return null;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
             }
@@ -249,6 +305,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
             @Override
             public UserInfo getUserInfo(String userId) {
+                Log.e(TAG, "userId=" + userId);
                 MainActivity.this.getUserInfo(userId);
                 return null;//根据 userId 去你的用户系统里查询对应的用户信息返回给融云 SDK。
             }
@@ -385,6 +442,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
     @Override
     public UserInfo getUserInfo(String s) {
+        Log.e(TAG, "userId s = " + s);
         setUserInfo(s);
         return null;
     }
@@ -393,6 +451,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         Map<String, String> params = new HashMap<>();
         params.put("mid", SPTool.getSessionValue(AppSP.UID));
         params.put("userId", userId);
+        Log.e("setUserInfo mid=" + SPTool.getSessionValue(AppSP.UID), "userId=" + userId);
         OkHttpHelper.getInstance().post(MainActivity.this, NetClass.BASE_URL + NetCuiMethod.getRongUserInfo, params, new BaseCallback<PhoneStateBean>() {
             @Override
             public void onFailure(Request request, Exception e) {
@@ -420,23 +479,18 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
     //通过监听viewpager滑动改变Checked的属性
     private void setListeners() {
-        if (tabLayout.getTabCount() != 0)
-            return;
-        tabLayout.setupWithViewPager(viewPager);
+        tabViews.clear();
         TabView tabView1 = new TabView(this);
-        tabView1.setValues(R.mipmap.icon_tab_home, "首页", null);
+        userType = SPTool.getSessionValue(AppSP.USER_TYPE);
+        if (userType.equals("0")) {
+            tabView1.setValues(R.mipmap.icon_tab_home, "职墙", null);
+        } else {
+            tabView1.setValues(R.mipmap.icon_tab_home, "人墙", null);
+        }
         TabView tabView2 = new TabView(this);
         tabView2.setValues(R.mipmap.icon_tab_message, "消息", tabMessageNumTv);
         TabView tabView3 = new TabView(this);
-        if (SPTool.getSessionValue(AppSP.sex).equals("1")) {
-            tabView3.setValues(R.mipmap.icon_tab_man, "我的", null);
-        } else if (SPTool.getSessionValue(AppSP.sex).equals("2")) {
-            tabView3.setValues(R.mipmap.icon_tab_woman, "我的", null);
-        } else {
-            tabView3.setValues(R.mipmap.icon_tab_person, "我的", null);
-        }
-
-        tabViews = new ArrayList<>();
+        tabView3.setValues(R.mipmap.icon_tab_person, "我的", null);
         tabViews.add(tabView1);
         tabViews.add(tabView2);
         tabViews.add(tabView3);
@@ -447,11 +501,14 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos = tab.getPosition();
-                tabMoveImg.animate().translationXBy((pos - posSel) * (tabGap + DisplayUtil.dip2px(mContext, 84))).setDuration(200).start();
-                Log.e("main", "dis = " + (pos - posSel) * (tabGap + DisplayUtil.dip2px(mContext, 84)));
+                int distance = (pos - posSel) * (tabGap + DisplayUtil.dip2px(mContext, 84));
+                tabMoveX = tabMoveX + distance;
+                tabMoveImg.clearAnimation();
+                tabMoveImg.animate().translationX(tabMoveX).setDuration(200).start();
+                Log.e("main", "target_x = " + distance);
                 posSel = pos;
                 tabViews.get(pos).setSelected(true);
-                Log.e("main", "position=" + tab.getPosition());
+                Log.e("main", "position=" + pos);
             }
 
             @Override
@@ -462,7 +519,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                Log.e(TAG, "onTabReselected = " + tab.getPosition());
             }
         });
     }
@@ -473,6 +530,16 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
         tabLayout = findViewById(R.id.lr_tab);
         tabMoveImg = findViewById(R.id.tab_move_img);
         tabMessageNumTv = findViewById(R.id.tab_message_num);
+        shadowRl = findViewById(R.id.shadow_rl);
+        ShadowDrawable drawable = new ShadowDrawable.Builder()
+                .setShapeRadius(0)
+                .setShadowRadius(DisplayUtil.dip2px(mContext, 4))
+                .setShadowColor(Color.parseColor("#80dbdbdb"))
+                .setOffsetX(0)
+                .setOffsetY(- DisplayUtil.dip2px(mContext, 2))
+                .builder();
+        shadowRl.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        shadowRl.setBackground(drawable);
     }
 
     //监听RadioButton的点击
@@ -507,6 +574,7 @@ public class MainActivity extends BaseActivity implements RongIM.UserInfoProvide
     protected void onResume() {
         super.onResume();
         if (AppSP.isToShopCar) {
+            Log.e(TAG, "onresume");
             viewPager.setCurrentItem(2);
             AppSP.isToShopCar = false;
         } else if (AppSP.isToHome) {

@@ -18,6 +18,7 @@ public abstract class UriFragment extends BaseFragment {
     private IActionBarHandler mBarHandler;
 
     public UriFragment() {
+
     }
 
     protected Bundle obtainUriBundle(Uri uri) {

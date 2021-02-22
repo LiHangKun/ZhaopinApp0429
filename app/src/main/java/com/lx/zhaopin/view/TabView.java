@@ -19,7 +19,7 @@ public class TabView extends RelativeLayout {
     private ImageView iconImg;
     private TextView tabNameTextView;
     private TextView tabMessageNum;
-    private int messageNum = 99;
+    private Runnable runnable;
 
     public TabView(Context context) {
         this(context, null);
@@ -44,10 +44,12 @@ public class TabView extends RelativeLayout {
         iconImg.setImageResource(iconId);
         tabNameTextView.setText(tabName);
         this.tabMessageNum = tabMessageNum;
-        if (tabMessageNum != null && messageNum != 0) {
-            tabMessageNum.setVisibility(VISIBLE);
-            tabMessageNum.setText(String.valueOf(messageNum));
-        }
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                tabNameTextView.setVisibility(VISIBLE);
+            }
+        };
     }
 
     public void setSelected(boolean isSelected) {
@@ -56,13 +58,10 @@ public class TabView extends RelativeLayout {
             if (tabMessageNum != null && tabMessageNum.getVisibility() == VISIBLE) {
                 tabMessageNum.animate().translationX(0).setDuration(200).start();
             }
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tabNameTextView.setVisibility(VISIBLE);
-                }
-            }, 200);
+            postDelayed(runnable, 200);
         } else {
+            if (runnable != null)
+                removeCallbacks(runnable);
             if (iconImg.getTranslationX() != 0) {
                 tabNameTextView.setVisibility(GONE);
                 iconImg.animate().translationX(0).scaleX(1f).scaleY(1f).setDuration(200).start();
@@ -79,7 +78,6 @@ public class TabView extends RelativeLayout {
         TypedArray typedArray = mContext.obtainStyledAttributes(attrs, R.styleable.TabView);
         int iconId = typedArray.getResourceId(R.styleable.TabView_icon, 0);
         String tabName = typedArray.getString(R.styleable.TabView_tabName);
-        boolean hasMessage = typedArray.getBoolean(R.styleable.TabView_hasMessage, false);
         iconImg.setImageResource(iconId);
         tabNameTextView.setText(tabName);
     }
